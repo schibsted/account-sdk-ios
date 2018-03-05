@@ -1,0 +1,32 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "User",
+    "type": "collection",
+    "code": 200,
+    "request": {
+        "reset": 3130,
+        "limit": 0,
+        "remaining": -8
+    },
+    "debug": {
+        "route": {
+            "name": "Manage digital content access",
+            "url": "/api/2/user/{id}/product/{product_id}",
+            "controller": "Api/2/User.user_product"
+        },
+        "params": {
+            "options": [],
+            "where": {
+                "id": "a5517b9a-5367-5299-baaa-bc875b46c5e4"
+            }
+        }
+    },
+    "meta": null,
+    "error": null,
+    "data": {
+        "productId": "123",
+        "result": true
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "access_token": "123",
+    "expires_in": 604800,
+    "is_admin": false,
+    "refresh_token": "abc",
+    "scope": null,
+    "server_time": 1486628389,
+    "token_type": "Bearer",
+    "user_id": false
+}

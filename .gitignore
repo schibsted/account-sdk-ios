@@ -1,0 +1,55 @@
+# OS X
+.DS_Store
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+.idea
+
+# Bundler
+.bundle
+vendor/
+*xccoverage.plist
+
+Example/*.xcworkspace/
+Example/*/ClientConfiguration.json
+DemoApp/*.xcworkspace/
+DemoApp/*/ClientConfiguration.json
+
+# Fastlane
+fastlane/*
+!fastlane/Fastfile
+!fastlane/README.md
+
+# Jazzy docs
+docs
+
+Carthage
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
+#
+# Note: if you ignore the Pods directory, make sure to uncomment
+# `pod install` in .travis.yml
+#
+Pods/
+/keyrings/live/pubring.gpg~
+/keyrings/live/pubring.kbx~
+/keyrings/live/secring.gpg
+/Example/SchibstedAccount/ClientConfiguration.json
+/Example/SchibstedAccount/Info.plist
+/DemoApp/SchibstedAccountDemo/ClientConfiguration.json
+/DemoApp/SchibstedAccountDemo/Info.plist

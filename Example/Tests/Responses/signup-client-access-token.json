@@ -1,0 +1,10 @@
+{
+    "access_token": "mytestcat555",
+    "expires_in": 604800,
+    "scope": null,
+    "user_id": false,
+    "is_admin": false,
+    "refresh_token": "b1aa8e1d52101a6359a90067fbd7ea605d1be413",
+    "server_time": 1487136977,
+    "token_type": "Bearer"
+}

@@ -1,0 +1,45 @@
+included:
+  - Example/SchibstedAccount
+  - Example/Tests
+  - SchibstedAccount
+
+excluded:
+  - SchibstedAccount/Base/IdentityAPI
+
+disabled_rules:
+ - cyclomatic_complexity
+ - todo
+ - type_body_length
+ - function_body_length
+ - function_parameter_count
+ - nesting
+ - identifier_name
+ - fallthrough
+
+opt_in_rules:
+  - file_header
+
+line_length:
+  warning: 160
+  error: 220
+
+file_length:
+  warning: 1000
+  error: 1400
+
+# disallow Xcode-generated file headers
+file_header:
+  forbidden_string: "//  Created by"
+  severity: error
+
+reporter: "xcode"
+
+trailing_semicolon: error
+trailing_whitespace:
+  severity: error
+
+force_cast: error
+
+trailing_comma:
+  severity: error
+  mandatory_comma: true

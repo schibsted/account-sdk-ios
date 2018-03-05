@@ -1,0 +1,34 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "User",
+    "type": "element",
+    "code": 200,
+    "request": {
+        "reset": 391,
+        "limit": 0,
+        "remaining": -5
+    },
+    "debug": {
+        "route": {
+            "name": "Has Access to User",
+            "url": "\/api\/2\/user\/{id}\/agreements",
+            "controller": "Api\/2\/User.user_agreements"
+        },
+        "params": {
+            "options": [],
+            "where": {
+                "id": "3502"
+            }
+        }
+    },
+    "meta": null,
+    "error": null,
+    "data": {
+        "agreements": {
+            "platform": true,
+            "client": true
+        }
+    }
+}

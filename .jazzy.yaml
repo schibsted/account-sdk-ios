@@ -1,0 +1,72 @@
+theme: apple
+min_acl: public
+skip_undocumented: true
+hide_documentation_coverage: true
+exclude:
+  - Example/**
+  - ExampleUI/**
+github_url: https://www.github.com/schibsted/account-sdk-ios
+copyright: © 2016-2018 Schibsted Products & Technology
+xcodebuild_arguments: ["-workspace", "Example/SchibstedAccount.xcworkspace", "-scheme", "SchibstedAccount-Example", "-sdk", "iphonesimulator", "-derivedDataPath", "build/DerivedData"]
+
+custom_categories:
+  - name: "Creating a User"
+    children:
+      - ClientConfiguration
+      - IdentityManager
+      - IdentityUI
+      - User
+      - UserDelegate
+      - UserState
+  - name: Authenticated Requests
+    children:
+      - URLSession
+  - name: Error Handling
+    children:
+      - ClientError
+      - Result
+      - NoValue
+  - name: Debugging
+    children:
+      - Logger
+  - name: Tracking
+    children:
+      - TrackingEventsHandler
+      - TrackingEvent
+  - name: Visual Login
+    children:
+      - IdentityUITheme
+      - IdentityUIConfiguration
+      - IdentityUIDelegate
+      - IdentityUIResult
+      - LoginMethod
+      - Style
+      - StyleColorKind
+      - StyleColors
+      - StyleIcons
+      - StyleIconKind
+      - StyleFont
+  - name: Headless Login
+    children:
+      - AppLaunchData
+      - IdentityManagerDelegate
+  - name: Identifiers
+    children:
+      - EmailAddress
+      - PhoneNumber
+      - Identifier
+  - name: Data Models
+    children:
+      - UserProfile
+      - Terms
+      - IdentifierStatus
+      - RequiredField
+      - UserProduct
+  - name: Protocols
+    children:
+      - IdentityManagerProtocol
+      - UserProtocol
+      - UserAuthAPI
+      - UserProfileAPI
+      - UserAgreementsAPI
+      - UserProductAPI

@@ -1,0 +1,86 @@
+fastlane_version "1.109.0"
+
+default_platform :ios
+
+platform :ios do
+
+  desc 'Runs all the tests'
+  desc '- `COVERAGE`: To coverage or not to doc (default to NO)'
+  lane :test do
+    scan(
+      workspace: 'Example/SchibstedAccount.xcworkspace',
+      scheme: 'SchibstedAccount-Example',
+      derived_data_path: 'build/DerivedData',
+      output_directory: 'build/',
+      device: 'iPhone 8', # Make sure this matches with pre sim opening in scripts/travis_env_tests.sh
+      buildlog_path: 'build/logs',
+      skip_build: true,
+      code_coverage: true
+    )
+
+    slather(
+        binary_basename: 'SchibstedAccount',
+        ignore: ['SchibstedAccount/UI/*'],
+        cobertura_xml: true,
+        travis: true,
+        use_bundle_exec: true,
+        source_directory: "SchibstedAccount/",
+        output_directory: "build/reports/coverage/xml",
+        build_directory: "build/DerivedData",
+        workspace: "Example/SchibstedAccount.xcworkspace",
+        scheme: "SchibstedAccount-Example",
+        proj: "Example/SchibstedAccount.xcodeproj"
+      )
+
+  end
+
+  desc 'Lint the source code and other linteable artifacts'
+  lane :lint do
+    swiftlint(
+      :mode => :lint,
+      # treat warnings as errors
+      :strict => true,
+      :ignore_exit_status => false
+    )
+
+    pod_lib_lint(
+      :quick => true,
+      :allow_warnings => true,
+      :sources => [
+        'https://github.com/CocoaPods/Specs.git',
+      ]
+    )
+  end
+
+  desc 'Generate documentation for the source code'
+  lane :documentation do
+    sh "cd .. && scripts/jazzy.sh"
+  end
+
+  desc 'Execute all lanes'
+  desc 'Configurable with:'
+  desc '- `LINT`: To lint or not to lint (default to YES)'
+  desc '- `TESTS`: To test or not to test (default to YES)'
+  desc '- `DOCUMENTATION`: To doc or not to doc (default to YES)'
+  lane :all do
+    lint unless skip('LINT')
+    test unless skip('TESTS')
+    documentation unless skip('DOCUMENTATION')
+  end
+
+  def skip(step, default: false)
+    value = ENV[step].to_s
+    if value.empty?
+      return default
+    end
+    value != 'YES'
+  end
+
+end
+
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+
+# fastlane reports which actions are used
+# No personal data is recorded. Learn more at https://github.com/fastlane/enhancer

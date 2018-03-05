@@ -1,0 +1,40 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "User",
+    "type": "element",
+    "code": 201,
+    "request": {
+        "reset": 3291,
+        "limit": 0,
+        "remaining": -2
+    },
+    "debug": {
+        "route": {
+            "name": "Signup",
+            "url": "\/api\/2\/signup",
+            "controller": "Api\/2\/User.user_signup"
+        },
+        "params": {
+            "options": [],
+            "where": []
+        }
+    },
+    "meta": null,
+    "error": null,
+    "data": {
+        "email": "123@monkey.net",
+        "oauthToken": "ecc2615eb4d7a2d434d09ecf9d3565cf6cce5378",
+        "accounts": {
+            "589486be4557700d008b4567": {
+                "id": "589486be4557700d008b4567",
+                "domain": "",
+                "accountName": "rashomon-test"
+            }
+        },
+        "merchants": [
+            46001
+        ]
+    }
+}

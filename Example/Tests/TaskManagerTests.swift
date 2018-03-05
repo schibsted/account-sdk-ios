@@ -1,0 +1,315 @@
+//
+// Copyright 2011 - 2018 Schibsted Products & Technology AS.
+// Licensed under the terms of the MIT license. See LICENSE in the project root.
+//
+
+import Foundation
+import Mockingjay
+import Nimble
+import Quick
+@testable import SchibstedAccount
+
+class MockTask: TaskProtocol {
+    static var counter = AtomicInt()
+
+    var didCancelCallCount = 0
+    var executeCallCount = 0
+    var shouldRefreshCallCount = 0
+
+    var failureValue: ClientError?
+    var shouldRefresh: Bool
+
+    init(failureValue: ClientError? = nil, shouldRefresh: Bool = false) {
+        MockTask.counter.getAndIncrement()
+        self.failureValue = failureValue
+        self.shouldRefresh = shouldRefresh
+    }
+
+    deinit {
+        MockTask.counter.getAndDecrement()
+    }
+
+    func execute(completion: @escaping (Result<NoValue, ClientError>) -> Void) {
+        self.executeCallCount += 1
+
+        if let failureValue = self.failureValue {
+            completion(.failure(failureValue))
+        } else {
+            completion(.success(()))
+        }
+    }
+
+    func didCancel() {
+        self.didCancelCallCount += 1
+    }
+
+    func shouldRefresh(result _: Result<NoValue, ClientError>) -> Bool {
+        self.shouldRefreshCallCount += 1
+        return self.shouldRefresh
+    }
+}
+
+class TaskManagerTests: QuickSpec {
+
+    override func spec() {
+
+        afterEach {
+            expect(MockTask.counter.value) == 0
+        }
+
+        describe("Adding a task") {
+
+            it("Should execute it") {
+                let task = MockTask()
+                let user = User(state: .loggedIn)
+                let manager = TaskManager(for: user)
+
+                _ = manager.add(task: task) { result in
+                    expect(result).to(beSuccess())
+                }
+                waitTill {
+                    task.executeCallCount == 1
+                }
+            }
+
+            it("Should do an automatic refresh") {
+                let user = TestingUser(state: .loggedIn)
+
+                self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
+
+                self.stub(uri("/api/2/user/\(user.id!)/agreements"), Builders.sequentialBuilder([
+                    try! Builders.load(file: "empty", status: 401),
+                    try! Builders.load(file: "agreements-valid-accepted", status: 200),
+                ]))
+
+                user.agreements.status { result in
+                    expect(result).to(beSuccess())
+                }
+
+                waitUntil { [unowned user] done in
+                    user.wrapped.taskManager.waitForRequestsToFinish()
+                    done()
+                }
+            }
+
+            it("should logout after invalid refresh grant") {
+                let user = TestingUser(state: .loggedIn)
+                self.stub(uri("/oauth/token"), try! Builders.load(file: "invalid-refresh-grant", status: 400))
+                self.stub(uri("/api/2/user/\(user.id!)/agreements"), try! Builders.load(file: "empty", status: 401))
+
+                user.agreements.status { result in
+                    guard case let .failure(error) = result else {
+                        return fail()
+                    }
+                    expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
+                    expect(user.state).to(equal(UserState.loggedOut))
+                }
+
+                waitUntil { [unowned user] done in
+                    user.wrapped.taskManager.waitForRequestsToFinish()
+                    done()
+                }
+            }
+
+            it("Should cancel on refresh failure") {
+                let user = TestingUser(state: .loggedIn)
+                self.stub(uri("/oauth/token"), try! Builders.load(file: "invalid-refresh-no-access-token", status: 401))
+                self.stub(uri("/api/2/user/\(user.id!)/agreements"), try! Builders.load(file: "empty", status: 401))
+
+                user.agreements.status { result in
+                    guard case let .failure(error) = result else {
+                        return fail()
+                    }
+                    expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
+                    expect(user.state).to(equal(UserState.loggedOut))
+                }
+
+                waitUntil { [unowned user] done in
+                    user.wrapped.taskManager.waitForRequestsToFinish()
+                    done()
+                }
+            }
+
+            it("Should handle many requests") {
+                let user = User(state: .loggedIn)
+                self.stub(uri("/api/2/user/\(user.id!)/agreements"), try! Builders.load(file: "agreements-valid-accepted", status: 200))
+
+                let numRequestsToFire = 100
+                var results: [Result<Bool, ClientError>] = []
+
+                for _ in 0..<numRequestsToFire {
+                    user.agreements.status { result in
+                        expect(result).to(beSuccess())
+                        results.append(result)
+                    }
+                }
+
+                waitUntil { [unowned user] done in
+                    user.taskManager.waitForRequestsToFinish()
+                    done()
+                }
+
+                expect(results.count).toEventually(equal(numRequestsToFire))
+            }
+
+            it("Should handle many requests that fail") {
+                let user = User(state: .loggedIn)
+
+                self.stub(uri("/oauth/token"), try! Builders.load(file: "invalid-refresh-no-access-token", status: 300))
+                self.stub(uri("/api/2/user/\(user.id!)/agreements"), try! Builders.load(file: "empty", status: 401))
+
+                let numRequestsToFire = 100
+                var results: [Result<Bool, ClientError>] = []
+
+                for _ in 0..<numRequestsToFire {
+                    user.agreements.status { result in
+                        results.append(result)
+                        guard case let .failure(error) = result else {
+                            return fail()
+                        }
+                        expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
+                    }
+                }
+
+                waitUntil { [unowned user] done in
+                    user.taskManager.waitForRequestsToFinish()
+                    done()
+                }
+
+                expect(results.count).toEventually(equal(numRequestsToFire))
+            }
+
+            it("should not refresh if already in progress") {
+                let user = User(state: .loggedIn)
+
+                self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
+
+                self.stub(uri("/api/2/user/\(user.id!)/agreements"), Builders.sequentialBuilder([
+                    try! Builders.load(file: "empty", status: 401),
+                    try! Builders.load(file: "empty", status: 401),
+                    try! Builders.load(file: "agreements-valid-accepted", status: 200),
+                ]))
+
+                user.taskManager.willStartRefresh.register { _ in
+                    // Let the other task come back as well with a 401 before we start the refresh
+                    usleep(1000 * 10)
+                }
+
+                waitUntil { [unowned user] done in
+                    user.taskManager.waitForRequestsToFinish()
+                    done()
+                }
+
+                // Fire off two tasks that should fail with 401
+                user.agreements.status { _ in }
+                user.agreements.status { _ in }
+
+                // Two failed 401 tasks
+                // 1 refresh
+                // Two successful 200 tasks
+                expect(Networking.testingProxy.callCount).toEventually(equal(5))
+                expect(Networking.testingProxy.calls[0].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
+                expect(Networking.testingProxy.calls[1].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
+                expect(Networking.testingProxy.calls[2].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(beNil())
+                expect(Networking.testingProxy.calls[3].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
+                expect(Networking.testingProxy.calls[4].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
+
+                user.taskManager.waitForRequestsToFinish()
+            }
+        }
+
+        describe("Cancelling a task") {
+
+            it("Should not call callback") {
+                let user = User(state: .loggedIn)
+                self.stub(uri("/api/2/user/\(user.id!)/agreements"), try! Builders.load(file: "agreements-valid-accepted", status: 200))
+
+                var callbackCalled = false
+                let handle = user.agreements.status { _ in
+                    callbackCalled = true
+                }
+                handle.cancel()
+
+                waitMakeSureNot { callbackCalled }
+            }
+
+            it("Should not call callback after refresh started") {
+                //
+                // So... this test is a bit weird
+                //
+                // The idea is that there should be eventually three network calls, which includes one refresh call (ie: didStartRefresh)
+                //
+                // After a refresh is started, cancel is called on the handle. So after the refresh is done, this handle should in theory
+                // be removed.
+                //
+                // The problem is that the actual User object that is created, can possible be in a "strong" state after the network proxy
+                // registers its second call (ie: Networking.testingProxy.callCount is eventually 2)
+                //
+                // And, the returned data from the refresh call will arraive *after* the registration of actual call, so hence the
+                // to *not* eventuall be nil
+                //
+                // We put all this in a do block so that we can check that the globally registered users is eventually nil and then we
+                // make sure the callback was not called.
+                //
+
+                var callbackCalled = false
+                do {
+                    let user = User(state: .loggedIn)
+
+                    self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
+
+                    self.stub(uri("/api/2/user/\(user.id!)/agreements"), Builders.sequentialBuilder([
+                        try! Builders.load(file: "empty", status: 401),
+                        try! Builders.load(file: "agreements-valid-accepted", status: 200),
+                    ]))
+
+                    user.taskManager.willStartRefresh.register { handle in
+                        handle.cancel()
+                    }
+
+                    user.agreements.status { _ in
+                        callbackCalled = true
+                    }
+                    expect(Networking.testingProxy.callCount).toEventually(equal(2))
+                    expect(Networking.testingProxy.calls[1].returnedData).toEventuallyNot(beNil())
+                }
+
+                expect(User.globalStore.count).toEventually(equal(0))
+                expect(callbackCalled).toNot(equal(true))
+            }
+
+            it("Should call the tasks cancel override") {
+                let user = User(state: .loggedIn)
+                let taskManager = TaskManager(for: user)
+                let task = MockTask()
+
+                let handle = taskManager.add(task: task)
+                handle.cancel()
+
+                waitTill {
+                    task.didCancelCallCount == 1
+                }
+                taskManager.waitForRequestsToFinish()
+            }
+
+            it("should call the tasks cancel once") {
+                let user = User(state: .loggedIn)
+                let taskManager = TaskManager(for: user)
+                let task = MockTask()
+
+                let handle = taskManager.add(task: task)
+                handle.cancel()
+                handle.cancel()
+
+                waitTill {
+                    task.didCancelCallCount == 1
+                }
+                waitMakeSureNot {
+                    task.didCancelCallCount >= 2
+                }
+
+                taskManager.waitForRequestsToFinish()
+            }
+        }
+    }
+}

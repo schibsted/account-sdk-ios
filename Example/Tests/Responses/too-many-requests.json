@@ -1,0 +1,7 @@
+{
+    "error": {
+        "code": 429,
+        "type": "too_many_requests",
+        "description": "Request limit exceeded: tokenId=5b47a750-437d-46c0-9898-a31a5796e147"    
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "User",
+    "type": "error",
+    "code": 403,
+    "request": {
+        "reset": -91,
+        "limit": 0,
+        "remaining": -6
+    },
+    "debug": {
+        "route": {
+            "name": "Has Access to User",
+            "url": "\/api\/2\/user\/{id}\/agreements",
+            "controller": "Api\/2\/User.user_agreements"
+        },
+        "params": {
+            "options": [],
+            "where": {
+                "id": "444"
+            }
+        }
+    },
+    "meta": null,
+    "error": {
+        "code": 403,
+        "type": "ApiException",
+        "description": "Token is not authorized to access this user."
+    },
+    "data": null
+}

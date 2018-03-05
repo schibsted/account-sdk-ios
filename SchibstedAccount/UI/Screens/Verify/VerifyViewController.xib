@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VerifyViewController" customModule="SchibstedAccount" customModuleProvider="target">
+            <connections>
+                <outlet property="changeIdentifier" destination="Dg2-1a-y2B" id="I7v-6U-YrW"/>
+                <outlet property="errorText" destination="Ktb-rh-s7n" id="g1s-af-FFE"/>
+                <outlet property="inputTitle" destination="Tcs-2F-vhB" id="9SM-dk-R8K"/>
+                <outlet property="resend" destination="MGg-nk-u7J" id="K2d-bR-QZE"/>
+                <outlet property="scrollView" destination="nWb-Tp-9xb" id="SUz-dn-QQP"/>
+                <outlet property="sentToText" destination="w81-Mu-1QB" id="9ZQ-xR-A7N"/>
+                <outlet property="text" destination="YFk-iY-SOK" id="Lg0-nP-iMc"/>
+                <outlet property="textFieldStackView" destination="bJc-Mw-ydc" id="5Pz-ZR-m6d"/>
+                <outlet property="verify" destination="Dxs-UK-nE3" id="73d-3i-2iH"/>
+                <outlet property="view" destination="Pez-tQ-XEn" id="8jH-TB-IQF"/>
+            </connections>
+        </placeholder>
+        <view contentMode="scaleToFill" id="Pez-tQ-XEn">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWb-Tp-9xb">
+                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="667"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gqM-JQ-Djo">
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="400"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fbP-oJ-lR6">
+                                    <rect key="frame" x="0.0" y="48" width="0.0" height="54.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the verification code we sent to:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFk-iY-SOK" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oRj-3o-gDu">
+                                            <rect key="frame" x="0.0" y="20.5" width="0.0" height="34"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NormalLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w81-Mu-1QB" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="97" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="jl7-ta-e5d">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="34"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dg2-1a-y2B">
+                                                            <rect key="frame" x="0.0" y="0.0" width="63" height="34"/>
+                                                            <state key="normal" title="Change">
+                                                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="didClickChangeIdentifier:" destination="-1" eventType="touchUpInside" id="Bpo-cP-Dnk"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hsG-cK-rLV">
+                                    <rect key="frame" x="0.0" y="126.5" width="0.0" height="34"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verification code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tcs-2F-vhB" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="128.5" height="34"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="xzi-Q5-w5v">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="34"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGg-nk-u7J">
+                                                    <rect key="frame" x="0.0" y="0.0" width="61" height="34"/>
+                                                    <state key="normal" title="Resend">
+                                                        <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="didClickResend:" destination="-1" eventType="touchUpInside" id="gqL-v1-wwP"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Zeh-f9-asm">
+                                    <rect key="frame" x="0.0" y="168.5" width="0.0" height="45"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bJc-Mw-ydc" userLabel="Code Stack View">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="45"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m8F-sh-ktT" customClass="ValidateTextField" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="m8F-sh-ktT" secondAttribute="height" multiplier="1:1" id="rFi-hA-KXw"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uYl-sM-riV" customClass="ValidateTextField" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="uYl-sM-riV" secondAttribute="height" multiplier="1:1" id="9WL-Od-RKB"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tXw-Le-jpx" customClass="ValidateTextField" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="135" y="0.0" width="45" height="45"/>
+                                                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="tXw-Le-jpx" secondAttribute="height" multiplier="1:1" id="dSX-yJ-m0h"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hvu-XM-Ij3" customClass="ValidateTextField" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="195" y="0.0" width="45" height="45"/>
+                                                    <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="hvu-XM-Ij3" secondAttribute="height" multiplier="1:1" id="3v7-5O-AoT"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G12-yK-poy" customClass="ValidateTextField" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="254.5" y="0.0" width="45" height="45"/>
+                                                    <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="G12-yK-poy" secondAttribute="height" multiplier="1:1" id="vvz-zc-w4m"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NEZ-a4-fip" customClass="ValidateTextField" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                                                    <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="NEZ-a4-fip" secondAttribute="height" multiplier="1:1" id="JwH-4s-ShE"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="45" id="4z2-pu-BQY"/>
+                                            </constraints>
+                                        </stackView>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktb-rh-s7n" customClass="ErrorLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="-168.5" width="0.0" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="fbP-oJ-lR6" secondAttribute="trailing" constant="16" id="4i1-iw-Pev"/>
+                                <constraint firstItem="fbP-oJ-lR6" firstAttribute="top" secondItem="gqM-JQ-Djo" secondAttribute="top" constant="48" id="FX3-zH-JST"/>
+                                <constraint firstItem="Zeh-f9-asm" firstAttribute="leading" secondItem="gqM-JQ-Djo" secondAttribute="leading" constant="16" id="Mwz-eu-kco"/>
+                                <constraint firstItem="hsG-cK-rLV" firstAttribute="top" secondItem="fbP-oJ-lR6" secondAttribute="bottom" constant="24" id="NWK-Xf-Z5U"/>
+                                <constraint firstAttribute="height" constant="400" id="Qwq-16-nUd"/>
+                                <constraint firstItem="Zeh-f9-asm" firstAttribute="top" secondItem="hsG-cK-rLV" secondAttribute="bottom" constant="8" id="aLP-s4-lOY"/>
+                                <constraint firstItem="hsG-cK-rLV" firstAttribute="leading" secondItem="gqM-JQ-Djo" secondAttribute="leading" constant="16" id="gGC-3z-kXo"/>
+                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Zeh-f9-asm" secondAttribute="bottom" constant="8" id="n5e-hI-Mvc"/>
+                                <constraint firstItem="fbP-oJ-lR6" firstAttribute="leading" secondItem="gqM-JQ-Djo" secondAttribute="leading" constant="16" id="oUM-Fk-fA3"/>
+                                <constraint firstAttribute="trailing" secondItem="Zeh-f9-asm" secondAttribute="trailing" constant="16" id="zTv-Bt-piU"/>
+                                <constraint firstAttribute="trailing" secondItem="hsG-cK-rLV" secondAttribute="trailing" constant="16" id="zXc-BI-ZWo"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="gqM-JQ-Djo" firstAttribute="top" secondItem="nWb-Tp-9xb" secondAttribute="top" id="CF1-30-BpT"/>
+                        <constraint firstItem="gqM-JQ-Djo" firstAttribute="leading" secondItem="nWb-Tp-9xb" secondAttribute="leading" id="Gv7-gd-tCp"/>
+                        <constraint firstAttribute="bottom" secondItem="gqM-JQ-Djo" secondAttribute="bottom" id="SoW-Vi-f2C"/>
+                        <constraint firstAttribute="trailing" secondItem="gqM-JQ-Djo" secondAttribute="trailing" id="aOK-4u-YAp"/>
+                    </constraints>
+                </scrollView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dxs-UK-nE3" customClass="PrimaryButton" customModule="SchibstedAccount" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="606" width="0.0" height="45"/>
+                    <color key="backgroundColor" red="0.23529411759999999" green="0.4823529412" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="hd2-uv-fKy"/>
+                    </constraints>
+                    <state key="normal" title="Verify"/>
+                    <connections>
+                        <action selector="didClickVerify:" destination="-1" eventType="touchUpInside" id="WGR-Vu-mpB"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Dxs-UK-nE3" firstAttribute="leading" secondItem="una-cn-kts" secondAttribute="leading" constant="16" id="8md-hB-f3t"/>
+                <constraint firstItem="nWb-Tp-9xb" firstAttribute="trailing" secondItem="una-cn-kts" secondAttribute="trailing" id="Nej-nI-pXd"/>
+                <constraint firstItem="nWb-Tp-9xb" firstAttribute="top" secondItem="Pez-tQ-XEn" secondAttribute="top" id="bPp-fk-K6O"/>
+                <constraint firstItem="nWb-Tp-9xb" firstAttribute="leading" secondItem="una-cn-kts" secondAttribute="leading" id="c2D-FD-rNg"/>
+                <constraint firstItem="una-cn-kts" firstAttribute="bottom" secondItem="Dxs-UK-nE3" secondAttribute="bottom" constant="16" id="jKI-NK-Bx1"/>
+                <constraint firstItem="nWb-Tp-9xb" firstAttribute="bottom" secondItem="una-cn-kts" secondAttribute="bottom" id="jjX-iF-dgt"/>
+                <constraint firstItem="gqM-JQ-Djo" firstAttribute="width" secondItem="una-cn-kts" secondAttribute="width" id="nph-Ia-kmn"/>
+                <constraint firstItem="una-cn-kts" firstAttribute="trailing" secondItem="Dxs-UK-nE3" secondAttribute="trailing" constant="16" id="yYS-b0-xUw"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="una-cn-kts"/>
+        </view>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+    </objects>
+</document>

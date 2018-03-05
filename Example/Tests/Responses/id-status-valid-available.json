@@ -1,0 +1,33 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "Email",
+    "type": "element",
+    "code": 200,
+    "request": {
+        "reset": 2080,
+        "limit": 0,
+        "remaining": -13
+    },
+    "debug": {
+        "route": {
+            "name": "Status",
+            "url": "\/api\/2\/email\/{email}\/status",
+            "controller": "Api\/2\/Email.email_status"
+        },
+        "params": {
+            "options": [],
+            "where": {
+                "email": "ZGFuMUBzcHAuZGV2"
+            }
+        }
+    },
+    "meta": null,
+    "error": null,
+    "data": {
+        "exists": false,
+        "available": true,
+        "verified": false
+    }
+}

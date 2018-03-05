@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>norway</key>
+	<dict>
+		<key>provider</key>
+		<string>identity</string>
+		<key>url</key>
+		<string>https://payment.schibsted.no</string>
+	</dict>
+	<key>production</key>
+	<dict>
+		<key>provider</key>
+		<string>identity</string>
+		<key>url</key>
+		<string>https://login.schibsted.com</string>
+	</dict>
+	<key>preproduction</key>
+	<dict>
+		<key>provider</key>
+		<string>identity-pre</string>
+		<key>url</key>
+		<string>https://identity-pre.schibsted.com</string>
+	</dict>
+	<key>development</key>
+	<dict>
+		<key>provider</key>
+		<string>identity-dev</string>
+		<key>url</key>
+		<string>https://identity-dev.schibsted.com</string>
+	</dict>
+</dict>
+</plist>

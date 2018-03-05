@@ -1,0 +1,33 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "Platform",
+    "type": "element",
+    "code": 200,
+    "request": null,
+    "debug": {
+        "route": {
+            "name": "Platform terms",
+            "url": "\/api\/2\/terms",
+            "controller": "Api\/2\/Platform.terms"
+        },
+        "params": {
+            "options": [],
+            "where": {
+                "client_id": "58b55f6e4557700b008b4567"
+            }
+        }
+    },
+    "meta": null,
+    "error": null,
+    "data": {
+        "accepted": false,
+        "terms_url": "https://environment.baseURL.com/terms/clientID",
+        "summary": [],
+        "change_date": "Aug 15, 2016",
+        "platform_privacy_url": "https://environment.baseURL.com/privacy",
+        "platform_terms_url": "https://environment.baseURL.com/about/terms",
+        "privacy_url": "https://clientID.client-website-url.com/privacy-link"
+    }
+}

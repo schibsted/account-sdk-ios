@@ -1,0 +1,7 @@
+{
+    "error": {
+        "code": 400,
+        "type": "invalid_grant",
+        "description": "Invalid code: connection=sms, tokenId=839ba0e1af05fd8d49e9691afcdf11d9c67ec0bd731d3efc461eed3b17339bd8, code=123"
+    }
+}

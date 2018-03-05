@@ -1,0 +1,6 @@
+{
+    "error": "invalid_token",
+    "error_code": 401,
+    "error_description": "401 Unauthorized access! Reason: \"invalid_token\" (OAuth realm: \"Service\", Scope: \"\")",
+    "type": "OAuthException"
+}

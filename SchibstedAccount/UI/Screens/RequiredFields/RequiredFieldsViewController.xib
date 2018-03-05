@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RequiredFieldsViewController" customModule="SchibstedAccount" customModuleProvider="target">
+            <connections>
+                <outlet property="continueButton" destination="yqI-Ms-4ff" id="vLZ-36-Ful"/>
+                <outlet property="requiredFieldsStackView" destination="f4L-Tl-jFz" id="SfA-Ds-t49"/>
+                <outlet property="scrollView" destination="iev-hC-9g1" id="tgZ-CE-bvA"/>
+                <outlet property="textLabel" destination="0ba-nY-hTs" id="mWE-Ef-ZGF"/>
+                <outlet property="view" destination="GXN-bq-3oH" id="fGH-U5-iAv"/>
+            </connections>
+        </placeholder>
+        <view contentMode="scaleToFill" id="GXN-bq-3oH">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iev-hC-9g1">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YG2-ap-J6Y">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="135"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="f4L-Tl-jFz">
+                                    <rect key="frame" x="16" y="98.5" width="343" height="20.5"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" placeholder="YES" id="uL1-fy-98e"/>
+                                    </constraints>
+                                </stackView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fill in some additional details for your profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ba-nY-hTs" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                    <rect key="frame" x="16" y="38" width="343" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="0ba-nY-hTs" firstAttribute="leading" secondItem="YG2-ap-J6Y" secondAttribute="leading" constant="16" id="3GD-kx-3VT"/>
+                                <constraint firstAttribute="trailing" secondItem="0ba-nY-hTs" secondAttribute="trailing" constant="16" id="6aO-BQ-FcL"/>
+                                <constraint firstAttribute="trailing" secondItem="f4L-Tl-jFz" secondAttribute="trailing" constant="16" id="7jL-pV-ZZ5"/>
+                                <constraint firstAttribute="bottom" secondItem="f4L-Tl-jFz" secondAttribute="bottom" constant="16" id="Wbq-wm-M9T"/>
+                                <constraint firstItem="f4L-Tl-jFz" firstAttribute="top" secondItem="0ba-nY-hTs" secondAttribute="bottom" constant="40" id="Yjh-ME-6GH"/>
+                                <constraint firstItem="f4L-Tl-jFz" firstAttribute="leading" secondItem="YG2-ap-J6Y" secondAttribute="leading" constant="16" id="mRF-Ga-d1P"/>
+                                <constraint firstItem="0ba-nY-hTs" firstAttribute="top" secondItem="YG2-ap-J6Y" secondAttribute="top" constant="38" id="vIZ-2f-OyB"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="YG2-ap-J6Y" secondAttribute="bottom" id="4dI-d4-jz0"/>
+                        <constraint firstItem="YG2-ap-J6Y" firstAttribute="leading" secondItem="iev-hC-9g1" secondAttribute="leading" id="8xa-Le-Zdl"/>
+                        <constraint firstAttribute="trailing" secondItem="YG2-ap-J6Y" secondAttribute="trailing" id="pU6-H6-T9l"/>
+                        <constraint firstItem="YG2-ap-J6Y" firstAttribute="top" secondItem="iev-hC-9g1" secondAttribute="top" id="xJI-V3-IlJ"/>
+                    </constraints>
+                </scrollView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqI-Ms-4ff" customClass="PrimaryButton" customModule="SchibstedAccount" customModuleProvider="target">
+                    <rect key="frame" x="16" y="621" width="343" height="30"/>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="didClickContinue:" destination="-1" eventType="touchUpInside" id="1ty-1w-B4d"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="7iN-Dn-spP" firstAttribute="trailing" secondItem="yqI-Ms-4ff" secondAttribute="trailing" constant="16" id="EUL-wz-v7i"/>
+                <constraint firstItem="7iN-Dn-spP" firstAttribute="bottom" secondItem="yqI-Ms-4ff" secondAttribute="bottom" constant="16" id="JhJ-Wg-NVb"/>
+                <constraint firstItem="iev-hC-9g1" firstAttribute="top" secondItem="GXN-bq-3oH" secondAttribute="top" id="MnT-Cs-jwZ"/>
+                <constraint firstItem="iev-hC-9g1" firstAttribute="leading" secondItem="7iN-Dn-spP" secondAttribute="leading" id="XAQ-fo-Ymf"/>
+                <constraint firstItem="yqI-Ms-4ff" firstAttribute="leading" secondItem="7iN-Dn-spP" secondAttribute="leading" constant="16" id="da9-Rt-TMc"/>
+                <constraint firstItem="iev-hC-9g1" firstAttribute="bottom" secondItem="7iN-Dn-spP" secondAttribute="bottom" id="h95-Ag-qQ6"/>
+                <constraint firstItem="iev-hC-9g1" firstAttribute="trailing" secondItem="7iN-Dn-spP" secondAttribute="trailing" id="jpQ-kk-KqW"/>
+                <constraint firstItem="YG2-ap-J6Y" firstAttribute="width" secondItem="7iN-Dn-spP" secondAttribute="width" id="xTO-OE-4km"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="7iN-Dn-spP"/>
+        </view>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+    </objects>
+</document>

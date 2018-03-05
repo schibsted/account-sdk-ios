@@ -1,0 +1,8 @@
+{
+    "access_token": "123",
+    "refresh_token": "abc",
+    "scope": "openid",
+    "id_token": "xyz",
+    "token_type": "Bearer",
+    "expires_in": 300
+}

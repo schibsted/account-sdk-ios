@@ -1,0 +1,79 @@
+"GlobalString.platformName" = "SPiD";
+"GlobalString.done" = "Ferdig";
+
+"IdentifierScreenString.title.sms" = "Logg inn eller opprett bruker";
+"IdentifierScreenString.title.email" = "Logg inn eller opprett bruker";
+"IdentifierScreenString.inputTitle.phone" = "Telefonnummer";
+"IdentifierScreenString.inputTitle.email" = "E-postadresse";
+"IdentifierScreenString.inputTitle.password" = "Skriv inn din e-postadresse";
+"IdentifierScreenString.privacyText.phone" = " Vi vil aldri dele telefonnummeret ditt uten ditt samtykke.";
+"IdentifierScreenString.privacyText.email" = "Vi vil aldri dele e-postadressen din uten ditt samtykke.";
+"IdentifierScreenString.needHelp" = "Trenger hjelp?";
+"IdentifierScreenString.proceed" = "Fortsett";
+
+"PasswordScreenString.title.signin" = "Velkommen tilbake";
+"PasswordScreenString.title.signup" = "Opprett bruker";
+"PasswordScreenString.inputTitle" = "Vennligst oppgi passordet ditt";
+"PasswordScreenString.proceed" = "Fortsett";
+"PasswordScreenString.invalidPassword" = "Passordet du oppga er feil. Prøv igjen senere.";
+"PasswordScreenString.change" = "Endre e-post";
+"PasswordScreenString.cancel" = "Avbryt";
+"PasswordScreenString.info" = "Minst 8 tegn";
+"PasswordScreenString.forgotPassword" = "Glemt passord?";
+
+"VerifyScreenString.title" = "Vi har sendt deg en kode";
+"VerifyScreenString.subtext" = "Tast inn bekreftelseskoden vi sendte til: ";
+"VerifyScreenString.inputTitle" = "Bekreftelseskode";
+"VerifyScreenString.resend" = "Sende";
+"VerifyScreenString.change" = "Endre";
+"VerifyScreenString.proceed" = "Fortsett";
+
+"ResendScreenString.header" = "Vi har sendt deg en ny bekreftelseskode";
+"ResendScreenString.subtext" = "Koden ble sendt til: ";
+"ResendScreenString.edit.phone" = "Bruk et annet telefonnummer";
+"ResendScreenString.edit.email" = "Bruk en annen e-postadresse";
+"ResendScreenString.proceed" = "OK";
+
+"TermsScreenString.title" = "Bruksvilkår";
+"TermsScreenString.subtext.create" = "For å kunne opprette kontoen din, må du godta følgende vilkår, betingelser og personvernerklæringer";
+"TermsScreenString.subtext.login" = "For å logge inn, må du godta følgende vilkår, betingelser og personvernerklæringer";
+"TermsScreenString.platform.terms" = "Jeg godtar vilkårene og betingelsene for $0 ";
+"TermsScreenString.client.terms" = "og $0";
+"TermsScreenString.platform.privacy" = "Jeg godtar personvernerklæringen for $0 ";
+"TermsScreenString.client.privacy" = "og $0";
+"TermsScreenString.proceed" = "Godta";
+"TermsScreenString.acceptTermError" = "Vennligst godta vilkårene og betingelsene for å fortsette.";
+"TermsScreenString.acceptPrivacyError" = "Vennligst godta personvernerklæringen for å fortsette.";
+"TermsScreenString.learnMore" = "Lær mer om oppdateringen";
+
+"TermsSummaryScreenString.title" = "Oppdaterte brukervilkår og betingelser";
+
+"CheckInboxScreenStrings.sentLink" = "Vi har sendt enbekreftelseskobling til";
+"CheckInboxScreenStrings.change" = "Bruk annen e-post";
+"CheckInboxScreenStrings.title" = "Sjekk innboksen din";
+
+"RequiredFieldsScreenString.title" = "Fullfør";
+"RequiredFieldsScreenString.subtext" = "Vennligst legg til mer informasjon i din profil";
+"RequiredFieldsScreenString.proceed" = "Fortsett";
+
+"RequiredField.givenName.title" = "Fornavn";
+"RequiredField.familyName.title" = "Etternavn";
+"RequiredField.birthday.title" = "Bursdag";
+"RequiredField.birthday.placeholder" = "YYYY-MM-DD";
+
+"RequiredField.error.missing" = "Dette feltet må fylles ut.";
+"RequiredField.error.lessThanThree" = "Dette feltet må bestå av minst 3 tegn.";
+"RequiredField.error.birthdateInvalid" = "Denne datoen er ugyldig";
+
+"ErrorScreenString.heading" = "Noe gikk galt!";
+"ErrorScreenString.proceed" = "OK";
+
+"ErrorString.invalidCode" = "Sjekk koden din og prøv igjen.";
+"ErrorString.invalidPhoneNumber" = "Oppgi et gyldig telefonnummer.";
+"ErrorString.invalidEmail" = "Oppgi en gyldig e-postadresse.";
+"ErrorString.networkingError" = "Vi har problemer for øyeblikket. Prøv igjen senere.";
+"ErrorString.unexpected" = "Prøv igjen senere.";
+"ErrorString.tooManyRequests" = "Du har sendt for mange kodeforespørsler. Prøv igjen senere.";
+"ErrorString.connectionTimeout" = "Tilkoblingen ble tidsavbrutt. Prøv igjen.";
+"ErrorString.noInternetConnection" = "Kan ikke koble til internett. Sjekk tilkoblingen din.";
+"ErrorString.unableToResend" = "Klarte ikke å sende koden på nytt. Prøv igjen senere.";

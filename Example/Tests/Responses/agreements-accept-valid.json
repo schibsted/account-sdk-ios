@@ -1,0 +1,31 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "User",
+    "type": "element",
+    "code": 200,
+    "request": {
+        "reset": 2574,
+        "limit": 0,
+        "remaining": -3
+    },
+    "debug": {
+        "route": {
+            "name": "User agreements acceptation process",
+            "url": "\/api\/2\/user\/{id}\/agreements\/accept",
+            "controller": "Api\/2\/User.user_agreements_accept"
+        },
+        "params": {
+            "options": [],
+            "where": {
+                "id": "3502"
+            }
+        }
+    },
+    "meta": null,
+    "error": null,
+    "data": {
+        "result": true
+    }
+}

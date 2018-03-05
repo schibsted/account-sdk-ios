@@ -1,0 +1,10 @@
+{
+    "access_token": "mytesttkn111",
+    "expires_in": 604800,
+    "scope": null,
+    "user_id": "3524",
+    "is_admin": "0",
+    "refresh_token": "cb4e56131247688b1460479b7406eab2ca0de932",
+    "server_time": 1487140387,
+    "token_type": "Bearer"
+}

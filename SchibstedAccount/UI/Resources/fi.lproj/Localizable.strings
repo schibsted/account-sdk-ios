@@ -1,0 +1,79 @@
+"GlobalString.platformName" = "SPiD";
+"GlobalString.done" = "Valmis";
+
+"IdentifierScreenString.title.sms" = "Kirjaudu sisään tai luo tili";
+"IdentifierScreenString.title.email" = "Kirjaudu sisään tai luo tili";
+"IdentifierScreenString.inputTitle.phone" = "Puhelinnumero";
+"IdentifierScreenString.inputTitle.email" = "Sähköpostiosoite";
+"IdentifierScreenString.inputTitle.password" = "Anna sähköpostiosoitteesi";
+"IdentifierScreenString.privacyText.phone" = "Emme koskaan anna puhelinnumeroasi eteenpäin ilman lupaasi.";
+"IdentifierScreenString.privacyText.email" = "Emme koskaan anna sähköpostiosoitettasi eteenpäin ilman lupaasi.";
+"IdentifierScreenString.needHelp" = "Tarvitsetko apua?";
+"IdentifierScreenString.proceed" = "Jatka";
+
+"PasswordScreenString.title.signin" = "Tervetuloa takaisin";
+"PasswordScreenString.title.signup" = "Luo tili";
+"PasswordScreenString.inputTitle" = "Kirjoita salasanasi";
+"PasswordScreenString.proceed" = "Jatka";
+"PasswordScreenString.invalidPassword" = "Salasana ei kelpaa";
+"PasswordScreenString.change" = "Vaihda sähköpostiosoite";
+"PasswordScreenString.cancel" = "Peruuta";
+"PasswordScreenString.info" = "Vähintään 8 merkkiä";
+"PasswordScreenString.forgotPassword" = "Unohtuiko salasana?";
+
+"VerifyScreenString.title" = "Koodi on lähetetty sinulle";
+"VerifyScreenString.subtext" = "Kirjoita vahvistuskoodi, jonka lähetimme, vastaanottaja:";
+"VerifyScreenString.inputTitle" = "Vahvistuskoodi";
+"VerifyScreenString.resend" = "Lähetä uudelleen";
+"VerifyScreenString.change" = "Vaihda";
+"VerifyScreenString.proceed" = "Jatka";
+
+"ResendScreenString.header" = "Uusi vahvistuskoodi on lähetetty sinulle";
+"ResendScreenString.subtext" = "Koodi on lähetetty, vastaanottaja:";
+"ResendScreenString.edit.phone" = "Käytä toista puhelinnumeroa";
+"ResendScreenString.edit.email" = "Käytä toista sähköpostiosoitetta";
+"ResendScreenString.proceed" = "OK";
+
+"TermsScreenString.title" = "Käyttöehdot";
+"TermsScreenString.subtext.create" = "Jotta voit luoda tilin, sinun tulee hyväksyä seuraavat käyttöehdot ja tietosuojalausunnot";
+"TermsScreenString.subtext.login" = "Jotta voit kirjautua tilillesi, sinun tulee hyväksyä seuraavat käyttöehdot ja tietosuojalausunnot";
+"TermsScreenString.platform.terms" = "Hyväksyn palveluiden $0 käyttöehdot";
+"TermsScreenString.client.terms" = "ja $0";
+"TermsScreenString.platform.privacy" = "Hyväksyn palveluiden $0 tietosuojalausunnot";
+"TermsScreenString.client.privacy" = "ja $0";
+"TermsScreenString.proceed" = "Hyväksy";
+"TermsScreenString.acceptTermError" = "Jatka hyväksymällä käyttöehdot.";
+"TermsScreenString.acceptPrivacyError" = "Jatka hyväksymällä tietosuojalausunto.";
+"TermsScreenString.learnMore" = "Lisätietoja päivityksestä";
+
+"TermsSummaryScreenString.title" = "Päivitetyt käyttöehdot";
+
+"CheckInboxScreenStrings.sentLink" = "Vahvistuslinkki on lähetetty osoitteeseen:";
+"CheckInboxScreenStrings.change" = "Käytä toista osoitetta";
+"CheckInboxScreenStrings.title" = "Tarkista postilaatikkosi";
+
+"RequiredFieldsScreenString.title" = "Viimeistele";
+"RequiredFieldsScreenString.subtext" = "Täytä lisätietoja profiiliisi";
+"RequiredFieldsScreenString.proceed" = "Jatka";
+
+"RequiredField.givenName.title" = "Etunimi";
+"RequiredField.familyName.title" = "Sukunimi";
+"RequiredField.birthday.title" = "Syntymäpäivä";
+"RequiredField.birthday.placeholder" = "YYYY-MM-DD";
+
+"RequiredField.error.missing" = "Tämä kenttä vaaditaan.";
+"RequiredField.error.lessThanThree" = "Tässä kentässä tulee olla vähintään 3 merkkiä";
+"RequiredField.error.birthdateInvalid" = "Tämä päivämäärä on virheellinen";
+
+"ErrorScreenString.heading" = "Jokin meni pieleen!";
+"ErrorScreenString.proceed" = "OK";
+
+"ErrorString.invalidCode" = "Tarkista koodi ja yritä uudelleen.";
+"ErrorString.invalidPhoneNumber" = "Anna kelvollinen puhelinnumero.";
+"ErrorString.invalidEmail" = "Anna kelvollinen sähköpostiosoite.";
+"ErrorString.networkingError" = "Ikävä kyllä meillä on tällä hetkellä ongelmia. Yritä myöhemmin uudelleen.";
+"ErrorString.unexpected" = "Yritä myöhemmin uudelleen.";
+"ErrorString.tooManyRequests" = "Olet lähettänyt liian monta koodipyyntöä. Yritä myöhemmin uudelleen.";
+"ErrorString.connectionTimeout" = "Yhteys on aikakatkaistu. Yritä uudelleen.";
+"ErrorString.noInternetConnection" = "Yhteyttä ei voitu muodostaa. Tarkista internetyhteys.";
+"ErrorString.unableToResend" = "Koodia ei onnistuttu lähettämään uudelleen. Yritä myöhemmin uudelleen.";

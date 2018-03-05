@@ -1,0 +1,10 @@
+{
+    "access_token": "d315d41a1804dc7416accb7a02410eeff7a078c7",
+    "expires_in": 604800,
+    "scope": null,
+    "id_token": "testIDToken",
+    "is_admin": false,
+    "refresh_token": "19242f0cffbc140fa39248143d785b3fd462db74",
+    "server_time": 1486394844,
+    "token_type": "Bearer"
+}

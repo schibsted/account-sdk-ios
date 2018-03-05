@@ -1,0 +1,29 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "Authorization",
+    "type": "element",
+    "code": 200,
+    "request": {
+        "reset": 3449,
+        "limit": 0,
+        "remaining": -5
+    },
+    "debug": {
+        "route": {
+            "name": "Exchange",
+            "url": "\/api\/2\/oauth\/exchange",
+            "controller": "Api\/2\/Authorization.exchange"
+        },
+        "params": {
+            "options": [],
+            "where": []
+        }
+    },
+    "meta": null,
+    "error": null,
+    "data": {
+        "code": "123"
+    }
+}

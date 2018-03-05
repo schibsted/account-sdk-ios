@@ -1,0 +1,31 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "User",
+    "type": "error",
+    "code": 302,
+    "request": {
+        "reset": -6631,
+        "limit": 0,
+        "remaining": -4
+    },
+    "debug": {
+        "route": {
+            "name": "Signup",
+            "url": "\/api\/2\/signup",
+            "controller": "Api\/2\/User.user_signup"
+        },
+        "params": {
+            "options": [],
+            "where": []
+        }
+    },
+    "meta": null,
+    "error": {
+        "code": 302,
+        "type": "ApiException",
+        "description": "kowabunga"
+    },
+    "data": null
+}

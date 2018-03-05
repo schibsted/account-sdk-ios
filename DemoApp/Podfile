@@ -1,0 +1,31 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+use_frameworks!
+platform :ios, '9.0'
+
+target 'SchibstedAccountDemo' do
+  pod 'SchibstedAccount', :path => '../'
+  pod 'SchibstedAccount/UI', :path => '../'
+
+  if !ENV['TRAVIS']
+    pod 'SwiftFormat/CLI'
+  end
+end
+
+post_install do |installer|
+  installer.pods_project.root_object.attributes["ORGANIZATIONNAME"] = "Schibsted Products & Technology"
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      if target.name == 'SchibstedAccount'
+        if config.name == 'Debug'
+          config.build_settings['OTHER_SWIFT_FLAGS'] = '-DDEBUG'
+        else
+          config.build_settings['OTHER_SWIFT_FLAGS'] = ''
+        end
+      end
+    end
+  end
+end
+
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'

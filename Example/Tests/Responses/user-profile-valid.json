@@ -1,0 +1,94 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "User",
+    "type": "element",
+    "code": 200,
+    "request": {
+        "reset": 3130,
+        "limit": 0,
+        "remaining": -8
+    },
+    "debug": {
+        "route": {
+            "name": "Get and update users",
+            "url": "\/api\/2\/user\/{id}",
+            "controller": "Api\/2\/User.user"
+        },
+        "params": {
+            "options": [],
+            "where": {
+                "id": "a5517b9a-5367-5299-baaa-bc875b46c5e4"
+            }
+        }
+    },
+    "meta": null,
+    "error": null,
+    "data": {
+        "id": "593683ea4557700d008b4569",
+        "accounts": {
+            "4d00e8d6bf92fc8648000000": {
+                "id": "4d00e8d6bf92fc8648000000",
+                "accountName": "SPiD",
+                "domain": "http:\/\/payment.schibsted.se\/"
+            },
+            "590aeef545577009008b4567": {
+                "id": "590aeef545577009008b4567",
+                "domain": "",
+                "accountName": "rashomontest"
+            }
+        },
+        "addresses": [],
+        "birthday": "1999-12-12",
+        "currentLocation": [],
+        "displayName": "5d3c9222044e4b52e673a6e9d83c7cbf1f5c1595",
+        "email": "5d3c9222044e4b52e673a6e9d83c7cbf1f5c1595@4d00e8d6bf92fc8648000000.payment.schibsted.se",
+        "emailVerified": false,
+        "emails": [
+            {
+               "value": "5d3c9222044e4b52e673a6e9d83c7cbf1f5c1595@4d00e8d6bf92fc8648000000.payment.schibsted.se",
+               "type": "other",
+               "hidden": "true"
+            },
+            {
+                "value": "blubberfubber@guffer.huffer",
+                "primary": "true"
+            }
+        ],
+        "gender": "undisclosed",
+        "lastAuthenticated": false,
+        "lastLoggedIn": "2017-06-06 12:29:50",
+        "locale": "en_US",
+        "merchants": [
+                      46000,
+                      46001
+                      ],
+        "name": {
+            "familyName": "Freeman",
+            "givenName": "Gordon",
+            "formatted": "Gordon Freeman"
+        },
+        "passwordChanged": false,
+        "phoneNumber": "",
+        "phoneNumberVerified": false,
+        "phoneNumbers": [
+                         {
+                         "type": "mobile",
+                         "value": "+123",
+                         "verified": "true",
+                         "verifiedTime": "2017-06-06 12:29:50"
+                         }
+                         ],
+        "photo": "https:\/\/secure.gravatar.com\/avatar\/60bf58899a67c4042354dc508b8a3c99?s=200",
+        "preferredUsername": "5d3c9222044e4b52e673a6e9d83c7cbf1f5c1595",
+        "published": "2017-06-06 12:28:58",
+        "status": 1,
+        "updated": "2017-06-06 12:29:50",
+        "url": "",
+        "userId": "3537",
+        "utcOffset": "+02:00",
+        "uuid": "a5517b9a-5367-5299-baaa-bc875b46c5e4",
+        "verified": "2017-06-06 12:29:50"
+    }
+}

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+swiftlint lint --strict --quiet
+sed -n "s/^.*version = '\(.*\)'.*$/import Foundation||\/\/\/ Version of the SDK.|public let sdkVersion = \"\1\"/p" SchibstedAccount.podspec | tr '|' '\n' > SchibstedAccount/Core/Version.swift
+./scripts/format.sh

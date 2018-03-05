@@ -1,0 +1,7 @@
+{
+    "error": {
+        "code": 400,
+        "type": "invalid_request",
+        "description": "Invalid or empty *phone_number*"
+    }
+}

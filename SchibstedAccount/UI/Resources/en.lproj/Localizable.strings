@@ -1,0 +1,79 @@
+"GlobalString.platformName" = "SPiD";
+"GlobalString.done" = "Done";
+
+"IdentifierScreenString.title.sms" = "Login or register";
+"IdentifierScreenString.title.email" = "Login or register";
+"IdentifierScreenString.inputTitle.phone" = "Enter your phone number";
+"IdentifierScreenString.inputTitle.email" = "Enter your email address";
+"IdentifierScreenString.inputTitle.password" = "Enter your email address";
+"IdentifierScreenString.privacyText.phone" = "We'll never share your phone number without your consent.";
+"IdentifierScreenString.privacyText.email" = "We'll never share your email address without your consent.";
+"IdentifierScreenString.needHelp" = "Need help?";
+"IdentifierScreenString.proceed" = "Continue";
+
+"PasswordScreenString.title.signin" = "Welcome back";
+"PasswordScreenString.title.signup" = "Create account";
+"PasswordScreenString.inputTitle" = "Enter your password";
+"PasswordScreenString.proceed" = "Continue";
+"PasswordScreenString.invalidPassword" = "The password you entered is incorrect. Please try again.";
+"PasswordScreenString.change" = "Change email";
+"PasswordScreenString.cancel" = "Cancel";
+"PasswordScreenString.info" = "Minimum 8 characters";
+"PasswordScreenString.forgotPassword" = "Forgot password?";
+
+"VerifyScreenString.title" = "We sent you a code";
+"VerifyScreenString.subtext" = "Enter the verification code we sent to:";
+"VerifyScreenString.inputTitle" = "Verification code";
+"VerifyScreenString.resend" = "Resend";
+"VerifyScreenString.change" = "Change";
+"VerifyScreenString.proceed" = "Continue";
+
+"ResendScreenString.header" = "We sent you a new verification code";
+"ResendScreenString.subtext" = "The code was sent to:";
+"ResendScreenString.edit.phone" = "Use a different phone number";
+"ResendScreenString.edit.email" = "Use a different email address";
+"ResendScreenString.proceed" = "OK";
+
+"TermsScreenString.title" = "Terms of use";
+"TermsScreenString.subtext.create" = "To create your account, you need to accept the following terms, conditions and privacy policies";
+"TermsScreenString.subtext.login" = "To log in, you need to accept the following terms, conditions and privacy policies";
+"TermsScreenString.platform.terms" = "I accept the terms and conditions for $0";
+"TermsScreenString.client.terms" = " and $0";
+"TermsScreenString.platform.privacy" = "I accept the privacy policy for $0";
+"TermsScreenString.client.privacy" = " and $0";
+"TermsScreenString.proceed" = "Accept";
+"TermsScreenString.acceptTermError" = "Please accept the terms and conditions to continue.";
+"TermsScreenString.acceptPrivacyError" = "Please accept the privacy policies to continue.";
+"TermsScreenString.learnMore" = "Learn more about the update";
+
+"TermsSummaryScreenString.title" = "Updated terms and conditions";
+
+"CheckInboxScreenStrings.sentLink" = "We sent a verification link to:";
+"CheckInboxScreenStrings.change" = "Use a different email address";
+"CheckInboxScreenStrings.title" = "Check your inbox";
+
+"RequiredFieldsScreenString.title" = "Finalise";
+"RequiredFieldsScreenString.subtext" = "Fill in some additional details for your profile";
+"RequiredFieldsScreenString.proceed" = "Continue";
+
+"RequiredField.givenName.title" = "Given name";
+"RequiredField.familyName.title" = "Family name";
+"RequiredField.birthday.title" = "Birthday";
+"RequiredField.birthday.placeholder" = "YYYY-MM-DD";
+
+"RequiredField.error.missing" = "This field is required.";
+"RequiredField.error.lessThanThree" = "This field must be at least 3 characters";
+"RequiredField.error.birthdateInvalid" = "This date is invalid";
+
+"ErrorScreenString.heading" = "Something went wrong!";
+"ErrorScreenString.proceed" = "OK";
+
+"ErrorString.invalidCode" = "Please check your code and try again.";
+"ErrorString.invalidPhoneNumber" = "Please enter a valid phone number.";
+"ErrorString.invalidEmail" = "Please enter a valid email address.";
+"ErrorString.networkingError" = "We are experiencing problems at the moment. Please try again later.";
+"ErrorString.unexpected" = "Please try again later.";
+"ErrorString.tooManyRequests" = "You have sent too many code requests. Please try again later.";
+"ErrorString.connectionTimeout" = "The connection has timed out. Please try again.";
+"ErrorString.noInternetConnection" = "Unable to connect to the internet. Please check your connection.";
+"ErrorString.unableToResend" = "Could not resend code.";
