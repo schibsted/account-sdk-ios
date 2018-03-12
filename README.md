@@ -5,11 +5,13 @@ The SchibstedAccount iOS SDK provides you access to SPT identity user objects an
 [![Build Status](https://travis-ci.org/schibsted/account-sdk-ios.svg?branch=master)](https://travis-ci.org/schibsted/account-sdk-ios) [![license](https://img.shields.io/github/license/schibsted/account-sdk-ios.svg)](https://github.com/schibsted/account-sdk-ios/blob/master/LICENSE) [![codecov](https://codecov.io/gh/schibsted/account-sdk-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/schibsted/account-sdk-ios)
 
 - [Documentation](https://schibsted.github.io/account-sdk-ios/)
-- [Contributing](CONTRIBUTING.md)
+- [Contributing](https://github.com/schibsted/account-sdk-ios/blob/master/CONTRIBUTING.md)
 
 ## Setup
 
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
+
+**WIP**:
 
 The pod is available as a public cocoapod under the name SchibstedAccount
 
@@ -29,6 +31,8 @@ To fulfill this, you can either implement it yourself or use one which is alread
 - `pod 'SchibstedAccountTracking'`: Adds dependency to the [new](https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios) pulse SDK
 
 ### [Carthage](https://github.com/Carthage/Carthage)
+
+**WIP**:
 
 Add this to `Cartfile`
 
@@ -211,39 +215,6 @@ class ViewController: UIViewController, IdentityManagerDelegate {
 }
 ```
 
-### **Building the example application(s)**
+### Building, testing, documentaion
 
-In CocoaPods-based projects you work within the project of the example application, which is inside "Example" folder.
-At first the workspace needs to be created by running `pod install` in the terminal, this has been wrapped in a script:
-```bash
-./pod_install.sh
-open Example/SchibstedAccount.xcworkspace
-```
-The last command will open "SchibstedAccount.xcworkspace" file in Xcode.
-Run the application using &#8984;R (Product - Run).
-Make sure that the "SchibstedAccount-Example" scheme is selected.
-
-There's an example UI application as well that you can open at:
-```bash
-open ExampleUI/ExampleUI.xcworkspace
-```
-
-### **Running the tests**
-
-In XCode: run the tests using &#8984;U (Product - Test).
-Make sure that the "SchibstedAccount-Example" scheme is selected.
-
-With fastlane it's just `fastlane test` from your command line.
-If you did not install via bundler, you can install [Fastlane](https://github.com/fastlane/fastlane) manually (if gem install fastlane doesn't work then "Installer Script" approach might work better with a default macOS Ruby without RVM).
-
-If you make a pull request github, a Travis CI bot will run the tests for you.
-
-### **Documentation**
-
-Install [jazzy](https://github.com/realm/jazzy), run jazzy, profit (if you installed via bundler then you already have it):
-
-```bash
-gem install jazzy
-jazzy
-open docs/index.html
-```
+See [contributing.md](https://github.com/schibsted/account-sdk-ios/blob/master/CONTRIBUTING.md).
