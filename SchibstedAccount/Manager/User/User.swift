@@ -49,7 +49,6 @@ public class User: UserProtocol {
     ///
     public weak var delegate: UserDelegate?
 
-    var didSetTokens = EventEmitter<(new: TokenData?, old: TokenData?)>(description: "User.didSetTokens")
     var willDeinit = EventEmitter<()>(description: "User.willDeinit")
 
     let api: IdentityAPI
@@ -144,7 +143,7 @@ public class User: UserProtocol {
             return
         }
 
-        self.didSetTokens.emitSync((new: nil, old: oldTokens))
+        self.updateStoredTokens(nil, previousTokens: oldTokens)
         self.delegate?.user(self, didChangeStateTo: .loggedOut)
 
         self.api.logout(oauthToken: oldTokens.accessToken) { [weak self] result in
@@ -212,10 +211,21 @@ public class User: UserProtocol {
         }
 
         log(from: self, "new tokens \(newTokens)")
-        self.didSetTokens.emitSync(tokens)
+        self.updateStoredTokens(tokens.new, previousTokens: tokens.old)
 
         if let newAnyUserID = newTokens.anyUserID, newAnyUserID != tokens.old?.anyUserID {
             self.delegate?.user(self, didChangeStateTo: .loggedIn)
+        }
+    }
+
+    func updateStoredTokens(_ tokens: TokenData?, previousTokens: TokenData?) {
+        // Always clear old tokens
+        if let previousUserTokens = previousTokens {
+            try? UserTokensStorage().clear(previousUserTokens)
+        }
+
+        if let tokens = tokens {
+            try? UserTokensStorage().store(tokens)
         }
     }
 
