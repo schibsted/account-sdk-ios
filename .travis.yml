@@ -23,6 +23,7 @@ matrix:
       after_failure:
         - scripts/print_simulator_crashlogs.sh
       deploy:
+        # https://github.com/travis-ci/travis-ci/issues/9312
         edge:
           branch: v1.8.47
         local_dir: docs
