@@ -22,10 +22,45 @@
         If there's a problem in [Podfile.lock](Example/Podfile.lock) having unquoted paths, update psych:
 
             sudo gem install psych -v 2.2.2
-1. Install decryption software for secrets. The Example and DemoApp using configuration files that are only available to active developers of the SDK. To use the example app you will either need to ask for permission to be added to the blackbox admins, or create your own client credentials:
+
+### Getting Example app to build
+
+You will not be able to compile the Example app out of the box without doing one of the following:
+
+**Core Developer**:
+
+We use blackbox for secrets. The Example and DemoApp use configuration files that are only available to active developers of the SDK. To use the example app out of the box, you will need to ask for permission to be added to the blackbox admins.
     1. Go [here](https://github.com/StackExchange/blackbox) and follow installation instructions.
     1. [Add yourself](https://github.com/StackExchange/blackbox#how-to-indoctrinate-a-new-user-into-the-system) and push a PR.
     1. Wait till an admin re-encrypts files with your credentials and merges your PR.
+
+**Other Developer**
+
+To get the Example app to compile if you are not a core developer, you need to run the [populate dummy secrets](https://github.com/schibsted/account-sdk-ios/blob/master/scripts/populate-dummy-secrets.sh) script before anything else:
+
+    ./scripts/populate-dummy-secrets.sh
+
+The Example app will then at least build and there's an offline mode switch (experimental) to see various functionality in action, but you will not be able to make real requests to Schibsted's backend without getting some client credentials.
+
+**Building**:
+
+In CocoaPods-based projects you work within the project of the example application, which is inside the "Example" folder. At first the workspace needs to be created by running `pod install` in the terminal, this has been wrapped in a script:
+
+```bash
+./pod_install.sh
+open Example/SchibstedAccount.xcworkspace
+```
+
+The last command will open "SchibstedAccount.xcworkspace" file in Xcode.
+Run the application using &#8984;R (Product - Run).
+Make sure that the "SchibstedAccount-Example" scheme is selected.
+
+For core developers:
+There's a DemoApp that is deployed to HockeyAPP, the following should work if you have been added to the blackbox keyring:
+
+```bash
+open DemoApp/SchibstedAccountDemo.xcworkspace
+```
 
 ## Code style
 
@@ -67,3 +102,23 @@ deprecated. Use the overloads which take Options objects instead.`
 * `Removed: Removed deprecated Manager.init(...) overloads.`
 * `Fixed: Fixes a bug where client tokens would not be refreshed correctly.`
 * `Security: Fixes a concern where user credentials were vulnerable to attacks based on redirects.
+
+## **Running the tests**
+
+In XCode: run the tests using &#8984;U (Product - Test).
+Make sure that the "SchibstedAccount-Example" scheme is selected.
+
+With fastlane it's just `fastlane test` from your command line.
+If you did not install via bundler, you can install [Fastlane](https://github.com/fastlane/fastlane) manually (if gem install fastlane doesn't work then "Installer Script" approach might work better with a default macOS Ruby without RVM).
+
+If you make a pull request github, a Travis CI bot will run the tests for you.
+
+### **Documentation**
+
+Install [jazzy](https://github.com/realm/jazzy), run jazzy, profit (if you installed via bundler then you already have it):
+
+```bash
+gem install jazzy
+jazzy
+open docs/index.html
+```
