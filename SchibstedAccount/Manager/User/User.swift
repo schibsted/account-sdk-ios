@@ -218,6 +218,16 @@ public class User: UserProtocol {
         }
     }
 
+    func loadStoredTokens() throws {
+        let tokens = try UserTokensStorage().loadTokens()
+        try self.set(
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken,
+            idToken: tokens.idToken,
+            userID: tokens.userID
+        )
+    }
+
     func updateStoredTokens(_ tokens: TokenData?, previousTokens: TokenData?) {
         // Always clear old tokens
         if let previousUserTokens = previousTokens {

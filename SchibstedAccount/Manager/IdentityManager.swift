@@ -109,9 +109,7 @@ public class IdentityManager: IdentityManagerProtocol {
         self.currentUser = User(clientConfiguration: clientConfiguration)
         self.currentUser.delegate = self
 
-        if let tokens = try? UserTokensStorage().loadTokens() {
-            self.finishLogin(result: .success(tokens), completion: nil)
-        }
+        try? self.currentUser.loadStoredTokens()
 
         log(from: self, "user: \(self.currentUser)")
     }

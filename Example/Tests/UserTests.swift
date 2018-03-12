@@ -215,6 +215,50 @@ class UserTests: QuickSpec {
             }
         }
 
+        describe("Keychain management") {
+            it("Should not treat the user as logged in if it does not find keychain data") {
+                let user = User(state: .loggedOut)
+                expect(user.state).to(equal(UserState.loggedOut))
+            }
+
+            it("Should treat the user as logged in if it finds keychain data") {
+                Utils.createDummyKeychain()
+                let user = User(state: .loggedOut)
+                try? user.loadStoredTokens()
+                expect(user.state).to(equal(UserState.loggedIn))
+            }
+
+            it("Should update keychain when user is refreshed") {
+                self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
+                var newTokens: TokenData?
+                do {
+                    Utils.createDummyKeychain()
+                    let user = User(state: .loggedOut)
+                    try? user.loadStoredTokens()
+                    user.refresh { _ in }
+                    newTokens = user.tokens
+                }
+
+                let tokens = UserTokensKeychain().data().first
+                expect(newTokens?.accessToken).to(equal(tokens?.accessToken))
+                expect(newTokens?.refreshToken).to(equal(tokens?.refreshToken))
+                expect(newTokens?.idToken).to(equal(tokens?.idToken))
+            }
+
+            it("Should clear the keychain on logout") {
+                Utils.createDummyKeychain()
+                let user = User(state: .loggedOut)
+                try? user.loadStoredTokens()
+                expect(user.state).to(equal(UserState.loggedIn))
+                user.logout()
+
+                let tokens = UserTokensKeychain().data().first
+                expect(tokens?.accessToken).to(beNil())
+                expect(tokens?.refreshToken).to(beNil())
+                expect(tokens?.idToken).to(beNil())
+            }
+        }
+
         describe("Creating user") {
 
             it("Should have tokens unset") {
