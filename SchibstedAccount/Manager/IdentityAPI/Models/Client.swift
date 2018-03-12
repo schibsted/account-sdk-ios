@@ -5,7 +5,7 @@
 
 import Foundation
 
-private enum ClientRequiredFieldsKey: String {
+enum ClientRequiredFieldsKey: String {
     case names
     case birthday
     case displayName

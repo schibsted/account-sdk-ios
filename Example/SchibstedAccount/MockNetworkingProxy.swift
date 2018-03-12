@@ -145,6 +145,35 @@ extension NetworkStub {
         stub.returnResponse(status: 200)
         return stub
     }
+
+    static func requiredFields() -> NetworkStub {
+        var stub = NetworkStub(path: .path(Router.requiredFields(userID: self.userID).path))
+        stub.returnData(json: [
+            "data": [
+                "requiredFields": [
+                    RequiredField.birthday.rawValue,
+                    RequiredField.familyName.rawValue,
+                    RequiredField.givenName.rawValue,
+                ],
+            ],
+        ])
+        stub.returnResponse(status: 200)
+        return stub
+    }
+
+    static func client() -> NetworkStub {
+        var stub = NetworkStub(path: .path(Router.client(clientID: ClientConfiguration.current.clientID).path))
+        stub.returnData(json: [
+            "data": [
+                "fields": [
+                    ClientRequiredFieldsKey.birthday.rawValue: true,
+                    ClientRequiredFieldsKey.names.rawValue: true,
+                ],
+            ],
+        ])
+        stub.returnResponse(status: 200)
+        return stub
+    }
 }
 
 extension UIApplication {
@@ -178,5 +207,7 @@ extension StubbedNetworkingProxy {
         StubbedNetworkingProxy.addStub(.agreementsStatus())
         StubbedNetworkingProxy.addStub(.acceptAgreements())
         StubbedNetworkingProxy.addStub(.fetchTerms())
+        StubbedNetworkingProxy.addStub(.requiredFields())
+        StubbedNetworkingProxy.addStub(.client())
     }
 }
