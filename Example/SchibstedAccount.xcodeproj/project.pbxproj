@@ -292,7 +292,6 @@
 				E1F6D27F1FEBB6C10053113A /* ClientConfigurationTests.swift */,
 				01399E391D9AB3EF00AFE819 /* AppLaunchDataTests.swift */,
 				E15135F31EAB5BCC000433B6 /* AutoRefreshURLProtocolTests.swift */,
-				E1F8461A1D6E3B69001EC9B5 /* EventEmitterTests.swift */,
 				E19164391D3E5A9900061A30 /* URLSessionTests.swift */,
 				E1963C0C1DF0376300DED2C8 /* IdentifierTests.swift */,
 				4310C5C51F306F2300009347 /* IdentityAPITests.swift */,
@@ -307,7 +306,6 @@
 				E1F092191FB5BACE004EBDD2 /* UserAuthTests.swift */,
 				E19164371D3E539000061A30 /* UserTests.swift */,
 				E106D7F41F3C4B70005611AD /* UserTokensKeychainTests.swift */,
-				0D1C4F472048157F00113A13 /* VersionNumberTest.swift */,
 				E1199E281F94E72100BF6FC3 /* WebSessionRoutesTests.swift */,
 				E19164281D3CD75500061A30 /* Utils */,
 				E13B2D5A1CF5DDCB00CFC6F6 /* Responses */,
@@ -414,7 +412,9 @@
 		E171993920569FEE00DF8FCB /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				E1F8461A1D6E3B69001EC9B5 /* EventEmitterTests.swift */,
 				E171993A2056A00D00DF8FCB /* NetworkingTests.swift */,
+				0D1C4F472048157F00113A13 /* VersionNumberTest.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
