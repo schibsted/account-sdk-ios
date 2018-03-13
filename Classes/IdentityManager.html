@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>IdentityManager Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/IdentityManager" class="dashAnchor"></a>
+    <a title="IdentityManager Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SchibstedAccount Docs</a></p>
+        <p class="header-right"><a href="https://www.github.com/schibsted/account-sdk-ios"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SchibstedAccount Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        IdentityManager Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Creating a User.html">Creating a User</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration/Environment.html">– Environment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityManager.html">IdentityManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityUI.html">IdentityUI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityUI/Route.html">– Route</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User.html">User</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Agreements.html">– Agreements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Auth.html">– Auth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Product.html">– Product</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Profile.html">– Profile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserDelegate.html">UserDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UserState.html">UserState</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Authenticated Requests.html">Authenticated Requests</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSession.html">URLSession</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Error Handling.html">Error Handling</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ClientError.html">ClientError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Error Handling.html#/s:16SchibstedAccount7NoValuea">NoValue</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Debugging.html">Debugging</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Logger.html">Logger</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Tracking.html">Tracking</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/View.html">– View</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/Engagement.html">– Engagement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Visual Login.html">Visual Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme.html">IdentityUITheme</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Geometry.html">– Geometry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Colors.html">– Colors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Icons.html">– Icons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Fonts.html">– Fonts</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/TextAttributes.html">– TextAttributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityUIDelegate.html">IdentityUIDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/IdentityUIResult.html">IdentityUIResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginMethod.html">LoginMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginMethod/FlowVariant.html">– FlowVariant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Style.html">Style</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleColorKind.html">StyleColorKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/StyleColors.html">StyleColors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/StyleIcons.html">StyleIcons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleIconKind.html">StyleIconKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleFont.html">StyleFont</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Headless Login.html">Headless Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AppLaunchData.html">AppLaunchData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityManagerDelegate.html">IdentityManagerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Identifiers.html">Identifiers</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/EmailAddress.html">EmailAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PhoneNumber.html">PhoneNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Identifier.html">Identifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Data Models.html">Data Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/UserProfile.html">UserProfile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Terms.html">Terms</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentifierStatus.html">IdentifierStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RequiredField.html">RequiredField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserProduct.html">UserProduct</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityManagerProtocol.html">IdentityManagerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProtocol.html">UserProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAuthAPI.html">UserAuthAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProfileAPI.html">UserProfileAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAgreementsAPI.html">UserAgreementsAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProductAPI.html">UserProductAPI</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/WebSessionRoutes.html">WebSessionRoutes</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Global Variables.html#/s:16SchibstedAccount10sdkVersionSSv">sdkVersion</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Enums.html">Other Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Birthdate.html">Birthdate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSessionTask.html">URLSessionTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSessionTask/State.html">– State</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Protocols.html">Other Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TaskHandle.html">TaskHandle</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Typealiases.html">Other Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount28RequiredFieldsResultCallbacka">RequiredFieldsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount20StringResultCallbacka">StringResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount19TermsResultCallbacka">TermsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>IdentityManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">IdentityManager</span><span class="p">:</span> <span class="kt"><a href="../Protocols/IdentityManagerProtocol.html">IdentityManagerProtocol</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>This manager provides access to various auth related APIs and manages the creation and persistence of an internal <code><a href="../Classes/User.html">User</a></code> object that
+can be accessed through <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>.</p>
+
+<p>A number of methods of creating a user exist within this manager. They include:</p>
+
+<ol>
+<li>Passwordless login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code>)</li>
+<li>Password login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordyAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
+<li>Signup APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathyAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
+<li>APIs to access client specific information</li>
+</ol>
+
+<p>The general approach is to first create an IdentityManager with a <code><a href="../Structs/ClientConfiguration.html">ClientConfiguration</a></code>. After that you may check if there already
+is a user that was previously persisted. This can be checked via <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>&lsquo;s <code><a href="../Classes/User.html#/s:16SchibstedAccount4UserC5stateAA0C5StateOv">User.state</a></code> which will tell you if the internal
+user is in a logged in or logged out state.</p>
+
+<p>The objective of the identity manager is to create a user object. There should be no need to keep an identity manager lying around once
+you have a reference to the internal user object.</p>
+<h3 id='authorization-code-vs-one-time-code' class='heading'>Authorization code vs one-time code</h3>
+
+<p>There are two <q>code</q> validation APIs in the manager. One of them operates on one time codes that are explicitly send to an <code><a href="../Enums/Identifier.html">Identifier</a></code>
+using <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code> to start a passwordless login process. The other is an OAuth-related authroization code, which
+is not explicily requested. The current use-case for authorization code validation is after a signup process, when a user verifies
+their email. Or after an unverified identifier tries to login.</p>
+<h3 id='after-logging-in' class='heading'>After logging in</h3>
+
+<p>After you successfully login by either the passwordless or password APIs, it is recommended that you check the profile status of your
+user object. This means checking if there are updated terms and conditions that need to be accepted or if there are required fields
+that need to be updated. These can both be done via <code><a href="../Classes/User/Agreements.html#/s:16SchibstedAccount4UserC10AgreementsC6statusAA10TaskHandle_pyAA6ResultOySbAA11ClientErrorOGc10completion_tF">User.Agreements.status(...)</a></code> and <code><a href="../Classes/User/Profile.html#/s:16SchibstedAccount4UserC7ProfileC14requiredFieldsAA10TaskHandle_pyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">User.Profile.requiredFields(...)</a></code>.</p>
+<h3 id='user-persistence' class='heading'>User persistence</h3>
+
+<p>The user that is internally managed by an identity manager is also persisted in your keychain for maintaing logged in and logged out
+state. Therefore, once a user is made valid, the manager persists the data necessary to recreate the user for a later session.</p>
+
+<p>Currently the keychain user is a singleton. So the last user that is <q>validated</q> will be persisted. And the last user that is persisted
+will be the one that is loaded by a new instance of the <code>IdentityManager</code>.</p>
+<h3 id='strong-support-strong' class='heading'><strong>Support</strong></h3>
+
+<p>The visual login via the <code><a href="../Classes/IdentityUI.html">IdentityUI</a></code> is the recommended approach to creating a <code><a href="../Classes/User.html">User</a></code>. This <code>IdentityManager</code> should just be
+used to check if there&rsquo;s already an existing user.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8delegateAA0cD8Delegate_pSgXwv"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8delegateAA0cD8Delegate_pSgXwv">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The delegate that will receive events related to the manager&rsquo;s state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/IdentityManagerDelegate.html">IdentityManagerDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv"></a>
+                    <a name="//apple_ref/swift/Property/currentUser" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">currentUser</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The user managed by this manager</p>
+
+<p>This user object is persisted in the keychain so that when you initialize an identity manager again, you may
+just resume the previously saved user session.</p>
+
+<p>Users are persisted after any successful login process.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">currentUser</span><span class="p">:</span> <span class="kt"><a href="../Classes/User.html">User</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC19clientConfigurationAA06ClientF0Vv"></a>
+                    <a name="//apple_ref/swift/Property/clientConfiguration" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC19clientConfigurationAA06ClientF0Vv">clientConfiguration</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The client configuration used to create the manager</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">clientConfiguration</span><span class="p">:</span> <span class="kt"><a href="../Structs/ClientConfiguration.html">ClientConfiguration</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC6routesAA16WebSessionRoutesCv"></a>
+                    <a name="//apple_ref/swift/Property/routes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC6routesAA16WebSessionRoutesCv">routes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gives you access to SPiD web flow routes.</p>
+
+<p>Where relevent, these can typically be used with <code><a href="../Classes/User/Auth.html#/s:16SchibstedAccount4UserC4AuthC13webSessionURLAA10TaskHandle_pSS8clientID_10Foundation0G0V08redirectG0yAA6ResultOyAkA11ClientErrorOGc10completiontF">User.Auth.webSessionURL(...)</a></code> to create a web session on a SPiD page
+where a user is considered as logged in.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">routes</span><span class="p">:</span> <span class="kt"><a href="../Classes/WebSessionRoutes.html">WebSessionRoutes</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerCAcA19ClientConfigurationV06clientF0_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(clientConfiguration:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerCAcA19ClientConfigurationV06clientF0_tcfc">init(clientConfiguration:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes the identity manager.</p>
+
+<p>If there is a valid user in the keychain then that will be loaded in, else you will have to create a user
+using one of the aformentioned methods.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="nv">clientConfiguration</span><span class="p">:</span> <span class="kt"><a href="../Structs/ClientConfiguration.html">ClientConfiguration</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clientConfiguration</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>defines your configuration</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/sendCode(to:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(to:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Starts a passwordless login flow with <code><a href="../Enums/Identifier.html">Identifier</a></code> as the basis of where to send the one time code to</p>
+
+<p>One time code passwordless authentication involves 2 steps. First this method is called to send a code
+to an identifier. This code has to be extracted seperately by the owner of the identifier and then it
+can be used with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3foryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:for:completion:)</a></code> to create a valid user</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendCode</span><span class="p">(</span><span class="n">to</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>can be either email or phone number</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>callback that is called after the code is sent</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC10resendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/resendCode(to:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC10resendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">resendCode(to:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resends the code that was tried previously with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code>.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <p><code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">resendCode</span><span class="p">(</span><span class="n">to</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>can be either email or phone number</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>callback that is called after the code has been resent</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3foryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/validate(oneTimeCode:for:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3foryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:for:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Used after a call to <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code> to validate the one time code that was sent to an identifier.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">oneTimeCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="k">for</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>oneTimeCode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the code sent to identifier</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the user&rsquo;s identifier. Should match the one used in <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the callback that is called after the one time code is checked</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/validate(oneTimeCode:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Used to validate an authorization code</p>
+
+<p><code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code> must have been called before. The difference between this overload
+and the one that takes an explicit identifier is that this will try and validate against any identifier
+that was previously used (during a single session) and succeed if any succeed.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">oneTimeCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>oneTimeCode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The auth code that was sent to the user</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the callback that is called after the auth code is checked</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordyAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/login(username:password:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordyAA6ResultOyytAA11ClientErrorOGc10completiontF">login(username:password:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Authenticate using e-mail and password.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">login</span><span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Enums/Identifier.html">Identifier</a></code> representing the username to login with. Only email is supported.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>password</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the password for the identifier</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a callback that is called after the credential is checked.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathyAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/signup(username:password:profile:acceptTerms:redirectPath:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathyAA6ResultOyytAA11ClientErrorOGc10completiontF">signup(username:password:profile:acceptTerms:redirectPath:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Signup using e-mail and password.</p>
+
+<p>This method does not result in a valid <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">currentUser</a></code> object. The reason is that either the identifier
+already exists in the system, in which case you will get a <code><a href="../Enums/ClientError.html#/s:16SchibstedAccount11ClientErrorO17alreadyRegisteredACSS7message_tcACmF">ClientError.alreadyRegistered</a></code>, or the
+identifier needs to be verified, in which case there will be an eventual deep link back in to your
+application that can be parsed with <code><a href="../Enums/AppLaunchData.html">AppLaunchData</a></code> and verified with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(authCode:completion:)</a></code></p>
+
+<p>This API results in an email being sent to the user to complete the process. Once a user clicks on a verification
+email, a number of things can happen, they can be:</p>
+
+<ol>
+<li>Redirected to the app via the url scheme (see <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSv">ClientConfiguration.appURLScheme</a></code>)</li>
+<li>Redirected to a webflow to accept terms and conditions, and then redirected to the app</li>
+<li>Redirected to a webflow to update/input required fields and then redirected to the app</li>
+</ol>
+<h3 id='checking-identifier-before-calling-signup' class='heading'>Checking identifier before calling signup</h3>
+
+<p>If you try and signup with an identifier that already exists, you will get an error. If you need to check the
+status of an identifier you should use <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11fetchStatusyAA10IdentifierO3for_yAA6ResultOyAA0gF0VAA11ClientErrorOGc10completiontF">fetchStatus(for:completion:)</a></code> first.</p>
+<h3 id='terms-and-conditions-and-privacy-policy' class='heading'>Terms and conditions and privacy policy</h3>
+
+<p>The redirection to the webflow terms and condition screen can be bypassed if you accept terms through this API.
+However, if you do do this then you are responsible for actually showing the terms to the user. This tells us
+that the user has explicitly accepted the platform (SPiD) terms and conditions and been notified of the privacy
+policy, and also has done the same for the client&rsquo;s (your) terms and conditions and privacy policy.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC10fetchTermsyyAA6ResultOyAA0F0VAA11ClientErrorOGc10completion_tF">fetchTerms(completion:)</a></code>
+
+</div>
+<h3 id='required-fields' class='heading'>Required fields</h3>
+
+<p>Depending on how you&rsquo;ve set up your client in self service, the user may also need to fill in some required fields.
+If you want to bypass the webflow for these as well, then you must provide a valid <code><a href="../Structs/UserProfile.html">UserProfile</a></code> object that fulfills
+all of your client&rsquo;s required fields.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <p><code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC14requiredFieldsyyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">requiredFields(completion:)</a></code></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">signup</span><span class="p">(</span>
+    <span class="nv">username</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span>
+    <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">profile</span><span class="p">:</span> <span class="kt"><a href="../Structs/UserProfile.html">UserProfile</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">acceptTerms</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">redirectPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span>
+<span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Enums/Identifier.html">Identifier</a></code> representing the username to signup</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>password</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>password for identifier</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>profile</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>profile information to be set on created user</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>acceptTerms</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>this must be set to true to create a user</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>redirectPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The signup process will eventually deep link back to your app with <code>ClientConfiguration.redirectBaseURL</code> and this argument</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a callback that is called in the end (with an error object in case of failures).</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/validate(authCode:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(authCode:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Log in by an auth code.</p>
+
+<p>The authorization code is passed into the app from SPiD after the user verified their email.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <p><code><a href="../Enums/AppLaunchData.html">AppLaunchData</a></code></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">authCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>authCode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>an authorization code (currently it&rsquo;s just available through deeplinks)</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the callback that is called after validation</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC11fetchStatusyAA10IdentifierO3for_yAA6ResultOyAA0gF0VAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/fetchStatus(for:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC11fetchStatusyAA10IdentifierO3for_yAA6ResultOyAA0gF0VAA11ClientErrorOGc10completiontF">fetchStatus(for:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch the <code><a href="../Structs/IdentifierStatus.html">IdentifierStatus</a></code> for the supplied identifier</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchStatus</span><span class="p">(</span><span class="k">for</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier you want the status for</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>contains an <code><a href="../Structs/IdentifierStatus.html">IdentifierStatus</a></code> object on success</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC10fetchTermsyyAA6ResultOyAA0F0VAA11ClientErrorOGc10completion_tF"></a>
+                    <a name="//apple_ref/swift/Method/fetchTerms(completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC10fetchTermsyyAA6ResultOyAA0F0VAA11ClientErrorOGc10completion_tF">fetchTerms(completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Retrieve the latest terms &amp; conditions links for the platform (i.e. SPiD) and client (i.e. your app).</p>
+
+<p>The platform terms returned are the default ones associated with the identity platform.
+The client terms are what are associated with your client ID and can be set in
+<a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a> under <q>Assign T&C</q> page.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchTerms</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount19TermsResultCallbacka">TermsResultCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a callback that receives the <code><a href="../Structs/Terms.html">Terms</a></code> model.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC14requiredFieldsyyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF"></a>
+                    <a name="//apple_ref/swift/Method/requiredFields(completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC14requiredFieldsyyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">requiredFields(completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetches the list of required fields that this client expects</p>
+
+<p>The required fields can be set in <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">requiredFields</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount28RequiredFieldsResultCallbacka">RequiredFieldsResultCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a callback that&rsquo;s called on completion and might receive an error.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount12UserDelegateP4useryAA0C0C_AA0C5StateO09didChangeF2TotF"></a>
+                    <a name="//apple_ref/swift/Method/user(_:didChangeStateTo:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount12UserDelegateP4useryAA0C0C_AA0C5StateO09didChangeF2TotF">user(_:didChangeStateTo:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">user</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt"><a href="../Classes/User.html">User</a></span><span class="p">,</span> <span class="n">didChangeStateTo</span> <span class="nv">newState</span><span class="p">:</span> <span class="kt"><a href="../Enums/UserState.html">UserState</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2016-2018 Schibsted Products &amp; Technology</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

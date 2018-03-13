@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ClientError Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/ClientError" class="dashAnchor"></a>
+    <a title="ClientError Enumeration Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SchibstedAccount Docs</a></p>
+        <p class="header-right"><a href="https://www.github.com/schibsted/account-sdk-ios"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SchibstedAccount Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        ClientError Enumeration Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Creating a User.html">Creating a User</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration/Environment.html">– Environment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityManager.html">IdentityManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityUI.html">IdentityUI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityUI/Route.html">– Route</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User.html">User</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Agreements.html">– Agreements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Auth.html">– Auth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Product.html">– Product</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Profile.html">– Profile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserDelegate.html">UserDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UserState.html">UserState</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Authenticated Requests.html">Authenticated Requests</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSession.html">URLSession</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Error Handling.html">Error Handling</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ClientError.html">ClientError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Error Handling.html#/s:16SchibstedAccount7NoValuea">NoValue</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Debugging.html">Debugging</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Logger.html">Logger</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Tracking.html">Tracking</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/View.html">– View</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/Engagement.html">– Engagement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Visual Login.html">Visual Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme.html">IdentityUITheme</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Geometry.html">– Geometry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Colors.html">– Colors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Icons.html">– Icons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Fonts.html">– Fonts</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/TextAttributes.html">– TextAttributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityUIDelegate.html">IdentityUIDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/IdentityUIResult.html">IdentityUIResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginMethod.html">LoginMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginMethod/FlowVariant.html">– FlowVariant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Style.html">Style</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleColorKind.html">StyleColorKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/StyleColors.html">StyleColors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/StyleIcons.html">StyleIcons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleIconKind.html">StyleIconKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleFont.html">StyleFont</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Headless Login.html">Headless Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AppLaunchData.html">AppLaunchData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityManagerDelegate.html">IdentityManagerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Identifiers.html">Identifiers</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/EmailAddress.html">EmailAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PhoneNumber.html">PhoneNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Identifier.html">Identifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Data Models.html">Data Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/UserProfile.html">UserProfile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Terms.html">Terms</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentifierStatus.html">IdentifierStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RequiredField.html">RequiredField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserProduct.html">UserProduct</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityManagerProtocol.html">IdentityManagerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProtocol.html">UserProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAuthAPI.html">UserAuthAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProfileAPI.html">UserProfileAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAgreementsAPI.html">UserAgreementsAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProductAPI.html">UserProductAPI</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/WebSessionRoutes.html">WebSessionRoutes</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Global Variables.html#/s:16SchibstedAccount10sdkVersionSSv">sdkVersion</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Enums.html">Other Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Birthdate.html">Birthdate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSessionTask.html">URLSessionTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSessionTask/State.html">– State</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Protocols.html">Other Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TaskHandle.html">TaskHandle</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Typealiases.html">Other Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount28RequiredFieldsResultCallbacka">RequiredFieldsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount20StringResultCallbacka">StringResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount19TermsResultCallbacka">TermsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>ClientError</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ClientError</span><span class="p">:</span> <span class="kt">Error</span></code></pre>
+
+                </div>
+              </div>
+            <p>The errors that can occur from client facing APIs</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO010networkingD0ACs0D0_pcACmF"></a>
+                    <a name="//apple_ref/swift/Element/networkingError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO010networkingD0ACs0D0_pcACmF">networkingError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A networking error occured between the client and the identity server or
+the client and the server that was being requested</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">networkingError</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO11invalidCodeA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidCode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO11invalidCodeA2CmF">invalidCode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when <code>IdentityManager.validate(oneTimeCode:)</code> is given an incorrect code</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidCode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO14unableToResendA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/unableToResend" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO14unableToResendA2CmF">unableToResend</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when <code>IdentityManager.resendCode</code> cannot resend the code</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">unableToResend</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO18invalidPhoneNumberA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidPhoneNumber" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO18invalidPhoneNumberA2CmF">invalidPhoneNumber</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when &lsquo;IdentityManager.sendCode(to:completion:)` is given an invalid phone number</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidPhoneNumber</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO12invalidEmailA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidEmail" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO12invalidEmailA2CmF">invalidEmail</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when a malformed e-mail is provided to an IdentityManager API call.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidEmail</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO11invalidUserA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidUser" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO11invalidUserA2CmF">invalidUser</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when a valid user object is needed but the user object is not valid</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidUser</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO20unexpectedIdentifierAcA0F0O6actual_SS8expectedtcACmF"></a>
+                    <a name="//apple_ref/swift/Element/unexpectedIdentifier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO20unexpectedIdentifierAcA0F0O6actual_SS8expectedtcACmF">unexpectedIdentifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when an identifier is invalid</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">unexpectedIdentifier</span><span class="p">(</span><span class="nv">actual</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">expected</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO22invalidUserCredentialsACSSSg7message_tcACmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidUserCredentials" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO22invalidUserCredentialsACSSSg7message_tcACmF">invalidUserCredentials</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when user credentials are invalid using email/password APIs</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">invalidUserCredentials</span><span class="p">(</span><span class="nv">message</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO07invalidC11CredentialsA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidClientCredentials" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO07invalidC11CredentialsA2CmF">invalidClientCredentials</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when client credentials are invalid</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidClientCredentials</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO15unverifiedEmailA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/unverifiedEmail" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO15unverifiedEmailA2CmF">unverifiedEmail</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when you try to login with an unverified email</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">unverifiedEmail</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO17alreadyRegisteredACSS7message_tcACmF"></a>
+                    <a name="//apple_ref/swift/Element/alreadyRegistered" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO17alreadyRegisteredACSS7message_tcACmF">alreadyRegistered</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when you try to signup with an identifier that&rsquo;s already registered</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">alreadyRegistered</span><span class="p">(</span><span class="nv">message</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO17userRefreshFailedACs0D0_pcACmF"></a>
+                    <a name="//apple_ref/swift/Element/userRefreshFailed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO17userRefreshFailedACs0D0_pcACmF">userRefreshFailed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when there&rsquo;s a user refresh failure (i.e. an authenticated request failure)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">userRefreshFailed</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO15tooManyRequestsA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/tooManyRequests" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO15tooManyRequestsA2CmF">tooManyRequests</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Occurs when the limit of requests per minute is exceeded</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">tooManyRequests</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO10unexpectedACs0D0_pcACmF"></a>
+                    <a name="//apple_ref/swift/Element/unexpected" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO10unexpectedACs0D0_pcACmF">unexpected</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Could be anything. The world is its oyster.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">unexpected</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO10agreementsA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/agreements" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO10agreementsA2CmF">agreements</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Will happen when the user is missing some agreements</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">agreements</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO13requiredFieldACSaySSGcACmF"></a>
+                    <a name="//apple_ref/swift/Element/requiredField" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO13requiredFieldACSaySSGcACmF">requiredField</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Will happen if a required field is failing validation</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">requiredField</span><span class="p">([</span><span class="kt">String</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO6domainSSvZ"></a>
+                    <a name="//apple_ref/swift/Variable/domain" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO6domainSSvZ">domain</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the SDK returns custom NSError objects. The domain is set to this.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">domain</span> <span class="o">=</span> <span class="s">"ClientError"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11ClientErrorO24RefreshRetryExceededCodeSivZ"></a>
+                    <a name="//apple_ref/swift/Variable/RefreshRetryExceededCode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11ClientErrorO24RefreshRetryExceededCodeSivZ">RefreshRetryExceededCode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is the error code inside the NSError object that is returned from <code>URLSession.dataTask(with:completion:)</code> in the case
+that the number of refresh retries has been exceeded</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">RefreshRetryExceededCode</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s23CustomStringConvertibleP11descriptionSSv"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSv">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2016-2018 Schibsted Products &amp; Technology</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

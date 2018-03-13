@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Creating a User  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="Creating a User  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">SchibstedAccount Docs</a></p>
+        <p class="header-right"><a href="https://www.github.com/schibsted/account-sdk-ios"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">SchibstedAccount Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Creating a User  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Creating a User.html">Creating a User</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ClientConfiguration/Environment.html">– Environment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/IdentityManager.html">IdentityManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/IdentityUI.html">IdentityUI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/IdentityUI/Route.html">– Route</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/User.html">User</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/User/Agreements.html">– Agreements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/User/Auth.html">– Auth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/User/Product.html">– Product</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/User/Profile.html">– Profile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/UserDelegate.html">UserDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/UserState.html">UserState</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Authenticated Requests.html">Authenticated Requests</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/URLSession.html">URLSession</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Error Handling.html">Error Handling</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/ClientError.html">ClientError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Error Handling.html#/s:16SchibstedAccount7NoValuea">NoValue</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Debugging.html">Debugging</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/Logger.html">Logger</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Tracking.html">Tracking</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TrackingEvent.html">TrackingEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TrackingEvent/View.html">– View</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TrackingEvent/Engagement.html">– Engagement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Visual Login.html">Visual Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/IdentityUITheme.html">IdentityUITheme</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/IdentityUITheme/Geometry.html">– Geometry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/IdentityUITheme/Colors.html">– Colors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/IdentityUITheme/Icons.html">– Icons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/IdentityUITheme/Fonts.html">– Fonts</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/IdentityUITheme/TextAttributes.html">– TextAttributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/IdentityUIDelegate.html">IdentityUIDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/IdentityUIResult.html">IdentityUIResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/LoginMethod.html">LoginMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/LoginMethod/FlowVariant.html">– FlowVariant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Style.html">Style</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/StyleColorKind.html">StyleColorKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/StyleColors.html">StyleColors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/StyleIcons.html">StyleIcons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/StyleIconKind.html">StyleIconKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/StyleFont.html">StyleFont</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Headless Login.html">Headless Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/AppLaunchData.html">AppLaunchData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/IdentityManagerDelegate.html">IdentityManagerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Identifiers.html">Identifiers</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/EmailAddress.html">EmailAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PhoneNumber.html">PhoneNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Identifier.html">Identifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Data Models.html">Data Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/UserProfile.html">UserProfile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Terms.html">Terms</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/IdentifierStatus.html">IdentifierStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/RequiredField.html">RequiredField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/UserProduct.html">UserProduct</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/IdentityManagerProtocol.html">IdentityManagerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/UserProtocol.html">UserProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/UserAuthAPI.html">UserAuthAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/UserProfileAPI.html">UserProfileAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/UserAgreementsAPI.html">UserAgreementsAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/UserProductAPI.html">UserProductAPI</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/WebSessionRoutes.html">WebSessionRoutes</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Global Variables.html#/s:16SchibstedAccount10sdkVersionSSv">sdkVersion</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Enums.html">Other Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/Birthdate.html">Birthdate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/URLSessionTask.html">URLSessionTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/URLSessionTask/State.html">– State</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Protocols.html">Other Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/TaskHandle.html">TaskHandle</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other Typealiases.html">Other Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount28RequiredFieldsResultCallbacka">RequiredFieldsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount20StringResultCallbacka">StringResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount19TermsResultCallbacka">TermsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Creating a User</h1>
+            
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV"></a>
+                    <a name="//apple_ref/swift/Struct/ClientConfiguration" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV">ClientConfiguration</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Configuration for your client. Allows client to set their ID and decide
+ which backend environment to point the SDK at.</p>
+
+<p>This is the first structure you must create in your SDK. Typically, an application will
+ have one for testing/debugging purposes and one that is used in a production environment.
+ A tip for organizing them would be to have it globally available in your applications:</p>
+<pre class="highlight swift"><code> <span class="kd">extension</span> <span class="kt">ClientConfiguration</span> <span class="p">{</span>
+   <span class="kd">static</span> <span class="k">let</span> <span class="nv">debug</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
+     <span class="o">...</span>
+   <span class="p">)</span>
+
+   <span class="kd">static</span> <span class="k">let</span> <span class="nv">production</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
+     <span class="o">...</span>
+   <span class="p">)</span>
+ <span class="p">}</span>
+</code></pre>
+
+<p>API calls will NOT work accross different ClientConfiguration objects. If you have state
+ that is left over after using one ClientConfiguration, and then you try and use that state
+ with a different ClientConfiguration, you will not get the results you want.</p>
+
+<p>This object is used to set your <code><a href="Structs/ClientConfiguration/Environment.html">ClientConfiguration.Environment</a></code>, your
+ <code><a href="Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSv">ClientConfiguration.appURLScheme</a></code> and your locale.</p>
+
+<p>### App URL Scheme</p>
+
+<p>If you want deep linking to work, then you must specify your app&rsquo;s URL scheme as well.
+ For SPiD mobile clients, the scheme is fixed and is available from the SPiD self-service
+ portal.</p>
+
+<p>You should specify this string value when creating your ClientConfiguration and you should
+ also register the url scheme as per Apple guidelines.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a>
+
+</div>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="https://developer.apple.com/library/content/documentation/iPhone/Conceptual/%0AiPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#%0A//apple_ref/doc/uid/TP40007072-CH6-SW1">Apple docs: Inter App Communication</a>
+
+</div>
+
+                        <a href="Structs/ClientConfiguration.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ClientConfiguration</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC"></a>
+                    <a name="//apple_ref/swift/Class/IdentityManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC">IdentityManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This manager provides access to various auth related APIs and manages the creation and persistence of an internal <code><a href="Classes/User.html">User</a></code> object that
+can be accessed through <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>.</p>
+
+<p>A number of methods of creating a user exist within this manager. They include:</p>
+
+<ol>
+<li>Passwordless login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code>)</li>
+<li>Password login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordyAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
+<li>Signup APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathyAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
+<li>APIs to access client specific information</li>
+</ol>
+
+<p>The general approach is to first create an IdentityManager with a <code><a href="Structs/ClientConfiguration.html">ClientConfiguration</a></code>. After that you may check if there already
+is a user that was previously persisted. This can be checked via <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>&lsquo;s <code><a href="Classes/User.html#/s:16SchibstedAccount4UserC5stateAA0C5StateOv">User.state</a></code> which will tell you if the internal
+user is in a logged in or logged out state.</p>
+
+<p>The objective of the identity manager is to create a user object. There should be no need to keep an identity manager lying around once
+you have a reference to the internal user object.</p>
+<h3 id='authorization-code-vs-one-time-code' class='heading'>Authorization code vs one-time code</h3>
+
+<p>There are two <q>code</q> validation APIs in the manager. One of them operates on one time codes that are explicitly send to an <code><a href="Enums/Identifier.html">Identifier</a></code>
+using <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code> to start a passwordless login process. The other is an OAuth-related authroization code, which
+is not explicily requested. The current use-case for authorization code validation is after a signup process, when a user verifies
+their email. Or after an unverified identifier tries to login.</p>
+<h3 id='after-logging-in' class='heading'>After logging in</h3>
+
+<p>After you successfully login by either the passwordless or password APIs, it is recommended that you check the profile status of your
+user object. This means checking if there are updated terms and conditions that need to be accepted or if there are required fields
+that need to be updated. These can both be done via <code><a href="Classes/User/Agreements.html#/s:16SchibstedAccount4UserC10AgreementsC6statusAA10TaskHandle_pyAA6ResultOySbAA11ClientErrorOGc10completion_tF">User.Agreements.status(...)</a></code> and <code><a href="Classes/User/Profile.html#/s:16SchibstedAccount4UserC7ProfileC14requiredFieldsAA10TaskHandle_pyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">User.Profile.requiredFields(...)</a></code>.</p>
+<h3 id='user-persistence' class='heading'>User persistence</h3>
+
+<p>The user that is internally managed by an identity manager is also persisted in your keychain for maintaing logged in and logged out
+state. Therefore, once a user is made valid, the manager persists the data necessary to recreate the user for a later session.</p>
+
+<p>Currently the keychain user is a singleton. So the last user that is <q>validated</q> will be persisted. And the last user that is persisted
+will be the one that is loaded by a new instance of the <code>IdentityManager</code>.</p>
+<h3 id='strong-support-strong' class='heading'><strong>Support</strong></h3>
+
+<p>The visual login via the <code><a href="Classes/IdentityUI.html">IdentityUI</a></code> is the recommended approach to creating a <code><a href="Classes/User.html">User</a></code>. This <code>IdentityManager</code> should just be
+used to check if there&rsquo;s already an existing user.</p>
+
+                        <a href="Classes/IdentityManager.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">IdentityManager</span><span class="p">:</span> <span class="kt"><a href="Protocols/IdentityManagerProtocol.html">IdentityManagerProtocol</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC"></a>
+                    <a name="//apple_ref/swift/Class/IdentityUI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC">IdentityUI</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is the main IdentityUI object that can be used to create a user object via a UI flow.</p>
+
+<p>There are two ways to start a login process, you can either start the flow from the beginning
+which will be presented on a provided UIViewController, or you can provide an <code><a href="Classes/IdentityUI/Route.html">IdentityUI.Route</a></code>
+that is generally used to continue a flow from the deep link.</p>
+
+                        <a href="Classes/IdentityUI.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">IdentityUI</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount4UserC"></a>
+                    <a name="//apple_ref/swift/Class/User" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC">User</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The user object is the central part of the SDK. Once one is created, it is recommended to hold on
+to it until you do not need it anymore.</p>
+
+<p>There are 2 ways to create a valid user object currently:</p>
+
+<ol>
+<li>Through the <code><a href="Classes/IdentityManager.html">IdentityManager</a></code></li>
+<li>Through the <code><a href="Classes/IdentityUI.html">IdentityUI</a></code></li>
+</ol>
+
+<p>It is recommended that you create one using the provided UI flows. But if the need arises the headless
+approach is also documented, but not <q>officially</q> supported.</p>
+<h3 id='checking-if-you-have-an-already-logged-in-user' class='heading'>Checking if you have an already logged in user</h3>
+
+<p>The process to check that is currently supported by the <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code> object. Once an
+identity manager is initialized, it&rsquo;s internal user object is either in a logged in state or not.</p>
+
+<p>Based on the state of <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>, you may either proceed to get one or store it and
+use it for whatever else.</p>
+
+                        <a href="Classes/User.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">User</span><span class="p">:</span> <span class="kt"><a href="Protocols/UserProtocol.html">UserProtocol</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount12UserDelegateP"></a>
+                    <a name="//apple_ref/swift/Protocol/UserDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount12UserDelegateP">UserDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code><a href="Classes/User.html">User</a></code> object delegate to be notified of changes</p>
+
+                        <a href="Protocols/UserDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">UserDelegate</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount9UserStateO"></a>
+                    <a name="//apple_ref/swift/Enum/UserState" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount9UserStateO">UserState</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Possible states that this user is currently in.</p>
+
+                        <a href="Enums/UserState.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">UserState</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2016-2018 Schibsted Products &amp; Technology</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

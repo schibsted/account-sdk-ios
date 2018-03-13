@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ClientConfiguration Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/ClientConfiguration" class="dashAnchor"></a>
+    <a title="ClientConfiguration Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SchibstedAccount Docs</a></p>
+        <p class="header-right"><a href="https://www.github.com/schibsted/account-sdk-ios"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SchibstedAccount Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        ClientConfiguration Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Creating a User.html">Creating a User</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration/Environment.html">– Environment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityManager.html">IdentityManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityUI.html">IdentityUI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityUI/Route.html">– Route</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User.html">User</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Agreements.html">– Agreements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Auth.html">– Auth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Product.html">– Product</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Profile.html">– Profile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserDelegate.html">UserDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UserState.html">UserState</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Authenticated Requests.html">Authenticated Requests</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSession.html">URLSession</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Error Handling.html">Error Handling</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ClientError.html">ClientError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Error Handling.html#/s:16SchibstedAccount7NoValuea">NoValue</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Debugging.html">Debugging</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Logger.html">Logger</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Tracking.html">Tracking</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/View.html">– View</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/Engagement.html">– Engagement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Visual Login.html">Visual Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme.html">IdentityUITheme</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Geometry.html">– Geometry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Colors.html">– Colors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Icons.html">– Icons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Fonts.html">– Fonts</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/TextAttributes.html">– TextAttributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityUIDelegate.html">IdentityUIDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/IdentityUIResult.html">IdentityUIResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginMethod.html">LoginMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginMethod/FlowVariant.html">– FlowVariant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Style.html">Style</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleColorKind.html">StyleColorKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/StyleColors.html">StyleColors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/StyleIcons.html">StyleIcons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleIconKind.html">StyleIconKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleFont.html">StyleFont</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Headless Login.html">Headless Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AppLaunchData.html">AppLaunchData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityManagerDelegate.html">IdentityManagerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Identifiers.html">Identifiers</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/EmailAddress.html">EmailAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PhoneNumber.html">PhoneNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Identifier.html">Identifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Data Models.html">Data Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/UserProfile.html">UserProfile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Terms.html">Terms</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentifierStatus.html">IdentifierStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RequiredField.html">RequiredField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserProduct.html">UserProduct</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityManagerProtocol.html">IdentityManagerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProtocol.html">UserProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAuthAPI.html">UserAuthAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProfileAPI.html">UserProfileAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAgreementsAPI.html">UserAgreementsAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProductAPI.html">UserProductAPI</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/WebSessionRoutes.html">WebSessionRoutes</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Global Variables.html#/s:16SchibstedAccount10sdkVersionSSv">sdkVersion</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Enums.html">Other Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Birthdate.html">Birthdate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSessionTask.html">URLSessionTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSessionTask/State.html">– State</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Protocols.html">Other Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TaskHandle.html">TaskHandle</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Typealiases.html">Other Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount28RequiredFieldsResultCallbacka">RequiredFieldsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount20StringResultCallbacka">StringResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount19TermsResultCallbacka">TermsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>ClientConfiguration</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ClientConfiguration</span></code></pre>
+
+                </div>
+              </div>
+            <p>Configuration for your client. Allows client to set their ID and decide
+ which backend environment to point the SDK at.</p>
+
+<p>This is the first structure you must create in your SDK. Typically, an application will
+ have one for testing/debugging purposes and one that is used in a production environment.
+ A tip for organizing them would be to have it globally available in your applications:</p>
+<pre class="highlight swift"><code> <span class="kd">extension</span> <span class="kt">ClientConfiguration</span> <span class="p">{</span>
+   <span class="kd">static</span> <span class="k">let</span> <span class="nv">debug</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
+     <span class="o">...</span>
+   <span class="p">)</span>
+
+   <span class="kd">static</span> <span class="k">let</span> <span class="nv">production</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
+     <span class="o">...</span>
+   <span class="p">)</span>
+ <span class="p">}</span>
+</code></pre>
+
+<p>API calls will NOT work accross different ClientConfiguration objects. If you have state
+ that is left over after using one ClientConfiguration, and then you try and use that state
+ with a different ClientConfiguration, you will not get the results you want.</p>
+
+<p>This object is used to set your <code><a href="../Structs/ClientConfiguration/Environment.html">ClientConfiguration.Environment</a></code>, your
+ <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSv">ClientConfiguration.appURLScheme</a></code> and your locale.</p>
+
+<p>### App URL Scheme</p>
+
+<p>If you want deep linking to work, then you must specify your app&rsquo;s URL scheme as well.
+ For SPiD mobile clients, the scheme is fixed and is available from the SPiD self-service
+ portal.</p>
+
+<p>You should specify this string value when creating your ClientConfiguration and you should
+ also register the url scheme as per Apple guidelines.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a>
+
+</div>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="https://developer.apple.com/library/content/documentation/iPhone/Conceptual/%0AiPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#%0A//apple_ref/doc/uid/TP40007072-CH6-SW1">Apple docs: Inter App Communication</a>
+
+</div>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV11EnvironmentO"></a>
+                    <a name="//apple_ref/swift/Enum/Environment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV11EnvironmentO">Environment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines which backend requests will be sent to. Most of the values here are
+explained on the SPiD self service site where you also must set up your client.</p>
+
+<p>Basically this is what determines if this is a production configuration, or
+pre production, etc. Please read the <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a></p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a>
+
+</div>
+
+                        <a href="../Structs/ClientConfiguration/Environment.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Environment</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV9serverURL10Foundation0F0Vv"></a>
+                    <a name="//apple_ref/swift/Property/serverURL" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV9serverURL10Foundation0F0Vv">serverURL</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>All SDK requests will be served to this URL.</p>
+
+<p>Is is either determined by an <code><a href="../Structs/ClientConfiguration/Environment.html">Environment</a></code> that you specify or can also be a custom URL, which may be
+handy for local testing.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">serverURL</span><span class="p">:</span> <span class="kt">URL</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV8clientIDSSv"></a>
+                    <a name="//apple_ref/swift/Property/clientID" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV8clientIDSSv">clientID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The client id that this object was initialized with</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">clientID</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV11environmentAC11EnvironmentOSgv"></a>
+                    <a name="//apple_ref/swift/Property/environment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV11environmentAC11EnvironmentOSgv">environment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Which environment (if any) is this configuration using</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">environment</span><span class="p">:</span> <span class="kt"><a href="../Structs/ClientConfiguration/Environment.html">Environment</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationVAC10Foundation3URLV06serverF0_SS8clientIDSS0H6SecretSSSg12appURLSchemeAD6LocaleVSg6localetcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(serverURL:clientID:clientSecret:appURLScheme:locale:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationVAC10Foundation3URLV06serverF0_SS8clientIDSS0H6SecretSSSg12appURLSchemeAD6LocaleVSg6localetcfc">init(serverURL:clientID:clientSecret:appURLScheme:locale:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Alternative initializer if you do not want to specify a pre-existing <code><a href="../Structs/ClientConfiguration/Environment.html">Environment</a></code>. Usually used for testing.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">serverURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">clientID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">clientSecret</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">appURLScheme</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">locale</span><span class="p">:</span> <span class="kt">Locale</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>serverURL</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the backend server URL to talk to.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>providerComponent</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the backend server provider URN.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clientID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>unique client identifier for this client.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clientSecret</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the secret associated with the client ID</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>appURLScheme</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>set your <code>appURLSceheme</code> here. Defaults to <q>spid-\(clientID)</q> if nil</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>locale</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Locale you want to use for requests - defaults to system</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationVA2C11EnvironmentO11environment_SS8clientIDSS0G6SecretSSSg12appURLScheme10Foundation6LocaleVSg6localetcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(environment:clientID:clientSecret:appURLScheme:locale:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationVA2C11EnvironmentO11environment_SS8clientIDSS0G6SecretSSSg12appURLScheme10Foundation6LocaleVSg6localetcfc">init(environment:clientID:clientSecret:appURLScheme:locale:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize a new configuration for a specific <code><a href="../Structs/ClientConfiguration/Environment.html">Environment</a></code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">environment</span><span class="p">:</span> <span class="kt"><a href="../Structs/ClientConfiguration/Environment.html">Environment</a></span><span class="p">,</span> <span class="nv">clientID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">clientSecret</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">appURLScheme</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">locale</span><span class="p">:</span> <span class="kt">Locale</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>environment</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the backend environment to talk to. Can be one of the pre-defined environments.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clientID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>unique client identifier for this client.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clientSecret</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the secret associated with the client ID</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>appURLScheme</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>set your <code>appURLSceheme</code>. Defaults to <q>spid-\(clientID)</q> if nil</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>locale</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Locale you want IdentityManager to use for requests</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSv"></a>
+                    <a name="//apple_ref/swift/Property/appURLScheme" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSv">appURLScheme</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is used for generating the redirect URI needed for going back to the app. You can find this in the SPiD selfservice
+under the <q>Redirect</q> tab for your client. It <strong>must</strong> be equal to the value under <q>Custom URI Scheme</q></p>
+
+<p>You will also have to register the scheme in the your apps Info.plist <q>URL Types</q> under <q>URL Schemes</q>.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html">Apple docs: Inter App Communication</a>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">appURLScheme</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV15redirectBaseURL10Foundation0G0VSSSg17withPathComponent_tF"></a>
+                    <a name="//apple_ref/swift/Method/redirectBaseURL(withPathComponent:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV15redirectBaseURL10Foundation0G0VSSSg17withPathComponent_tF">redirectBaseURL(withPathComponent:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Base URL for redirects that will be created by the SDK for various API calls.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">redirectBaseURL</span><span class="p">(</span><span class="n">withPathComponent</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">URL</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV15RedirectPayloada"></a>
+                    <a name="//apple_ref/swift/Alias/RedirectPayload" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV15RedirectPayloada">RedirectPayload</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The result of parsing a redirect URL deep link</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">RedirectPayload</span> <span class="o">=</span> <span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">queryComponents</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV16parseRedirectURLSSSg4path_s10DictionaryVySSSaySSGG15queryComponentstSg10Foundation0G0VF"></a>
+                    <a name="//apple_ref/swift/Method/parseRedirectURL(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV16parseRedirectURLSSSg4path_s10DictionaryVySSSaySSGG15queryComponentstSg10Foundation0G0VF">parseRedirectURL(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV15RedirectPayloada">RedirectPayload</a></code> that contains data that can be used by <code><a href="../Enums/AppLaunchData.html">AppLaunchData</a></code> to
+extract deep link related information</p>
+
+<p>The redirectURL must have been generated via <code>redirectBaseURL</code> and contain
+the <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSv">appURLScheme</a></code> inside for it to be valid.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">parseRedirectURL</span><span class="p">(</span><span class="n">_</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV15RedirectPayloada">RedirectPayload</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of path and queryComponents if the URL was a valid redirectURL</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2016-2018 Schibsted Products &amp; Technology</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

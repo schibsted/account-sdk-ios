@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>IdentityUI Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/IdentityUI" class="dashAnchor"></a>
+    <a title="IdentityUI Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SchibstedAccount Docs</a></p>
+        <p class="header-right"><a href="https://www.github.com/schibsted/account-sdk-ios"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SchibstedAccount Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        IdentityUI Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Creating a User.html">Creating a User</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration/Environment.html">– Environment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityManager.html">IdentityManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityUI.html">IdentityUI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IdentityUI/Route.html">– Route</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User.html">User</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Agreements.html">– Agreements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Auth.html">– Auth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Product.html">– Product</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Profile.html">– Profile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserDelegate.html">UserDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/UserState.html">UserState</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Authenticated Requests.html">Authenticated Requests</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSession.html">URLSession</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Error Handling.html">Error Handling</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ClientError.html">ClientError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Error Handling.html#/s:16SchibstedAccount7NoValuea">NoValue</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Debugging.html">Debugging</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Logger.html">Logger</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Tracking.html">Tracking</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/View.html">– View</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/Engagement.html">– Engagement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Visual Login.html">Visual Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme.html">IdentityUITheme</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Geometry.html">– Geometry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Colors.html">– Colors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Icons.html">– Icons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/Fonts.html">– Fonts</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUITheme/TextAttributes.html">– TextAttributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityUIDelegate.html">IdentityUIDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/IdentityUIResult.html">IdentityUIResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginMethod.html">LoginMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginMethod/FlowVariant.html">– FlowVariant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Style.html">Style</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleColorKind.html">StyleColorKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/StyleColors.html">StyleColors</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/StyleIcons.html">StyleIcons</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleIconKind.html">StyleIconKind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StyleFont.html">StyleFont</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Headless Login.html">Headless Login</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AppLaunchData.html">AppLaunchData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityManagerDelegate.html">IdentityManagerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Identifiers.html">Identifiers</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/EmailAddress.html">EmailAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PhoneNumber.html">PhoneNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Identifier.html">Identifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Data Models.html">Data Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/UserProfile.html">UserProfile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Terms.html">Terms</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IdentifierStatus.html">IdentifierStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RequiredField.html">RequiredField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserProduct.html">UserProduct</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/IdentityManagerProtocol.html">IdentityManagerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProtocol.html">UserProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAuthAPI.html">UserAuthAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProfileAPI.html">UserProfileAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAgreementsAPI.html">UserAgreementsAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserProductAPI.html">UserProductAPI</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/WebSessionRoutes.html">WebSessionRoutes</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Global Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Global Variables.html#/s:16SchibstedAccount10sdkVersionSSv">sdkVersion</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Enums.html">Other Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Birthdate.html">Birthdate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSessionTask.html">URLSessionTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/URLSessionTask/State.html">– State</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Protocols.html">Other Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TaskHandle.html">TaskHandle</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other Typealiases.html">Other Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount28RequiredFieldsResultCallbacka">RequiredFieldsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount20StringResultCallbacka">StringResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount19TermsResultCallbacka">TermsResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>IdentityUI</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">IdentityUI</span></code></pre>
+
+                </div>
+              </div>
+            <p>This is the main IdentityUI object that can be used to create a user object via a UI flow.</p>
+
+<p>There are two ways to start a login process, you can either start the flow from the beginning
+which will be presented on a provided UIViewController, or you can provide an <code><a href="../Classes/IdentityUI/Route.html">IdentityUI.Route</a></code>
+that is generally used to continue a flow from the deep link.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC8delegateAA0C10UIDelegate_pSgXwv"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC8delegateAA0C10UIDelegate_pSgXwv">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/IdentityUIDelegate.html">IdentityUIDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC13configurationAA0C15UIConfigurationVv"></a>
+                    <a name="//apple_ref/swift/Property/configuration" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC13configurationAA0C15UIConfigurationVv">configuration</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC15identityManagerAA0cF0Cv"></a>
+                    <a name="//apple_ref/swift/Property/identityManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC15identityManagerAA0cF0Cv">identityManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">identityManager</span><span class="p">:</span> <span class="kt"><a href="../Classes/IdentityManager.html">IdentityManager</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUICAcA0C15UIConfigurationV13configuration_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(configuration:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUICAcA0C15UIConfigurationV13configuration_tcfc">init(configuration:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an IdentityUI object</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUICAcA0C15UIConfigurationV13configuration_AA0C7ManagerC08identityG0tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(configuration:identityManager:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUICAcA0C15UIConfigurationV13configuration_AA0C7ManagerC08identityG0tcfc">init(configuration:identityManager:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an IdentityUI object with a provided identityManager</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a></span><span class="p">,</span> <span class="nv">identityManager</span><span class="p">:</span> <span class="kt"><a href="../Classes/IdentityManager.html">IdentityManager</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC07presentC7ProcessySo16UIViewControllerC4from_AA11LoginMethodO05loginK0SSSg19localizedTeaserTexttF"></a>
+                    <a name="//apple_ref/swift/Method/presentIdentityProcess(from:loginMethod:localizedTeaserText:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC07presentC7ProcessySo16UIViewControllerC4from_AA11LoginMethodO05loginK0SSSg19localizedTeaserTexttF">presentIdentityProcess(from:loginMethod:localizedTeaserText:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Starts the login process</p>
+
+<p>Even though multiple <code>IdentityUI</code> instances can be constructed, usually only one identity process should be started at a time. An exception to this is
+when the identity process is started as a result of a universal (i.e. deep) link, since in that case it is possible (and somewhat likely) that an existing
+identity process was already in place when the user tapped on a universal links leading her back to the identity process; in that case, calling
+<code>presentIdentityProcess(from:)</code> on an instance of <code>IdentityUI</code> initialized with a route (e.g. with <code>init(configuration:route:)</code>) will automatically handle
+the case of an existing identity process (if any) for you.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">presentIdentityProcess</span><span class="p">(</span>
+    <span class="n">from</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span>
+    <span class="nv">loginMethod</span><span class="p">:</span> <span class="kt"><a href="../Enums/LoginMethod.html">LoginMethod</a></span><span class="p">,</span>
+    <span class="nv">localizedTeaserText</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC07presentC7ProcessySo16UIViewControllerC4from_AC5RouteO5routetF"></a>
+                    <a name="//apple_ref/swift/Method/presentIdentityProcess(from:route:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC07presentC7ProcessySo16UIViewControllerC4from_AC5RouteO5routetF">presentIdentityProcess(from:route:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Starts the login process from a route</p>
+
+<p>Even though multiple <code>IdentityUI</code> instances can be constructed, usually only one identity process should be started at a time. An exception to this is
+when the identity process is started as a result of a universal (i.e. deep) link, since in that case it is possible (and somewhat likely) that an existing
+identity process was already in place when the user tapped on a universal links leading her back to the identity process; in that case, calling
+<code>presentIdentityProcess(from:)</code> on an instance of <code>IdentityUI</code> initialized with a route (e.g. with <code>init(configuration:route:)</code>) will automatically handle
+the case of an existing identity process (if any) for you.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <p><code>init(configuration:route:)</code></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">presentIdentityProcess</span><span class="p">(</span><span class="n">from</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="nv">route</span><span class="p">:</span> <span class="kt"><a href="../Classes/IdentityUI/Route.html">Route</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>viewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>which view controller to present the login UI from</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>route</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a parsed <code><a href="../Classes/IdentityUI/Route.html">IdentityUI.Route</a></code> object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC5RouteO"></a>
+                    <a name="//apple_ref/swift/Enum/Route" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC5RouteO">Route</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Route to a specific screen in the identity UI flow. A route is typically constructed in order to handle a universal (i.e. deep) link URL so that the
+identity process can then be presented by going directly to the screen corresponding to the URL.</p>
+
+                        <a href="../Classes/IdentityUI/Route.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Route</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>© 2016-2018 Schibsted Products &amp; Technology</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
