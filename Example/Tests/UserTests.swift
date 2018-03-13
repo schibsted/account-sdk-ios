@@ -33,13 +33,12 @@ class UserTests: QuickSpec {
                 expect(newTokens?.refreshToken).toNot(equal(oldTokens?.refreshToken))
             }
 
-            it("Should emit set event when session refreshes it") {
+            it("Should update tokens when session refreshes it") {
                 self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
                 let user = TestingUser(state: .loggedIn)
                 let oldTokens = user.wrapped.tokens
-                var newTokens: TokenData?
-                _ = user.wrapped.didSetTokens.register { newTokens = $0.new }
                 user.refresh { _ in }
+                let newTokens = user.wrapped.tokens
                 expect(newTokens).toNot(beNil())
                 expect(oldTokens).toNot(equal(newTokens))
             }
@@ -177,43 +176,86 @@ class UserTests: QuickSpec {
                 expect(user.tokens).toNot(beNil())
             }
 
-            it("Should emit set event") {
+            it("Should update tokens") {
                 let user = User(state: .loggedOut)
-                var newTokens: TokenData?
-                _ = user.didSetTokens.register { newTokens = $0.new }
+                expect(user.tokens).to(beNil())
                 _ = try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe")
-                expect(newTokens).toNot(beNil())
+                expect(user.tokens).toNot(beNil())
             }
 
-            it("Should not emit set event if set to same") {
+            it("Should not change tokens if set to same") {
                 let user = User(state: .loggedOut)
-                var newTokens: TokenData?
                 _ = try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe")
-                _ = user.didSetTokens.register { newTokens = $0.new }
+                let tokens = user.tokens
+                expect(tokens).toNot(beNil())
                 _ = try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe")
-                expect(newTokens).to(beNil())
+                expect(user.tokens) == tokens
             }
 
-            it("Should emit set event if any tokens set differently") {
+            it("Should update tokens if set differently") {
                 let user = User(state: .loggedOut)
+                try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", userID: "hehe")
+                try? user.set(accessToken: "hehe again")
+                expect(user.tokens).toNot(beNil())
+                expect(user.tokens?.refreshToken) == "hehe"
+                expect(user.tokens?.idToken) == "hehe"
+                expect(user.tokens?.userID) == "hehe"
+
+                try? user.set(refreshToken: "hehe again")
+                expect(user.tokens).toNot(beNil())
+                expect(user.tokens?.refreshToken) == "hehe again"
+
+                try? user.set(idToken: "hehe again")
+                expect(user.tokens).toNot(beNil())
+                expect(user.tokens?.idToken) == "hehe again"
+
+                try? user.set(userID: "hehe again")
+                expect(user.tokens).toNot(beNil())
+                expect(user.tokens?.userID) == "hehe again"
+            }
+        }
+
+        describe("Keychain management") {
+            it("Should not treat the user as logged in if it does not find keychain data") {
+                let user = User(state: .loggedOut)
+                expect(user.state).to(equal(UserState.loggedOut))
+            }
+
+            it("Should treat the user as logged in if it finds keychain data") {
+                Utils.createDummyKeychain()
+                let user = User(state: .loggedOut)
+                try? user.loadStoredTokens()
+                expect(user.state).to(equal(UserState.loggedIn))
+            }
+
+            it("Should update keychain when user is refreshed") {
+                self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
                 var newTokens: TokenData?
-                _ = try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", userID: "hehe")
-                _ = user.didSetTokens.register { newTokens = $0.new }
+                do {
+                    Utils.createDummyKeychain()
+                    let user = TestingUser(state: .loggedOut)
+                    try? user.wrapped.loadStoredTokens()
+                    user.refresh { _ in }
+                    newTokens = user.wrapped.tokens
+                }
 
-                _ = try? user.set(accessToken: "hehe again")
-                expect(newTokens).toNot(beNil())
-                newTokens = nil
+                let tokens = UserTokensKeychain().data().first
+                expect(newTokens?.accessToken).to(equal(tokens?.accessToken))
+                expect(newTokens?.refreshToken).to(equal(tokens?.refreshToken))
+                expect(newTokens?.idToken).to(equal(tokens?.idToken))
+            }
 
-                _ = try? user.set(refreshToken: "hehe again")
-                expect(newTokens).toNot(beNil())
-                newTokens = nil
+            it("Should clear the keychain on logout") {
+                Utils.createDummyKeychain()
+                let user = User(state: .loggedOut)
+                try? user.loadStoredTokens()
+                expect(user.state).to(equal(UserState.loggedIn))
+                user.logout()
 
-                _ = try? user.set(idToken: "hehe again")
-                expect(newTokens).toNot(beNil())
-                newTokens = nil
-
-                _ = try? user.set(userID: "hehe again")
-                expect(newTokens).toNot(beNil())
+                let tokens = UserTokensKeychain().data().first
+                expect(tokens?.accessToken).to(beNil())
+                expect(tokens?.refreshToken).to(beNil())
+                expect(tokens?.idToken).to(beNil())
             }
         }
 

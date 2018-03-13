@@ -34,7 +34,7 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             Utils.cleanupKeychain()
             PasswordlessTokenStore.clear()
 
-            expect(User.globalStore.count) == 0
+            expect(User.globalStore.count).toEventually(equal(0))
 
             OwnedTaskHandle.counter.value = 0
 
