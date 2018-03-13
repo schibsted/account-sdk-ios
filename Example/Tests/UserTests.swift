@@ -38,7 +38,7 @@ class UserTests: QuickSpec {
                 let user = TestingUser(state: .loggedIn)
                 let oldTokens = user.wrapped.tokens
                 user.refresh { _ in }
-                let newTokens = UserTokensKeychain().data().first
+                let newTokens = user.wrapped.tokens
                 expect(newTokens).toNot(beNil())
                 expect(oldTokens).toNot(equal(newTokens))
             }
@@ -178,40 +178,40 @@ class UserTests: QuickSpec {
 
             it("Should update tokens") {
                 let user = User(state: .loggedOut)
-                expect(UserTokensKeychain().data().first).to(beNil())
+                expect(user.tokens).to(beNil())
                 _ = try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe")
-                expect(UserTokensKeychain().data().first).toNot(beNil())
+                expect(user.tokens).toNot(beNil())
             }
 
             it("Should not change tokens if set to same") {
                 let user = User(state: .loggedOut)
                 _ = try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe")
-                let tokens = UserTokensKeychain().data().first
+                let tokens = user.tokens
                 expect(tokens).toNot(beNil())
                 _ = try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe")
-                expect(UserTokensKeychain().data().first).to(equal(tokens))
+                expect(user.tokens) == tokens
             }
 
             it("Should update tokens if set differently") {
                 let user = User(state: .loggedOut)
-                _ = try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", userID: "hehe")
-                _ = try? user.set(accessToken: "hehe again")
-                var tokens = UserTokensKeychain().data().first
-                expect(tokens).toNot(beNil())
-                UserTokensKeychain().removeTokens(forAccessToken: tokens?.accessToken ?? "")
+                try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", userID: "hehe")
+                try? user.set(accessToken: "hehe again")
+                expect(user.tokens).toNot(beNil())
+                expect(user.tokens?.refreshToken) == "hehe"
+                expect(user.tokens?.idToken) == "hehe"
+                expect(user.tokens?.userID) == "hehe"
 
-                _ = try? user.set(refreshToken: "hehe again")
-                tokens = UserTokensKeychain().data().first
-                expect(tokens).toNot(beNil())
-                UserTokensKeychain().removeTokens(forAccessToken: tokens?.accessToken ?? "")
+                try? user.set(refreshToken: "hehe again")
+                expect(user.tokens).toNot(beNil())
+                expect(user.tokens?.refreshToken) == "hehe again"
 
-                _ = try? user.set(idToken: "hehe again")
-                tokens = UserTokensKeychain().data().first
-                expect(tokens).toNot(beNil())
-                UserTokensKeychain().removeTokens(forAccessToken: tokens?.accessToken ?? "")
+                try? user.set(idToken: "hehe again")
+                expect(user.tokens).toNot(beNil())
+                expect(user.tokens?.idToken) == "hehe again"
 
-                _ = try? user.set(userID: "hehe again")
-                expect(UserTokensKeychain().data().first).toNot(beNil())
+                try? user.set(userID: "hehe again")
+                expect(user.tokens).toNot(beNil())
+                expect(user.tokens?.userID) == "hehe again"
             }
         }
 
@@ -233,10 +233,10 @@ class UserTests: QuickSpec {
                 var newTokens: TokenData?
                 do {
                     Utils.createDummyKeychain()
-                    let user = User(state: .loggedOut)
-                    try? user.loadStoredTokens()
+                    let user = TestingUser(state: .loggedOut)
+                    try? user.wrapped.loadStoredTokens()
                     user.refresh { _ in }
-                    newTokens = user.tokens
+                    newTokens = user.wrapped.tokens
                 }
 
                 let tokens = UserTokensKeychain().data().first
