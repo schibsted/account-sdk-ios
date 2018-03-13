@@ -8,15 +8,15 @@
 
 Pod::Spec.new do |s|
   s.name = 'SchibstedAccount'
-  s.version = '1.0.0'
-  s.summary = "Prototype SDK for the SchibstedAccount identity service"
+  s.version = '1.0.0-rc1'
+  s.summary = "SDK for a Schibsted identity service"
   s.license = { :type => "MIT" }
-  s.homepage = "https://pages.github.schibsted.io/spt-identity/identity-sdk-ios/"
+  s.homepage = "https://schibsted.github.io/account-sdk-ios/"
   s.authors = {
     "Schibsted" => "support@spid.no",
   }
   s.source = {
-    :git => 'git@github.schibsted.io:spt-identity/identity-sdk-ios.git',
+    :git => 'https://github.com/schibsted/account-sdk-ios.git',
     :tag => s.version.to_s
   }
 
