@@ -29,6 +29,7 @@ matrix:
         local_dir: docs
         provider: pages
         skip_cleanup: true
+        keep-history: true
         github_token: $GITHUB_TOKEN
         on:
           branch: master
