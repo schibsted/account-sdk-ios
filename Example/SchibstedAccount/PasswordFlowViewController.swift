@@ -10,6 +10,7 @@ class PasswordFlowViewController: UIViewController {
 
     @IBOutlet var emailField: UITextField!
     @IBOutlet var passwordField: UITextField!
+    @IBOutlet var shouldPersistUserSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +28,14 @@ class PasswordFlowViewController: UIViewController {
 
     @IBAction func login(_: UIButton) {
         guard let email = self.email, let password = self.password else { return }
-        UIApplication.identityManager.login(email: email, password: password, persistUser: false) { result in
+        UIApplication.identityManager.login(email: email, password: password, persistUser: self.shouldPersistUserSwitch.isOn) { result in
             print(result)
         }
     }
 
     @IBAction func signup(_: UIButton) {
         guard let email = self.email, let password = self.password else { return }
-        UIApplication.identityManager.signup(email: email, password: password, persistUser: false) { result in
+        UIApplication.identityManager.signup(email: email, password: password, persistUser: self.shouldPersistUserSwitch.isOn) { result in
             print(result)
         }
     }
