@@ -219,6 +219,7 @@ class UserTests: QuickSpec {
             it("Should not treat the user as logged in if it does not find keychain data") {
                 let user = User(state: .loggedOut)
                 expect(user.state).to(equal(UserState.loggedOut))
+                try? user.loadStoredTokens()
             }
 
             it("Should treat the user as logged in if it finds keychain data") {
@@ -230,9 +231,11 @@ class UserTests: QuickSpec {
 
             it("Should update keychain when user is refreshed") {
                 self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
+                var oldTokens: TokenData?
                 var newTokens: TokenData?
                 do {
                     Utils.createDummyKeychain()
+                    oldTokens = UserTokensKeychain().data().first
                     let user = TestingUser(state: .loggedOut)
                     try? user.wrapped.loadStoredTokens()
                     user.refresh { _ in }
@@ -243,6 +246,9 @@ class UserTests: QuickSpec {
                 expect(newTokens?.accessToken).to(equal(tokens?.accessToken))
                 expect(newTokens?.refreshToken).to(equal(tokens?.refreshToken))
                 expect(newTokens?.idToken).to(equal(tokens?.idToken))
+
+                expect(newTokens?.accessToken).toNot(equal(oldTokens?.accessToken))
+                expect(newTokens?.refreshToken).toNot(equal(oldTokens?.refreshToken))
             }
 
             it("Should clear the keychain on logout") {
