@@ -109,24 +109,9 @@ public class IdentityManager: IdentityManagerProtocol {
         self.currentUser = User(clientConfiguration: clientConfiguration)
         self.currentUser.delegate = self
 
-        if let tokens = try? UserTokensStorage().loadTokens() {
-            self.finishLogin(result: .success(tokens), completion: nil)
-        }
-
-        self.currentUser.didSetTokens.register(self, handler: type(of: self).userDidSetTokens).descriptionText = "IdentityManager.userDidSetTokens"
+        try? self.currentUser.loadStoredTokens()
 
         log(from: self, "user: \(self.currentUser)")
-    }
-
-    private func userDidSetTokens(_ tokens: (new: TokenData?, old: TokenData?)) {
-        // Always clear old tokens
-        if let previousUserTokens = tokens.old {
-            try? UserTokensStorage().clear(previousUserTokens)
-        }
-
-        if tokens.new != nil, let currentUserTokens = self.currentUser.tokens {
-            try? UserTokensStorage().store(currentUserTokens)
-        }
     }
 
     private func dispatchIfSelf(_ block: @escaping () -> Void) {
