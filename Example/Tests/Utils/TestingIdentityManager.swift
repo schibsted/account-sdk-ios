@@ -39,21 +39,21 @@ class TestingIdentityManager: IdentityManagerProtocol {
         }
     }
 
-    func validate(oneTimeCode: String, completion: @escaping NoValueCallback) {
+    func validate(oneTimeCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
         Utils.waitUntilDone(completion) { [unowned self] in
-            self.identityManager.validate(oneTimeCode: oneTimeCode, completion: $0)
+            self.identityManager.validate(oneTimeCode: oneTimeCode, persistUser: persistUser, completion: $0)
         }
     }
 
-    func validate(oneTimeCode: String, for identifier: Identifier, completion: @escaping NoValueCallback) {
+    func validate(oneTimeCode: String, for identifier: Identifier, persistUser: Bool, completion: @escaping NoValueCallback) {
         Utils.waitUntilDone(completion) { [unowned self] in
-            self.identityManager.validate(oneTimeCode: oneTimeCode, for: identifier, completion: $0)
+            self.identityManager.validate(oneTimeCode: oneTimeCode, for: identifier, persistUser: persistUser, completion: $0)
         }
     }
 
-    func validate(authCode: String, completion: @escaping NoValueCallback) {
+    func validate(authCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
         Utils.waitUntilDone(completion) { [unowned self] in
-            self.identityManager.validate(authCode: authCode, completion: $0)
+            self.identityManager.validate(authCode: authCode, persistUser: persistUser, completion: $0)
         }
     }
 
@@ -63,9 +63,9 @@ class TestingIdentityManager: IdentityManagerProtocol {
         }
     }
 
-    func login(username: Identifier, password: String, completion: @escaping NoValueCallback) {
+    func login(username: Identifier, password: String, persistUser: Bool, completion: @escaping NoValueCallback) {
         Utils.waitUntilDone(completion) { [unowned self] in
-            self.identityManager.login(username: username, password: password, completion: $0)
+            self.identityManager.login(username: username, password: password, persistUser: persistUser, completion: $0)
         }
     }
 
@@ -75,6 +75,7 @@ class TestingIdentityManager: IdentityManagerProtocol {
         profile: UserProfile? = nil,
         acceptTerms: Bool? = nil,
         redirectPath: String? = nil,
+        persistUser: Bool,
         completion: @escaping NoValueCallback
     ) {
         Utils.waitUntilDone(completion) { [unowned self] in
@@ -84,6 +85,7 @@ class TestingIdentityManager: IdentityManagerProtocol {
                 profile: profile,
                 acceptTerms: acceptTerms,
                 redirectPath: redirectPath,
+                persistUser: persistUser,
                 completion: $0
             )
         }

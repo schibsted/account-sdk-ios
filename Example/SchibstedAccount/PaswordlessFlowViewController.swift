@@ -64,7 +64,7 @@ class PaswordlessFlowViewController: UIViewController {
             return
         }
 
-        UIApplication.identityManager.validate(oneTimeCode: code) { result in
+        UIApplication.identityManager.validate(oneTimeCode: code, persistUser: false) { result in
             switch result {
             case .success:
                 print("Code validated!")

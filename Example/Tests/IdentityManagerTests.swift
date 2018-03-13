@@ -176,7 +176,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
 
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
 
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
             }
@@ -189,7 +189,7 @@ class IdentityManagerTests: QuickSpec {
 
                 expect(identityManager.currentUser.tokens?.accessToken).to(beNil())
 
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber) { result in
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false) { result in
                     expect(result).to(beSuccess())
                 }
 
@@ -202,21 +202,33 @@ class IdentityManagerTests: QuickSpec {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.validate(oneTimeCode: "123", for: actual) { result in
+                identityManager.validate(oneTimeCode: "123", for: actual, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.unexpectedIdentifier(actual: actual, expected: self.testNumber.normalizedString)))
                 }
             }
 
-            it("Should ensure user is logged in on next session") {
+            it("Should ensure user is logged in on next session if login is persistent") {
                 do {
                     self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
                     PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                     let identityManager = Utils.makeIdentityManager()
-                    identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                    identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: true, completion: { _ in })
                 }
 
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedIn))
+            }
+
+            it("Should ensure user is not logged in on next session if login is not persistent") {
+                do {
+                    self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                    PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
+                    let identityManager = Utils.makeIdentityManager()
+                    identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
+                }
+
+                let identityManager = Utils.makeIdentityManager()
+                expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
             }
 
             it("Should delegate a logged in event") {
@@ -226,7 +238,7 @@ class IdentityManagerTests: QuickSpec {
 
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
 
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
             }
@@ -238,14 +250,14 @@ class IdentityManagerTests: QuickSpec {
 
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
 
                 // Now set state to anything but LoggedIn and make sure it doesn't turn in to LoggedIn
                 delegate.recordedState = .loggedOut
 
                 // Set data again because it's removed after previous successful validation
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
                 expect(delegate.recordedState).toNotEventually(equal(UserState.loggedIn))
             }
 
@@ -256,14 +268,14 @@ class IdentityManagerTests: QuickSpec {
 
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
 
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
 
                 delegate.recordedState = .loggedOut
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode-same-id-diff-code", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
                 expect(delegate.recordedState).toNotEventually(equal(UserState.loggedIn))
             }
 
@@ -274,14 +286,14 @@ class IdentityManagerTests: QuickSpec {
 
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
 
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
 
                 delegate.recordedState = .loggedOut
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode-diff-id-same-code", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
             }
 
@@ -289,7 +301,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.validate(oneTimeCode: "123", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
                 expect { try PasswordlessTokenStore.getData(for: .sms) }.to(throwError())
                 expect { try PasswordlessTokenStore.getData(for: .email) }.to(throwError())
             }
@@ -298,7 +310,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.validate(oneTimeCode: "123") { result in
+                identityManager.validate(oneTimeCode: "123", persistUser: false) { result in
                     expect(result).to(beSuccess())
                 }
             }
@@ -306,7 +318,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should fail if no identifier present when identifier not provided") {
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.validate(oneTimeCode: "123") { result in
+                identityManager.validate(oneTimeCode: "123", persistUser: false) { result in
                     struct NothingToValidate: Error {}
                     expect(result).to(failWith(ClientError.unexpected(NothingToValidate())))
                 }
@@ -317,7 +329,7 @@ class IdentityManagerTests: QuickSpec {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testEmail, for: .email)
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.validate(oneTimeCode: "123") { result in
+                identityManager.validate(oneTimeCode: "123", persistUser: false) { result in
                     let expectedError = ClientError.networkingError(NetworkingError.unexpectedStatus(status: 400, data: "".data(using: .utf8)!))
                     expect(result).to(failWith(expectedError))
                 }
@@ -328,7 +340,7 @@ class IdentityManagerTests: QuickSpec {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.validate(oneTimeCode: self.testAuthCode, for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: self.testAuthCode, for: self.testNumber, persistUser: false, completion: { _ in })
 
                 expect(Networking.testingProxy.calledOnce).to(beTrue())
                 let callData = Networking.testingProxy.calls[0]
@@ -346,7 +358,7 @@ class IdentityManagerTests: QuickSpec {
 
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.validate(oneTimeCode: self.testAuthCode, for: self.testNumber) { result in
+                identityManager.validate(oneTimeCode: self.testAuthCode, for: self.testNumber, persistUser: false) { result in
                     expect(result).to(failWith(.networkingError(error)))
                 }
             }
@@ -356,7 +368,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "invalid-authcode-no-access-token", status: 200))
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.validate(oneTimeCode: "whatevs", for: self.testNumber) { result in
+                identityManager.validate(oneTimeCode: "whatevs", for: self.testNumber, persistUser: false) { result in
                     expect(result).to(failWith(.unexpected(JSONError.noKey("access_token"))))
                 }
             }
@@ -366,7 +378,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.validate(oneTimeCode: "whatevs", for: self.testNumber, completion: { _ in })
+                identityManager.validate(oneTimeCode: "whatevs", for: self.testNumber, persistUser: false, completion: { _ in })
 
                 let tokens = identityManager.currentUser.tokens
 
@@ -381,7 +393,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/oauth/ro"), try! Builders.load(file: "invalid-authcode", status: 400))
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.validate(oneTimeCode: "whatevs", for: self.testNumber) { result in
+                identityManager.validate(oneTimeCode: "whatevs", for: self.testNumber, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.invalidCode))
                 }
             }
@@ -573,7 +585,7 @@ class IdentityManagerTests: QuickSpec {
 
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 expect(Networking.testingProxy.calledOnce).to(beTrue())
                 let callData = Networking.testingProxy.calls[0]
@@ -587,7 +599,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedIn))
             }
@@ -597,7 +609,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.tokens).to(beNil())
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 expect(identityManager.currentUser.tokens).toNot(beNil())
                 expect(identityManager.currentUser.tokens?.accessToken).to(equal("d315d41a1804dc7416accb7a02410eeff7a078c7"))
@@ -610,7 +622,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.tokens?.idToken).to(beNil())
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 expect(identityManager.currentUser.tokens?.idToken).to(equal("testIDToken"))
             }
@@ -620,7 +632,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.id).to(beNil())
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 expect(identityManager.currentUser.id).to(equal("testIDToken"))
             }
@@ -630,7 +642,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 var errorMaybe: Error?
 
-                identityManager.login(username: self.testEmail, password: self.testPassword) { result in
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.invalidUserCredentials(message: nil)))
                 }
             }
@@ -640,7 +652,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
             }
@@ -649,7 +661,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/oauth/token"), try! Builders.load(file: "login-invalid-unverified", status: 400))
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.login(username: self.testEmail, password: self.testPassword) { result in
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.unverifiedEmail))
                 }
             }
@@ -661,7 +673,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-valid", status: 201))
 
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.signup(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 expect(Networking.testingProxy.callCount).to(equal(2))
                 let callData = Networking.testingProxy.calls.last
@@ -673,7 +685,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-valid", status: 201))
 
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.signup(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 let callData = Networking.testingProxy.calls.last
                 expect(callData?.passedFormData?["email"]) == self.testEmail.normalizedString
@@ -691,13 +703,13 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-valid", status: 201))
 
                 let identityManager = Utils.makeIdentityManager(clientConfiguration: configuration)
-                identityManager.signup(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 let callData = Networking.testingProxy.calls.last
                 let redirectUri = URL(string: callData!.passedFormData!["redirectUri"]!)
                 expect(redirectUri?.scheme) == configuration.appURLScheme
                 expect(redirectUri?.host) == configuration.redirectURLRoot
-                expect(redirectUri?.query) == "path=validate-after-signup"
+                expect(redirectUri?.query) == "persist-user=false&path=validate-after-signup"
             }
 
             it("Should have correct redirect uri with custom scheme") {
@@ -706,13 +718,13 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-valid", status: 201))
 
                 let identityManager = Utils.makeIdentityManager(clientConfiguration: configuration)
-                identityManager.signup(username: self.testEmail, password: self.testPassword, completion: { _ in })
+                identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
                 let callData = Networking.testingProxy.calls.last
                 let redirectUri = URL(string: callData!.passedFormData!["redirectUri"]!)
                 expect(redirectUri?.scheme) == configuration.appURLScheme
                 expect(redirectUri?.pathComponents[1]) == configuration.redirectURLRoot
-                expect(redirectUri?.query) == "path=validate-after-signup"
+                expect(redirectUri?.query) == "persist-user=false&path=validate-after-signup"
             }
 
             it("Should report an error on bad email") {
@@ -721,7 +733,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-invalid-duplicate-email", status: 302))
 
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.signup(username: self.testEmail, password: self.testPassword) { result in
+                identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.alreadyRegistered(message: "kowabunga")))
                 }
             }
@@ -731,7 +743,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-invalid-bad-password", status: 409))
 
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.signup(username: self.testEmail, password: self.testPassword) { result in
+                identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
                     // TODO: Is this correct? Should there be a ClientError enum for this?
                     expect(result).to(beFailure())
                 }
@@ -742,7 +754,7 @@ class IdentityManagerTests: QuickSpec {
                 self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-invalid-duplicate-email", status: 302))
 
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.signup(username: self.testEmail, password: self.testPassword) { result in
+                identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.alreadyRegistered(message: "kowabunga")))
                 }
             }
@@ -754,7 +766,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
 
-                identityManager.validate(authCode: self.testAuthCode, completion: { _ in })
+                identityManager.validate(authCode: self.testAuthCode, persistUser: false, completion: { _ in })
 
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedIn))
             }
@@ -762,7 +774,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should set auth tokens") {
                 self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-validation-valid", status: 200))
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.validate(authCode: self.testAuthCode, completion: { _ in })
+                identityManager.validate(authCode: self.testAuthCode, persistUser: false, completion: { _ in })
 
                 expect(identityManager.currentUser.tokens).toNot(beNil())
                 expect(identityManager.currentUser.tokens?.accessToken).to(equal("mytesttkn111"))
@@ -772,7 +784,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should report an error on invalid code") {
                 self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-validation-invalid", status: 400))
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.validate(authCode: self.testAuthCode) { result in
+                identityManager.validate(authCode: self.testAuthCode, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.invalidCode))
                 }
             }
@@ -780,7 +792,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should stay logged out on invalid code") {
                 self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-validation-invalid", status: 400))
                 let identityManager = Utils.makeIdentityManager()
-                identityManager.validate(authCode: self.testAuthCode, completion: { _ in })
+                identityManager.validate(authCode: self.testAuthCode, persistUser: false, completion: { _ in })
 
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
             }

@@ -159,8 +159,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch appLaunchData {
         case .afterForgotPassword:
             print("enter password now")
-        case let .codeAfterSignup(code), let .codeAfterUnvalidatedLogin(code):
-            self.passwordFlowViewController?.validateDeepLinkCode(code)
+        case let .codeAfterSignup(code, shouldPersistUser):
+            self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: shouldPersistUser)
+        case let .codeAfterUnvalidatedLogin(code):
+            self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
         }
         return true
     }

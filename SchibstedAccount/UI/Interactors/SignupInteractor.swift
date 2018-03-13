@@ -6,13 +6,15 @@
 class SignupInteractor: CompleteProfileInteractor {
     let identifier: Identifier
     let password: String
+    let persistUser: Bool
     let identityManager: IdentityManager
     let currentUser: User? = nil
     let loginFlowVariant: LoginMethod.FlowVariant = .signup
 
-    init(identifier: Identifier, password: String, identityManager: IdentityManager) {
+    init(identifier: Identifier, password: String, persistUser: Bool, identityManager: IdentityManager) {
         self.identifier = identifier
         self.password = password
+        self.persistUser = persistUser
         self.identityManager = identityManager
     }
 
@@ -27,7 +29,13 @@ class SignupInteractor: CompleteProfileInteractor {
             profile.set(field: field, value: value)
         }
 
-        self.identityManager.signup(username: self.identifier, password: self.password, profile: profile, acceptTerms: acceptingTerms) { [weak self] result in
+        self.identityManager.signup(
+            username: self.identifier,
+            password: self.password,
+            profile: profile,
+            acceptTerms: acceptingTerms,
+            persistUser: self.persistUser
+        ) { [weak self] result in
             guard let strongSelf = self else { return }
             switch result {
             case .success:

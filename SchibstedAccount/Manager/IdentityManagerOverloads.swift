@@ -31,22 +31,30 @@ public extension IdentityManagerProtocol {
     }
 
     /// - SeeAlso: `IdentityManager.validate(oneTimeCode:for:completion:)`
-    func validate(oneTimeCode: String, for email: EmailAddress, completion: @escaping NoValueCallback) {
-        return self.validate(oneTimeCode: oneTimeCode, for: Identifier(email), completion: completion)
+    func validate(oneTimeCode: String, for email: EmailAddress, persistUser: Bool, completion: @escaping NoValueCallback) {
+        return self.validate(oneTimeCode: oneTimeCode, for: Identifier(email), persistUser: persistUser, completion: completion)
     }
 
     /// - SeeAlso: `IdentityManager.validate(oneTimeCode:for:completion:)`
-    func validate(oneTimeCode: String, for phone: PhoneNumber, completion: @escaping NoValueCallback) {
-        return self.validate(oneTimeCode: oneTimeCode, for: Identifier(phone), completion: completion)
+    func validate(oneTimeCode: String, for phone: PhoneNumber, persistUser: Bool, completion: @escaping NoValueCallback) {
+        return self.validate(oneTimeCode: oneTimeCode, for: Identifier(phone), persistUser: persistUser, completion: completion)
     }
 
     /// - SeeAlso: `IdentityManager.login(...)`
-    func login(email: EmailAddress, password: String, completion: @escaping NoValueCallback) {
-        return self.login(username: Identifier(email), password: password, completion: completion)
+    func login(email: EmailAddress, password: String, persistUser: Bool, completion: @escaping NoValueCallback) {
+        return self.login(username: Identifier(email), password: password, persistUser: persistUser, completion: completion)
     }
     /// - SeeAlso: `IdentityManager.signup(...)`
-    func signup(email: EmailAddress, password: String, completion: @escaping NoValueCallback) {
-        return self.signup(username: Identifier(email), password: password, profile: nil, acceptTerms: nil, redirectPath: nil, completion: completion)
+    func signup(email: EmailAddress, password: String, persistUser: Bool, completion: @escaping NoValueCallback) {
+        return self.signup(
+            username: Identifier(email),
+            password: password,
+            profile: nil,
+            acceptTerms: nil,
+            redirectPath: nil,
+            persistUser: persistUser,
+            completion: completion
+        )
     }
 
     /// - SeeAlso: `IdentityManager.fetchStatus(...)`

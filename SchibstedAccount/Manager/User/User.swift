@@ -49,6 +49,8 @@ public class User: UserProtocol {
     ///
     public weak var delegate: UserDelegate?
 
+    var isPersistent = false
+
     var didSetTokens = EventEmitter<(new: TokenData?, old: TokenData?)>(description: "User.didSetTokens")
     var willDeinit = EventEmitter<()>(description: "User.willDeinit")
 
