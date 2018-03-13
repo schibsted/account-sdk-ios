@@ -46,6 +46,8 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             TaskOperation.counter.value = 0
             AutoRefreshURLProtocol.counter.value = 0
             AutoRefreshTask.counter.value = 0
+
+            StubbedNetworkingProxy.removeStubs()
         }
     }
 }

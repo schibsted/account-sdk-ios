@@ -11,7 +11,7 @@ struct GenericError {
 
 extension GenericError {
     struct Unexpected: Error {
-        var string: String?
+        var string: String
         init(_ string: String) {
             self.string = string
         }
@@ -20,16 +20,13 @@ extension GenericError {
 
 extension GenericError.Unexpected: CustomStringConvertible {
     var description: String {
-        if let string = self.string {
-            return "\(type(of: self))! \(string)"
-        }
-        return "\(type(of: self))!"
+        return "\(type(of: self))! \(string)"
     }
 }
 
 extension GenericError {
     struct WTF: Error {
-        var string: String?
+        var string: String
         init(_ string: String) {
             self.string = string
         }
@@ -38,9 +35,6 @@ extension GenericError {
 
 extension GenericError.WTF: CustomStringConvertible {
     var description: String {
-        if let string = self.string {
-            return "\(type(of: self))! \(string)"
-        }
-        return "\(type(of: self))!"
+        return "\(type(of: self))! \(string)"
     }
 }
