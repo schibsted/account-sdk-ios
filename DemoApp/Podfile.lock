@@ -1,11 +1,11 @@
 PODS:
-  - SchibstedAccount (1.0.0):
-    - SchibstedAccount/Manager (= 1.0.0)
-    - SchibstedAccount/UI (= 1.0.0)
-  - SchibstedAccount/Core (1.0.0)
-  - SchibstedAccount/Manager (1.0.0):
+  - SchibstedAccount (1.0.0-rc1):
+    - SchibstedAccount/Manager (= 1.0.0-rc1)
+    - SchibstedAccount/UI (= 1.0.0-rc1)
+  - SchibstedAccount/Core (1.0.0-rc1)
+  - SchibstedAccount/Manager (1.0.0-rc1):
     - SchibstedAccount/Core
-  - SchibstedAccount/UI (1.0.0):
+  - SchibstedAccount/UI (1.0.0-rc1):
     - SchibstedAccount/Manager
   - SwiftFormat/CLI (0.33.4)
 
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  SchibstedAccount: 8176ce54ad5a2dea12b427106021b57a3e0db2e9
+  SchibstedAccount: 59c9988cee73fb4b3ce027676c7fce9c1ac5613f
   SwiftFormat: f39044d75d5e58dbbc7c436c089104ec9c8f717a
 
 PODFILE CHECKSUM: f97517f36b0cdaf5f6767aa954f28af497511f2b
