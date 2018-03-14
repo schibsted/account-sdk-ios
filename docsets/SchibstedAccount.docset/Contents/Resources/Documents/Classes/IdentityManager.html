@@ -334,8 +334,8 @@ can be accessed through <code><a href="../Classes/IdentityManager.html#/s:16Schi
 
 <ol>
 <li>Passwordless login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code>)</li>
-<li>Password login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordyAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
-<li>Signup APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathyAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
+<li>Password login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
+<li>Signup APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
 <li>APIs to access client specific information</li>
 </ol>
 
@@ -358,8 +358,9 @@ user object. This means checking if there are updated terms and conditions that 
 that need to be updated. These can both be done via <code><a href="../Classes/User/Agreements.html#/s:16SchibstedAccount4UserC10AgreementsC6statusAA10TaskHandle_pyAA6ResultOySbAA11ClientErrorOGc10completion_tF">User.Agreements.status(...)</a></code> and <code><a href="../Classes/User/Profile.html#/s:16SchibstedAccount4UserC7ProfileC14requiredFieldsAA10TaskHandle_pyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">User.Profile.requiredFields(...)</a></code>.</p>
 <h3 id='user-persistence' class='heading'>User persistence</h3>
 
-<p>The user that is internally managed by an identity manager is also persisted in your keychain for maintaing logged in and logged out
-state. Therefore, once a user is made valid, the manager persists the data necessary to recreate the user for a later session.</p>
+<p>If the <code>persistUser</code> parameter passed to the <code>IdentityManager</code>&rsquo;s methods is <code>true</code>, the user that is internally managed by an identity manager is also
+persisted in your keychain for maintaing logged in and logged out state. Therefore, once a user is made valid, the manager persists the data necessary to
+recreate the user for a later session.</p>
 
 <p>Currently the keychain user is a singleton. So the last user that is <q>validated</q> will be persisted. And the last user that is persisted
 will be the one that is loaded by a new instance of the <code>IdentityManager</code>.</p>
@@ -554,7 +555,7 @@ using one of the aformentioned methods.</p>
 
 <p>One time code passwordless authentication involves 2 steps. First this method is called to send a code
 to an identifier. This code has to be extracted seperately by the owner of the identifier and then it
-can be used with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3foryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:for:completion:)</a></code> to create a valid user</p>
+can be used with <code>validate(oneTimeCode:for:completion:)</code> to create a valid user</p>
 
                       </div>
                       <div class="declaration">
@@ -665,9 +666,9 @@ can be used with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAc
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3foryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/validate(oneTimeCode:for:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3foryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:for:completion:)</a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3forSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/validate(oneTimeCode:for:persistUser:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3forSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:for:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -682,7 +683,7 @@ can be used with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAc
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">oneTimeCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="k">for</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">oneTimeCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="k">for</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">persistUser</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -717,6 +718,18 @@ can be used with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAc
                             <tr>
                               <td>
                                 <code>
+                                <em>persistUser</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>whether the login status should be persistent on app&rsquo;s relaunches</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
                                 <em>completion</em>
                                 </code>
                               </td>
@@ -735,9 +748,9 @@ can be used with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAc
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/validate(oneTimeCode:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:completion:)</a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_Sb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/validate(oneTimeCode:persistUser:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_Sb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -756,7 +769,7 @@ that was previously used (during a single session) and succeed if any succeed.</
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">oneTimeCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">oneTimeCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">persistUser</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -773,6 +786,18 @@ that was previously used (during a single session) and succeed if any succeed.</
                               <td>
                                 <div>
                                   <p>The auth code that was sent to the user</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>persistUser</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>whether the login status should be persistent on app&rsquo;s relaunches</p>
                                 </div>
                               </td>
                             </tr>
@@ -797,9 +822,9 @@ that was previously used (during a single session) and succeed if any succeed.</
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordyAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/login(username:password:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordyAA6ResultOyytAA11ClientErrorOGc10completiontF">login(username:password:completion:)</a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/login(username:password:persistUser:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">login(username:password:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -814,7 +839,7 @@ that was previously used (during a single session) and succeed if any succeed.</
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">login</span><span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">login</span><span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">persistUser</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -849,6 +874,18 @@ that was previously used (during a single session) and succeed if any succeed.</
                             <tr>
                               <td>
                                 <code>
+                                <em>persistUser</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>whether the login status should be persistent on app&rsquo;s relaunches</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
                                 <em>completion</em>
                                 </code>
                               </td>
@@ -867,9 +904,9 @@ that was previously used (during a single session) and succeed if any succeed.</
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathyAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/signup(username:password:profile:acceptTerms:redirectPath:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathyAA6ResultOyytAA11ClientErrorOGc10completiontF">signup(username:password:profile:acceptTerms:redirectPath:completion:)</a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/signup(username:password:profile:acceptTerms:redirectPath:persistUser:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF">signup(username:password:profile:acceptTerms:redirectPath:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -882,7 +919,7 @@ that was previously used (during a single session) and succeed if any succeed.</
 <p>This method does not result in a valid <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">currentUser</a></code> object. The reason is that either the identifier
 already exists in the system, in which case you will get a <code><a href="../Enums/ClientError.html#/s:16SchibstedAccount11ClientErrorO17alreadyRegisteredACSS7message_tcACmF">ClientError.alreadyRegistered</a></code>, or the
 identifier needs to be verified, in which case there will be an eventual deep link back in to your
-application that can be parsed with <code><a href="../Enums/AppLaunchData.html">AppLaunchData</a></code> and verified with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(authCode:completion:)</a></code></p>
+application that can be parsed with <code><a href="../Enums/AppLaunchData.html">AppLaunchData</a></code> and verified with <code>validate(authCode:completion:)</code></p>
 
 <p>This API results in an email being sent to the user to complete the process. Once a user clicks on a verification
 email, a number of things can happen, they can be:</p>
@@ -929,6 +966,7 @@ all of your client&rsquo;s required fields.</p>
     <span class="nv">profile</span><span class="p">:</span> <span class="kt"><a href="../Structs/UserProfile.html">UserProfile</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">acceptTerms</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">redirectPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">persistUser</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
     <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span>
 <span class="p">)</span></code></pre>
 
@@ -1001,6 +1039,18 @@ all of your client&rsquo;s required fields.</p>
                             <tr>
                               <td>
                                 <code>
+                                <em>persistUser</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>whether the login status should be persistent on app&rsquo;s relaunches</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
                                 <em>completion</em>
                                 </code>
                               </td>
@@ -1019,9 +1069,9 @@ all of your client&rsquo;s required fields.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/validate(authCode:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_yAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(authCode:completion:)</a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_Sb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/validate(authCode:persistUser:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_Sb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(authCode:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1043,7 +1093,7 @@ all of your client&rsquo;s required fields.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">authCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">authCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">persistUser</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1072,6 +1122,18 @@ all of your client&rsquo;s required fields.</p>
                               <td>
                                 <div>
                                   <p>the callback that is called after validation</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>persistUser</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>whether the login status should be persistent on app&rsquo;s relaunches</p>
                                 </div>
                               </td>
                             </tr>

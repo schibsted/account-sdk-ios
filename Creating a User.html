@@ -418,8 +418,8 @@ can be accessed through <code><a href="Classes/IdentityManager.html#/s:16Schibst
 
 <ol>
 <li>Passwordless login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code>)</li>
-<li>Password login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordyAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
-<li>Signup APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathyAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
+<li>Password login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
+<li>Signup APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
 <li>APIs to access client specific information</li>
 </ol>
 
@@ -442,8 +442,9 @@ user object. This means checking if there are updated terms and conditions that 
 that need to be updated. These can both be done via <code><a href="Classes/User/Agreements.html#/s:16SchibstedAccount4UserC10AgreementsC6statusAA10TaskHandle_pyAA6ResultOySbAA11ClientErrorOGc10completion_tF">User.Agreements.status(...)</a></code> and <code><a href="Classes/User/Profile.html#/s:16SchibstedAccount4UserC7ProfileC14requiredFieldsAA10TaskHandle_pyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">User.Profile.requiredFields(...)</a></code>.</p>
 <h3 id='user-persistence' class='heading'>User persistence</h3>
 
-<p>The user that is internally managed by an identity manager is also persisted in your keychain for maintaing logged in and logged out
-state. Therefore, once a user is made valid, the manager persists the data necessary to recreate the user for a later session.</p>
+<p>If the <code>persistUser</code> parameter passed to the <code>IdentityManager</code>&rsquo;s methods is <code>true</code>, the user that is internally managed by an identity manager is also
+persisted in your keychain for maintaing logged in and logged out state. Therefore, once a user is made valid, the manager persists the data necessary to
+recreate the user for a later session.</p>
 
 <p>Currently the keychain user is a singleton. So the last user that is <q>validated</q> will be persisted. And the last user that is persisted
 will be the one that is loaded by a new instance of the <code>IdentityManager</code>.</p>
