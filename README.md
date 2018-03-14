@@ -31,7 +31,7 @@ To fulfill this, you can either implement it yourself or use one which is alread
 
 **Internal**: There is an internal Schibsted Tracking implementation for the identity SDK availabe [here](https://github.schibsted.io/spt-identity/identity-sdk-ios-tracking) and is available from `source "git@github.schibsted.io:CocoaPods/Specs.git`, so in your pod file you may:
 
-- `pod 'SchibstedAccountTracking'`: Adds dependency to the [new](https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios) pulse SDK
+- `pod 'SchibstedIDTracking'`: Adds dependency to the [new](https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios) pulse SDK
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
