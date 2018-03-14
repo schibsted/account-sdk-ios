@@ -198,7 +198,7 @@ public struct ClientConfiguration {
     /**
      Base URL for redirects that will be created by the SDK for various API calls.
      */
-    public func redirectBaseURL(withPathComponent path: String?) -> URL {
+    public func redirectBaseURL(withPathComponent path: String?, additionalQueryItems: [URLQueryItem]? = nil) -> URL {
         var components = URLComponents()
         components.scheme = self.appURLScheme
         if self.appURLScheme == self.defaultAppURLScheme {
@@ -207,7 +207,9 @@ public struct ClientConfiguration {
             components.path = "/" + self.redirectURLRoot
         }
         if let path = path {
-            components.queryItems = [URLQueryItem(name: RedirectInfo.pathKey, value: path)]
+            components.queryItems = (additionalQueryItems ?? []) + [URLQueryItem(name: RedirectInfo.pathKey, value: path)]
+        } else {
+            components.queryItems = additionalQueryItems
         }
         guard let url = components.url else {
             preconditionFailure("Failed to create URL out of app scheme")
@@ -259,6 +261,7 @@ public struct ClientConfiguration {
 
     struct RedirectInfo {
         static let pathKey = "path"
+        static let persistUserKey = "persist-user"
 
         struct Signup {
             static let settingsKey = "RedirectInfo.Signup"

@@ -49,8 +49,9 @@ public protocol IdentityManagerDelegate: class {
 
  ### User persistence
 
- The user that is internally managed by an identity manager is also persisted in your keychain for maintaing logged in and logged out
- state. Therefore, once a user is made valid, the manager persists the data necessary to recreate the user for a later session.
+ If the `persistUser` parameter passed to the `IdentityManager`'s methods is `true`, the user that is internally managed by an identity manager is also
+ persisted in your keychain for maintaing logged in and logged out state. Therefore, once a user is made valid, the manager persists the data necessary to
+ recreate the user for a later session.
 
  Currently the keychain user is a singleton. So the last user that is "validated" will be persisted. And the last user that is persisted
  will be the one that is loaded by a new instance of the `IdentityManager`.
@@ -226,9 +227,10 @@ public class IdentityManager: IdentityManagerProtocol {
 
      - parameter oneTimeCode: the code sent to identifier
      - parameter identifier: the user's identifier. Should match the one used in `sendCode(...)`
+     - parameter persistUser: whether the login status should be persistent on app's relaunches
      - parameter completion: the callback that is called after the one time code is checked
      */
-    public func validate(oneTimeCode: String, for identifier: Identifier, completion: @escaping NoValueCallback) {
+    public func validate(oneTimeCode: String, for identifier: Identifier, persistUser: Bool, completion: @escaping NoValueCallback) {
         log(from: self, "code: \(oneTimeCode), identifier: \(identifier)")
         let passwordlessToken: PasswordlessToken
         do {
@@ -254,7 +256,7 @@ public class IdentityManager: IdentityManagerProtocol {
             passwordlessToken: passwordlessToken,
             scope: ["openid"]
         ) { [weak self] result in
-            self?.finishLogin(result: result, completion: completion)
+            self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }
     }
 
@@ -266,9 +268,10 @@ public class IdentityManager: IdentityManagerProtocol {
      that was previously used (during a single session) and succeed if any succeed.
 
      - parameter oneTimeCode: The auth code that was sent to the user
+     - parameter persistUser: whether the login status should be persistent on app's relaunches
      - parameter completion: the callback that is called after the auth code is checked
      */
-    public func validate(oneTimeCode: String, completion: @escaping NoValueCallback) {
+    public func validate(oneTimeCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
 
         enum ValidateCallbackStatus {
             case success
@@ -321,14 +324,14 @@ public class IdentityManager: IdentityManagerProtocol {
         }
 
         if let email = maybeEmail {
-            self.validate(oneTimeCode: oneTimeCode, for: email, completion: createCallback(
+            self.validate(oneTimeCode: oneTimeCode, for: email, persistUser: persistUser, completion: createCallback(
                 thisCallbackStatusIndex: validateEmailCallbackStatusIndex,
                 otherCallbackStatusIndex: validatePhoneCallbackStatusIndex
             ))
         }
 
         if let phone = maybePhone {
-            self.validate(oneTimeCode: oneTimeCode, for: phone, completion: createCallback(
+            self.validate(oneTimeCode: oneTimeCode, for: phone, persistUser: persistUser, completion: createCallback(
                 thisCallbackStatusIndex: validatePhoneCallbackStatusIndex,
                 otherCallbackStatusIndex: validateEmailCallbackStatusIndex
             ))
@@ -340,9 +343,10 @@ public class IdentityManager: IdentityManagerProtocol {
 
      - parameter username: `Identifier` representing the username to login with. Only email is supported.
      - parameter password: the password for the identifier
+     - parameter persistUser: whether the login status should be persistent on app's relaunches
      - parameter completion: a callback that is called after the credential is checked.
      */
-    public func login(username: Identifier, password: String, completion: @escaping NoValueCallback) {
+    public func login(username: Identifier, password: String, persistUser: Bool, completion: @escaping NoValueCallback) {
         guard case .email = username else {
             completion(.failure(ClientError.unexpectedIdentifier(actual: username, expected: "only EmailAddress supported")))
             return
@@ -356,7 +360,7 @@ public class IdentityManager: IdentityManagerProtocol {
             password: password,
             scope: ["openid"]
         ) { [weak self] result in
-            self?.finishLogin(result: result, completion: completion)
+            self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }
     }
 
@@ -402,6 +406,7 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter profile: profile information to be set on created user
      - parameter acceptTerms: this must be set to true to create a user
      - parameter redirectPath: The signup process will eventually deep link back to your app with `ClientConfiguration.redirectBaseURL` and this argument
+     - parameter persistUser: whether the login status should be persistent on app's relaunches
      - parameter completion: a callback that is called in the end (with an error object in case of failures).
      */
     public func signup(
@@ -410,6 +415,7 @@ public class IdentityManager: IdentityManagerProtocol {
         profile: UserProfile? = nil,
         acceptTerms: Bool? = nil,
         redirectPath: String? = nil,
+        persistUser: Bool,
         completion: @escaping NoValueCallback
     ) {
         guard case .email = username else {
@@ -437,7 +443,9 @@ public class IdentityManager: IdentityManagerProtocol {
 
             guard let strongSelf = self else { return }
 
-            let redirectURL = strongSelf.clientConfiguration.redirectBaseURL(withPathComponent: redirectPath)
+            let redirectURL = strongSelf.clientConfiguration.redirectBaseURL(withPathComponent: redirectPath, additionalQueryItems: [
+                URLQueryItem(name: ClientConfiguration.RedirectInfo.persistUserKey, value: persistUser ? "true" : "false"),
+            ])
 
             strongSelf.api.signup(
                 oauthToken: clientTokenData.accessToken,
@@ -472,10 +480,11 @@ public class IdentityManager: IdentityManagerProtocol {
 
      - parameter authCode: an authorization code (currently it's just available through deeplinks)
      - parameter completion: the callback that is called after validation
+     - parameter persistUser: whether the login status should be persistent on app's relaunches
 
      - SeeAlso: `AppLaunchData`
      */
-    public func validate(authCode: String, completion: @escaping NoValueCallback) {
+    public func validate(authCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
         self.api.requestAccessToken(
             clientID: self.clientConfiguration.clientID,
             clientSecret: self.clientConfiguration.clientSecret,
@@ -484,11 +493,11 @@ public class IdentityManager: IdentityManagerProtocol {
             // this parameter is useless, but required, otherwise you get "invalid_request" error
             redirectURI: self.clientConfiguration.redirectBaseURL(withPathComponent: nil).absoluteString
         ) { [weak self] result in
-            self?.finishLogin(result: result, completion: completion)
+            self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }
     }
 
-    private func finishLogin(result: Result<TokenData, ClientError>, completion: NoValueCallback?) {
+    private func finishLogin(result: Result<TokenData, ClientError>, persistUser: Bool, completion: NoValueCallback?) {
         log(from: self, result)
         do {
             let tokens = try result.materialize()
@@ -496,7 +505,8 @@ public class IdentityManager: IdentityManagerProtocol {
                 accessToken: tokens.accessToken,
                 refreshToken: tokens.refreshToken,
                 idToken: tokens.idToken,
-                userID: tokens.userID
+                userID: tokens.userID,
+                makePersistent: persistUser
             )
             PasswordlessTokenStore.clear()
             self.dispatchIfSelf {

@@ -215,6 +215,43 @@ class UserTests: QuickSpec {
             }
         }
 
+        describe("Persistence") {
+            it("Should not find stored tokens if they are not persistent") {
+                let user = User(state: .loggedOut)
+                try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", makePersistent: false)
+                expect(user.tokens).toNot(beNil())
+
+                let otherUser = User(state: .loggedOut)
+                try? otherUser.loadStoredTokens()
+                expect(otherUser.tokens).to(beNil())
+            }
+
+            it("Should find stored tokens if they are persistent") {
+                let user = User(state: .loggedOut)
+                try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", makePersistent: true)
+                expect(user.tokens).toNot(beNil())
+
+                let otherUser = User(state: .loggedOut)
+                try? otherUser.loadStoredTokens()
+                expect(otherUser.tokens).toNot(beNil())
+                expect(user.tokens) == otherUser.tokens
+            }
+
+            it("Should update persistence status") {
+                let user = User(state: .loggedOut)
+                try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", makePersistent: true)
+                expect(user.tokens).toNot(beNil())
+                user.logout()
+                expect(user.tokens).to(beNil())
+                try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", makePersistent: false)
+                expect(user.tokens).toNot(beNil())
+
+                let otherUser = User(state: .loggedOut)
+                try? otherUser.loadStoredTokens()
+                expect(otherUser.tokens).to(beNil())
+            }
+        }
+
         describe("Keychain management") {
             it("Should not treat the user as logged in if it does not find keychain data") {
                 let user = User(state: .loggedOut)

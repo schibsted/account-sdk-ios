@@ -14,7 +14,7 @@ import Foundation
  */
 public enum AppLaunchData: Equatable {
     /// When a deep link contains an auth code after a signup attempt
-    case codeAfterSignup(String)
+    case codeAfterSignup(String, shouldPersistUser: Bool)
     /// When a deep link contains an auth code after trying to login with an unverified identifier
     case codeAfterUnvalidatedLogin(String)
     /// When a deep link returns after a forgot password session
@@ -38,6 +38,7 @@ public enum AppLaunchData: Equatable {
 extension AppLaunchData {
     enum QueryKey: String {
         case code
+        case persistUser = "persist-user"
     }
     /**
      Initializes this object if the launchOptions contains a valid url that is parsable by the SDK.
@@ -86,7 +87,8 @@ extension AppLaunchData {
             guard let code = payload.queryComponents[QueryKey.code.rawValue]?.first else {
                 return nil
             }
-            self = .codeAfterSignup(code)
+            let shouldPersistUser = payload.queryComponents[QueryKey.persistUser.rawValue]?.first == "true"
+            self = .codeAfterSignup(code, shouldPersistUser: shouldPersistUser)
             return
         }
 

@@ -19,7 +19,7 @@ class AppLaunchDataTests: QuickSpec {
             var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
             components.queryItems?.append(URLQueryItem(name: "code", value: "9158"))
             let appData = AppLaunchData(deepLink: components.url!, clientConfiguration: .testing)
-            expect(appData).to(equal(AppLaunchData.codeAfterSignup("9158")))
+            expect(appData).to(equal(AppLaunchData.codeAfterSignup("9158", shouldPersistUser: false)))
         }
 
         it("Should get code after login if no path") {

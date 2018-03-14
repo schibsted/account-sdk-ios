@@ -12,6 +12,7 @@ class PaswordlessFlowViewController: UIViewController {
     @IBOutlet var phoneNumberField: UITextField!
     @IBOutlet var authCodeField: UITextField!
     @IBOutlet var resendButton: UIButton!
+    @IBOutlet var shouldPersistUserSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +65,7 @@ class PaswordlessFlowViewController: UIViewController {
             return
         }
 
-        UIApplication.identityManager.validate(oneTimeCode: code) { result in
+        UIApplication.identityManager.validate(oneTimeCode: code, persistUser: self.shouldPersistUserSwitch.isOn) { result in
             switch result {
             case .success:
                 print("Code validated!")

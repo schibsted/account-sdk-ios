@@ -96,7 +96,7 @@ extension PasswordCoordinator {
         }
 
         self.presentedViewController?.startLoading()
-        self.signinInteractor.login(username: identifier, password: password) { [weak self] result in
+        self.signinInteractor.login(username: identifier, password: password, persistUser: false) { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
@@ -131,7 +131,7 @@ extension PasswordCoordinator {
         case let .signin(currentUser):
             completeProfileInteractor = UpdateProfileInteractor(currentUser: currentUser, loginFlowVariant: .signin, tracker: self.configuration.tracker)
         case let .signup(identifier, password):
-            completeProfileInteractor = SignupInteractor(identifier: identifier, password: password, identityManager: self.identityManager)
+            completeProfileInteractor = SignupInteractor(identifier: identifier, password: password, persistUser: false, identityManager: self.identityManager)
         }
 
         let completeProfileCoordinator = CompleteProfileCoordinator(

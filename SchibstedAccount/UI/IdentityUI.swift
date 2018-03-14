@@ -399,9 +399,9 @@ extension IdentityUI {
                     self?.complete(with: output)
                 }
             }
-        case let .validateAuthCode(code):
+        case let .validateAuthCode(code, shouldPersistUser):
             // Let's check if the code validates.
-            self.authenticationCodeInteractor.validate(authCode: code) { [weak self] result in
+            self.authenticationCodeInteractor.validate(authCode: code, persistUser: shouldPersistUser) { [weak self] result in
                 switch result {
                 case let .success(user):
                     self?.configuration.tracker?.loginID = self?.identityManager.currentUser.legacyID

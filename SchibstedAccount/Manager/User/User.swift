@@ -58,6 +58,7 @@ public class User: UserProtocol {
 
     private let dispatchQueue = DispatchQueue(label: "com.schibsted.identity.User", attributes: [])
     private var _tokens: TokenData?
+    private var isPersistent = false
 
     var tokens: TokenData? {
         return self.dispatchQueue.sync {
@@ -155,7 +156,8 @@ public class User: UserProtocol {
         accessToken newAccessToken: String? = nil,
         refreshToken newRefreshToken: String? = nil,
         idToken newIDToken: IDToken? = nil,
-        userID newUserID: String? = nil
+        userID newUserID: String? = nil,
+        makePersistent: Bool? = nil
     ) throws {
 
         //
@@ -211,7 +213,14 @@ public class User: UserProtocol {
         }
 
         log(from: self, "new tokens \(newTokens)")
-        self.updateStoredTokens(tokens.new, previousTokens: tokens.old)
+
+        if let makePersistent = makePersistent {
+            self.isPersistent = makePersistent
+        }
+
+        if self.isPersistent {
+            self.updateStoredTokens(tokens.new, previousTokens: tokens.old)
+        }
 
         if let newAnyUserID = newTokens.anyUserID, newAnyUserID != tokens.old?.anyUserID {
             self.delegate?.user(self, didChangeStateTo: .loggedIn)
@@ -226,6 +235,9 @@ public class User: UserProtocol {
             idToken: tokens.idToken,
             userID: tokens.userID
         )
+
+        // Since credentials were already saved, we assume login is persistent.
+        self.isPersistent = true
     }
 
     func updateStoredTokens(_ tokens: TokenData?, previousTokens: TokenData?) {
@@ -234,7 +246,7 @@ public class User: UserProtocol {
             try? UserTokensStorage().clear(previousUserTokens)
         }
 
-        if let tokens = tokens {
+        if self.isPersistent, let tokens = tokens {
             try? UserTokensStorage().store(tokens)
         }
     }

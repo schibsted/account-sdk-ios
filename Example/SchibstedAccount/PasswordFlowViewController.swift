@@ -10,6 +10,7 @@ class PasswordFlowViewController: UIViewController {
 
     @IBOutlet var emailField: UITextField!
     @IBOutlet var passwordField: UITextField!
+    @IBOutlet var shouldPersistUserSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,20 +28,20 @@ class PasswordFlowViewController: UIViewController {
 
     @IBAction func login(_: UIButton) {
         guard let email = self.email, let password = self.password else { return }
-        UIApplication.identityManager.login(email: email, password: password) { result in
+        UIApplication.identityManager.login(email: email, password: password, persistUser: self.shouldPersistUserSwitch.isOn) { result in
             print(result)
         }
     }
 
     @IBAction func signup(_: UIButton) {
         guard let email = self.email, let password = self.password else { return }
-        UIApplication.identityManager.signup(email: email, password: password) { result in
+        UIApplication.identityManager.signup(email: email, password: password, persistUser: self.shouldPersistUserSwitch.isOn) { result in
             print(result)
         }
     }
 
-    func validateDeepLinkCode(_ code: String) {
-        UIApplication.identityManager.validate(authCode: code) { result in
+    func validateDeepLinkCode(_ code: String, persistUser: Bool) {
+        UIApplication.identityManager.validate(authCode: code, persistUser: persistUser) { result in
             switch result {
             case .success:
                 print("Code validated!")

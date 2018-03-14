@@ -55,7 +55,7 @@ extension PasswordlessCoordinator {
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(code):
-                self?.submit(code: code, for: identifier, on: loginFlowVariant, completion: completion)
+                self?.submit(code: code, for: identifier, on: loginFlowVariant, persistUser: false, completion: completion)
             case .resendCode:
                 self?.resendCode(for: identifier, completion: completion)
             case .changeIdentifier:
@@ -73,10 +73,11 @@ extension PasswordlessCoordinator {
         code: String,
         for identifier: Identifier,
         on loginFlowVariant: LoginMethod.FlowVariant,
+        persistUser: Bool,
         completion: @escaping (Output) -> Void
     ) {
         self.presentedViewController?.startLoading()
-        self.oneTimeCodeInteractor.validate(oneTimeCode: code, for: identifier) { [weak self] result in
+        self.oneTimeCodeInteractor.validate(oneTimeCode: code, for: identifier, persistUser: persistUser) { [weak self] result in
             self?.presentedViewController?.endLoading()
             switch result {
             case let .success(currentUser):
