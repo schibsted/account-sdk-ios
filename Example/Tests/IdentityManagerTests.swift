@@ -77,6 +77,18 @@ class IdentityManagerTests: QuickSpec {
                 expect(newTokens?.refreshToken).to(equal(tokens?.refreshToken))
                 expect(newTokens?.idToken).to(equal(tokens?.idToken))
             }
+
+            it("Should clear the keychain on logout") {
+                Utils.createDummyKeychain()
+                let user = Utils.makeIdentityManager().currentUser
+                expect(user.state).to(equal(UserState.loggedIn))
+                user.logout()
+
+                let tokens = UserTokensKeychain().data().first
+                expect(tokens?.accessToken).to(beNil())
+                expect(tokens?.refreshToken).to(beNil())
+                expect(tokens?.idToken).to(beNil())
+            }
         }
 
         describe("Send code for passwordless signup") {

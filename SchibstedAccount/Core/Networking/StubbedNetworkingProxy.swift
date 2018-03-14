@@ -8,9 +8,28 @@ import Foundation
 class MockURLSessionDataTask: URLSessionDataTask {
     var callback: URLSessionTaskCallback?
     let _data: Data?
-    let _response: URLResponse?
+    let _response: HTTPURLResponse?
+    let _session: URLSession?
+    let _request: URLRequest
     var _error: Error?
-    init(request: URLRequest, callback: @escaping URLSessionTaskCallback, stub: NetworkStub) {
+
+    private func handleCacheControl() {
+        guard let response = self._response, let cacheControl = self._response?.allHeaderFields["Cache-Control"] as? String else {
+            return
+        }
+        let parts = cacheControl.split(separator: ",")
+        guard let maxAge = parts.filter({ $0.range(of: "max-age") != nil }).first else {
+            return
+        }
+        guard let stringValue = maxAge.split(separator: "=").dropFirst().first, let age = Int(String(describing: stringValue)), age > 0 else {
+            return
+        }
+        let data = self._data ?? Data()
+        let cachedResponse = CachedURLResponse(response: response, data: data, userInfo: nil, storagePolicy: .allowedInMemoryOnly)
+        self._session?.configuration.urlCache?.storeCachedResponse(cachedResponse, for: self._request)
+    }
+
+    init(session: URLSession, request: URLRequest, callback: @escaping URLSessionTaskCallback, stub: NetworkStub) {
         self.callback = callback
         if let jsonData = stub.jsonData {
             self._data = try? JSONSerialization.data(withJSONObject: jsonData, options: [])
@@ -18,13 +37,16 @@ class MockURLSessionDataTask: URLSessionDataTask {
             self._data = nil
         }
         if let statusCode = stub.statusCode, let url = request.url {
-            self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)
+            self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
         } else {
             self._response = nil
         }
         self._error = nil
+        self._session = session
+        self._request = request
     }
     override func resume() {
+        self.handleCacheControl()
         self.callback?(self._data, self._response, self._error)
         self.callback = nil
     }
@@ -84,6 +106,7 @@ struct NetworkStub: Equatable, Comparable {
     var jsonData: JSONObject?
     var statusCode: Int?
     var predicate: ((URLRequest) -> Bool)?
+    var responseHeaders: [String: String]?
     let path: NetworkStubPath
 
     init(path: NetworkStubPath) {
@@ -94,8 +117,9 @@ struct NetworkStub: Equatable, Comparable {
         self.jsonData = json
     }
 
-    mutating func returnResponse(status: Int) {
+    mutating func returnResponse(status: Int, headers: [String: String]? = nil) {
         self.statusCode = status
+        self.responseHeaders = headers
     }
 
     static func unstubbed(path: NetworkStubPath) -> NetworkStub {
@@ -179,12 +203,18 @@ class StubbedNetworkingProxy: NetworkingProxy {
         }
     }
 
+    static func removeStubs() {
+        self.urls.removeAll(keepingCapacity: false)
+        self.paths.removeAll(keepingCapacity: false)
+        self.defaultStubs.removeAll(keepingCapacity: false)
+    }
+
     static var urls = SynchronizedDictionary<URL, [NetworkStub]>()
     static var paths = SynchronizedDictionary<String, [NetworkStub]>()
     static var defaultStubs: [NetworkStub] = []
 
     func dataTask(
-        for _: URLSession,
+        for session: URLSession,
         request: URLRequest,
         completion: URLSessionTaskCallback?
     ) -> URLSessionDataTask {
@@ -195,7 +225,7 @@ class StubbedNetworkingProxy: NetworkingProxy {
 
         for stub in type(of: self).urls[url] ?? [] {
             if stub.proceed(with: request) {
-                return MockURLSessionDataTask(request: request, callback: completion, stub: stub)
+                return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
             }
         }
 
@@ -204,7 +234,7 @@ class StubbedNetworkingProxy: NetworkingProxy {
         for path in sortedPaths where url.absoluteString.matches(path) {
             for stub in dictionary[path] ?? [] {
                 if stub.proceed(with: request) {
-                    return MockURLSessionDataTask(request: request, callback: completion, stub: stub)
+                    return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
                 }
             }
         }
@@ -215,10 +245,10 @@ class StubbedNetworkingProxy: NetworkingProxy {
 
         for stub in defaultStubs {
             if stub.proceed(with: request) {
-                return MockURLSessionDataTask(request: request, callback: completion, stub: stub)
+                return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
             }
         }
 
-        return MockURLSessionDataTask(request: request, callback: completion, stub: .unstubbed(path: .url(url)))
+        return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: .unstubbed(path: .url(url)))
     }
 }

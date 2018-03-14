@@ -34,7 +34,7 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             Utils.cleanupKeychain()
             PasswordlessTokenStore.clear()
 
-            expect(User.globalStore.count) == 0
+            expect(User.globalStore.count).toEventually(equal(0))
 
             OwnedTaskHandle.counter.value = 0
 
@@ -46,6 +46,8 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             TaskOperation.counter.value = 0
             AutoRefreshURLProtocol.counter.value = 0
             AutoRefreshTask.counter.value = 0
+
+            StubbedNetworkingProxy.removeStubs()
         }
     }
 }

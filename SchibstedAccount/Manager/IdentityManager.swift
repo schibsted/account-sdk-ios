@@ -110,25 +110,9 @@ public class IdentityManager: IdentityManagerProtocol {
         self.currentUser = User(clientConfiguration: clientConfiguration)
         self.currentUser.delegate = self
 
-        if let tokens = try? UserTokensStorage().loadTokens() {
-            // Since credentials were already saved, we assume login is persistent.
-            self.finishLogin(result: .success(tokens), persistUser: true, completion: nil)
-        }
-
-        self.currentUser.didSetTokens.register(self, handler: type(of: self).userDidSetTokens).descriptionText = "IdentityManager.userDidSetTokens"
+        try? self.currentUser.loadStoredTokens()
 
         log(from: self, "user: \(self.currentUser)")
-    }
-
-    private func userDidSetTokens(_ tokens: (new: TokenData?, old: TokenData?)) {
-        // Always clear old tokens
-        if let previousUserTokens = tokens.old {
-            try? UserTokensStorage().clear(previousUserTokens)
-        }
-
-        if self.currentUser.isPersistent, tokens.new != nil, let currentUserTokens = self.currentUser.tokens {
-            try? UserTokensStorage().store(currentUserTokens)
-        }
     }
 
     private func dispatchIfSelf(_ block: @escaping () -> Void) {
@@ -517,12 +501,12 @@ public class IdentityManager: IdentityManagerProtocol {
         log(from: self, result)
         do {
             let tokens = try result.materialize()
-            self.currentUser.isPersistent = persistUser
             try self.currentUser.set(
                 accessToken: tokens.accessToken,
                 refreshToken: tokens.refreshToken,
                 idToken: tokens.idToken,
-                userID: tokens.userID
+                userID: tokens.userID,
+                makePersistent: persistUser
             )
             PasswordlessTokenStore.clear()
             self.dispatchIfSelf {

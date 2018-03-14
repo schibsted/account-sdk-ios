@@ -49,9 +49,6 @@ public class User: UserProtocol {
     ///
     public weak var delegate: UserDelegate?
 
-    var isPersistent = false
-
-    var didSetTokens = EventEmitter<(new: TokenData?, old: TokenData?)>(description: "User.didSetTokens")
     var willDeinit = EventEmitter<()>(description: "User.willDeinit")
 
     let api: IdentityAPI
@@ -61,6 +58,7 @@ public class User: UserProtocol {
 
     private let dispatchQueue = DispatchQueue(label: "com.schibsted.identity.User", attributes: [])
     private var _tokens: TokenData?
+    private var isPersistent = false
 
     var tokens: TokenData? {
         return self.dispatchQueue.sync {
@@ -146,7 +144,7 @@ public class User: UserProtocol {
             return
         }
 
-        self.didSetTokens.emitSync((new: nil, old: oldTokens))
+        self.updateStoredTokens(nil, previousTokens: oldTokens)
         self.delegate?.user(self, didChangeStateTo: .loggedOut)
 
         self.api.logout(oauthToken: oldTokens.accessToken) { [weak self] result in
@@ -158,7 +156,8 @@ public class User: UserProtocol {
         accessToken newAccessToken: String? = nil,
         refreshToken newRefreshToken: String? = nil,
         idToken newIDToken: IDToken? = nil,
-        userID newUserID: String? = nil
+        userID newUserID: String? = nil,
+        makePersistent: Bool? = nil
     ) throws {
 
         //
@@ -214,10 +213,41 @@ public class User: UserProtocol {
         }
 
         log(from: self, "new tokens \(newTokens)")
-        self.didSetTokens.emitSync(tokens)
+
+        if let makePersistent = makePersistent {
+            self.isPersistent = makePersistent
+        }
+
+        if self.isPersistent {
+            self.updateStoredTokens(tokens.new, previousTokens: tokens.old)
+        }
 
         if let newAnyUserID = newTokens.anyUserID, newAnyUserID != tokens.old?.anyUserID {
             self.delegate?.user(self, didChangeStateTo: .loggedIn)
+        }
+    }
+
+    func loadStoredTokens() throws {
+        let tokens = try UserTokensStorage().loadTokens()
+        try self.set(
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken,
+            idToken: tokens.idToken,
+            userID: tokens.userID
+        )
+
+        // Since credentials were already saved, we assume login is persistent.
+        self.isPersistent = true
+    }
+
+    func updateStoredTokens(_ tokens: TokenData?, previousTokens: TokenData?) {
+        // Always clear old tokens
+        if let previousUserTokens = previousTokens {
+            try? UserTokensStorage().clear(previousUserTokens)
+        }
+
+        if self.isPersistent, let tokens = tokens {
+            try? UserTokensStorage().store(tokens)
         }
     }
 
