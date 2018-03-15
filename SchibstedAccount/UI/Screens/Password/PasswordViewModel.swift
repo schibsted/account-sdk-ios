@@ -57,4 +57,8 @@ extension PasswordViewModel {
     var forgotPassword: String {
         return "PasswordScreenString.forgotPassword".localized(from: self.localizationBundle)
     }
+
+    var persistentLogin: String {
+        return "PasswordScreenString.persistentLogin".localized(from: self.localizationBundle)
+    }
 }

@@ -20,6 +20,7 @@
 "PasswordScreenString.cancel" = "Peruuta";
 "PasswordScreenString.info" = "Vähintään 8 merkkiä";
 "PasswordScreenString.forgotPassword" = "Unohtuiko salasana?";
+"PasswordScreenString.persistentLogin" = "Pidä minut kirjautuneena";
 
 "VerifyScreenString.title" = "Koodi on lähetetty sinulle";
 "VerifyScreenString.subtext" = "Kirjoita vahvistuskoodi, jonka lähetimme, vastaanottaja:";

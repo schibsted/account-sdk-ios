@@ -7,7 +7,7 @@ import UIKit
 
 class PasswordViewController: IdentityUIViewController {
     enum Action {
-        case enter(password: String)
+        case enter(password: String, shouldPersistUser: Bool)
         case changeIdentifier
         case forgotPassword
         case back
@@ -16,11 +16,22 @@ class PasswordViewController: IdentityUIViewController {
 
     var didRequestAction: ((Action) -> Void)?
 
+    @IBOutlet var shouldPersistUserCheck: Checkbox!
+    @IBOutlet var shouldPersistUserText: NormalLabel! {
+        didSet {
+            self.shouldPersistUserText.text = self.viewModel.persistentLogin
+        }
+    }
     @IBOutlet var forgotPasswordButton: UIButton! {
         didSet {
             self.forgotPasswordButton.titleLabel?.font = self.theme.fonts.normal
             self.forgotPasswordButton.setTitle(self.viewModel.forgotPassword, for: .normal)
             self.forgotPasswordButton.isHidden = true
+        }
+    }
+    @IBOutlet var infoLabelHeight: NSLayoutConstraint! {
+        didSet {
+            self.infoLabelHeight.constant = 0
         }
     }
     @IBOutlet var changeIdentifierButton: UIButton! {
@@ -112,9 +123,11 @@ class PasswordViewController: IdentityUIViewController {
         switch self.viewModel.loginFlowVariant {
         case .signup:
             self.infoLabel.isHidden = false
+            self.infoLabelHeight.constant = 200 // (less than or equal of some big value).
             self.forgotPasswordButton.isHidden = true
         case .signin:
             self.infoLabel.isHidden = true
+            self.infoLabelHeight.constant = 0
             self.forgotPasswordButton.isHidden = false
         }
     }
@@ -124,7 +137,7 @@ class PasswordViewController: IdentityUIViewController {
             self.showInlineError(.invalidUserCredentials(message: nil))
             return
         }
-        self.didRequestAction?(.enter(password: password))
+        self.didRequestAction?(.enter(password: password, shouldPersistUser: self.shouldPersistUserCheck.isChecked))
     }
 
     override var navigationTitle: String {

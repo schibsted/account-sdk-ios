@@ -20,6 +20,7 @@
 "PasswordScreenString.cancel" = "Annullera";
 "PasswordScreenString.info" = "Minst 8 tecken";
 "PasswordScreenString.forgotPassword" = "Glömt lösenordet?";
+"PasswordScreenString.persistentLogin" = "Håll mig inloggad";
 
 "VerifyScreenString.title" = "Vi har skickat en kod till dig";
 "VerifyScreenString.subtext" = "Ange verifieringskoden vi skickade till: ";
