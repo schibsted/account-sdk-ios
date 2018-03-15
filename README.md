@@ -1,6 +1,11 @@
 # SchibstedAccount iOS SDK
 
-The SchibstedAccount iOS SDK provides you access to SPT identity user objects and gives you the tools to manage your users and make authenticated requests
+The SchibstedAccount iOS SDK provides you access to Schibsted identity services via the [SPiD](https://techdocs.spid.no/#api-reference) APIs. It provides the following:
+* User management (profiles, logins, signups)
+* UI based logins
+* Authenticated request and oauth management
+
+**Note: The APIs provided by the SDK do not cover the full spectrum of APIs provided by SPiD. If there is functionality missing, please look at the [SPiD API reference](https://techdocs.spid.no/#api-reference) and open up an issue for an enhancement request.**
 
 [![Build Status](https://travis-ci.org/schibsted/account-sdk-ios.svg?branch=master)](https://travis-ci.org/schibsted/account-sdk-ios) [![license](https://img.shields.io/github/license/schibsted/account-sdk-ios.svg)](https://github.com/schibsted/account-sdk-ios/blob/master/LICENSE) [![codecov](https://codecov.io/gh/schibsted/account-sdk-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/schibsted/account-sdk-ios)
 
@@ -10,8 +15,6 @@ The SchibstedAccount iOS SDK provides you access to SPT identity user objects an
 ## Setup
 
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
-
-**WIP**:
 
 The pod is available as a public cocoapod under the name SchibstedAccount
 
@@ -28,7 +31,7 @@ To fulfill this, you can either implement it yourself or use one which is alread
 
 **Internal**: There is an internal Schibsted Tracking implementation for the identity SDK availabe [here](https://github.schibsted.io/spt-identity/identity-sdk-ios-tracking) and is available from `source "git@github.schibsted.io:CocoaPods/Specs.git`, so in your pod file you may:
 
-- `pod 'SchibstedAccountTracking'`: Adds dependency to the [new](https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios) pulse SDK
+- `pod 'SchibstedIDTracking'`: Adds dependency to the [new](https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios) pulse SDK
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
