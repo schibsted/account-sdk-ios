@@ -120,6 +120,11 @@ class IdentityUIViewController: UIViewController {
             barButtonItem.tintColor = self.theme.colors.iconTint
             self.navigationItem.rightBarButtonItem = barButtonItem
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.configuration.tracker?.view(self.trackerViewID)
 
         NotificationCenter.default.addObserver(
             self,
@@ -129,7 +134,8 @@ class IdentityUIViewController: UIViewController {
         )
     }
 
-    deinit {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
     }
 
@@ -162,11 +168,6 @@ class IdentityUIViewController: UIViewController {
         var contentOffset = scrollView.contentOffset
         contentOffset.y -= delta
         scrollView.setContentOffset(contentOffset, animated: true)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.configuration.tracker?.view(self.trackerViewID)
     }
 
     func startLoading() {
