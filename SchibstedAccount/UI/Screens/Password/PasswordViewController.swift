@@ -107,7 +107,6 @@ class PasswordViewController: IdentityUIViewController {
         let toolbar = UIToolbar.forKeyboard(target: self, doneString: self.viewModel.done, doneSelector: #selector(self.didClickContinue))
 
         self.password.inputAccessoryView = toolbar
-        self.password.becomeFirstResponder()
         self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.password
 
         switch self.viewModel.loginFlowVariant {

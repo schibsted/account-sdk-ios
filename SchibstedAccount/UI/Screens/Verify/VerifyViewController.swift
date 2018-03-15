@@ -99,7 +99,6 @@ class VerifyViewController: IdentityUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        (self.textFieldStackView.arrangedSubviews.first as? TextField)?.becomeFirstResponder()
         self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.textFieldStackView
     }
 
