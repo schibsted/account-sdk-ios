@@ -1,9 +1,6 @@
 //
-//  SchibstedAccount.h
-//  SchibstedAccount
-//
-//  Created by Torp, Thomas on 16/03/2018.
-//  Copyright © 2018 Schibsted. All rights reserved.
+// Copyright 2011 - 2018 Schibsted Products & Technology AS.
+// Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
 #import <UIKit/UIKit.h>

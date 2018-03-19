@@ -7,7 +7,7 @@ PODS:
     - SchibstedAccount/Core
   - SchibstedAccount/UI (1.0.0-rc1):
     - SchibstedAccount/Manager
-  - SwiftFormat/CLI (0.33.4)
+  - SwiftFormat/CLI (0.33.5)
 
 DEPENDENCIES:
   - SchibstedAccount (from `../`)
@@ -19,8 +19,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  SchibstedAccount: 3ae49e8278680ed4c5d7a3db578940c4cf216a03
-  SwiftFormat: f39044d75d5e58dbbc7c436c089104ec9c8f717a
+  SchibstedAccount: f8eae35a06092f2350e3a51ff909f95f88efee64
+  SwiftFormat: 13fd81206cf4453c19f1a5c51768c8c0d9165c30
 
 PODFILE CHECKSUM: f97517f36b0cdaf5f6767aa954f28af497511f2b
 

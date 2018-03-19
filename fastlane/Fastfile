@@ -20,7 +20,7 @@ platform :ios do
 
     slather(
         binary_basename: 'SchibstedAccount',
-        ignore: ['SchibstedAccount/UI/*'],
+        ignore: ['Source/UI/*'],
         cobertura_xml: true,
         travis: true,
         use_bundle_exec: true,
