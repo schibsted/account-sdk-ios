@@ -44,7 +44,7 @@ extension StatusViewController: IdentityUIDelegate {
 
 class StatusViewController: UIViewController {
 
-    let identityUI = IdentityUI(configuration: .current, identityManager: UIApplication.identityManager)
+    let identityUI = IdentityUI(configuration: .current)
     var session: URLSession?
 
     @IBOutlet var userStateLabel: UILabel!
@@ -57,15 +57,15 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didClickPasswordlessEmailLogin(_: Any) {
-        self.identityUI.presentIdentityProcess(from: self, loginMethod: .email)
+        self.identityUI.presentIdentityProcess(from: self, loginMethod: .email, identityManager: UIApplication.identityManager)
     }
 
     @IBAction func didClickPasswordlessPhoneLogin(_: Any) {
-        self.identityUI.presentIdentityProcess(from: self, loginMethod: .phone)
+        self.identityUI.presentIdentityProcess(from: self, loginMethod: .phone, identityManager: UIApplication.identityManager)
     }
 
     @IBAction func didClickPasswordLogin(_: Any) {
-        self.identityUI.presentIdentityProcess(from: self, loginMethod: .password)
+        self.identityUI.presentIdentityProcess(from: self, loginMethod: .password, identityManager: UIApplication.identityManager)
     }
 
     @IBAction func didClickOpenProfile(_: Any) {

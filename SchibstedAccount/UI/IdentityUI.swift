@@ -90,15 +90,13 @@ public class IdentityUI {
     public weak var delegate: IdentityUIDelegate?
     ///
     public let configuration: IdentityUIConfiguration
-    ///
-    public let identityManager: IdentityManager
 
     let navigationController = UINavigationController()
 
     var child: ChildFlowCoordinator?
 
-    private let fetchStatusInteractor: FetchStatusInteractor
-    private let authenticationCodeInteractor: AuthenticationCodeInteractor
+    private var fetchStatusInteractor: FetchStatusInteractor?
+    private var authenticationCodeInteractor: AuthenticationCodeInteractor?
 
     // Used to store the currently presented identity process so that:
     // 1. The presentation of one process at a time can be enforced.
@@ -108,19 +106,8 @@ public class IdentityUI {
     /**
      Creates an IdentityUI object
      */
-    public convenience init(configuration: IdentityUIConfiguration) {
-        let manager = IdentityManager(clientConfiguration: configuration.clientConfiguration)
-        self.init(configuration: configuration, identityManager: manager)
-    }
-
-    /**
-     Creates an IdentityUI object with a provided identityManager
-     */
-    public init(configuration: IdentityUIConfiguration, identityManager: IdentityManager) {
+    public init(configuration: IdentityUIConfiguration) {
         self.configuration = configuration
-        self.identityManager = identityManager
-        self.fetchStatusInteractor = FetchStatusInteractor(identityManager: identityManager)
-        self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: identityManager)
     }
 
     /**
@@ -136,18 +123,23 @@ public class IdentityUI {
      - parameter: localizedTeaserText: an optional text that will be displayed above the identifier text field in the login screen (may be used to provide the
        user with some context about the login). Text longer than three lines will be truncated with ellipsis. Note that you should supply a localized text.
      - parameter: localizedTeaserText: If provided, the identifier screen will show this text at the top.
+     - parameter: The identity manager to be used to communicate with the APIs. If `nil` is passed, a new manager will be created and initialized with the
+       stored `configuration`.
      */
     public func presentIdentityProcess(
         from viewController: UIViewController,
         loginMethod: LoginMethod,
-        localizedTeaserText: String? = nil
+        localizedTeaserText: String? = nil,
+        identityManager: IdentityManager? = nil
     ) {
         self.configuration.tracker?.loginMethod = loginMethod
+        let identityManager = identityManager ?? IdentityManager(clientConfiguration: self.configuration.clientConfiguration)
         self.start(
             input: .byLoginMethod(
                 loginMethod,
                 presentingViewController: viewController,
-                localizedTeaserText: localizedTeaserText
+                localizedTeaserText: localizedTeaserText,
+                identityManager: identityManager
             )
         ) { [weak self] output in
             self?.complete(with: output)
@@ -165,12 +157,15 @@ public class IdentityUI {
 
      - parameter viewController: which view controller to present the login UI from
      - parameter route: a parsed `IdentityUI.Route` object
+     - parameter: the identity manager to be used to communicate with the APIs. If `nil` is passed, a new manager will be created and initialized with the
+       stored `configuration`.
 
      - SeeAlso: `init(configuration:route:)`
      */
-    public func presentIdentityProcess(from viewController: UIViewController, route: Route) {
+    public func presentIdentityProcess(from viewController: UIViewController, route: Route, identityManager: IdentityManager? = nil) {
         self.configuration.tracker?.loginMethod = route.loginMethod
-        self.start(input: .byRoute(route, presentingViewController: viewController)) { [weak self] output in
+        let identityManager = identityManager ?? IdentityManager(clientConfiguration: self.configuration.clientConfiguration)
+        self.start(input: .byRoute(route, presentingViewController: viewController, identityManager: identityManager)) { [weak self] output in
             self?.complete(with: output)
         }
     }
@@ -219,8 +214,8 @@ public class IdentityUI {
 extension IdentityUI: FlowCoordinator {
 
     enum Input {
-        case byLoginMethod(LoginMethod, presentingViewController: UIViewController, localizedTeaserText: String?)
-        case byRoute(Route, presentingViewController: UIViewController)
+        case byLoginMethod(LoginMethod, presentingViewController: UIViewController, localizedTeaserText: String?, identityManager: IdentityManager)
+        case byRoute(Route, presentingViewController: UIViewController, identityManager: IdentityManager)
     }
 
     enum Output {
@@ -234,12 +229,12 @@ extension IdentityUI: FlowCoordinator {
         if let presentedIdentityUI = IdentityUI.presentedIdentityUI {
             // A login flow is already in progress. It should not be allowed to have multiple login flows at the same time, but if we ended up here because
             // of a route, we need to give the currently presented login flow a chance to handle it.
-            guard case let .byRoute(route, _) = input else {
+            guard case let .byRoute(route, _, identityManager) = input else {
                 preconditionFailure("Attempt to present a new Identity UI instance while another one is already presented.")
             }
 
             // Let the currently presented flow handle the route.
-            presentedIdentityUI.handleRouteForPresentingUI(route: route)
+            presentedIdentityUI.handleRouteForPresentingUI(route: route, identityManager: identityManager)
 
             // This new flow will not be started.
             completion(.notStarted)
@@ -258,10 +253,15 @@ extension IdentityUI {
 
     func showIdentifierViewController(input: Input, completion: @escaping (Output) -> Void) {
         switch input {
-        case let .byRoute(route, vc):
-            self.handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, completion: completion)
-        case let .byLoginMethod(loginMethod, vc, localizedTeaserText):
-            let viewController = self.makeIdentifierViewController(loginMethod: loginMethod, localizedTeaserText: localizedTeaserText, completion: completion)
+        case let .byRoute(route, vc, identityManager):
+            self.handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, identityManager: identityManager, completion: completion)
+        case let .byLoginMethod(loginMethod, vc, localizedTeaserText, identityManager):
+            let viewController = self.makeIdentifierViewController(
+                loginMethod: loginMethod,
+                localizedTeaserText: localizedTeaserText,
+                identityManager: identityManager,
+                completion: completion
+            )
             self.navigationController.viewControllers = [viewController]
             vc.present(self.navigationController, animated: true)
         }
@@ -270,6 +270,7 @@ extension IdentityUI {
     private func makeIdentifierViewController(
         loginMethod: LoginMethod,
         localizedTeaserText: String?,
+        identityManager: IdentityManager,
         completion: @escaping (Output) -> Void
     ) -> UIViewController {
         let navigationSettings = NavigationSettings(
@@ -285,7 +286,7 @@ extension IdentityUI {
             switch action {
             case let .enter(identifier):
                 // An identifier was entered: we fetch its status and proceed with the flow accordingly by spawing an appropriate child coordinator.
-                self?.fetchFlowVariant(for: identifier) { [weak self] loginFlowVariant in
+                self?.fetchFlowVariant(for: identifier, identityManager: identityManager) { [weak self] loginFlowVariant in
                     let disposition: LoginFlowDisposition
                     if let delegate = self?.delegate {
                         disposition = delegate.willPresent(flow: loginFlowVariant)
@@ -294,7 +295,13 @@ extension IdentityUI {
                     }
                     switch disposition {
                     case .continue:
-                        self?.spawnCoordinator(loginMethod.authenticationType, for: identifier, on: loginFlowVariant, completion: completion)
+                        self?.spawnCoordinator(
+                            loginMethod.authenticationType,
+                            for: identifier,
+                            on: loginFlowVariant,
+                            identityManager: identityManager,
+                            completion: completion
+                        )
                     case let .abort(shouldDismiss):
                         if shouldDismiss {
                             self?.complete(with: .onlyDismiss)
@@ -314,10 +321,15 @@ extension IdentityUI {
         return viewController
     }
 
-    private func fetchFlowVariant(for identifier: Identifier, completion: @escaping (_ loginFlowVariant: LoginMethod.FlowVariant) -> Void) {
+    private func fetchFlowVariant(
+        for identifier: Identifier,
+        identityManager: IdentityManager,
+        completion: @escaping (_ loginFlowVariant: LoginMethod.FlowVariant) -> Void
+    ) {
         self.presentedViewController?.startLoading()
 
-        self.fetchStatusInteractor.fetchStatus(for: identifier) { [weak self] result in
+        self.fetchStatusInteractor = FetchStatusInteractor(identityManager: identityManager)
+        self.fetchStatusInteractor?.fetchStatus(for: identifier) { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
@@ -337,6 +349,7 @@ extension IdentityUI {
         _ authenticationType: LoginMethod.AuthenticationType,
         for identifier: Identifier,
         on loginFlowVariant: LoginMethod.FlowVariant,
+        identityManager: IdentityManager,
         completion: @escaping (Output) -> Void
     ) {
         let coordinator: AuthenticationCoordinator
@@ -345,13 +358,13 @@ extension IdentityUI {
         case .password:
             coordinator = PasswordCoordinator(
                 navigationController: self.navigationController,
-                identityManager: self.identityManager,
+                identityManager: identityManager,
                 configuration: self.configuration
             )
         case .passwordless:
             coordinator = PasswordlessCoordinator(
                 navigationController: self.navigationController,
-                identityManager: self.identityManager,
+                identityManager: identityManager,
                 configuration: self.configuration
             )
         }
@@ -384,7 +397,7 @@ extension IdentityUI {
 }
 
 extension IdentityUI {
-    private func handle(route: IdentityUI.Route, byPresentingIn presentingViewController: UIViewController?) {
+    private func handle(route: IdentityUI.Route, byPresentingIn presentingViewController: UIViewController?, identityManager: IdentityManager) {
         switch route {
         case .login:
             // Either we have a child that can handle the route or we have nothing else to do (since we are already in the root, a.k.a. login screen).
@@ -395,16 +408,17 @@ extension IdentityUI {
 
                 // The user changed her password after requesting a password change: we present a new login flow with the email prefilled (since we previously
                 // saved it on password change request).
-                self.spawnCoordinator(.password, for: Identifier(email), on: .signin) { [weak self] output in
+                self.spawnCoordinator(.password, for: Identifier(email), on: .signin, identityManager: identityManager) { [weak self] output in
                     self?.complete(with: output)
                 }
             }
         case let .validateAuthCode(code, shouldPersistUser):
             // Let's check if the code validates.
-            self.authenticationCodeInteractor.validate(authCode: code, persistUser: shouldPersistUser) { [weak self] result in
+            self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: identityManager)
+            self.authenticationCodeInteractor?.validate(authCode: code, persistUser: shouldPersistUser) { [weak self] result in
                 switch result {
                 case let .success(user):
-                    self?.configuration.tracker?.loginID = self?.identityManager.currentUser.legacyID
+                    self?.configuration.tracker?.loginID = identityManager.currentUser.legacyID
                     self?.configuration.tracker?.engagement(.network(.accountVerified))
                     // User has validated the identifier and the code matches, nothing else to do.
                     self?.complete(with: .success(user))
@@ -430,15 +444,21 @@ extension IdentityUI {
     private func handleRouteForUnpresentedUI(
         route: IdentityUI.Route,
         byPresentingIn presentingViewController: UIViewController,
+        identityManager: IdentityManager,
         completion: @escaping (Output) -> Void
     ) {
-        let viewController = self.makeIdentifierViewController(loginMethod: route.loginMethod, localizedTeaserText: nil, completion: completion)
+        let viewController = self.makeIdentifierViewController(
+            loginMethod: route.loginMethod,
+            localizedTeaserText: nil,
+            identityManager: identityManager,
+            completion: completion
+        )
         self.navigationController.viewControllers = [viewController]
-        self.handle(route: route, byPresentingIn: presentingViewController)
+        self.handle(route: route, byPresentingIn: presentingViewController, identityManager: identityManager)
     }
 
-    private func handleRouteForPresentingUI(route: IdentityUI.Route) {
-        self.handle(route: route, byPresentingIn: nil)
+    private func handleRouteForPresentingUI(route: IdentityUI.Route, identityManager: IdentityManager) {
+        self.handle(route: route, byPresentingIn: nil, identityManager: identityManager)
     }
 
     @discardableResult
