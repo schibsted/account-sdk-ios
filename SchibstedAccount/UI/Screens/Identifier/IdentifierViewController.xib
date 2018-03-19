@@ -26,6 +26,7 @@
                 <outlet property="privacyText" destination="CZp-Li-kvw" id="6Oc-bV-xhN"/>
                 <outlet property="scrollView" destination="SyO-au-Era" id="luv-KM-eqL"/>
                 <outlet property="teaser" destination="lKU-ue-rCx" id="C3h-X1-1A2"/>
+                <outlet property="teaserView" destination="JpK-Kl-xqq" id="EBc-AN-Vuj"/>
                 <outlet property="view" destination="ETQ-ha-3W8" id="Mjd-3i-TWy"/>
             </connections>
         </placeholder>
@@ -42,20 +43,42 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ncr-lr-CmI">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="THF-VM-JvY" customClass="LogoStackView" customModule="SchibstedAccount" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xA-mk-L2J">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="42"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="THF-VM-JvY" customClass="LogoStackView" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="16" width="343" height="10"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="10" id="eIk-5h-G8M"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="52" id="eIk-5h-G8M"/>
+                                                <constraint firstAttribute="trailing" secondItem="THF-VM-JvY" secondAttribute="trailing" constant="16" id="6MJ-jH-paX"/>
+                                                <constraint firstItem="THF-VM-JvY" firstAttribute="leading" secondItem="8xA-mk-L2J" secondAttribute="leading" constant="16" id="7EH-mj-nqu"/>
+                                                <constraint firstItem="THF-VM-JvY" firstAttribute="top" secondItem="8xA-mk-L2J" secondAttribute="top" constant="16" id="OGM-7I-WNr"/>
+                                                <constraint firstAttribute="bottom" secondItem="THF-VM-JvY" secondAttribute="bottom" constant="16" id="g6d-8H-udC"/>
                                             </constraints>
-                                        </stackView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Teaser" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKU-ue-rCx" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="52" width="375" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JpK-Kl-xqq">
+                                            <rect key="frame" x="0.0" y="42" width="375" height="50"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Teaser" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKU-ue-rCx" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="0.0" width="343" height="26"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="lKU-ue-rCx" secondAttribute="trailing" constant="16" id="Gb1-At-2hS"/>
+                                                <constraint firstItem="lKU-ue-rCx" firstAttribute="top" secondItem="JpK-Kl-xqq" secondAttribute="top" id="j5f-v2-Lz4"/>
+                                                <constraint firstAttribute="bottom" secondItem="lKU-ue-rCx" secondAttribute="bottom" constant="24" id="kc9-CI-caA"/>
+                                                <constraint firstItem="lKU-ue-rCx" firstAttribute="leading" secondItem="JpK-Kl-xqq" secondAttribute="leading" constant="16" id="mcU-xt-9Zv"/>
+                                            </constraints>
+                                        </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dUX-Li-6fk">
-                                            <rect key="frame" x="0.0" y="72.5" width="375" height="574.5"/>
+                                            <rect key="frame" x="0.0" y="92" width="375" height="555"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MrD-sI-hSd" userLabel="InputTitle" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
@@ -79,7 +102,7 @@
                                                                     <textInputTraits key="textInputTraits"/>
                                                                 </textField>
                                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZeN-LP-RPp" userLabel="PhoneNumber" customClass="TextField" customModule="SchibstedAccount" customModuleProvider="target">
-                                                                    <rect key="frame" x="85" y="0.0" width="375" height="30"/>
+                                                                    <rect key="frame" x="85" y="0.0" width="290" height="30"/>
                                                                     <nil key="textColor"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits"/>
@@ -101,16 +124,16 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cIa-P1-gNm" userLabel="PrivacyStackView">
-                                                    <rect key="frame" x="0.0" y="137" width="375" height="437.5"/>
+                                                    <rect key="frame" x="0.0" y="137" width="375" height="418"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" image="lock-outline" translatesAutoresizingMaskIntoConstraints="NO" id="XW0-E0-ndf">
                                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="left" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="9Qw-VW-lWj">
-                                                            <rect key="frame" x="40" y="0.0" width="375" height="49.5"/>
+                                                            <rect key="frame" x="40" y="0.0" width="335" height="49.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Privacy text" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZp-Li-kvw">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="19.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="19.5"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -163,7 +186,7 @@
                     </constraints>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kaw-tF-5AU" userLabel="ContinueButton" customClass="PrimaryButton" customModule="SchibstedAccount" customModuleProvider="target">
-                    <rect key="frame" x="16" y="606" width="375" height="45"/>
+                    <rect key="frame" x="16" y="606" width="343" height="45"/>
                     <color key="backgroundColor" red="0.23529411759999999" green="0.4823529412" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="cwk-45-Wr4"/>
