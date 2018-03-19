@@ -26,6 +26,16 @@ class IdentifierViewController: IdentityUIViewController {
             self.helpButton.contentEdgeInsets.top = 1
         }
     }
+    @IBOutlet var backgroundView: UIView! {
+        didSet {
+            self.backgroundView.backgroundColor = .schibstedMediumGray
+        }
+    }
+    @IBOutlet var contentView: UIView! {
+        didSet {
+            self.contentView.layer.cornerRadius = self.theme.geometry.cornerRadius
+        }
+    }
     @IBAction func didClickNeedHelp(_: Any) {
         self.configuration.tracker?.engagement(.click(.help, self.trackerViewID))
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
