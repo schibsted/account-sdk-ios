@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  SchibstedAccount: 59c9988cee73fb4b3ce027676c7fce9c1ac5613f
+  SchibstedAccount: 3ae49e8278680ed4c5d7a3db578940c4cf216a03
   SwiftFormat: f39044d75d5e58dbbc7c436c089104ec9c8f717a
 
 PODFILE CHECKSUM: f97517f36b0cdaf5f6767aa954f28af497511f2b

@@ -25,18 +25,18 @@ Pod::Spec.new do |s|
   s.default_subspecs = ['Manager', 'UI']
 
   s.subspec "Core" do |ss|
-    ss.source_files = ['SchibstedAccount/Core/**/*.swift']
+    ss.source_files = ['Source/Core/**/*.swift']
   end
 
   s.subspec "Manager" do |ss|
-    ss.source_files = ['SchibstedAccount/Manager/**/*.{h,m,swift}']
-    ss.resources = ['SchibstedAccount/Manager/Configuration.plist']
+    ss.source_files = ['Source/Manager/**/*.{h,m,swift}']
+    ss.resources = ['Source/Manager/Configuration.plist']
     ss.dependency 'SchibstedAccount/Core'
   end
 
   s.subspec "UI" do |ss|
-    ss.source_files = ['SchibstedAccount/UI/**/*.swift']
-    ss.resources = ['SchibstedAccount/UI/**/*.{lproj,storyboard,xcassets,xib,strings}']
+    ss.source_files = ['Source/UI/**/*.swift']
+    ss.resources = ['Source/UI/**/*.{lproj,storyboard,xcassets,xib,strings}']
     ss.dependency 'SchibstedAccount/Manager'
   end
 
