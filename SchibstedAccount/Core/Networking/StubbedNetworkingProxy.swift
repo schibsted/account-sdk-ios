@@ -6,14 +6,22 @@
 import Foundation
 
 class MockURLSessionDataTask: URLSessionDataTask {
+    // This is the callback for when task.resume is called
     var callback: URLSessionTaskCallback?
+
+    // The next three are the arguments to the completion block of the URLSessionTask
     let _data: Data?
     var _response: HTTPURLResponse?
-    let _session: URLSession?
-    var _request: URLRequest
     var _error: Error?
 
+    let _session: URLSession?
+    var _request: URLRequest
+
     private func handleCacheControl() {
+        //
+        // Here we parse the cache control header and make sure we do the right thing on the session.urlCache
+        // This must be called before sending a response back to the caller, i.e. before the callback is invoked
+        //
         guard let response = self._response, let cacheControl = self._response?.allHeaderFields["Cache-Control"] as? String else {
             return
         }
@@ -33,8 +41,11 @@ class MockURLSessionDataTask: URLSessionDataTask {
         self.callback = callback
         if let responseData = stub.responseData {
             switch responseData {
+                // If it's just a JSON object, we serialize it to a Data and just set that and we're done
             case let .jsonObject(json):
                 self._data = try? JSONSerialization.data(withJSONObject: json, options: [])
+
+                // If it's an array of datas, we just take the first data and the first status code and set the data and response to that
             case let .arrayOfData(datas):
                 self._data = datas.first?.data
                 if let statusCode = datas.first?.statusCode {
@@ -46,6 +57,8 @@ class MockURLSessionDataTask: URLSessionDataTask {
             self._data = nil
         }
 
+        // Only if the response object was not set before, and if we have a status code do we set the response object here
+        // This means that if we have an arrayOfData then that response overrides this one
         if self._response == nil, let statusCode = stub.statusCode, let url = request.url {
             self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
         }
@@ -57,12 +70,13 @@ class MockURLSessionDataTask: URLSessionDataTask {
     override func resume() {
         self.handleCacheControl()
         self.callback?(self._data, self._response, self._error)
-        self.callback = nil
+        self.callback = nil // just in case someone decides to call resume again
     }
     override func cancel() {
         let error = NSError(domain: "MockURLSessionDataTask", code: NSURLErrorCancelled, userInfo: nil)
         self.callback?(nil, nil, error)
         self._error = error as Error
+        self.callback = nil // just in case someone decides to call resume again
     }
     override var response: URLResponse? {
         return self._response
@@ -80,7 +94,10 @@ class MockURLSessionDataTask: URLSessionDataTask {
 }
 
 enum NetworkStubPath: Hashable, CustomStringConvertible {
+    // Partial patch matching
     case path(String)
+
+    // Exact URL matching
     case url(URL)
 
     var description: String {
@@ -111,7 +128,11 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
 
 struct NetworkStub: Equatable, Comparable {
     enum ResponseData: Equatable {
+        // This will set the data in the response to be a JSONObject
         case jsonObject(JSONObject)
+
+        // This will make successive calls use up the array. So if this contains 3 objects, the first time this stub
+        // is matches, it will use the first data/code and that will be removed, etc...
         case arrayOfData([(data: Data, statusCode: Int)])
 
         static func == (lhs: ResponseData, rhs: ResponseData) -> Bool {
@@ -133,10 +154,19 @@ struct NetworkStub: Equatable, Comparable {
             }
         }
     }
+
     var responseData: ResponseData?
+
+    // This statusCode is seperate for now and is only useful if responseData is set to .jsonObject
     var statusCode: Int?
+
+    // This is for path customizations. Setting this will allow you to customize if a stub is called on a request or not
+    // Use func applesIf to set this.
     var predicate: ((URLRequest) -> Bool)?
+
+    // Response headers apply to all invocations of the stub
     var responseHeaders: [String: String]?
+
     let path: NetworkStubPath
 
     init(path: NetworkStubPath) {
@@ -274,8 +304,11 @@ class StubbedNetworkingProxy: NetworkingProxy {
             return URLSessionDataTask()
         }
 
+        // Check if there're exact matches on this URL. If there are, first check if we are allowed
+        // to proceed with it (defaults to true) and then return a mock data task
         for stub in type(of: self).urls[url] ?? [] {
             if stub.proceed(with: request) {
+                // Incase we are an arrayOfData, we need to remove the first elemenet since it is now "used up"
                 defer {
                     if case var .arrayOfData(datas)? = stub.responseData {
                         datas.remove(at: 0)
@@ -288,11 +321,13 @@ class StubbedNetworkingProxy: NetworkingProxy {
             }
         }
 
+        // If we do not have an exact URL match, check if any of the paths match (so contained in URL)
         let dictionary = type(of: self).paths.take()
         let sortedPaths = dictionary.keys.sorted { $0.count > $1.count }
         for path in sortedPaths where url.absoluteString.matches(path) {
             for stub in dictionary[path] ?? [] {
                 if stub.proceed(with: request) {
+                    // Incase we are an arrayOfData, we need to remove the first elemenet since it is now "used up"
                     defer {
                         if case var .arrayOfData(datas)? = stub.responseData {
                             datas.remove(at: 0)
@@ -306,6 +341,7 @@ class StubbedNetworkingProxy: NetworkingProxy {
             }
         }
 
+        // This URL is not stubbed
         return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: .unstubbed(path: .url(url)))
     }
 }

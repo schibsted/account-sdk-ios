@@ -25,6 +25,10 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             Utils.cleanupKeychain()
             PasswordlessTokenStore.clear()
 
+            //
+            // Before each test, make sure we reset the proxy to use the testing networking proxy incase a test changes the configuration
+            // And make sure the internal forwarding proxy if the testing proxy is the default one.
+            //
             let testingNetworkingProxy = TestingNetworkingProxy()
             testingNetworkingProxy.internalProxy = DefaultNetworkingProxy()
             Networking.proxy = testingNetworkingProxy
