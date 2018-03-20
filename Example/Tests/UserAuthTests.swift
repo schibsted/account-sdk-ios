@@ -15,7 +15,10 @@ class UserAuthTests: QuickSpec {
 
         describe("Token exchange") {
             it("Should fail if logged out") {
-                self.stub(uri("/api/2/oauth/exchange"), try! Builders.load(file: "token-exchange-valid", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.exchangeToken.path))
+                stubSignup.returnFile(file: "token-exchange-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let user = TestingUser(state: .loggedOut)
                 user.auth.oneTimeCode(clientID: ClientConfiguration.testing.clientID) { result in
@@ -24,7 +27,10 @@ class UserAuthTests: QuickSpec {
             }
 
             it("Should return a code") {
-                self.stub(uri("/api/2/oauth/exchange"), try! Builders.load(file: "token-exchange-valid", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.exchangeToken.path))
+                stubSignup.returnFile(file: "token-exchange-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let user = TestingUser(state: .loggedIn)
                 user.auth.oneTimeCode(clientID: ClientConfiguration.testing.clientID) { result in

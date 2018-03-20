@@ -68,12 +68,10 @@
 		E13B2D641CF5DDD800CFC6F6 /* valid-passwordless.json in Resources */ = {isa = PBXBuildFile; fileRef = E13B2D5F1CF5DDD800CFC6F6 /* valid-passwordless.json */; };
 		E141827F1F60083200758377 /* ColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141827E1F60083200758377 /* ColorTests.swift */; };
 		E15135F41EAB5BCC000433B6 /* AutoRefreshURLProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15135F31EAB5BCC000433B6 /* AutoRefreshURLProtocolTests.swift */; };
-		E15D239E1E85517E00324544 /* invalid-phone-number-error.json in Resources */ = {isa = PBXBuildFile; fileRef = E15D239D1E85517E00324544 /* invalid-phone-number-error.json */; };
 		E15D239F1E8551A000324544 /* invalid-phone-number-error.json in Resources */ = {isa = PBXBuildFile; fileRef = E15D239D1E85517E00324544 /* invalid-phone-number-error.json */; };
 		E15D23A51E89CCEC00324544 /* TaskManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15D23A41E89CCEC00324544 /* TaskManagerTests.swift */; };
 		E16AFE001E92E7B400F76B48 /* UserTokensStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16AFDFF1E92E7B400F76B48 /* UserTokensStorageTests.swift */; };
 		E171993B2056A00D00DF8FCB /* NetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E171993A2056A00D00DF8FCB /* NetworkingTests.swift */; };
-		E17555E01D0945C5006FA8B6 /* valid-refresh.json in Resources */ = {isa = PBXBuildFile; fileRef = E17555DF1D0945C5006FA8B6 /* valid-refresh.json */; };
 		E17555E11D0945DF006FA8B6 /* valid-refresh.json in Resources */ = {isa = PBXBuildFile; fileRef = E17555DF1D0945C5006FA8B6 /* valid-refresh.json */; };
 		E17C712A1F20B4AC00A57EB4 /* valid-authcode-same-id-diff-code.json in Resources */ = {isa = PBXBuildFile; fileRef = E17C71291F20B4AC00A57EB4 /* valid-authcode-same-id-diff-code.json */; };
 		E17C712C1F20B4E000A57EB4 /* valid-authcode-diff-id-same-code.json in Resources */ = {isa = PBXBuildFile; fileRef = E17C712B1F20B4E000A57EB4 /* valid-authcode-diff-id-same-code.json */; };
@@ -532,11 +530,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E17555E01D0945C5006FA8B6 /* valid-refresh.json in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				E126007720528DFC006083A7 /* ClientConfiguration.json in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				E15D239E1E85517E00324544 /* invalid-phone-number-error.json in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

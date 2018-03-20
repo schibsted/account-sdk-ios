@@ -62,8 +62,7 @@ class MockURLSessionDataTask: URLSessionDataTask {
         if self._response == nil, let statusCode = stub.statusCode, let url = request.url {
             self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
         }
-
-        self._error = nil
+        self._error = stub.error
         self._session = session
         self._request = request
     }
@@ -80,6 +79,9 @@ class MockURLSessionDataTask: URLSessionDataTask {
     }
     override var response: URLResponse? {
         return self._response
+    }
+    override var currentRequest: URLRequest? {
+        return self._request
     }
     override var error: Error? {
         return self._error
@@ -181,6 +183,19 @@ struct NetworkStub: Equatable, Comparable {
         self.responseData = .arrayOfData(data)
     }
 
+    mutating func returnFile(file: String, type: String, in bundle: Bundle) {
+        guard let path = bundle.path(forResource: file, ofType: type) else {
+            print("[FILE MISSING] name:'\(file).\(type)'")
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        self.data = try? Data(contentsOf: url)
+    }
+
+    mutating func returnError(error: Error) {
+        self.error = error
+    }
+
     mutating func returnResponse(status: Int, headers: [String: String]? = nil) {
         self.statusCode = status
         self.responseHeaders = headers
@@ -232,9 +247,12 @@ private extension String {
 }
 
 class StubbedNetworkingProxy: NetworkingProxy {
-
     var session: URLSession {
-        return .shared
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
+        config.httpAdditionalHeaders = [Networking.Header.userAgent.rawValue: UserAgent().value]
+        return URLSession(configuration: config)
     }
 
     static func insert<K>(in dictionary: inout SynchronizedDictionary<K, [NetworkStub]>, key: K, stub: NetworkStub) {

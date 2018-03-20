@@ -104,21 +104,30 @@ class URLSessionTests: QuickSpec {
             }
 
             it("Should perform a standard data task") {
-                let successData = "prissy brat"
                 let (session, user) = Utils.makeURLSession()
                 Utils.hold(user)
-                self.stub(uri("example.com"), Builders.load(string: successData, status: 200))
+
+                let url = URL(string: "example.com")!
+                var stub = NetworkStub(path: .url(url))
+                stub.returnData(json: ["key": "prissy brat"])
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 doDataTask(session, url: URL(string: "example.com")!) { data, _, _ in
-                    expect(String(data: data!, encoding: .utf8)) == successData
+                    expect(String(data: data!, encoding: .utf8)) == "{\"key\":\"prissy brat\"}"
                 }
             }
 
             it("Should handle network error") {
                 let expectedError = NSError(domain: "getting jiggy with it", code: 19_212_701, userInfo: nil)
-                self.stub(everything, failure(expectedError))
+                let url = URL(string: "http://www.example.com/")!
+                var stub = NetworkStub(path: .url(url))
+                stub.returnError(error: expectedError)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let (session, user) = Utils.makeURLSession()
                 Utils.hold(user)
-                doDataTask(session, url: URL(string: "whateva")!) { _, _, error in
+                doDataTask(session, url: url) { _, _, error in
                     expect(error!).to(matchError(expectedError))
                 }
             }
@@ -218,9 +227,17 @@ class URLSessionTests: QuickSpec {
 
             it("should fail if refresh retry count exeeded") {
                 let wantedUrl = "http://www.example.com/"
-                let refreshUrl = "/oauth/token"
-                self.stub(uri(wantedUrl), Builders.load(string: "oh noes", status: 401))
-                self.stub(uri(refreshUrl), try! Builders.load(file: "valid-refresh", status: 200))
+                let refreshUrl = Router.oauthToken.path
+
+                var stub = NetworkStub(path: .url(URL(string: "http://www.example.com/")!))
+                stub.returnResponse(status: 401)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
+                stubSignup.returnFile(file: "valid-refresh", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
+
                 let (session, user) = Utils.makeURLSession()
                 user.auth.refreshRetryCount = 2
                 doDataTask(session, url: URL(string: wantedUrl)!) { _, _, error in

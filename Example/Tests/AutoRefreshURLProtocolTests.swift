@@ -11,10 +11,20 @@ import Quick
 
 class AutoRefreshURLProtocolTests: QuickSpec {
 
+    func addPrissyBratStub() {
+        let url = URL(string: "example.com")!
+        var stub = NetworkStub(path: .url(url))
+        stub.returnData(json: ["key": "prissy brat"])
+        stub.returnResponse(status: 200, headers: [
+            "cache-control": "max-age=5",
+        ])
+        StubbedNetworkingProxy.addStub(stub)
+    }
+
     override func spec() {
 
         it("Should perform a standard data task") {
-            self.stub(uri("example.com"), Builders.load(string: "prissy brat", status: 200))
+            self.addPrissyBratStub()
 
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: .default)
@@ -22,7 +32,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
             waitUntil { done in
                 let task = session.dataTask(with: request) { data, _, _ in
-                    expect(String(data: data!, encoding: .utf8)) == "prissy brat"
+                    expect(String(data: data!, encoding: .utf8)) == "{\"key\":\"prissy brat\"}"
                     done()
                 }
 
@@ -39,7 +49,8 @@ class AutoRefreshURLProtocolTests: QuickSpec {
         }
 
         it("Should fail if no user") {
-            self.stub(uri("example.com"), Builders.load(string: "prissy brat", status: 200))
+            self.addPrissyBratStub()
+
             let configuration = URLSessionConfiguration.default
             configuration.protocolClasses = [AutoRefreshURLProtocol.self]
             let session = URLSession(configuration: configuration)
@@ -62,7 +73,8 @@ class AutoRefreshURLProtocolTests: QuickSpec {
                 configuration.protocolClasses = [AutoRefreshURLProtocol.self]
                 session = URLSession(user: user, configuration: URLSessionConfiguration.default)
             }
-            self.stub(uri("example.com"), Builders.load(string: "prissy brat", status: 200))
+
+            self.addPrissyBratStub()
             let request = URLRequest(url: URL(string: "http://example.com")!)
 
             waitUntil { done in
@@ -75,7 +87,8 @@ class AutoRefreshURLProtocolTests: QuickSpec {
         }
 
         it("Should have access token in request") {
-            self.stub(everything, http(200))
+            self.addPrissyBratStub()
+
             let user = User(state: .loggedIn)
             let session = URLSession(user: user, configuration: .default)
             let request = URLRequest(url: URL(string: "http://example.com")!)
@@ -137,9 +150,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
         it("Should not refresh on 200") {
             let wantedUrl = "example.com"
-            let successData = "i am not google"
-
-            self.stub(uri(wantedUrl), Builders.load(string: successData, status: 200))
+            self.addPrissyBratStub()
 
             let user = User(state: .loggedIn)
             let session = URLSession(user: user, configuration: .default)
@@ -147,7 +158,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
             waitUntil { done in
                 let task = session.dataTask(with: request) { data, _, _ in
-                    expect(String(data: data!, encoding: .utf8)) == successData
+                    expect(String(data: data!, encoding: .utf8)) == "{\"key\":\"prissy brat\"}"
                     done()
                 }
                 task.resume()
@@ -166,13 +177,17 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
         it("Should handle network error") {
             let expectedError = NSError(domain: "getting jiggy with it", code: 501, userInfo: nil)
-            self.stub(everything, failure(expectedError))
+            let url = URL(string: "example.com")!
+            var stub = NetworkStub(path: .url(url))
+            stub.returnError(error: expectedError)
+            stub.returnResponse(status: 501)
+            StubbedNetworkingProxy.addStub(stub)
 
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: URLSessionConfiguration.default)
 
             waitUntil { done in
-                let task = session.dataTask(with: URLRequest(url: URL(string: "whateva")!)) { _, _, error in
+                let task = session.dataTask(with: URLRequest(url: url)) { _, _, error in
                     expect(error).to(matchError(expectedError))
                     done()
                 }
@@ -237,12 +252,19 @@ class AutoRefreshURLProtocolTests: QuickSpec {
         }
 
         it("Should handle refresh failure") {
-            self.stub(uri("/oauth/token"), Builders.load(string: "", status: 401))
-            self.stub({ $0.url?.host == "www.example.com" }, Builders.load(string: "", status: 401))
+            let url = URL(string: "example.com")!
+            var stub = NetworkStub(path: .path("/oauth/token"))
+            stub.returnResponse(status: 401)
+            StubbedNetworkingProxy.addStub(stub)
+
+            var stub2 = NetworkStub(path: .url(url))
+            stub2.returnResponse(status: 401)
+            StubbedNetworkingProxy.addStub(stub2)
+
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: URLSessionConfiguration.default)
             waitUntil { done in
-                session.dataTask(with: URLRequest(url: URL(string: "https://www.example.com")!)) {
+                session.dataTask(with: URLRequest(url: url)) {
                     expect($2).to(matchError(ClientError.userRefreshFailed(kDummyError)))
                     done()
                 }.resume()
