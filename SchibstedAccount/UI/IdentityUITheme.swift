@@ -13,6 +13,9 @@ public struct IdentityUITheme {
     /// Default UI theme object
     public static let `default` = IdentityUITheme()
 
+    /// The logo that's displayed on the identifier screen
+    public var titleLogo: UIImage?
+
     ///
     public struct Geometry {
         /// Default curved corner radius of controls
