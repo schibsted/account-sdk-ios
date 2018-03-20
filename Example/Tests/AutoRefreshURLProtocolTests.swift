@@ -96,7 +96,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
             var refreshStub = NetworkStub(path: .path(refreshUrl))
             refreshStub.returnData(json: JSONObject.fromFile("valid-refresh"))
-            refreshStub.statusCode = 200
+            refreshStub.returnResponse(status: 200)
             StubbedNetworkingProxy.addStub(refreshStub)
 
             var wantedStub = NetworkStub(path: .path(wantedUrl))

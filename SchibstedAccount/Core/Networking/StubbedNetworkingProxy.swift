@@ -7,15 +7,15 @@ import Foundation
 
 class MockURLSessionDataTask: URLSessionDataTask {
     // This is the callback for when task.resume is called
-    var callback: URLSessionTaskCallback?
+    private var callback: URLSessionTaskCallback?
 
     // The next three are the arguments to the completion block of the URLSessionTask
-    let _data: Data?
-    var _response: HTTPURLResponse?
-    var _error: Error?
+    private let _data: Data?
+    private var _response: HTTPURLResponse?
+    private var _error: Error?
 
-    let _session: URLSession?
-    var _request: URLRequest
+    private let _session: URLSession?
+    private var _request: URLRequest
 
     private func handleCacheControl() {
         //
@@ -155,19 +155,19 @@ struct NetworkStub: Equatable, Comparable {
         }
     }
 
-    var responseData: ResponseData?
+    fileprivate var responseData: ResponseData?
 
     // This statusCode is seperate for now and is only useful if responseData is set to .jsonObject
-    var statusCode: Int?
+    fileprivate var statusCode: Int?
 
     // This is for path customizations. Setting this will allow you to customize if a stub is called on a request or not
     // Use func applesIf to set this.
-    var predicate: ((URLRequest) -> Bool)?
+    private var predicate: ((URLRequest) -> Bool)?
 
     // Response headers apply to all invocations of the stub
-    var responseHeaders: [String: String]?
+    fileprivate var responseHeaders: [String: String]?
 
-    let path: NetworkStubPath
+    fileprivate let path: NetworkStubPath
 
     init(path: NetworkStubPath) {
         self.path = path
@@ -186,7 +186,7 @@ struct NetworkStub: Equatable, Comparable {
         self.responseHeaders = headers
     }
 
-    static func unstubbed(path: NetworkStubPath) -> NetworkStub {
+    fileprivate static func unstubbed(path: NetworkStubPath) -> NetworkStub {
         var stub = NetworkStub(path: path)
         stub.returnData(json: [
             "message": "Path \(path) is not stubbed",
@@ -199,7 +199,7 @@ struct NetworkStub: Equatable, Comparable {
         self.predicate = predicate
     }
 
-    func proceed(with request: URLRequest) -> Bool {
+    fileprivate func proceed(with request: URLRequest) -> Bool {
         return self.predicate?(request) ?? true
     }
 
