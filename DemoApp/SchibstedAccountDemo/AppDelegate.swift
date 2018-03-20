@@ -104,8 +104,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        self.user = IdentityManager(clientConfiguration: .current).currentUser
+    func application(_: UIApplication, didFinishLaunchingWithOptions options: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let identityManager = IdentityManager(clientConfiguration: .current)
+        self.user = identityManager.currentUser
+        
+        if !AppLaunchData.doesLaunchOptionsContainRecognizedURL(options, for: .current), self.user?.state == .loggedIn {
+            self.user?.needsAcceptanceOfNewTerms { [weak self] result in
+                switch result {
+                case let .success(needsAcceptance):
+                    guard needsAcceptance, let vc = self?.window?.rootViewController else {
+                        return
+                    }
+                    self?.identityUI = IdentityUI(configuration: .default)
+                    self?.identityUI?.delegate = self
+                    self?.identityUI?.presentIdentityProcess(from: vc, route: .presentUpdatedTerms, identityManager: identityManager)
+                case let .failure(error):
+                    // Fail silently, retry will occur on next app's launch.
+                    print("Error attempting to fetch availability of new terms: \(error)")
+                }
+            }
+            
+            return true
+        }
+        
         return true
     }
 
@@ -120,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.identityUI = IdentityUI(configuration: .default)
         self.identityUI?.delegate = self
-        self.identityUI?.presentIdentityProcess(from: vc, route: route)
+        self.identityUI?.presentIdentityProcess(from: vc, route: route, identityManager: nil)
 
         return true
     }

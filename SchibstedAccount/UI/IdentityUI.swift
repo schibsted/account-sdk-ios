@@ -162,7 +162,7 @@ public class IdentityUI {
 
      - SeeAlso: `init(configuration:route:)`
      */
-    public func presentIdentityProcess(from viewController: UIViewController, route: Route, identityManager: IdentityManager? = nil) {
+    public func presentIdentityProcess(from viewController: UIViewController, route: Route, identityManager: IdentityManager?) {
         self.configuration.tracker?.loginMethod = route.loginMethod
         let identityManager = identityManager ?? IdentityManager(clientConfiguration: self.configuration.clientConfiguration)
         self.start(input: .byRoute(route, presentingViewController: viewController, identityManager: identityManager)) { [weak self] output in
@@ -245,13 +245,13 @@ extension IdentityUI: FlowCoordinator {
         // This is now the currently presented login flow.
         IdentityUI.presentedIdentityUI = self
         // Show the first screen in the flow.
-        self.showIdentifierViewController(input: input, completion: completion)
+        self.show(input: input, completion: completion)
     }
 }
 
 extension IdentityUI {
 
-    func showIdentifierViewController(input: Input, completion: @escaping (Output) -> Void) {
+    func show(input: Input, completion: @escaping (Output) -> Void) {
         switch input {
         case let .byRoute(route, vc, identityManager):
             self.handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, identityManager: identityManager, completion: completion)
@@ -394,6 +394,31 @@ extension IdentityUI {
             }
         }
     }
+
+    private func spawnTermsCoordinator(
+        identityManager: IdentityManager,
+        completion: @escaping (Output) -> Void
+    ) {
+        let termsCoordinator = TermsCoordinator(
+            navigationController: self.navigationController,
+            identityManager: identityManager,
+            configuration: self.configuration
+        )
+
+        self.child = ChildFlowCoordinator(termsCoordinator, input: TermsCoordinator.Input()) { [weak self] output in
+            self?.child = nil
+
+            switch output {
+            case .success:
+                completion(.onlyDismiss)
+            case .cancel:
+                // Since user has not accepted the updated terms, we log her out :'(
+                identityManager.currentUser.logout()
+            case let .error(error):
+                self?.present(error: error)
+            }
+        }
+    }
 }
 
 extension IdentityUI {
@@ -433,6 +458,16 @@ extension IdentityUI {
 
             // We don't want to present a new login flow yet, since if the verification code validates then we don't need to display any UI.
             return
+
+        case .presentUpdatedTerms:
+            guard presentingViewController != nil else {
+                // Do not present the updated terms if another login flow is already in progress.
+                return
+            }
+
+            self.spawnTermsCoordinator(identityManager: identityManager) { [weak self] output in
+                self?.complete(with: output)
+            }
         }
 
         if self.navigationController.presentingViewController == nil, let presentingViewController = presentingViewController {

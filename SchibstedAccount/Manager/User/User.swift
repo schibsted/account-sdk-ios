@@ -23,6 +23,16 @@ import Foundation
 
  Based on the state of `IdentityManager.currentUser`, you may either proceed to get one or store it and
  use it for whatever else.
+
+ In order to comply with privacy regulations, you need to make sure that the user accepts any update
+ to terms and conditions that may have been issued since the last visit. For this reason, at the
+ startup of your app, right after having obtained the `IdentityManager.currentUser` and verified the
+ login status, you should call `needsAcceptanceOfNewTerms(:)` and in case of positive result present
+ a screen where the user can review and accept the updated terms. The recommended way of doing so is
+ by using the provided UI flows, thus instantiating `IdentityUI` and then calling
+ `IdentityUI.presentNewTerms(from:identityManager:)`. If you are using the headless approach instead,
+ you should then present your own UI and manually call `acceptNewTerms(:)`, if the user accepted the
+ new terms, or `logout()`, if the user rejected them.
 */
 public class User: UserProtocol {
 
@@ -122,6 +132,34 @@ public class User: UserProtocol {
         self.willDeinit.emitSync(())
         User.globalStore[ObjectIdentifier(self).hashValue] = nil
         log(from: self, "removed User \(ObjectIdentifier(self).hashValue) from global store")
+    }
+
+    /**
+     Checks whether the user has accepted the latest terms and conditions.
+
+     Since new terms and conditions may be issued at any time, you should call this method at the app's startup to check that the logged in user you have obtained
+     from an instance of `IdentityManager` (if any) has accepted the latest terms. If the result to this call is `true`, you should then present a screen where
+     the user can review and accept the updated terms. The recommended way of doing so is by using the provided UI flows, thus instantiating `IdentityUI` and
+     then calling `IdentityUI.presentNewTerms(from:identityManager:)`. If you are using the headless approach instead, you should then present your own UI and
+     manually call `acceptNewTerms(:)`, if the user accepted the new terms, or `logout()`, if the user rejected them.
+
+     - parameter completion: Callback that is called after acceptance status has been checked.
+     */
+    public func needsAcceptanceOfNewTerms(completion: @escaping BoolResultCallback) {
+        self.agreements.status(completion: completion)
+    }
+
+    /**
+     Tells the server that the user has accepted the latest terms and conditions.
+
+     If you use the recommended way of presenting the screen to accept the terms, so if you the UI flows provided by `IdentityUI`, then you should *not* call this
+     method manually, as it will be automatically called for you when the user accepts the new terms. You should only use this method if you are following the
+     headless approach and implementing your own UI.
+
+     - parameter completion: Callback that is called after the acceptance of the terms has been sent to the server.
+     */
+    public func acceptNewTerms(completion: @escaping NoValueCallback) {
+        self.agreements.accept(completion: completion)
     }
 
     /**

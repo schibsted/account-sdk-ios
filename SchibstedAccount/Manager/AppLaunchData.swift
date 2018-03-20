@@ -41,9 +41,9 @@ extension AppLaunchData {
         case persistUser = "persist-user"
     }
     /**
-     Initializes this object if the launchOptions contains a valid url that is parsable by the SDK.
+     Initializes this object if url is a valid deep link.
 
-     - parameter launchOptions: Options you get through `UIApplicationDelegate.application(_:didFinishLaunchingWithOptions:)`
+     - parameter url: The url you get through `UIApplicationDelegate.application(_:url:options:)`.
      */
     public init?(launchOptions: [AnyHashable: Any]?, clientConfiguration: ClientConfiguration) {
         guard let maybeURL = launchOptions?[UIApplicationLaunchOptionsKey.url], let url = maybeURL as? URL else {
@@ -98,5 +98,15 @@ extension AppLaunchData {
         }
 
         return nil
+    }
+
+    /**
+     Returns whether the given launch options contain a URL that is recognized as a deep link to the SchibstedAccount SDK.
+
+     - parameter launchOptions: The launch options you get through `UIApplicationDelegate.application(_:url:options:)`.
+     - parameter clientConfiguration: The current client configuration.
+     */
+    public static func doesLaunchOptionsContainRecognizedURL(_ launchOptions: [AnyHashable: Any]?, for clientConfiguration: ClientConfiguration) -> Bool {
+        return AppLaunchData(launchOptions: launchOptions, clientConfiguration: clientConfiguration) != nil
     }
 }

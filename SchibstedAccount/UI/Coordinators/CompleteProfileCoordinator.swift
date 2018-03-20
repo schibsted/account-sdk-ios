@@ -190,14 +190,14 @@ extension CompleteProfileCoordinator {
         )
 
         let viewController = TermsViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-        viewController.didRequestAction = { action in
+        viewController.didRequestAction = { [weak self] action in
             switch action {
             case .acceptTerms:
                 completion(.wereJustAccepted)
             case let .learnMore(summary):
-                self.showTermsSummaryView(summary)
+                self?.showTermsSummaryView(summary)
             case let .open(url):
-                self.present(url: url)
+                self?.present(url: url)
             case .back:
                 completion(.back)
             case .cancel:

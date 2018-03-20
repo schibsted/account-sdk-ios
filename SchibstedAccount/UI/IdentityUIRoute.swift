@@ -19,9 +19,15 @@ extension IdentityUI {
         /// Route to the next step after email validation occurred after signup.
         case validateAuthCode(code: String, shouldPersistUser: Bool)
 
+        /// Route to present updated terms and condition to an already logged-in user.
+        case presentUpdatedTerms
+
         var loginMethod: LoginMethod {
             switch self {
             case .login, .enterPassword, .validateAuthCode:
+                return .password
+            case .presentUpdatedTerms:
+                // Not really relevant in this case.
                 return .password
             }
         }
@@ -84,7 +90,7 @@ extension IdentityUI.Route {
     /// - Note: Metadata for a single route can be persisted at a time, since persisting new metadata will replace previously persisted one.
     static func persistMetadata(for route: IdentityUI.Route) {
         switch route {
-        case .login, .validateAuthCode(code: _):
+        case .login, .validateAuthCode(code: _), .presentUpdatedTerms:
             // No persistent metadata need to be stored.
             return
         case let .enterPassword(for: email):
