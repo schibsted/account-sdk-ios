@@ -26,7 +26,7 @@ class LogoStackView: UIStackView, Themeable {
             let scale = titleLogo.size.width / titleLogo.size.height
             customLogoImageView.contentMode = .scaleAspectFit
             customLogoImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-            customLogoImageView.widthAnchor.constraint(equalToConstant: 20 * scale).isActive = true
+            customLogoImageView.widthAnchor.constraint(equalToConstant: ceil(20 * scale)).isActive = true
 
             self.addArrangedSubview(customLogoImageView)
             self.addArrangedSubview(filler)
