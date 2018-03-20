@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import Mockingjay
 import Nimble
 import Quick
 @testable import SchibstedAccount
@@ -15,7 +14,11 @@ class UserProfileSessionTests: QuickSpec {
         describe("Profile data") {
             it("Should have all the fields") {
                 let user = TestingUser(state: .loggedIn)
-                self.stub(uri("/api/2/user/\(user.id!)"), try! Builders.load(file: "user-profile-valid", status: 200))
+
+                var stubSignup = NetworkStub(path: .path(Router.profile(userID: user.id!).path))
+                stubSignup.returnFile(file: "user-profile-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 user.profile.fetch { result in
                     guard case let .success(profile) = result else {
@@ -32,7 +35,10 @@ class UserProfileSessionTests: QuickSpec {
         describe("Profile data update") {
             it("Should update the name successfully") {
                 let user = TestingUser(state: .loggedIn)
-                self.stub(uri("/api/2/user/\(user.id!)"), try! Builders.load(file: "user-profile-valid", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.profile(userID: user.id!).path))
+                stubSignup.returnFile(file: "user-profile-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let profile = UserProfile(givenName: "Gordon", familyName: "Freeman")
                 user.profile.update(profile) { result in

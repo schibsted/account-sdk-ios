@@ -33,6 +33,8 @@ class MockURLSessionDataTask: URLSessionDataTask {
         self.callback = callback
         if let jsonData = stub.jsonData {
             self._data = try? JSONSerialization.data(withJSONObject: jsonData, options: [])
+        } else if let data = stub.data {
+            self._data = data
         } else {
             self._data = nil
         }
@@ -41,7 +43,7 @@ class MockURLSessionDataTask: URLSessionDataTask {
         } else {
             self._response = nil
         }
-        self._error = nil
+        self._error = stub.error
         self._session = session
         self._request = request
     }
@@ -57,6 +59,9 @@ class MockURLSessionDataTask: URLSessionDataTask {
     }
     override var response: URLResponse? {
         return self._response
+    }
+    override var currentRequest: URLRequest? {
+        return self._request
     }
     override var error: Error? {
         return self._error
@@ -104,7 +109,9 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
 
 struct NetworkStub: Equatable, Comparable {
     var jsonData: JSONObject?
+    var data: Data?
     var statusCode: Int?
+    var error: Error?
     var predicate: ((URLRequest) -> Bool)?
     var responseHeaders: [String: String]?
     let path: NetworkStubPath
@@ -115,6 +122,19 @@ struct NetworkStub: Equatable, Comparable {
 
     mutating func returnData(json: JSONObject) {
         self.jsonData = json
+    }
+
+    mutating func returnFile(file: String, type: String, in bundle: Bundle) {
+        guard let path = bundle.path(forResource: file, ofType: type) else {
+            print("[FILE MISSING] name:'\(file).\(type)'")
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        self.data = try? Data(contentsOf: url)
+    }
+
+    mutating func returnError(error: Error) {
+        self.error = error
     }
 
     mutating func returnResponse(status: Int, headers: [String: String]? = nil) {
@@ -168,9 +188,12 @@ private extension String {
 }
 
 class StubbedNetworkingProxy: NetworkingProxy {
-
     var session: URLSession {
-        return .shared
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
+        config.httpAdditionalHeaders = [Networking.Header.userAgent.rawValue: UserAgent().value]
+        return URLSession(configuration: config)
     }
 
     static func insert<K>(in dictionary: inout SynchronizedDictionary<K, [NetworkStub]>, key: K, stub: NetworkStub) {

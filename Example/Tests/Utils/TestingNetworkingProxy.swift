@@ -43,7 +43,7 @@ class TestingNetworkingProxy: NetworkingProxy {
         return self.internalProxy.session
     }
 
-    let internalProxy: NetworkingProxy = DefaultNetworkingProxy()
+    let internalProxy: NetworkingProxy = StubbedNetworkingProxy()
 
     var calledOnce: Bool {
         return self.calls.count == 1
@@ -108,7 +108,9 @@ class TestingNetworkingProxy: NetworkingProxy {
         } : nil
 
         let dataTask = self.internalProxy.dataTask(for: session, request: request, completion: decoratedCallback)
-        callData.sentHTTPHeaders = dataTask.currentRequest?.allHTTPHeaderFields
+        let requestHeaders = request.allHTTPHeaderFields ?? [:]
+        let sessionHeaders = session.configuration.httpAdditionalHeaders as? [String: String] ?? [:]
+        callData.sentHTTPHeaders = requestHeaders.merging(sessionHeaders) { current, _ in current }
         return dataTask
     }
 }

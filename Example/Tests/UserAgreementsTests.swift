@@ -23,7 +23,10 @@ class UserAgreementsTests: QuickSpec {
 
             it("Should fetch unaccepted status") {
                 let user = TestingUser(state: .loggedIn)
-                self.stub(uri("/api/2/user/\(user.id!)/agreements"), try! Builders.load(file: "agreements-valid-unaccepted", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
+                stubSignup.returnFile(file: "agreements-valid-unaccepted", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 user.agreements.status { result in
                     guard case let .success(isAccepted) = result else {
@@ -35,7 +38,10 @@ class UserAgreementsTests: QuickSpec {
 
             it("Should fetch accepted status") {
                 let user = TestingUser(state: .loggedIn)
-                self.stub(uri("/api/2/user/\(user.id!)/agreements"), try! Builders.load(file: "agreements-valid-accepted", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
+                stubSignup.returnFile(file: "agreements-valid-accepted", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 user.agreements.status { result in
                     guard case let .success(isAccepted) = result else {
@@ -60,7 +66,11 @@ class UserAgreementsTests: QuickSpec {
 
             it("Should report an error on invalid user ID") {
                 let user = TestingUser(state: .loggedIn)
-                self.stub(uri("/api/2/user/\(user.id!)/agreements"), try! Builders.load(file: "agreements-invalid-wrong-user", status: 403))
+
+                var stub = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
+                stub.returnFile(file: "agreements-invalid-wrong-user", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnResponse(status: 403)
+                StubbedNetworkingProxy.addStub(stub)
 
                 user.agreements.status { result in
                     guard case let .failure(ClientError.networkingError(NetworkingError.unexpectedStatus(status, _))) = result else {
@@ -81,7 +91,11 @@ class UserAgreementsTests: QuickSpec {
 
             it("Should be able to accept") {
                 let user = TestingUser(state: .loggedIn)
-                self.stub(uri("/api/2/user/\(user.id!)/agreements/accept"), try! Builders.load(file: "agreements-accept-valid", status: 200))
+
+                var stub = NetworkStub(path: .path(Router.acceptAgreements(userID: user.id!).path))
+                stub.returnFile(file: "agreements-accept-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
 
                 user.agreements.accept { result in
                     expect(result).to(beSuccess())
@@ -103,7 +117,10 @@ class UserAgreementsTests: QuickSpec {
 
             it("Should report an error on invalid user ID") {
                 let user = TestingUser(state: .loggedIn)
-                self.stub(uri("/api/2/user/\(user.id!)/agreements/accept"), try! Builders.load(file: "agreements-invalid-wrong-user", status: 403))
+                var stub = NetworkStub(path: .path(Router.acceptAgreements(userID: user.id!).path))
+                stub.returnFile(file: "agreements-invalid-wrong-user", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnResponse(status: 403)
+                StubbedNetworkingProxy.addStub(stub)
 
                 user.agreements.accept { result in
                     guard case let .failure(ClientError.networkingError(NetworkingError.unexpectedStatus(status, _))) = result else {

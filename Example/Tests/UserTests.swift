@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import Mockingjay
 import Nimble
 import Quick
 @testable import SchibstedAccount
@@ -16,7 +15,10 @@ class UserTests: QuickSpec {
         describe("Refreshing") {
 
             it("Should refresh internal properties") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
+                stubSignup.returnFile(file: "valid-refresh", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let user = TestingUser(state: .loggedIn)
 
@@ -34,7 +36,11 @@ class UserTests: QuickSpec {
             }
 
             it("Should update tokens when session refreshes it") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
+                stubSignup.returnFile(file: "valid-refresh", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
+
                 let user = TestingUser(state: .loggedIn)
                 let oldTokens = user.wrapped.tokens
                 user.refresh { _ in }
@@ -44,7 +50,11 @@ class UserTests: QuickSpec {
             }
 
             it("Should handle when the refresh_token is missing") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "invalid-refresh-no-refresh-token", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
+                stubSignup.returnFile(file: "invalid-refresh-no-refresh-token", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
+
                 let user = TestingUser(state: .loggedIn)
                 user.refresh { result in
                     expect(result).to(failWith(.unexpected(JSONError.noKey("refreshToken"))))
@@ -93,7 +103,10 @@ class UserTests: QuickSpec {
             }
 
             it("Should fire the API logout call asynchronously") {
-                self.stub(uri("/api/2/logout"), Builders.load(string: "", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.logout.path))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
+
                 let user = TestingUser(state: .loggedIn)
                 user.logout()
                 expect(Networking.testingProxy.calledOnce).toEventually(beTrue())
@@ -267,7 +280,11 @@ class UserTests: QuickSpec {
             }
 
             it("Should update keychain when user is refreshed") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
+                stubSignup.returnFile(file: "valid-refresh", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
+
                 var oldTokens: TokenData?
                 var newTokens: TokenData?
                 do {
