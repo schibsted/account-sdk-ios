@@ -257,14 +257,7 @@ class StubbedNetworkingProxy: NetworkingProxy {
                 return nil
             }
 
-            var maybeIndex: Int?
-            for (index, containedStub) in stubs.enumerated() {
-                if containedStub == stub {
-                    maybeIndex = index
-                    break
-                }
-            }
-            guard let index = maybeIndex else {
+            guard let index = stubs.enumerated().filter({ $0.element == stub }).first?.offset else {
                 return stubs
             }
 
