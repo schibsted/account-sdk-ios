@@ -28,12 +28,12 @@ class IdentifierViewController: IdentityUIViewController {
     }
     @IBOutlet var backgroundView: UIView! {
         didSet {
-            self.backgroundView.backgroundColor = .schibstedMediumGray
+            self.backgroundView.backgroundColor = .schibstedLightGray
         }
     }
     @IBOutlet var contentView: UIView! {
         didSet {
-            self.contentView.layer.cornerRadius = self.theme.geometry.cornerRadius
+            self.contentView.layer.cornerRadius = 12
         }
     }
     @IBAction func didClickNeedHelp(_: Any) {

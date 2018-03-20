@@ -81,16 +81,16 @@
                                             <rect key="frame" x="0.0" y="92" width="375" height="555"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MrD-sI-hSd" userLabel="InputTitle" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
+                                                    <rect key="frame" x="16" y="16" width="343" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="OUS-mb-DSr" userLabel="InputStackView">
-                                                    <rect key="frame" x="0.0" y="24" width="375" height="88.5"/>
+                                                    <rect key="frame" x="16" y="40" width="343" height="88.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="E1A-Rx-9fe" userLabel="NumberStackView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                                             <subviews>
                                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0qS-6C-iFm" userLabel="CountryCode" customClass="TextField" customModule="SchibstedAccount" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="81" height="30"/>
@@ -102,7 +102,7 @@
                                                                     <textInputTraits key="textInputTraits"/>
                                                                 </textField>
                                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZeN-LP-RPp" userLabel="PhoneNumber" customClass="TextField" customModule="SchibstedAccount" customModuleProvider="target">
-                                                                    <rect key="frame" x="85" y="0.0" width="290" height="30"/>
+                                                                    <rect key="frame" x="85" y="0.0" width="258" height="30"/>
                                                                     <nil key="textColor"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits"/>
@@ -110,13 +110,13 @@
                                                             </subviews>
                                                         </stackView>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KeK-Pk-rYA" userLabel="EmailAddress" customClass="TextField" customModule="SchibstedAccount" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="34" width="375" height="30"/>
+                                                            <rect key="frame" x="0.0" y="34" width="343" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ziq-TS-JKS" userLabel="InputError" customClass="ErrorLabel" customModule="SchibstedAccount" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="68" width="375" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="68" width="343" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -124,16 +124,16 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cIa-P1-gNm" userLabel="PrivacyStackView">
-                                                    <rect key="frame" x="0.0" y="137" width="375" height="418"/>
+                                                    <rect key="frame" x="16" y="153" width="343" height="402"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" image="lock-outline" translatesAutoresizingMaskIntoConstraints="NO" id="XW0-E0-ndf">
-                                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="24"/>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="left" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="9Qw-VW-lWj">
-                                                            <rect key="frame" x="40" y="0.0" width="335" height="49.5"/>
+                                                            <rect key="frame" x="-16" y="0.0" width="303" height="49.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Privacy text" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZp-Li-kvw">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="19.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="83" height="19.5"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -154,13 +154,13 @@
                                             <constraints>
                                                 <constraint firstItem="OUS-mb-DSr" firstAttribute="top" secondItem="MrD-sI-hSd" secondAttribute="bottom" constant="4" id="2pB-1w-c8c"/>
                                                 <constraint firstItem="cIa-P1-gNm" firstAttribute="top" secondItem="OUS-mb-DSr" secondAttribute="bottom" constant="24" id="Dfa-Fm-xwa"/>
-                                                <constraint firstItem="OUS-mb-DSr" firstAttribute="leading" secondItem="dUX-Li-6fk" secondAttribute="leading" id="FCf-Bp-gBv"/>
-                                                <constraint firstItem="MrD-sI-hSd" firstAttribute="leading" secondItem="dUX-Li-6fk" secondAttribute="leading" id="FOa-qN-Rr3"/>
-                                                <constraint firstItem="MrD-sI-hSd" firstAttribute="top" secondItem="dUX-Li-6fk" secondAttribute="top" id="GNF-sy-XWJ"/>
-                                                <constraint firstAttribute="trailing" secondItem="cIa-P1-gNm" secondAttribute="trailing" id="PSL-c0-HtZ"/>
-                                                <constraint firstAttribute="trailing" secondItem="MrD-sI-hSd" secondAttribute="trailing" id="ZmQ-tD-5hv"/>
-                                                <constraint firstAttribute="trailing" secondItem="OUS-mb-DSr" secondAttribute="trailing" id="d8Q-dG-a4a"/>
-                                                <constraint firstItem="cIa-P1-gNm" firstAttribute="leading" secondItem="dUX-Li-6fk" secondAttribute="leading" id="e5q-zr-ItG"/>
+                                                <constraint firstItem="cIa-P1-gNm" firstAttribute="leading" secondItem="dUX-Li-6fk" secondAttribute="leading" constant="16" id="ahs-Ip-On1"/>
+                                                <constraint firstItem="MrD-sI-hSd" firstAttribute="leading" secondItem="dUX-Li-6fk" secondAttribute="leading" constant="16" id="ajx-na-IOW"/>
+                                                <constraint firstAttribute="trailing" secondItem="MrD-sI-hSd" secondAttribute="trailing" constant="16" id="eU3-AZ-HdT"/>
+                                                <constraint firstItem="OUS-mb-DSr" firstAttribute="leading" secondItem="dUX-Li-6fk" secondAttribute="leading" constant="16" id="l2v-0d-ea0"/>
+                                                <constraint firstItem="MrD-sI-hSd" firstAttribute="top" secondItem="dUX-Li-6fk" secondAttribute="top" constant="16" id="lMY-ZJ-CMG"/>
+                                                <constraint firstAttribute="trailing" secondItem="cIa-P1-gNm" secondAttribute="trailing" constant="16" id="nVj-ut-TKI"/>
+                                                <constraint firstAttribute="trailing" secondItem="OUS-mb-DSr" secondAttribute="trailing" constant="16" id="vH1-mu-SYq"/>
                                                 <constraint firstAttribute="bottom" secondItem="cIa-P1-gNm" secondAttribute="bottom" id="weL-3d-ozr"/>
                                             </constraints>
                                         </view>

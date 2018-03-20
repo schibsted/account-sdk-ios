@@ -17,7 +17,7 @@ public struct IdentityUITheme {
     public struct Geometry {
         /// Default curved corner radius of controls
         public var cornerRadius: CGFloat = 4
-        /// Dfault spacing between views that form a grouping
+        /// Default spacing between views that form a grouping
         public var groupedViewSpacing: CGFloat = 8
     }
 
