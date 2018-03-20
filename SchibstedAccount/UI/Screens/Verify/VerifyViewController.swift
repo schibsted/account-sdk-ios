@@ -7,7 +7,7 @@ import UIKit
 
 class VerifyViewController: IdentityUIViewController {
     enum Action {
-        case enter(code: String)
+        case enter(code: String, shouldPersistUser: Bool)
         case changeIdentifier
         case resendCode
         case cancel
@@ -15,6 +15,12 @@ class VerifyViewController: IdentityUIViewController {
 
     var didRequestAction: ((Action) -> Void)?
 
+    @IBOutlet var shouldPersistUserCheck: Checkbox!
+    @IBOutlet var shouldPersistUserText: NormalLabel! {
+        didSet {
+            self.shouldPersistUserText.text = self.viewModel.persistentLogin
+        }
+    }
     @IBOutlet var text: NormalLabel! {
         didSet {
             self.text.text = self.viewModel.subtext
@@ -99,7 +105,6 @@ class VerifyViewController: IdentityUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        (self.textFieldStackView.arrangedSubviews.first as? TextField)?.becomeFirstResponder()
         self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.textFieldStackView
     }
 
@@ -120,7 +125,7 @@ class VerifyViewController: IdentityUIViewController {
             return
         }
 
-        self.didRequestAction?(.enter(code: self.enteredCode))
+        self.didRequestAction?(.enter(code: self.enteredCode, shouldPersistUser: self.shouldPersistUserCheck.isChecked))
     }
 
     @IBAction func didClickChangeIdentifier(_: Any) {

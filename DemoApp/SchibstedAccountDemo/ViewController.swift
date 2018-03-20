@@ -3,6 +3,7 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet private weak var showTeaserSwitch: UISwitch!
+    @IBOutlet private weak var userLabel: UILabel!
     @IBOutlet private weak var versionLabel: UILabel!
     
     var identityUI: IdentityUI?
@@ -15,6 +16,15 @@ class ViewController: UIViewController {
         {
             self.versionLabel.text = "SDK \(SchibstedAccount.sdkVersion) — Demo App \(appVersion) (\(buildVersion))"
         }
+        
+        self.updateUserLabel()
+    }
+    
+    func updateUserLabel() {
+        guard let user = (UIApplication.shared.delegate as? AppDelegate)?.user else {
+            return
+        }
+        self.userLabel.text = "User: \(user.id != nil ? String(describing: user) : "n/a")"
     }
 
     @IBAction func didTapLoginButton(_ sender: UIButton) {

@@ -20,6 +20,7 @@
 "PasswordScreenString.cancel" = "Avbryt";
 "PasswordScreenString.info" = "Minst 8 tegn";
 "PasswordScreenString.forgotPassword" = "Glemt passord?";
+"PasswordScreenString.persistentLogin" = "Forbli innlogget";
 
 "VerifyScreenString.title" = "Vi har sendt deg en kode";
 "VerifyScreenString.subtext" = "Tast inn bekreftelseskoden vi sendte til: ";

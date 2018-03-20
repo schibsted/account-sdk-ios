@@ -47,4 +47,8 @@ extension VerifyViewModel {
     var invalidCode: String {
         return ClientError.invalidCode.localized(from: self.localizationBundle)
     }
+
+    var persistentLogin: String {
+        return "PasswordScreenString.persistentLogin".localized(from: self.localizationBundle)
+    }
 }
