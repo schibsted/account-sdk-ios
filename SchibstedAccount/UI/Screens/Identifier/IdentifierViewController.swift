@@ -127,14 +127,12 @@ class IdentifierViewController: IdentityUIViewController {
         switch self.viewModel.loginMethod {
         case .email, .password:
             showEmailAddress()
-            self.emailAddress.becomeFirstResponder()
             self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.emailAddress
         case let .emailWithPrefilledValue(prefilledEmail), let .passwordWithPrefilledEmail(prefilledEmail):
             showEmailAddress()
             self.emailAddress.text = prefilledEmail.normalizedString
         case .phone:
             showPhoneNumber()
-            self.phoneNumber.becomeFirstResponder()
             self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.phoneNumber
         case let .phoneWithPrefilledValue(prefilledPhone):
             showPhoneNumber()

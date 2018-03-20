@@ -61,8 +61,8 @@ extension PasswordCoordinator {
 
         viewController.didRequestAction = { [weak self] action in
             switch action {
-            case let .enter(password):
-                self?.submit(password: password, for: identifier, on: loginFlowVariant, completion: completion)
+            case let .enter(password, shouldPersistUser):
+                self?.submit(password: password, for: identifier, on: loginFlowVariant, persistUser: shouldPersistUser, completion: completion)
             case .changeIdentifier:
                 completion(.changeIdentifier)
             case .forgotPassword:
@@ -88,15 +88,16 @@ extension PasswordCoordinator {
         password: String,
         for identifier: Identifier,
         on loginFlowVariant: LoginMethod.FlowVariant,
+        persistUser: Bool,
         completion: @escaping (Output) -> Void
     ) {
         if loginFlowVariant == .signup {
-            self.spawnCompleteProfileCoordinator(for: .signup(identifier, password), completion: completion)
+            self.spawnCompleteProfileCoordinator(for: .signup(identifier, password: password, shouldPersistUser: persistUser), completion: completion)
             return
         }
 
         self.presentedViewController?.startLoading()
-        self.signinInteractor.login(username: identifier, password: password, persistUser: false) { [weak self] result in
+        self.signinInteractor.login(username: identifier, password: password, persistUser: persistUser) { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
@@ -120,7 +121,7 @@ extension PasswordCoordinator {
 
 extension PasswordCoordinator {
     enum CompleteProfileVariant {
-        case signup(Identifier, String)
+        case signup(Identifier, password: String, shouldPersistUser: Bool)
         case signin(User)
     }
 
@@ -130,8 +131,13 @@ extension PasswordCoordinator {
         switch variant {
         case let .signin(currentUser):
             completeProfileInteractor = UpdateProfileInteractor(currentUser: currentUser, loginFlowVariant: .signin, tracker: self.configuration.tracker)
-        case let .signup(identifier, password):
-            completeProfileInteractor = SignupInteractor(identifier: identifier, password: password, persistUser: false, identityManager: self.identityManager)
+        case let .signup(identifier, password, shouldPersistUser):
+            completeProfileInteractor = SignupInteractor(
+                identifier: identifier,
+                password: password,
+                persistUser: shouldPersistUser,
+                identityManager: self.identityManager
+            )
         }
 
         let completeProfileCoordinator = CompleteProfileCoordinator(
@@ -148,7 +154,7 @@ extension PasswordCoordinator {
                 switch variant {
                 case .signin:
                     completion(.success(currentUser))
-                case let .signup(identifier, _):
+                case let .signup(identifier, _, _):
                     self?.showCheckInboxView(for: identifier, completion: completion)
                 }
             case .cancel:
