@@ -24,7 +24,11 @@ class SchibstedAccountConfiguration: QuickConfiguration {
 
             Utils.cleanupKeychain()
             PasswordlessTokenStore.clear()
-            Networking.proxy = TestingNetworkingProxy()
+
+            let testingNetworkingProxy = TestingNetworkingProxy()
+            testingNetworkingProxy.internalProxy = DefaultNetworkingProxy()
+            Networking.proxy = testingNetworkingProxy
+
             JWTHelper.proxy = TestingJWTHelperProxy()
 
             // The simulator example app creates a user on start up so this can be potentially 1 before anything runs

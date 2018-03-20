@@ -10,6 +10,32 @@ import Quick
 
 let kDummyError = NSError(domain: "Irrelevant NSError", code: 0, userInfo: nil)
 
+extension Data {
+    static func fromFile(_ name: String) -> Data {
+        let bundle = Bundle(for: TestingUser.self)
+
+        guard let path = bundle.path(forResource: name, ofType: "json") else {
+            preconditionFailure("Must specify a file name that exists in the test bundle")
+        }
+
+        return (try? Data(contentsOf: URL(fileURLWithPath: path))) ?? Data()
+    }
+}
+
+extension Dictionary where Key == String, Value == Any {
+    static func fromFile(_ name: String) -> JSONObject {
+        let data = Data.fromFile(name)
+        let json: JSONObject
+        do {
+            json = try data.jsonObject()
+        } catch {
+            preconditionFailure("Must specify a file name that exists in the test bundle: \(error)")
+        }
+
+        return json
+    }
+}
+
 func beSuccess<T, E: Error>() -> Predicate<Result<T, E>> {
     return Predicate({ (expression) -> PredicateResult in
         let msg = ExpectationMessage.expectedActualValueTo("be success(\(T.self))")

@@ -8,9 +8,9 @@ import Foundation
 class MockURLSessionDataTask: URLSessionDataTask {
     var callback: URLSessionTaskCallback?
     let _data: Data?
-    let _response: HTTPURLResponse?
+    var _response: HTTPURLResponse?
     let _session: URLSession?
-    let _request: URLRequest
+    var _request: URLRequest
     var _error: Error?
 
     private func handleCacheControl() {
@@ -31,16 +31,25 @@ class MockURLSessionDataTask: URLSessionDataTask {
 
     init(session: URLSession, request: URLRequest, callback: @escaping URLSessionTaskCallback, stub: NetworkStub) {
         self.callback = callback
-        if let jsonData = stub.jsonData {
-            self._data = try? JSONSerialization.data(withJSONObject: jsonData, options: [])
+        if let responseData = stub.responseData {
+            switch responseData {
+            case let .jsonObject(json):
+                self._data = try? JSONSerialization.data(withJSONObject: json, options: [])
+            case let .arrayOfData(datas):
+                self._data = datas.first?.data
+                if let statusCode = datas.first?.statusCode {
+                    let url = request.url ?? URL(string: "unknown")!
+                    self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
+                }
+            }
         } else {
             self._data = nil
         }
-        if let statusCode = stub.statusCode, let url = request.url {
+
+        if self._response == nil, let statusCode = stub.statusCode, let url = request.url {
             self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
-        } else {
-            self._response = nil
         }
+
         self._error = nil
         self._session = session
         self._request = request
@@ -64,12 +73,15 @@ class MockURLSessionDataTask: URLSessionDataTask {
     override func suspend() {
         fatalError("Not implemented. Wouldn't know what to do")
     }
+
+    override var currentRequest: URLRequest? {
+        return self._request
+    }
 }
 
 enum NetworkStubPath: Hashable, CustomStringConvertible {
     case path(String)
     case url(URL)
-    case `default`
 
     var description: String {
         switch self {
@@ -77,8 +89,6 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
             return path
         case let .url(url):
             return url.absoluteString
-        case .default:
-            return "*"
         }
     }
 
@@ -88,8 +98,6 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
             if case let .path(b) = rhs { return a == b } else { return false }
         case let .url(a):
             if case let .url(b) = rhs { return a == b } else { return false }
-        case .default:
-            if case .default = rhs { return true } else { return false }
         }
     }
 
@@ -97,13 +105,35 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
         switch self {
         case let .path(path): return path.hashValue
         case let .url(url): return url.absoluteString.hashValue
-        case .default: return "*".hashValue
         }
     }
 }
 
 struct NetworkStub: Equatable, Comparable {
-    var jsonData: JSONObject?
+    enum ResponseData: Equatable {
+        case jsonObject(JSONObject)
+        case arrayOfData([(data: Data, statusCode: Int)])
+
+        static func == (lhs: ResponseData, rhs: ResponseData) -> Bool {
+            switch lhs {
+            case let .jsonObject(a):
+                if case let .jsonObject(b) = rhs { return NSDictionary(dictionary: a).isEqual(b) } else { return false }
+            case let .arrayOfData(a):
+                if case let .arrayOfData(b) = rhs {
+                    guard a.count == b.count else { return false }
+                    for (index, element) in a.enumerated() {
+                        guard element.data == b[index].data && element.statusCode == b[index].statusCode else {
+                            return false
+                        }
+                    }
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
+    }
+    var responseData: ResponseData?
     var statusCode: Int?
     var predicate: ((URLRequest) -> Bool)?
     var responseHeaders: [String: String]?
@@ -114,7 +144,11 @@ struct NetworkStub: Equatable, Comparable {
     }
 
     mutating func returnData(json: JSONObject) {
-        self.jsonData = json
+        self.responseData = .jsonObject(json)
+    }
+
+    mutating func returnData(_ data: [(data: Data, statusCode: Int)]) {
+        self.responseData = .arrayOfData(data)
     }
 
     mutating func returnResponse(status: Int, headers: [String: String]? = nil) {
@@ -143,10 +177,10 @@ struct NetworkStub: Equatable, Comparable {
         if lhs.statusCode != rhs.statusCode {
             return false
         }
-        guard let jsonA = lhs.jsonData, let jsonB = rhs.jsonData else {
-            return lhs.jsonData == nil && rhs.jsonData == nil
+        guard let resA = lhs.responseData, let resB = rhs.responseData else {
+            return lhs.responseData == nil && rhs.responseData == nil
         }
-        return NSDictionary(dictionary: jsonA).isEqual(to: jsonB)
+        return resA == resB
     }
 
     static func < (lhs: NetworkStub, rhs: NetworkStub) -> Bool {
@@ -187,6 +221,30 @@ class StubbedNetworkingProxy: NetworkingProxy {
         }
     }
 
+    static func replace<K>(in dictionary: inout SynchronizedDictionary<K, [NetworkStub]>, key: K, stub: NetworkStub, with newStub: NetworkStub) {
+        dictionary.getAndSet(key: key) { stubs in
+            guard var stubs = stubs else {
+                return nil
+            }
+
+            var maybeIndex: Int?
+            for (index, containedStub) in stubs.enumerated() {
+                if containedStub == stub {
+                    maybeIndex = index
+                    break
+                }
+            }
+            guard let index = maybeIndex else {
+                return stubs
+            }
+
+            stubs.remove(at: index)
+            stubs.append(newStub)
+            stubs.sort()
+            return stubs
+        }
+    }
+
     static func addStub(_ stub: NetworkStub) {
         switch stub.path {
         case let .url(url):
@@ -195,23 +253,16 @@ class StubbedNetworkingProxy: NetworkingProxy {
             let parts = path.components(separatedBy: "*")
             let path = parts.joined(separator: "(.*)")
             self.insert(in: &self.paths, key: path, stub: stub)
-        case .default:
-            DispatchQueue.global().sync {
-                self.defaultStubs.append(stub)
-                self.defaultStubs.sort()
-            }
         }
     }
 
     static func removeStubs() {
         self.urls.removeAll(keepingCapacity: false)
         self.paths.removeAll(keepingCapacity: false)
-        self.defaultStubs.removeAll(keepingCapacity: false)
     }
 
     static var urls = SynchronizedDictionary<URL, [NetworkStub]>()
     static var paths = SynchronizedDictionary<String, [NetworkStub]>()
-    static var defaultStubs: [NetworkStub] = []
 
     func dataTask(
         for session: URLSession,
@@ -225,6 +276,14 @@ class StubbedNetworkingProxy: NetworkingProxy {
 
         for stub in type(of: self).urls[url] ?? [] {
             if stub.proceed(with: request) {
+                defer {
+                    if case var .arrayOfData(datas)? = stub.responseData {
+                        datas.remove(at: 0)
+                        var newStub = stub
+                        newStub.returnData(datas)
+                        type(of: self).replace(in: &type(of: self).urls, key: url, stub: stub, with: newStub)
+                    }
+                }
                 return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
             }
         }
@@ -234,18 +293,16 @@ class StubbedNetworkingProxy: NetworkingProxy {
         for path in sortedPaths where url.absoluteString.matches(path) {
             for stub in dictionary[path] ?? [] {
                 if stub.proceed(with: request) {
+                    defer {
+                        if case var .arrayOfData(datas)? = stub.responseData {
+                            datas.remove(at: 0)
+                            var newStub = stub
+                            newStub.returnData(datas)
+                            type(of: self).replace(in: &type(of: self).paths, key: path, stub: stub, with: newStub)
+                        }
+                    }
                     return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
                 }
-            }
-        }
-
-        let defaultStubs = DispatchQueue.global().sync {
-            return type(of: self).defaultStubs
-        }
-
-        for stub in defaultStubs {
-            if stub.proceed(with: request) {
-                return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
             }
         }
 
