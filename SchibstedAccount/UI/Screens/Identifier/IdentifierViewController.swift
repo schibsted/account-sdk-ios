@@ -26,14 +26,29 @@ class IdentifierViewController: IdentityUIViewController {
             self.helpButton.contentEdgeInsets.top = 1
         }
     }
+    @IBOutlet var backgroundView: UIView! {
+        didSet {
+            self.backgroundView.backgroundColor = .schibstedLightGray
+        }
+    }
+    @IBOutlet var contentView: UIView! {
+        didSet {
+            self.contentView.layer.cornerRadius = 12
+        }
+    }
     @IBAction func didClickNeedHelp(_: Any) {
         self.configuration.tracker?.engagement(.click(.help, self.trackerViewID))
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
     }
+
+    @IBOutlet var teaserView: UIView! {
+        didSet {
+            self.teaserView.isHidden = self.teaser.text?.isEmpty != false
+        }
+    }
     @IBOutlet var teaser: NormalLabel! {
         didSet {
             self.teaser.text = self.viewModel.localizedTeaserText
-            self.teaser.isHidden = self.teaser.text?.isEmpty != false
         }
     }
     @IBOutlet var countryCode: TextField! {

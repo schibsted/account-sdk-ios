@@ -88,8 +88,17 @@ extension SchibstedAccount.ClientConfiguration {
     }
 }
 
+extension IdentityUITheme {
+    static let custom: IdentityUITheme = {
+        var theme = IdentityUITheme.default
+        let image = UIImage(named: "hummus", in: Bundle.main, compatibleWith: nil)
+        theme.titleLogo = image
+        return theme
+    }()
+}
+
 extension IdentityUIConfiguration {
-    static let current = IdentityUIConfiguration(clientConfiguration: .current, theme: .default, isCancelable: true)
+    static let current = IdentityUIConfiguration(clientConfiguration: .current, theme: .custom, isCancelable: true)
 }
 
 extension UIApplication {
