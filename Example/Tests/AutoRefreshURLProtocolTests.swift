@@ -208,6 +208,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             for i in 0..<numRequestsToFire {
                 requests.append(i % 2 == 0 ? failure : success)
             }
+            requests.append(success)
             wantedStub.returnData(requests)
             StubbedNetworkingProxy.addStub(wantedStub)
 

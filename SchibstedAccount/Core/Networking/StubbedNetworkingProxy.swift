@@ -323,10 +323,12 @@ class StubbedNetworkingProxy: NetworkingProxy {
                 // Incase we are an arrayOfData, we need to remove the first elemenet since it is now "used up"
                 defer {
                     if case var .arrayOfData(datas)? = stub.responseData {
-                        datas.remove(at: 0)
-                        var newStub = stub
-                        newStub.returnData(datas)
-                        type(of: self).replace(in: &type(of: self).urls, key: url, stub: stub, with: newStub)
+                        if datas.count > 1 {
+                            datas.remove(at: 0)
+                            var newStub = stub
+                            newStub.returnData(datas)
+                            type(of: self).replace(in: &type(of: self).urls, key: url, stub: stub, with: newStub)
+                        }
                     }
                 }
                 return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
@@ -342,10 +344,12 @@ class StubbedNetworkingProxy: NetworkingProxy {
                     // Incase we are an arrayOfData, we need to remove the first elemenet since it is now "used up"
                     defer {
                         if case var .arrayOfData(datas)? = stub.responseData {
-                            datas.remove(at: 0)
-                            var newStub = stub
-                            newStub.returnData(datas)
-                            type(of: self).replace(in: &type(of: self).paths, key: path, stub: stub, with: newStub)
+                            if datas.count > 1 {
+                                datas.remove(at: 0)
+                                var newStub = stub
+                                newStub.returnData(datas)
+                                type(of: self).replace(in: &type(of: self).paths, key: path, stub: stub, with: newStub)
+                            }
                         }
                     }
                     return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
