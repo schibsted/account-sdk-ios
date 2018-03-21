@@ -49,8 +49,8 @@ extension TermsCoordinator {
         completion: @escaping (Output) -> Void
     ) {
         let navigationSettings = NavigationSettings(
-            cancel: configuration.isCancelable ? { completion(.cancel) } : nil,
-            back: { completion(.cancel) }
+            cancel: { completion(.cancel) },
+            back: nil
         )
         let viewModel = TermsViewModel(
             terms: terms,
@@ -64,6 +64,7 @@ extension TermsCoordinator {
             switch action {
             case .acceptTerms:
                 self?.configuration.tracker?.engagement(.network(.agreementAccepted))
+                // TODO: Network call to accept the terms
                 completion(.success)
             case let .learnMore(summary):
                 self?.showTermsSummaryView(summary)

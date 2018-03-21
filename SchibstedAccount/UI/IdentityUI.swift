@@ -414,6 +414,7 @@ extension IdentityUI {
             case .cancel:
                 // Since user has not accepted the updated terms, we log her out :'(
                 identityManager.currentUser.logout()
+                completion(.onlyDismiss)
             case let .error(error):
                 self?.present(error: error)
             }
