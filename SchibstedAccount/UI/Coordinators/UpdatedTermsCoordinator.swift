@@ -32,12 +32,19 @@ class UpdatedTermsCoordinator: FlowCoordinator {
     }
 
     func start(input _: Void, completion: @escaping (Output) -> Void) {
+        let loadingViewController = showLoadingView(didCancel: { completion(.cancel) })
+        loadingViewController.startLoading()
+
         self.termsInteractor.fetchTerms { [weak self] result in
             switch result {
             case let .success(terms):
-                self?.showAcceptTermsView(for: terms, completion: completion)
+                loadingViewController.endLoading { [weak self] in
+                    self?.showAcceptTermsView(for: terms, completion: completion)
+                }
             case let .failure(error):
-                if self?.handle(error: error) != true { completion(.error(error)) }
+                self?.present(error: error) {
+                    completion(.cancel)
+                }
             }
         }
     }
@@ -86,11 +93,15 @@ extension UpdatedTermsCoordinator {
 }
 
 extension UpdatedTermsCoordinator {
-    private func handle(error: ClientError) -> Bool {
-        if self.presentedViewController is TermsViewController || self.presentedViewController is RequiredFieldsViewController {
-            self.present(error: error)
-            return true
-        }
-        return false
+    private func showLoadingView(didCancel: @escaping () -> Void) -> LoadingViewController {
+        let navigationSettings = NavigationSettings(
+            cancel: { didCancel() },
+            back: nil
+        )
+        let viewModel = LoadingViewModel(localizationBundle: self.configuration.localizationBundle)
+        let loadingViewController = LoadingViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
+        self.navigationController.viewControllers = [loadingViewController]
+
+        return loadingViewController
     }
 }
