@@ -108,7 +108,9 @@ class TestingNetworkingProxy: NetworkingProxy {
         } : nil
 
         let dataTask = self.internalProxy.dataTask(for: session, request: request, completion: decoratedCallback)
-        callData.sentHTTPHeaders = dataTask.currentRequest?.allHTTPHeaderFields
+        let requestHeaders = request.allHTTPHeaderFields ?? [:]
+        let sessionHeaders = session.configuration.httpAdditionalHeaders as? [String: String] ?? [:]
+        callData.sentHTTPHeaders = requestHeaders.merging(sessionHeaders) { current, _ in current }
         return dataTask
     }
 }

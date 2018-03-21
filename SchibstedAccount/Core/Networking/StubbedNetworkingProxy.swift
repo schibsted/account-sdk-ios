@@ -39,6 +39,7 @@ class MockURLSessionDataTask: URLSessionDataTask {
 
     init(session: URLSession, request: URLRequest, callback: @escaping URLSessionTaskCallback, stub: NetworkStub) {
         self.callback = callback
+
         if let responseData = stub.responseData {
             switch responseData {
                 // If it's just a JSON object, we serialize it to a Data and just set that and we're done
@@ -63,7 +64,7 @@ class MockURLSessionDataTask: URLSessionDataTask {
             self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
         }
 
-        self._error = nil
+        self._error = stub.error
         self._session = session
         self._request = request
     }
@@ -169,6 +170,8 @@ struct NetworkStub: Equatable, Comparable {
 
     fileprivate let path: NetworkStubPath
 
+    fileprivate var error: Error?
+
     init(path: NetworkStubPath) {
         self.path = path
     }
@@ -179,6 +182,10 @@ struct NetworkStub: Equatable, Comparable {
 
     mutating func returnData(_ data: [(data: Data, statusCode: Int)]) {
         self.responseData = .arrayOfData(data)
+    }
+
+    mutating func returnError(error: Error) {
+        self.error = error
     }
 
     mutating func returnResponse(status: Int, headers: [String: String]? = nil) {
@@ -232,9 +239,12 @@ private extension String {
 }
 
 class StubbedNetworkingProxy: NetworkingProxy {
-
     var session: URLSession {
-        return .shared
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
+        config.httpAdditionalHeaders = [Networking.Header.userAgent.rawValue: UserAgent().value]
+        return URLSession(configuration: config)
     }
 
     static func insert<K>(in dictionary: inout SynchronizedDictionary<K, [NetworkStub]>, key: K, stub: NetworkStub) {

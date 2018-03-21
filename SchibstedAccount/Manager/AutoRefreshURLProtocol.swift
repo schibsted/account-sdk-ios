@@ -37,6 +37,7 @@ class AutoRefreshTask: TaskProtocol {
 
     func execute(completion: @escaping (Result<SuccessType, ClientError>) -> Void) {
         guard let accessToken = self.user?.tokens?.accessToken else {
+            print("NO ACCESS TOKEN, \(String(describing: self.user)), \(self.request)")
             completion(.failure(.invalidUser))
             return
         }
