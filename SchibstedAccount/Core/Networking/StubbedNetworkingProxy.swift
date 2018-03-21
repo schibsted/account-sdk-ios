@@ -89,10 +89,6 @@ class MockURLSessionDataTask: URLSessionDataTask {
     override func suspend() {
         fatalError("Not implemented. Wouldn't know what to do")
     }
-
-    override var currentRequest: URLRequest? {
-        return self._request
-    }
 }
 
 enum NetworkStubPath: Hashable, CustomStringConvertible {
@@ -161,6 +157,8 @@ struct NetworkStub: Equatable, Comparable {
 
     // This statusCode is seperate for now and is only useful if responseData is set to .jsonObject
     fileprivate var statusCode: Int?
+
+    fileprivate var error: Error?
 
     // This is for path customizations. Setting this will allow you to customize if a stub is called on a request or not
     // Use func applesIf to set this.

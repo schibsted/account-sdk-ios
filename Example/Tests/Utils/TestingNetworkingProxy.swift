@@ -43,7 +43,7 @@ class TestingNetworkingProxy: NetworkingProxy {
         return self.internalProxy.session
     }
 
-    let internalProxy: NetworkingProxy = StubbedNetworkingProxy()
+    var internalProxy: NetworkingProxy = StubbedNetworkingProxy()
 
     var calledOnce: Bool {
         return self.calls.count == 1
