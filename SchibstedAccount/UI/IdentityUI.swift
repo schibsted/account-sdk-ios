@@ -395,17 +395,17 @@ extension IdentityUI {
         }
     }
 
-    private func spawnTermsCoordinator(
+    private func spawnUpdatedTermsCoordinator(
         identityManager: IdentityManager,
         completion: @escaping (Output) -> Void
     ) {
-        let termsCoordinator = TermsCoordinator(
+        let updatedTermsCoordinator = UpdatedTermsCoordinator(
             navigationController: self.navigationController,
             identityManager: identityManager,
             configuration: self.configuration
         )
 
-        self.child = ChildFlowCoordinator(termsCoordinator, input: TermsCoordinator.Input()) { [weak self] output in
+        self.child = ChildFlowCoordinator(updatedTermsCoordinator, input: UpdatedTermsCoordinator.Input()) { [weak self] output in
             self?.child = nil
 
             switch output {
@@ -466,7 +466,7 @@ extension IdentityUI {
                 return
             }
 
-            self.spawnTermsCoordinator(identityManager: identityManager) { [weak self] output in
+            self.spawnUpdatedTermsCoordinator(identityManager: identityManager) { [weak self] output in
                 self?.complete(with: output)
             }
         }

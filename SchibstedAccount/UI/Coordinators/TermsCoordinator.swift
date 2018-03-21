@@ -5,7 +5,7 @@
 
 import UIKit
 
-class TermsCoordinator: FlowCoordinator {
+class UpdatedTermsCoordinator: FlowCoordinator {
     enum Output {
         case success
         case cancel
@@ -43,7 +43,7 @@ class TermsCoordinator: FlowCoordinator {
     }
 }
 
-extension TermsCoordinator {
+extension UpdatedTermsCoordinator {
     private func showAcceptTermsView(
         for terms: Terms,
         completion: @escaping (Output) -> Void
@@ -85,7 +85,7 @@ extension TermsCoordinator {
     }
 }
 
-extension TermsCoordinator {
+extension UpdatedTermsCoordinator {
     private func handle(error: ClientError) -> Bool {
         if self.presentedViewController is TermsViewController || self.presentedViewController is RequiredFieldsViewController {
             self.present(error: error)
