@@ -13,7 +13,6 @@ target 'SchibstedAccount_Example' do
     pod 'Quick', '= 1.2.0'
     pod 'Nimble', '= 7.0.3', :inhibit_warnings => true #Needed because of deprecated warnings. See: https://github.com/Quick/Nimble/issues/444
     pod 'URITemplate', '= 2.0.3', :inhibit_warnings => true #Needed because of deprecated warnings. See: https://github.com/kylef/URITemplate.swift/pull/42
-    pod 'Mockingjay', '= 2.0.1',
     if !ENV['TRAVIS']
       pod 'SwiftFormat/CLI', '= 0.32.0'
     end

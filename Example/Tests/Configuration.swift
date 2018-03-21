@@ -30,7 +30,7 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             // And make sure the internal forwarding proxy if the testing proxy is the default one.
             //
             let testingNetworkingProxy = TestingNetworkingProxy()
-            testingNetworkingProxy.internalProxy = DefaultNetworkingProxy()
+            testingNetworkingProxy.internalProxy = StubbedNetworkingProxy()
             Networking.proxy = testingNetworkingProxy
 
             JWTHelper.proxy = TestingJWTHelperProxy()

@@ -1,11 +1,4 @@
 PODS:
-  - Mockingjay (2.0.1):
-    - Mockingjay/Core (= 2.0.1)
-    - Mockingjay/XCTest (= 2.0.1)
-  - Mockingjay/Core (2.0.1):
-    - URITemplate (~> 2.0)
-  - Mockingjay/XCTest (2.0.1):
-    - Mockingjay/Core
   - Nimble (7.0.3)
   - Quick (1.2.0)
   - SchibstedAccount (1.0.0-rc1):
@@ -20,7 +13,6 @@ PODS:
   - URITemplate (2.0.3)
 
 DEPENDENCIES:
-  - Mockingjay (= 2.0.1)
   - Nimble (= 7.0.3)
   - Quick (= 1.2.0)
   - SchibstedAccount (from `../`)
@@ -33,13 +25,12 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Mockingjay: 11a621880d2887f1775bdcf824341eb68f218450
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   SchibstedAccount: 59c9988cee73fb4b3ce027676c7fce9c1ac5613f
   SwiftFormat: 5e765e6a83048da0dc5781991619d8421be733b0
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
 
-PODFILE CHECKSUM: b2f13456d99e63a207a05c3b2476eb91a764bebb
+PODFILE CHECKSUM: ea7ad76dce82aee0658be318798df547f5a82870
 
 COCOAPODS: 1.4.0

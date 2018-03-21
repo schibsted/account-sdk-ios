@@ -138,7 +138,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when phone number invalid") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnFile(file: "invalid-phone-number-error", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-phone-number-error"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -160,7 +160,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when the passwordless_token is missing") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnFile(file: "empty", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-phone-number-error"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -182,7 +182,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should return passwordless token") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnFile(file: "valid-passwordless", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-passwordless"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
@@ -261,7 +261,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when the access_token is missing") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "invalid-authcode-no-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-authcode-no-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -285,7 +285,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should return validate data") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
@@ -313,7 +313,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when code is invalid") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "invalid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-authcode"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -386,7 +386,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should return refresh data") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "valid-refresh", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-refresh"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -408,7 +408,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when the access_token is missing") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "invalid-refresh-no-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-refresh-no-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -478,7 +478,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when the passwordless_token is missing") {
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "empty", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("empty"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -499,7 +499,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should return passwordless token") {
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "valid-passwordless", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-passwordless"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -746,7 +746,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should get the usermodel back") {
                 var stub = NetworkStub(path: .path(Router.signup.path))
-                stub.returnFile(file: "signup-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-valid"))
                 stub.returnResponse(status: 201)
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
@@ -844,7 +844,7 @@ class IdentityAPITests: QuickSpec {
 
             it("should get the new profile returned") {
                 var stub = NetworkStub(path: .path(Router.updateProfile(userID: self.testUserID).path))
-                stub.returnFile(file: "user-profile-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("user-profile-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 

@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import Mockingjay
 import Nimble
 import Quick
 @testable import SchibstedAccount
@@ -16,7 +15,7 @@ class UserAuthTests: QuickSpec {
         describe("Token exchange") {
             it("Should fail if logged out") {
                 var stubSignup = NetworkStub(path: .path(Router.exchangeToken.path))
-                stubSignup.returnFile(file: "token-exchange-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("token-exchange-valid"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -28,7 +27,7 @@ class UserAuthTests: QuickSpec {
 
             it("Should return a code") {
                 var stubSignup = NetworkStub(path: .path(Router.exchangeToken.path))
-                stubSignup.returnFile(file: "token-exchange-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("token-exchange-valid"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -43,11 +42,18 @@ class UserAuthTests: QuickSpec {
 
             it("Should refresh on invalid token") {
                 let user = TestingUser(state: .loggedIn)
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
-                self.stub(uri("/api/2/oauth/exchange"), Builders.sequentialBuilder([
-                    try! Builders.load(file: "token-invalid", status: 401),
-                    try! Builders.load(file: "token-exchange-valid", status: 200),
-                ]))
+
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("valid-refresh"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var wantedStub = NetworkStub(path: .path(Router.exchangeToken.path))
+                wantedStub.returnData([
+                    (data: Data.fromFile("token-invalid"), statusCode: 401),
+                    (data: Data.fromFile("token-exchange-valid"), statusCode: 200),
+                ])
+                StubbedNetworkingProxy.addStub(wantedStub)
 
                 user.auth.oneTimeCode(clientID: ClientConfiguration.testing.clientID) { result in
                     expect(result).to(beSuccess())
