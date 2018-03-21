@@ -10,13 +10,11 @@ import Quick
 
 class AutoRefreshURLProtocolTests: QuickSpec {
 
+    let prissyBrat = "prissy brat"
     func addPrissyBratStub() {
         let url = URL(string: "example.com")!
         var stub = NetworkStub(path: .url(url))
-        stub.returnData(json: ["key": "prissy brat"])
-        stub.returnResponse(status: 200, headers: [
-            "cache-control": "max-age=5",
-        ])
+        stub.returnData(string: self.prissyBrat)
         StubbedNetworkingProxy.addStub(stub)
     }
 
@@ -31,7 +29,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
             waitUntil { done in
                 let task = session.dataTask(with: request) { data, _, _ in
-                    expect(String(data: data!, encoding: .utf8)) == "{\"key\":\"prissy brat\"}"
+                    expect(String(data: data!, encoding: .utf8)) == self.prissyBrat
                     done()
                 }
 
@@ -153,7 +151,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
             waitUntil { done in
                 let task = session.dataTask(with: request) { data, _, _ in
-                    expect(String(data: data!, encoding: .utf8)) == "{\"key\":\"prissy brat\"}"
+                    expect(String(data: data!, encoding: .utf8)) == self.prissyBrat
                     done()
                 }
                 task.resume()

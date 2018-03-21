@@ -45,6 +45,9 @@ class MockURLSessionDataTask: URLSessionDataTask {
             case let .jsonObject(json):
                 self._data = try? JSONSerialization.data(withJSONObject: json, options: [])
 
+            case let .string(string):
+                self._data = string.data(using: .utf8)
+
                 // If it's an array of datas, we just take the first data and the first status code and set the data and response to that
             case let .arrayOfData(datas):
                 self._data = datas.first?.data
@@ -129,6 +132,9 @@ struct NetworkStub: Equatable, Comparable {
         // This will set the data in the response to be a JSONObject
         case jsonObject(JSONObject)
 
+        // This will set the data in the response to be a String
+        case string(String)
+
         // This will make successive calls use up the array. So if this contains 3 objects, the first time this stub
         // is matches, it will use the first data/code and that will be removed, etc...
         case arrayOfData([(data: Data, statusCode: Int)])
@@ -137,6 +143,8 @@ struct NetworkStub: Equatable, Comparable {
             switch lhs {
             case let .jsonObject(a):
                 if case let .jsonObject(b) = rhs { return NSDictionary(dictionary: a).isEqual(b) } else { return false }
+            case let .string(a):
+                if case let .string(b) = rhs { return a == b } else { return false }
             case let .arrayOfData(a):
                 if case let .arrayOfData(b) = rhs {
                     guard a.count == b.count else { return false }
@@ -175,6 +183,10 @@ struct NetworkStub: Equatable, Comparable {
 
     mutating func returnData(json: JSONObject) {
         self.responseData = .jsonObject(json)
+    }
+
+    mutating func returnData(string: String) {
+        self.responseData = .string(string)
     }
 
     mutating func returnData(_ data: [(data: Data, statusCode: Int)]) {
