@@ -415,8 +415,6 @@ extension IdentityUI {
                 // Since user has not accepted the updated terms, we force a logout :'(
                 identityManager.currentUser.logout()
                 completion(.onlyDismiss)
-            case let .error(error):
-                self?.present(error: error)
             }
         }
     }

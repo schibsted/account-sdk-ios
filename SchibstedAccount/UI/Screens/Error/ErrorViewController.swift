@@ -90,8 +90,8 @@ class ErrorViewController: IdentityUIViewController {
     }
 
     @IBAction func didTapOKButton(_: UIButton) {
-        self.didDismiss?()
         self.dismiss(animated: true, completion: nil)
+        self.didDismiss?()
     }
 
     override func viewDidLoad() {

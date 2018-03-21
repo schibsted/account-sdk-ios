@@ -9,7 +9,6 @@ class UpdatedTermsCoordinator: FlowCoordinator {
     enum Output {
         case success
         case cancel
-        case error(ClientError)
     }
 
     let navigationController: UINavigationController
@@ -42,6 +41,7 @@ class UpdatedTermsCoordinator: FlowCoordinator {
                     self?.showAcceptTermsView(for: terms, completion: completion)
                 }
             case let .failure(error):
+                loadingViewController.endLoading()
                 self?.present(error: error) {
                     completion(.cancel)
                 }
