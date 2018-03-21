@@ -56,9 +56,10 @@ extension FlowCoordinator {
         self.navigationController.topViewController?.present(viewController, animated: true, completion: nil)
     }
 
-    func present(error: ClientError) {
+    func present(error: ClientError, completion: (() -> Void)? = nil) {
         let strings = ErrorScreenStrings(localizationBundle: self.configuration.localizationBundle)
         let viewController = ErrorViewController(configuration: self.configuration, error: error, from: self.presentedViewController, strings: strings)
+        viewController.didDismiss = completion
         self.presentAsPopup(viewController)
     }
 
