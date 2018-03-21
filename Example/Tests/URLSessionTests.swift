@@ -49,7 +49,7 @@ class HTTPSessionSharedExamplesConfiguration: QuickConfiguration {
 
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
                 stub.returnResponse(status: status)
-                stub.returnData(json: JSONObject.fromFile("empty"))
+                stub.returnData(json: .fromFile("empty"))
                 StubbedNetworkingProxy.addStub(stub)
 
                 let numTasks = 100
@@ -144,7 +144,7 @@ class URLSessionTests: QuickSpec {
 
                 var wantedStub = NetworkStub(path: .url(url))
                 wantedStub.returnData([
-                    (data: Data.fromFile("empty"), statusCode: 401),
+                    (data: .fromFile("empty"), statusCode: 401),
                     (data: "".data(using: .utf8) ?? Data(), statusCode: 200),
                 ])
                 StubbedNetworkingProxy.addStub(wantedStub)
@@ -171,7 +171,7 @@ class URLSessionTests: QuickSpec {
 
                 var wantedStub = NetworkStub(path: .url(url))
                 wantedStub.returnData([
-                    (data: Data.fromFile("empty"), statusCode: 401),
+                    (data: .fromFile("empty"), statusCode: 401),
                     (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
                 ])
                 StubbedNetworkingProxy.addStub(wantedStub)
@@ -200,7 +200,7 @@ class URLSessionTests: QuickSpec {
                 let refreshUrl = "/oauth/token"
 
                 var refreshStub = NetworkStub(path: .path(refreshUrl))
-                refreshStub.returnData(json: JSONObject.fromFile("valid-refresh"))
+                refreshStub.returnData(json: .fromFile("valid-refresh"))
                 refreshStub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(refreshStub)
 
@@ -248,7 +248,7 @@ class URLSessionTests: QuickSpec {
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
-                stubSignup.returnData(json: JSONObject.fromFile("valid-refresh"))
+                stubSignup.returnData(json: .fromFile("valid-refresh"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 

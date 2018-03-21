@@ -23,7 +23,7 @@ class UserAgreementsTests: QuickSpec {
             it("Should fetch unaccepted status") {
                 let user = TestingUser(state: .loggedIn)
                 var stubSignup = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
-                stubSignup.returnData(json: JSONObject.fromFile("agreements-valid-unaccepted"))
+                stubSignup.returnData(json: .fromFile("agreements-valid-unaccepted"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -38,7 +38,7 @@ class UserAgreementsTests: QuickSpec {
             it("Should fetch accepted status") {
                 let user = TestingUser(state: .loggedIn)
                 var stubSignup = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
-                stubSignup.returnData(json: JSONObject.fromFile("agreements-valid-accepted"))
+                stubSignup.returnData(json: .fromFile("agreements-valid-accepted"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -60,8 +60,8 @@ class UserAgreementsTests: QuickSpec {
 
                 var wantedStub = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
                 wantedStub.returnData([
-                    (data: Data.fromFile("empty"), statusCode: 401),
-                    (data: Data.fromFile("agreements-valid-accepted"), statusCode: 200),
+                    (data: .fromFile("empty"), statusCode: 401),
+                    (data: .fromFile("agreements-valid-accepted"), statusCode: 200),
                 ])
                 StubbedNetworkingProxy.addStub(wantedStub)
 
@@ -74,7 +74,7 @@ class UserAgreementsTests: QuickSpec {
                 let user = TestingUser(state: .loggedIn)
 
                 var stub = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
-                stub.returnData(json: JSONObject.fromFile("agreements-invalid-wrong-user"))
+                stub.returnData(json: .fromFile("agreements-invalid-wrong-user"))
                 stub.returnResponse(status: 403)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -99,7 +99,7 @@ class UserAgreementsTests: QuickSpec {
                 let user = TestingUser(state: .loggedIn)
 
                 var stub = NetworkStub(path: .path(Router.acceptAgreements(userID: user.id!).path))
-                stub.returnData(json: JSONObject.fromFile("agreements-accept-valid"))
+                stub.returnData(json: .fromFile("agreements-accept-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -117,8 +117,8 @@ class UserAgreementsTests: QuickSpec {
 
                 var wantedStub = NetworkStub(path: .path(Router.acceptAgreements(userID: user.id!).path))
                 wantedStub.returnData([
-                    (data: Data.fromFile("token-invalid"), statusCode: 401),
-                    (data: Data.fromFile("agreements-accept-valid"), statusCode: 200),
+                    (data: .fromFile("token-invalid"), statusCode: 401),
+                    (data: .fromFile("agreements-accept-valid"), statusCode: 200),
                 ])
                 StubbedNetworkingProxy.addStub(wantedStub)
 
@@ -130,7 +130,7 @@ class UserAgreementsTests: QuickSpec {
             it("Should report an error on invalid user ID") {
                 let user = TestingUser(state: .loggedIn)
                 var stub = NetworkStub(path: .path(Router.acceptAgreements(userID: user.id!).path))
-                stub.returnData(json: JSONObject.fromFile("agreements-invalid-wrong-user"))
+                stub.returnData(json: .fromFile("agreements-invalid-wrong-user"))
                 stub.returnResponse(status: 403)
                 StubbedNetworkingProxy.addStub(stub)
 

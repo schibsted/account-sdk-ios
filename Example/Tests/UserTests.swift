@@ -16,7 +16,7 @@ class UserTests: QuickSpec {
 
             it("Should refresh internal properties") {
                 var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
-                stubSignup.returnData(json: JSONObject.fromFile("valid-refresh"))
+                stubSignup.returnData(json: .fromFile("valid-refresh"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -37,7 +37,7 @@ class UserTests: QuickSpec {
 
             it("Should update tokens when session refreshes it") {
                 var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
-                stubSignup.returnData(json: JSONObject.fromFile("valid-refresh"))
+                stubSignup.returnData(json: .fromFile("valid-refresh"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -51,7 +51,7 @@ class UserTests: QuickSpec {
 
             it("Should handle when the refresh_token is missing") {
                 var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
-                stubSignup.returnData(json: JSONObject.fromFile("invalid-refresh-no-refresh-token"))
+                stubSignup.returnData(json: .fromFile("invalid-refresh-no-refresh-token"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -281,7 +281,7 @@ class UserTests: QuickSpec {
 
             it("Should update keychain when user is refreshed") {
                 var stubSignup = NetworkStub(path: .path(Router.oauthToken.path))
-                stubSignup.returnData(json: JSONObject.fromFile("valid-refresh"))
+                stubSignup.returnData(json: .fromFile("valid-refresh"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 

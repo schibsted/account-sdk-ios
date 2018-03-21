@@ -15,7 +15,7 @@ class UserAuthTests: QuickSpec {
         describe("Token exchange") {
             it("Should fail if logged out") {
                 var stubSignup = NetworkStub(path: .path(Router.exchangeToken.path))
-                stubSignup.returnData(json: JSONObject.fromFile("token-exchange-valid"))
+                stubSignup.returnData(json: .fromFile("token-exchange-valid"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -27,7 +27,7 @@ class UserAuthTests: QuickSpec {
 
             it("Should return a code") {
                 var stubSignup = NetworkStub(path: .path(Router.exchangeToken.path))
-                stubSignup.returnData(json: JSONObject.fromFile("token-exchange-valid"))
+                stubSignup.returnData(json: .fromFile("token-exchange-valid"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -50,8 +50,8 @@ class UserAuthTests: QuickSpec {
 
                 var wantedStub = NetworkStub(path: .path(Router.exchangeToken.path))
                 wantedStub.returnData([
-                    (data: Data.fromFile("token-invalid"), statusCode: 401),
-                    (data: Data.fromFile("token-exchange-valid"), statusCode: 200),
+                    (data: .fromFile("token-invalid"), statusCode: 401),
+                    (data: .fromFile("token-exchange-valid"), statusCode: 200),
                 ])
                 StubbedNetworkingProxy.addStub(wantedStub)
 

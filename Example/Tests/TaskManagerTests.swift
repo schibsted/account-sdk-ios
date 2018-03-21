@@ -81,8 +81,8 @@ class TaskManagerTests: QuickSpec {
 
                 var wantedStub = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
                 wantedStub.returnData([
-                    (data: Data.fromFile("empty"), statusCode: 401),
-                    (data: Data.fromFile("agreements-valid-accepted"), statusCode: 200),
+                    (data: .fromFile("empty"), statusCode: 401),
+                    (data: .fromFile("agreements-valid-accepted"), statusCode: 200),
                 ])
                 StubbedNetworkingProxy.addStub(wantedStub)
 
@@ -99,12 +99,12 @@ class TaskManagerTests: QuickSpec {
             it("should logout after invalid refresh grant") {
                 let user = TestingUser(state: .loggedIn)
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnData(json: JSONObject.fromFile("invalid-refresh-grant"))
+                stub.returnData(json: .fromFile("invalid-refresh-grant"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubAgreements = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
-                stubAgreements.returnData(json: JSONObject.fromFile("empty"))
+                stubAgreements.returnData(json: .fromFile("empty"))
                 stubAgreements.returnResponse(status: 401)
                 StubbedNetworkingProxy.addStub(stubAgreements)
 
@@ -125,12 +125,12 @@ class TaskManagerTests: QuickSpec {
             it("Should cancel on refresh failure") {
                 let user = TestingUser(state: .loggedIn)
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnData(json: JSONObject.fromFile("invalid-refresh-no-access-token"))
+                stub.returnData(json: .fromFile("invalid-refresh-no-access-token"))
                 stub.returnResponse(status: 401)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubAgreements = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
-                stubAgreements.returnData(json: JSONObject.fromFile("empty"))
+                stubAgreements.returnData(json: .fromFile("empty"))
                 stubAgreements.returnResponse(status: 401)
                 StubbedNetworkingProxy.addStub(stubAgreements)
 
@@ -151,7 +151,7 @@ class TaskManagerTests: QuickSpec {
             it("Should handle many requests") {
                 let user = User(state: .loggedIn)
                 var stub = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
-                stub.returnData(json: JSONObject.fromFile("agreements-valid-accepted"))
+                stub.returnData(json: .fromFile("agreements-valid-accepted"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -176,12 +176,12 @@ class TaskManagerTests: QuickSpec {
             it("Should handle many requests that fail") {
                 let user = User(state: .loggedIn)
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnData(json: JSONObject.fromFile("invalid-refresh-no-access-token"))
+                stub.returnData(json: .fromFile("invalid-refresh-no-access-token"))
                 stub.returnResponse(status: 300)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubAgreements = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
-                stubAgreements.returnData(json: JSONObject.fromFile("empty"))
+                stubAgreements.returnData(json: .fromFile("empty"))
                 stubAgreements.returnResponse(status: 401)
                 StubbedNetworkingProxy.addStub(stubAgreements)
 
@@ -216,9 +216,9 @@ class TaskManagerTests: QuickSpec {
 
                 var wantedStub = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
                 wantedStub.returnData([
-                    (data: Data.fromFile("empty"), statusCode: 401),
-                    (data: Data.fromFile("empty"), statusCode: 401),
-                    (data: Data.fromFile("agreements-valid-accepted"), statusCode: 200),
+                    (data: .fromFile("empty"), statusCode: 401),
+                    (data: .fromFile("empty"), statusCode: 401),
+                    (data: .fromFile("agreements-valid-accepted"), statusCode: 200),
                 ])
                 StubbedNetworkingProxy.addStub(wantedStub)
 
@@ -255,7 +255,7 @@ class TaskManagerTests: QuickSpec {
             it("Should not call callback") {
                 let user = User(state: .loggedIn)
                 var stub = NetworkStub(path: .path(Router.acceptAgreements(userID: user.id!).path))
-                stub.returnData(json: JSONObject.fromFile("agreements-valid-accepted"))
+                stub.returnData(json: .fromFile("agreements-valid-accepted"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -298,8 +298,8 @@ class TaskManagerTests: QuickSpec {
 
                     var wantedStub = NetworkStub(path: .path(Router.agreementsStatus(userID: user.id!).path))
                     wantedStub.returnData([
-                        (data: Data.fromFile("empty"), statusCode: 401),
-                        (data: Data.fromFile("agreements-valid-accepted"), statusCode: 200),
+                        (data: .fromFile("empty"), statusCode: 401),
+                        (data: .fromFile("agreements-valid-accepted"), statusCode: 200),
                     ])
                     StubbedNetworkingProxy.addStub(wantedStub)
 

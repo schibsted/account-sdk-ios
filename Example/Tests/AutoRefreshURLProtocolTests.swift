@@ -101,13 +101,13 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let successData = "i am not google"
 
             var refreshStub = NetworkStub(path: .path(refreshUrl))
-            refreshStub.returnData(json: JSONObject.fromFile("valid-refresh"))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
             refreshStub.returnResponse(status: 200)
             StubbedNetworkingProxy.addStub(refreshStub)
 
             var wantedStub = NetworkStub(path: .path(wantedUrl))
             wantedStub.returnData([
-                (data: Data.fromFile("empty"), statusCode: 401),
+                (data: .fromFile("empty"), statusCode: 401),
                 (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
             ])
             StubbedNetworkingProxy.addStub(wantedStub)
@@ -194,7 +194,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let refreshUrl = "/oauth/token"
 
             var refreshStub = NetworkStub(path: .path(refreshUrl))
-            refreshStub.returnData(json: JSONObject.fromFile("valid-refresh"))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
             refreshStub.returnResponse(status: 200)
             StubbedNetworkingProxy.addStub(refreshStub)
 
@@ -267,7 +267,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
         it("Should handle cancel") {
             var refreshStub = NetworkStub(path: .path("example.com"))
-            refreshStub.returnData(json: JSONObject.fromFile("empty"))
+            refreshStub.returnData(json: .fromFile("empty"))
             refreshStub.returnResponse(status: 200)
             StubbedNetworkingProxy.addStub(refreshStub)
 
@@ -290,13 +290,13 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let successData = "i am google"
 
             var refreshStub = NetworkStub(path: .path(refreshUrl))
-            refreshStub.returnData(json: JSONObject.fromFile("valid-refresh"))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
             refreshStub.returnResponse(status: 200)
             StubbedNetworkingProxy.addStub(refreshStub)
 
             var wantedStub = NetworkStub(path: .path(wantedUrl))
             wantedStub.returnData([
-                (data: Data.fromFile("empty"), statusCode: 401),
+                (data: .fromFile("empty"), statusCode: 401),
                 (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
             ])
             StubbedNetworkingProxy.addStub(wantedStub)
@@ -328,13 +328,13 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let successData = "i am google"
 
             var refreshStub = NetworkStub(path: .path(refreshUrl))
-            refreshStub.returnData(json: JSONObject.fromFile("valid-refresh"))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
             refreshStub.returnResponse(status: 200)
             StubbedNetworkingProxy.addStub(refreshStub)
 
             var wantedStub = NetworkStub(path: .path(wantedUrl))
             wantedStub.returnData([
-                (data: Data.fromFile("empty"), statusCode: 401),
+                (data: .fromFile("empty"), statusCode: 401),
                 (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
             ])
             StubbedNetworkingProxy.addStub(wantedStub)
@@ -366,13 +366,13 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let successData = "i am not google"
 
             var refreshStub = NetworkStub(path: .path(refreshUrl))
-            refreshStub.returnData(json: JSONObject.fromFile("valid-refresh"))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
             refreshStub.returnResponse(status: 200)
             StubbedNetworkingProxy.addStub(refreshStub)
 
             var wantedStub = NetworkStub(path: .path(wantedUrl))
             wantedStub.returnData([
-                (data: Data.fromFile("empty"), statusCode: 401),
+                (data: .fromFile("empty"), statusCode: 401),
                 (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
             ])
             StubbedNetworkingProxy.addStub(wantedStub)
@@ -407,13 +407,13 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let successData = "i am google"
 
             var refreshStub = NetworkStub(path: .path(refreshUrl))
-            refreshStub.returnData(json: JSONObject.fromFile("valid-refresh"))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
             refreshStub.returnResponse(status: 200)
             StubbedNetworkingProxy.addStub(refreshStub)
 
             var wantedStub = NetworkStub(path: .path(wantedUrl))
             wantedStub.returnData([
-                (data: Data.fromFile("empty"), statusCode: 401),
+                (data: .fromFile("empty"), statusCode: 401),
                 (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
             ])
             StubbedNetworkingProxy.addStub(wantedStub)

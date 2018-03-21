@@ -138,7 +138,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when phone number invalid") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnData(json: JSONObject.fromFile("invalid-phone-number-error"))
+                stub.returnData(json: .fromFile("invalid-phone-number-error"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -160,7 +160,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when the passwordless_token is missing") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnData(json: JSONObject.fromFile("invalid-phone-number-error"))
+                stub.returnData(json: .fromFile("invalid-phone-number-error"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -182,7 +182,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should return passwordless token") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnData(json: JSONObject.fromFile("valid-passwordless"))
+                stub.returnData(json: .fromFile("valid-passwordless"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
@@ -261,7 +261,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when the access_token is missing") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnData(json: JSONObject.fromFile("invalid-authcode-no-access-token"))
+                stub.returnData(json: .fromFile("invalid-authcode-no-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -285,7 +285,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should return validate data") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnData(json: JSONObject.fromFile("valid-authcode"))
+                stub.returnData(json: .fromFile("valid-authcode"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
@@ -313,7 +313,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when code is invalid") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnData(json: JSONObject.fromFile("invalid-authcode"))
+                stub.returnData(json: .fromFile("invalid-authcode"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -386,7 +386,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should return refresh data") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnData(json: JSONObject.fromFile("valid-refresh"))
+                stub.returnData(json: .fromFile("valid-refresh"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -408,7 +408,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when the access_token is missing") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnData(json: JSONObject.fromFile("invalid-refresh-no-access-token"))
+                stub.returnData(json: .fromFile("invalid-refresh-no-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -478,7 +478,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when the passwordless_token is missing") {
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnData(json: JSONObject.fromFile("empty"))
+                stub.returnData(json: .fromFile("empty"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -499,7 +499,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should return passwordless token") {
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnData(json: JSONObject.fromFile("valid-passwordless"))
+                stub.returnData(json: .fromFile("valid-passwordless"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -746,7 +746,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should get the usermodel back") {
                 var stub = NetworkStub(path: .path(Router.signup.path))
-                stub.returnData(json: JSONObject.fromFile("signup-valid"))
+                stub.returnData(json: .fromFile("signup-valid"))
                 stub.returnResponse(status: 201)
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
@@ -844,7 +844,7 @@ class IdentityAPITests: QuickSpec {
 
             it("should get the new profile returned") {
                 var stub = NetworkStub(path: .path(Router.updateProfile(userID: self.testUserID).path))
-                stub.returnData(json: JSONObject.fromFile("user-profile-valid"))
+                stub.returnData(json: .fromFile("user-profile-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 

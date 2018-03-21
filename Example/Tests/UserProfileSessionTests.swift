@@ -16,7 +16,7 @@ class UserProfileSessionTests: QuickSpec {
                 let user = TestingUser(state: .loggedIn)
 
                 var stubSignup = NetworkStub(path: .path(Router.profile(userID: user.id!).path))
-                stubSignup.returnData(json: JSONObject.fromFile("user-profile-valid"))
+                stubSignup.returnData(json: .fromFile("user-profile-valid"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -36,7 +36,7 @@ class UserProfileSessionTests: QuickSpec {
             it("Should update the name successfully") {
                 let user = TestingUser(state: .loggedIn)
                 var stubSignup = NetworkStub(path: .path(Router.profile(userID: user.id!).path))
-                stubSignup.returnData(json: JSONObject.fromFile("user-profile-valid"))
+                stubSignup.returnData(json: .fromFile("user-profile-valid"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
