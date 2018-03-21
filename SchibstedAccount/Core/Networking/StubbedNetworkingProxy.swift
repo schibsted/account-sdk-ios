@@ -6,14 +6,22 @@
 import Foundation
 
 class MockURLSessionDataTask: URLSessionDataTask {
-    var callback: URLSessionTaskCallback?
-    let _data: Data?
-    let _response: HTTPURLResponse?
-    let _session: URLSession?
-    let _request: URLRequest
-    var _error: Error?
+    // This is the callback for when task.resume is called
+    private var callback: URLSessionTaskCallback?
+
+    // The next three are the arguments to the completion block of the URLSessionTask
+    private let _data: Data?
+    private var _response: HTTPURLResponse?
+    private var _error: Error?
+
+    private let _session: URLSession?
+    private var _request: URLRequest
 
     private func handleCacheControl() {
+        //
+        // Here we parse the cache control header and make sure we do the right thing on the session.urlCache
+        // This must be called before sending a response back to the caller, i.e. before the callback is invoked
+        //
         guard let response = self._response, let cacheControl = self._response?.allHeaderFields["Cache-Control"] as? String else {
             return
         }
@@ -31,16 +39,30 @@ class MockURLSessionDataTask: URLSessionDataTask {
 
     init(session: URLSession, request: URLRequest, callback: @escaping URLSessionTaskCallback, stub: NetworkStub) {
         self.callback = callback
-        if let jsonData = stub.jsonData {
-            self._data = try? JSONSerialization.data(withJSONObject: jsonData, options: [])
+        if let responseData = stub.responseData {
+            switch responseData {
+                // If it's just a JSON object, we serialize it to a Data and just set that and we're done
+            case let .jsonObject(json):
+                self._data = try? JSONSerialization.data(withJSONObject: json, options: [])
+
+                // If it's an array of datas, we just take the first data and the first status code and set the data and response to that
+            case let .arrayOfData(datas):
+                self._data = datas.first?.data
+                if let statusCode = datas.first?.statusCode {
+                    let url = request.url ?? URL(string: "unknown")!
+                    self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
+                }
+            }
         } else {
             self._data = nil
         }
-        if let statusCode = stub.statusCode, let url = request.url {
+
+        // Only if the response object was not set before, and if we have a status code do we set the response object here
+        // This means that if we have an arrayOfData then that response overrides this one
+        if self._response == nil, let statusCode = stub.statusCode, let url = request.url {
             self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
-        } else {
-            self._response = nil
         }
+
         self._error = nil
         self._session = session
         self._request = request
@@ -48,12 +70,13 @@ class MockURLSessionDataTask: URLSessionDataTask {
     override func resume() {
         self.handleCacheControl()
         self.callback?(self._data, self._response, self._error)
-        self.callback = nil
+        self.callback = nil // just in case someone decides to call resume again
     }
     override func cancel() {
         let error = NSError(domain: "MockURLSessionDataTask", code: NSURLErrorCancelled, userInfo: nil)
         self.callback?(nil, nil, error)
         self._error = error as Error
+        self.callback = nil // just in case someone decides to call resume again
     }
     override var response: URLResponse? {
         return self._response
@@ -64,12 +87,18 @@ class MockURLSessionDataTask: URLSessionDataTask {
     override func suspend() {
         fatalError("Not implemented. Wouldn't know what to do")
     }
+
+    override var currentRequest: URLRequest? {
+        return self._request
+    }
 }
 
 enum NetworkStubPath: Hashable, CustomStringConvertible {
+    // Partial patch matching
     case path(String)
+
+    // Exact URL matching
     case url(URL)
-    case `default`
 
     var description: String {
         switch self {
@@ -77,8 +106,6 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
             return path
         case let .url(url):
             return url.absoluteString
-        case .default:
-            return "*"
         }
     }
 
@@ -88,8 +115,6 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
             if case let .path(b) = rhs { return a == b } else { return false }
         case let .url(a):
             if case let .url(b) = rhs { return a == b } else { return false }
-        case .default:
-            if case .default = rhs { return true } else { return false }
         }
     }
 
@@ -97,24 +122,63 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
         switch self {
         case let .path(path): return path.hashValue
         case let .url(url): return url.absoluteString.hashValue
-        case .default: return "*".hashValue
         }
     }
 }
 
 struct NetworkStub: Equatable, Comparable {
-    var jsonData: JSONObject?
-    var statusCode: Int?
-    var predicate: ((URLRequest) -> Bool)?
-    var responseHeaders: [String: String]?
-    let path: NetworkStubPath
+    enum ResponseData: Equatable {
+        // This will set the data in the response to be a JSONObject
+        case jsonObject(JSONObject)
+
+        // This will make successive calls use up the array. So if this contains 3 objects, the first time this stub
+        // is matches, it will use the first data/code and that will be removed, etc...
+        case arrayOfData([(data: Data, statusCode: Int)])
+
+        static func == (lhs: ResponseData, rhs: ResponseData) -> Bool {
+            switch lhs {
+            case let .jsonObject(a):
+                if case let .jsonObject(b) = rhs { return NSDictionary(dictionary: a).isEqual(b) } else { return false }
+            case let .arrayOfData(a):
+                if case let .arrayOfData(b) = rhs {
+                    guard a.count == b.count else { return false }
+                    for (index, element) in a.enumerated() {
+                        guard element.data == b[index].data && element.statusCode == b[index].statusCode else {
+                            return false
+                        }
+                    }
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
+    }
+
+    fileprivate var responseData: ResponseData?
+
+    // This statusCode is seperate for now and is only useful if responseData is set to .jsonObject
+    fileprivate var statusCode: Int?
+
+    // This is for path customizations. Setting this will allow you to customize if a stub is called on a request or not
+    // Use func applesIf to set this.
+    private var predicate: ((URLRequest) -> Bool)?
+
+    // Response headers apply to all invocations of the stub
+    fileprivate var responseHeaders: [String: String]?
+
+    fileprivate let path: NetworkStubPath
 
     init(path: NetworkStubPath) {
         self.path = path
     }
 
     mutating func returnData(json: JSONObject) {
-        self.jsonData = json
+        self.responseData = .jsonObject(json)
+    }
+
+    mutating func returnData(_ data: [(data: Data, statusCode: Int)]) {
+        self.responseData = .arrayOfData(data)
     }
 
     mutating func returnResponse(status: Int, headers: [String: String]? = nil) {
@@ -122,7 +186,7 @@ struct NetworkStub: Equatable, Comparable {
         self.responseHeaders = headers
     }
 
-    static func unstubbed(path: NetworkStubPath) -> NetworkStub {
+    fileprivate static func unstubbed(path: NetworkStubPath) -> NetworkStub {
         var stub = NetworkStub(path: path)
         stub.returnData(json: [
             "message": "Path \(path) is not stubbed",
@@ -135,7 +199,7 @@ struct NetworkStub: Equatable, Comparable {
         self.predicate = predicate
     }
 
-    func proceed(with request: URLRequest) -> Bool {
+    fileprivate func proceed(with request: URLRequest) -> Bool {
         return self.predicate?(request) ?? true
     }
 
@@ -143,10 +207,10 @@ struct NetworkStub: Equatable, Comparable {
         if lhs.statusCode != rhs.statusCode {
             return false
         }
-        guard let jsonA = lhs.jsonData, let jsonB = rhs.jsonData else {
-            return lhs.jsonData == nil && rhs.jsonData == nil
+        guard let resA = lhs.responseData, let resB = rhs.responseData else {
+            return lhs.responseData == nil && rhs.responseData == nil
         }
-        return NSDictionary(dictionary: jsonA).isEqual(to: jsonB)
+        return resA == resB
     }
 
     static func < (lhs: NetworkStub, rhs: NetworkStub) -> Bool {
@@ -187,6 +251,23 @@ class StubbedNetworkingProxy: NetworkingProxy {
         }
     }
 
+    static func replace<K>(in dictionary: inout SynchronizedDictionary<K, [NetworkStub]>, key: K, stub: NetworkStub, with newStub: NetworkStub) {
+        dictionary.getAndSet(key: key) { stubs in
+            guard var stubs = stubs else {
+                return nil
+            }
+
+            guard let index = stubs.enumerated().filter({ $0.element == stub }).first?.offset else {
+                return stubs
+            }
+
+            stubs.remove(at: index)
+            stubs.append(newStub)
+            stubs.sort()
+            return stubs
+        }
+    }
+
     static func addStub(_ stub: NetworkStub) {
         switch stub.path {
         case let .url(url):
@@ -195,23 +276,16 @@ class StubbedNetworkingProxy: NetworkingProxy {
             let parts = path.components(separatedBy: "*")
             let path = parts.joined(separator: "(.*)")
             self.insert(in: &self.paths, key: path, stub: stub)
-        case .default:
-            DispatchQueue.global().sync {
-                self.defaultStubs.append(stub)
-                self.defaultStubs.sort()
-            }
         }
     }
 
     static func removeStubs() {
         self.urls.removeAll(keepingCapacity: false)
         self.paths.removeAll(keepingCapacity: false)
-        self.defaultStubs.removeAll(keepingCapacity: false)
     }
 
     static var urls = SynchronizedDictionary<URL, [NetworkStub]>()
     static var paths = SynchronizedDictionary<String, [NetworkStub]>()
-    static var defaultStubs: [NetworkStub] = []
 
     func dataTask(
         for session: URLSession,
@@ -223,32 +297,44 @@ class StubbedNetworkingProxy: NetworkingProxy {
             return URLSessionDataTask()
         }
 
+        // Check if there're exact matches on this URL. If there are, first check if we are allowed
+        // to proceed with it (defaults to true) and then return a mock data task
         for stub in type(of: self).urls[url] ?? [] {
             if stub.proceed(with: request) {
+                // Incase we are an arrayOfData, we need to remove the first elemenet since it is now "used up"
+                defer {
+                    if case var .arrayOfData(datas)? = stub.responseData {
+                        datas.remove(at: 0)
+                        var newStub = stub
+                        newStub.returnData(datas)
+                        type(of: self).replace(in: &type(of: self).urls, key: url, stub: stub, with: newStub)
+                    }
+                }
                 return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
             }
         }
 
+        // If we do not have an exact URL match, check if any of the paths match (so contained in URL)
         let dictionary = type(of: self).paths.take()
         let sortedPaths = dictionary.keys.sorted { $0.count > $1.count }
         for path in sortedPaths where url.absoluteString.matches(path) {
             for stub in dictionary[path] ?? [] {
                 if stub.proceed(with: request) {
+                    // Incase we are an arrayOfData, we need to remove the first elemenet since it is now "used up"
+                    defer {
+                        if case var .arrayOfData(datas)? = stub.responseData {
+                            datas.remove(at: 0)
+                            var newStub = stub
+                            newStub.returnData(datas)
+                            type(of: self).replace(in: &type(of: self).paths, key: path, stub: stub, with: newStub)
+                        }
+                    }
                     return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
                 }
             }
         }
 
-        let defaultStubs = DispatchQueue.global().sync {
-            return type(of: self).defaultStubs
-        }
-
-        for stub in defaultStubs {
-            if stub.proceed(with: request) {
-                return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: stub)
-            }
-        }
-
+        // This URL is not stubbed
         return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: .unstubbed(path: .url(url)))
     }
 }
