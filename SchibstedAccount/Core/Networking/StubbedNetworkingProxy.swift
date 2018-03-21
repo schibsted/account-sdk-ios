@@ -184,15 +184,6 @@ struct NetworkStub: Equatable, Comparable {
         self.responseData = .arrayOfData(data)
     }
 
-    mutating func returnFile(file: String, type: String, in bundle: Bundle) {
-        guard let path = bundle.path(forResource: file, ofType: type) else {
-            print("[FILE MISSING] name:'\(file).\(type)'")
-            return
-        }
-        let url = URL(fileURLWithPath: path)
-        self.data = try? Data(contentsOf: url)
-    }
-
     mutating func returnError(error: Error) {
         self.error = error
     }

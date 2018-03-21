@@ -16,7 +16,7 @@ class UserProductTests: QuickSpec {
                 let user = TestingUser(state: .loggedIn)
                 let productID = "123"
                 var stubSignup = NetworkStub(path: .path(Router.product(userID: user.id!, productID: productID).path))
-                stubSignup.returnFile(file: "user-product-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("user-product-valid"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 

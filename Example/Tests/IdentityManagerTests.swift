@@ -3,7 +3,6 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import Mockingjay
 import Nimble
 import Quick
 @testable import SchibstedAccount
@@ -64,7 +63,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should update keychain when user is refreshed") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "valid-refresh", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-refresh"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 var newTokens: TokenData?
@@ -97,7 +96,7 @@ class IdentityManagerTests: QuickSpec {
         describe("Send code for passwordless signup") {
             it("Should set the proper tokens in token store when all is good") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnFile(file: "valid-passwordless", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-passwordless"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
@@ -159,7 +158,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should handle when phone number invalid") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnFile(file: "invalid-phone-number-error", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-phone-number-error"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -172,7 +171,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should report invalid e-mail error") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnFile(file: "invalid-email-error", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-email-error"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
@@ -184,7 +183,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should report too many requests error") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnFile(file: "too-many-requests", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("too-many-requests"))
                 stub.returnResponse(status: 429)
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
@@ -196,7 +195,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should handle when the passwordless_token is missing") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnFile(file: "empty", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("empty"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
@@ -211,7 +210,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should maintain logged out state when code is invalid") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "invalid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-authcode"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -225,7 +224,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should set the access token if the correct auth code is provided") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -256,7 +255,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should ensure user is logged in on next session if login is persistent") {
                 do {
                     var stub = NetworkStub(path: .path(Router.validate.path))
-                    stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                    stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                     stub.returnResponse(status: 200)
                     StubbedNetworkingProxy.addStub(stub)
 
@@ -272,7 +271,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should ensure user is not logged in on next session if login is not persistent") {
                 do {
                     var stub = NetworkStub(path: .path(Router.validate.path))
-                    stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                    stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                     stub.returnResponse(status: 200)
                     StubbedNetworkingProxy.addStub(stub)
 
@@ -291,7 +290,7 @@ class IdentityManagerTests: QuickSpec {
                 identityManager.delegate = delegate
 
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -307,7 +306,7 @@ class IdentityManagerTests: QuickSpec {
                 identityManager.delegate = delegate
 
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -328,7 +327,12 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.delegate = delegate
 
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var wantedStub = NetworkStub(path: .path(Router.validate.path))
+                wantedStub.returnData([
+                    (data: Data.fromFile("valid-authcode"), statusCode: 200),
+                    (data: Data.fromFile("valid-authcode-same-id-diff-code"), statusCode: 200),
+                ])
+                StubbedNetworkingProxy.addStub(wantedStub)
 
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
@@ -336,7 +340,6 @@ class IdentityManagerTests: QuickSpec {
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
 
                 delegate.recordedState = .loggedOut
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode-same-id-diff-code", status: 200))
 
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
@@ -348,7 +351,12 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.delegate = delegate
 
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var wantedStub = NetworkStub(path: .path(Router.validate.path))
+                wantedStub.returnData([
+                    (data: Data.fromFile("valid-authcode"), statusCode: 200),
+                    (data: Data.fromFile("valid-authcode-diff-id-same-code"), statusCode: 200),
+                ])
+                StubbedNetworkingProxy.addStub(wantedStub)
 
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
@@ -356,7 +364,6 @@ class IdentityManagerTests: QuickSpec {
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
 
                 delegate.recordedState = .loggedOut
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode-diff-id-same-code", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
@@ -364,7 +371,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should clean token store after validation") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -377,7 +384,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should use whichever identifier works if identifier not provided") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -390,7 +397,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should fail if no identifier present when identifier not provided") {
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -451,7 +458,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should handle when the access_token is missing") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "invalid-authcode-no-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-authcode-no-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -466,7 +473,7 @@ class IdentityManagerTests: QuickSpec {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
 
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "valid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-authcode"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -485,7 +492,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should handle when code is invalid") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnFile(file: "invalid-authcode", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-authcode"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -572,7 +579,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should fail if different passwordless token returned") {
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "valid-passwordless", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-passwordless"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -585,7 +592,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should succeed if correct passwordless token returned") {
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "valid-passwordless", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-passwordless"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -598,7 +605,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should fail if identifier incorrect") {
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "valid-passwordless", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-passwordless"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -644,7 +651,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should handle when the passwordless_token is missing") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "empty", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("empty"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
@@ -657,7 +664,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should return passwordless token") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "valid-passwordless", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("valid-passwordless"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
@@ -673,7 +680,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should handle when phone number invalid") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "invalid-phone-number-error", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-phone-number-error"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
@@ -686,7 +693,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should report invalid e-mail error") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testEmail, for: .email)
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "invalid-email-error", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("invalid-email-error"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -700,7 +707,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should report too many requests error") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnFile(file: "too-many-requests", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("too-many-requests"))
                 stub.returnResponse(status: 429)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -715,7 +722,7 @@ class IdentityManagerTests: QuickSpec {
         describe("Login with password") {
             it("Should pass in a credential") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "login-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("login-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -732,7 +739,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should change state to be logged in") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "login-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("login-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -746,7 +753,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should set auth tokens") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "login-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("login-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
@@ -762,7 +769,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should set id token if present") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "login-valid-with-id-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("login-valid-with-id-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -776,7 +783,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should parse subjectID from id token if present") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "login-valid-with-id-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("login-valid-with-id-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -790,7 +797,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should report an error on invalid password") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "login-invalid-password", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("login-invalid-password"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -804,7 +811,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should stay logged out on invalid password") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "login-invalid-password", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("login-invalid-password"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -818,7 +825,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should return unverifiedEmail error when it is unverified") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "login-invalid-unverified", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("login-invalid-unverified"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -833,12 +840,12 @@ class IdentityManagerTests: QuickSpec {
         describe("Signup") {
             it("Should receive client access token as obtained") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-client-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-client-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path(Router.signup.path))
-                stubSignup.returnFile(file: "signup-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("signup-valid"))
                 stubSignup.returnResponse(status: 201)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -852,12 +859,12 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should receive email and password") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-client-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-client-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path(Router.signup.path))
-                stubSignup.returnFile(file: "signup-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("signup-valid"))
                 stubSignup.returnResponse(status: 201)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -878,12 +885,12 @@ class IdentityManagerTests: QuickSpec {
                 )
 
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-client-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-client-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path(Router.signup.path))
-                stubSignup.returnFile(file: "signup-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("signup-valid"))
                 stubSignup.returnResponse(status: 201)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -901,12 +908,12 @@ class IdentityManagerTests: QuickSpec {
                 let configuration = ClientConfiguration.testing
 
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-client-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-client-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path(Router.signup.path))
-                stubSignup.returnFile(file: "signup-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("signup-valid"))
                 stubSignup.returnResponse(status: 201)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -924,12 +931,12 @@ class IdentityManagerTests: QuickSpec {
                 // TODO: this is kinda wrong, but this is what we get ATM (see https://jira.schibsted.io/browse/ID-1524 )
 
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-client-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-client-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path(Router.signup.path))
-                stubSignup.returnFile(file: "signup-invalid-duplicate-email", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("signup-invalid-duplicate-email"))
                 stubSignup.returnResponse(status: 302)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -941,12 +948,12 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should report an error on bad password") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-client-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-client-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path(Router.signup.path))
-                stubSignup.returnFile(file: "signup-invalid-bad-password", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("signup-invalid-bad-password"))
                 stubSignup.returnResponse(status: 409)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -959,12 +966,12 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should report an error on duplicate email") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-client-access-token", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-client-access-token"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path(Router.signup.path))
-                stubSignup.returnFile(file: "signup-invalid-duplicate-email", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("signup-invalid-duplicate-email"))
                 stubSignup.returnResponse(status: 302)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -978,7 +985,7 @@ class IdentityManagerTests: QuickSpec {
         describe("Signup email validation") {
             it("Should change to logged in state") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-validation-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-validation-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -992,7 +999,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should set auth tokens") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-validation-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-validation-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -1006,7 +1013,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should report an error on invalid code") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-validation-invalid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-validation-invalid"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -1018,7 +1025,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should stay logged out on invalid code") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "signup-validation-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("signup-validation-valid"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -1039,12 +1046,12 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should receive client access token as obtained") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "client-access-token-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("client-access-token-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path("api/2/email/YnViYmxlQGZhcnQucnVsZXM=/status"))
-                stubSignup.returnFile(file: "id-status-valid-verified", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("id-status-valid-verified"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -1058,7 +1065,7 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should fail without client access token") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "client-access-token-invalid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("client-access-token-invalid"))
                 stub.returnResponse(status: 400)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -1071,12 +1078,12 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should get correct status - verified") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "client-access-token-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("client-access-token-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path("api/2/email/YnViYmxlQGZhcnQucnVsZXM=/status"))
-                stubSignup.returnFile(file: "id-status-valid-verified", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("id-status-valid-verified"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -1088,12 +1095,12 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should get correct status - available") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnFile(file: "client-access-token-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("client-access-token-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
                 var stubSignup = NetworkStub(path: .path("api/2/email/YnViYmxlQGZhcnQucnVsZXM=/status"))
-                stubSignup.returnFile(file: "id-status-valid-available", type: "json", in: Bundle(for: TestingUser.self))
+                stubSignup.returnData(json: JSONObject.fromFile("id-status-valid-available"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
@@ -1108,7 +1115,7 @@ class IdentityManagerTests: QuickSpec {
             it("Should return the links") {
                 let identityManager = Utils.makeIdentityManager()
                 var stub = NetworkStub(path: .path(Router.terms.path))
-                stub.returnFile(file: "agreements-text-valid", type: "json", in: Bundle(for: TestingUser.self))
+                stub.returnData(json: JSONObject.fromFile("agreements-text-valid"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
