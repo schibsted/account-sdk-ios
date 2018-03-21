@@ -54,8 +54,8 @@ extension PasswordlessCoordinator {
         let viewController = VerifyViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
         viewController.didRequestAction = { [weak self] action in
             switch action {
-            case let .enter(code):
-                self?.submit(code: code, for: identifier, on: loginFlowVariant, persistUser: false, completion: completion)
+            case let .enter(code, shouldPersistUser):
+                self?.submit(code: code, for: identifier, on: loginFlowVariant, persistUser: shouldPersistUser, completion: completion)
             case .resendCode:
                 self?.resendCode(for: identifier, completion: completion)
             case .changeIdentifier:

@@ -61,6 +61,7 @@ extension AppDelegate: IdentityUIDelegate {
         case let .completed(user):
             self.user = user
             self.showAlert(for: .loggedIn)
+            self.updateUserLabel()
         }
     }
 }
@@ -69,6 +70,7 @@ extension AppDelegate: UserDelegate {
     func user(_: User, didChangeStateTo newState: UserState) {
         print("user is \(newState)")
         self.showAlert(for: newState)
+        self.updateUserLabel()
     }
 }
 
@@ -93,6 +95,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alert.addAction(action)
         self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func updateUserLabel() {
+        ((self.window?.rootViewController as? UINavigationController)?.topViewController as? ViewController)?.updateUserLabel()
     }
 
     var window: UIWindow?

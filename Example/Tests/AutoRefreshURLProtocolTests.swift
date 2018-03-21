@@ -103,12 +103,21 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let refreshUrl = "/oauth/token"
             let successData = "i am not google"
 
-            self.stub(uri(refreshUrl), try! Builders.load(file: "valid-refresh", status: 200))
+            let testingNetworkingProxy = TestingNetworkingProxy()
+            testingNetworkingProxy.internalProxy = StubbedNetworkingProxy()
+            Networking.proxy = testingNetworkingProxy
 
-            self.stub(uri(wantedUrl), Builders.sequentialBuilder([
-                try! Builders.load(file: "empty", status: 401),
-                Builders.load(string: successData, status: 200),
-            ]))
+            var refreshStub = NetworkStub(path: .path(refreshUrl))
+            refreshStub.returnData(json: JSONObject.fromFile("valid-refresh"))
+            refreshStub.returnResponse(status: 200)
+            StubbedNetworkingProxy.addStub(refreshStub)
+
+            var wantedStub = NetworkStub(path: .path(wantedUrl))
+            wantedStub.returnData([
+                (data: Data.fromFile("empty"), statusCode: 401),
+                (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
+            ])
+            StubbedNetworkingProxy.addStub(wantedStub)
 
             let user = User(state: .loggedIn)
             let session = URLSession(user: user, configuration: .default)

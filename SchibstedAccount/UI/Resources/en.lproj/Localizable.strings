@@ -20,6 +20,7 @@
 "PasswordScreenString.cancel" = "Cancel";
 "PasswordScreenString.info" = "Minimum 8 characters";
 "PasswordScreenString.forgotPassword" = "Forgot password?";
+"PasswordScreenString.persistentLogin" = "Keep me logged in";
 
 "VerifyScreenString.title" = "We sent you a code";
 "VerifyScreenString.subtext" = "Enter the verification code we sent to:";
