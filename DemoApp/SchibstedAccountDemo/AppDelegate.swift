@@ -115,25 +115,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.user = identityManager.currentUser
         
         if !AppLaunchData.doesLaunchOptionsContainRecognizedURL(options, for: .current), self.user?.state == .loggedIn {
-            self.user?.needsAcceptanceOfNewTerms { [weak self] result in
-                switch result {
-                case let .success(needsAcceptance):
-                    guard needsAcceptance, let vc = self?.window?.rootViewController else {
-                        return
-                    }
-                    self?.identityUI = IdentityUI(configuration: .default)
-                    self?.identityUI?.delegate = self
-                    self?.identityUI?.presentIdentityProcess(from: vc, route: .presentUpdatedTerms, identityManager: identityManager)
-                case let .failure(error):
-                    // Fail silently, retry will occur on next app's launch.
-                    print("Error attempting to fetch availability of new terms: \(error)")
-                }
-            }
-            
+            self.ensureAcceptanceOfNewTerms(identityManager: identityManager)
             return true
         }
         
         return true
+    }
+    
+    private func ensureAcceptanceOfNewTerms(identityManager: IdentityManager) {
+        self.user?.needsAcceptanceOfNewTerms { [weak self] result in
+            switch result {
+            case let .success(needsAcceptance):
+                guard needsAcceptance, let vc = self?.window?.rootViewController else {
+                    return
+                }
+                self?.identityUI = IdentityUI(configuration: .default)
+                self?.identityUI?.delegate = self
+                self?.identityUI?.presentIdentityProcess(from: vc, route: .presentUpdatedTerms, identityManager: identityManager)
+            case let .failure(error):
+                // Fail silently, retry will occur on next app's launch.
+                print("Error attempting to fetch availability of new terms: \(error)")
+            }
+        }
     }
 
     func application(_: UIApplication, open url: URL, options _: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
