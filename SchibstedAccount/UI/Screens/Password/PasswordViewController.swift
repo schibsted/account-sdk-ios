@@ -43,7 +43,9 @@ class PasswordViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickForgotPassword(_: Any) {
-        self.configuration.tracker?.engagement(.click(.forgotPassword, self.trackerViewID))
+        if let trackerViewID = self.trackerViewID {
+            self.configuration.tracker?.engagement(.click(.forgotPassword, trackerViewID))
+        }
         self.didRequestAction?(.forgotPassword)
     }
 
@@ -63,10 +65,9 @@ class PasswordViewController: IdentityUIViewController {
 
         let cancelAction = UIAlertAction(title: self.viewModel.cancel, style: .cancel, handler: nil)
         let changeAction = UIAlertAction(title: self.viewModel.change, style: .default) { [weak self] _ in
-            guard let strongSelf = self else {
-                return
+            if let trackerViewID = self?.trackerViewID {
+                self?.configuration.tracker?.engagement(.click(.changeIdentifier, trackerViewID))
             }
-            strongSelf.configuration.tracker?.engagement(.click(.changeIdentifier, strongSelf.trackerViewID))
             self?.didRequestAction?(.changeIdentifier)
         }
 

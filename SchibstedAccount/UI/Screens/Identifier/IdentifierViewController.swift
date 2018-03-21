@@ -27,7 +27,9 @@ class IdentifierViewController: IdentityUIViewController {
         }
     }
     @IBAction func didClickNeedHelp(_: Any) {
-        self.configuration.tracker?.engagement(.click(.help, self.trackerViewID))
+        if let trackerViewID = self.trackerViewID {
+            self.configuration.tracker?.engagement(.click(.help, trackerViewID))
+        }
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
     }
     @IBOutlet var teaser: NormalLabel! {
@@ -145,7 +147,9 @@ class IdentifierViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID))
+        if let trackerViewID = self.trackerViewID {
+            self.configuration.tracker?.engagement(.click(.submit, trackerViewID))
+        }
 
         let identifier: Identifier
 
@@ -205,7 +209,10 @@ class IdentifierViewController: IdentityUIViewController {
             return false
         }
 
-        self.configuration.tracker?.error(.validation(error), in: self.trackerViewID)
+        if let trackerViewID = self.trackerViewID {
+            self.configuration.tracker?.error(.validation(error), in: trackerViewID)
+        }
+
         self.inputError.text = message
         self.inputError.isHidden = false
         switch self.viewModel.loginMethod.identifierType {

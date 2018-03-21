@@ -113,12 +113,16 @@ class VerifyViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickResend(_: Any) {
-        self.configuration.tracker?.engagement(.click(.resend, self.trackerViewID))
+        if let trackerViewID = self.trackerViewID {
+            self.configuration.tracker?.engagement(.click(.resend, trackerViewID))
+        }
         self.didRequestAction?(.resendCode)
     }
 
     @IBAction func didClickVerify(_: Any) {
-        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID))
+        if let trackerViewID = self.trackerViewID {
+            self.configuration.tracker?.engagement(.click(.submit, trackerViewID))
+        }
 
         guard self.enteredCode.count == VerifyViewModel.numberOfCodeDigits else {
             self.showInlineError(.invalidCode)
@@ -174,7 +178,10 @@ class VerifyViewController: IdentityUIViewController {
         }
         self.errorText.text = message
         self.errorText.isHidden = false
-        self.configuration.tracker?.error(.validation(error), in: self.trackerViewID)
+
+        if let trackerViewID = self.trackerViewID {
+            self.configuration.tracker?.error(.validation(error), in: trackerViewID)
+        }
 
         return true
     }
