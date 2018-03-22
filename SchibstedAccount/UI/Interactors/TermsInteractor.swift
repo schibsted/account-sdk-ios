@@ -17,4 +17,8 @@ class TermsInteractor {
     func fetchTerms(completion: @escaping TermsResultCallback) {
         self.identityManager.fetchTerms(completion: completion)
     }
+
+    func acceptTerms(onBehalfOf user: User, completion: @escaping NoValueCallback) {
+        user.agreements.accept(completion: completion)
+    }
 }

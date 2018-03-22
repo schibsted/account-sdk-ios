@@ -405,7 +405,7 @@ extension IdentityUI {
             configuration: self.configuration
         )
 
-        self.child = ChildFlowCoordinator(updatedTermsCoordinator, input: UpdatedTermsCoordinator.Input()) { [weak self] output in
+        self.child = ChildFlowCoordinator(updatedTermsCoordinator, input: identityManager.currentUser) { [weak self] output in
             self?.child = nil
 
             switch output {

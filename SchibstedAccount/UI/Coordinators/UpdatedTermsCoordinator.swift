@@ -30,7 +30,7 @@ class UpdatedTermsCoordinator: FlowCoordinator {
         self.termsInteractor = TermsInteractor(identityManager: identityManager)
     }
 
-    func start(input _: Void, completion: @escaping (Output) -> Void) {
+    func start(input currentUser: User, completion: @escaping (Output) -> Void) {
         let loadingViewController = showLoadingView(didCancel: { completion(.cancel) })
         loadingViewController.startLoading()
 
@@ -38,7 +38,9 @@ class UpdatedTermsCoordinator: FlowCoordinator {
             switch result {
             case let .success(terms):
                 loadingViewController.endLoading { [weak self] in
-                    self?.showAcceptTermsView(for: terms, completion: completion)
+                    self?.showAcceptTermsView(for: terms) { [weak self] result in
+                        self?.handleResult(result, for: currentUser, completion: completion)
+                    }
                 }
             case let .failure(error):
                 loadingViewController.endLoading()
@@ -46,6 +48,23 @@ class UpdatedTermsCoordinator: FlowCoordinator {
                     completion(.cancel)
                 }
             }
+        }
+    }
+
+    private func handleResult(_ result: Output, for currentUser: User, completion: @escaping (Output) -> Void) {
+        switch result {
+        case .success:
+            self.termsInteractor.acceptTerms(onBehalfOf: currentUser) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.configuration.tracker?.engagement(.network(.agreementAccepted))
+                    completion(.success)
+                case let .failure(error):
+                    self?.present(error: error)
+                }
+            }
+        case .cancel:
+            completion(.cancel)
         }
     }
 }
@@ -70,8 +89,6 @@ extension UpdatedTermsCoordinator {
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case .acceptTerms:
-                self?.configuration.tracker?.engagement(.network(.agreementAccepted))
-                // TODO: Network call to accept the terms
                 completion(.success)
             case let .learnMore(summary):
                 self?.showTermsSummaryView(summary)
