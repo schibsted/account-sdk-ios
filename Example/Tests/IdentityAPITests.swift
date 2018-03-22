@@ -160,7 +160,7 @@ class IdentityAPITests: QuickSpec {
 
             it("Should handle when the passwordless_token is missing") {
                 var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnData(json: .fromFile("invalid-phone-number-error"))
+                stub.returnData(json: .fromFile("empty"))
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
@@ -521,8 +521,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("fetchAgreementsAcceptanceStatus") {
             it("should pass in correct data") {
-                var stub = NetworkStub(path: .path(Router.agreementsStatus(userID: self.testUserID).path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.agreementsStatus(userID: self.testUserID).path))
                 StubbedNetworkingProxy.addStub(stub)
 
                 let api = IdentityAPI(basePath: self.testBasePath)
@@ -547,8 +546,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("acceptAgreements") {
             it("should pass in correct data") {
-                var stub = NetworkStub(path: .path(Router.acceptAgreements(userID: self.testUserID).path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.acceptAgreements(userID: self.testUserID).path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 
@@ -571,8 +569,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("fetchTerms") {
             it("should pass in correct data") {
-                var stub = NetworkStub(path: .path(Router.terms.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.terms.path))
                 StubbedNetworkingProxy.addStub(stub)
 
                 let api = IdentityAPI(basePath: self.testBasePath)
@@ -597,8 +594,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("fetchClientAccessToken") {
             it("should pass in correct data") {
-                var stub = NetworkStub(path: .path(Router.oauthToken.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.oauthToken.path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 
@@ -622,8 +618,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("fetchIdentifierStatus") {
             it("should pass in correct data on phone") {
-                var stub = NetworkStub(path: .path(Router.identifierStatus(connection: .sms, identifierInBase64: "base64").path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.identifierStatus(connection: .sms, identifierInBase64: "base64").path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 
@@ -646,8 +641,7 @@ class IdentityAPITests: QuickSpec {
             }
 
             it("should pass in correct data") {
-                var stub = NetworkStub(path: .path(Router.identifierStatus(connection: .email, identifierInBase64: "base64").path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.identifierStatus(connection: .email, identifierInBase64: "base64").path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 
@@ -672,8 +666,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("fetchUserProfile") {
             it("should pass in correct data") {
-                var stub = NetworkStub(path: .path(Router.profile(userID: self.testUserID).path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.profile(userID: self.testUserID).path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 
@@ -697,8 +690,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("logout") {
             it("should pass in correct data") {
-                var stub = NetworkStub(path: .path(Router.logout.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.logout.path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 
@@ -720,8 +712,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("signup") {
             it("should pass in correct data") {
-                var stub = NetworkStub(path: .path(Router.signup.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.signup.path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 
@@ -765,8 +756,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("tokenExchange") {
             it("should pass in correct data code") {
-                var stub = NetworkStub(path: .path(Router.exchangeToken.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.exchangeToken.path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 
@@ -790,8 +780,7 @@ class IdentityAPITests: QuickSpec {
             }
 
             it("should pass in correct data session") {
-                var stub = NetworkStub(path: .path(Router.exchangeToken.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.exchangeToken.path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 
@@ -817,8 +806,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("updateUserProfile") {
             it("should pass in correct data") {
-                var stub = NetworkStub(path: .path(Router.updateProfile(userID: self.testUserID).path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.updateProfile(userID: self.testUserID).path))
                 StubbedNetworkingProxy.addStub(stub)
                 let api = IdentityAPI(basePath: self.testBasePath)
 

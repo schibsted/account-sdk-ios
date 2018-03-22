@@ -110,8 +110,7 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should pass in correct form data with sms") {
-                var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.passwordlessStart.path))
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
@@ -127,8 +126,7 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should pass in correct form data with email") {
-                var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.passwordlessStart.path))
                 StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
@@ -423,8 +421,7 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should pass in correct form data") {
-                var stub = NetworkStub(path: .path(Router.validate.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.validate.path))
                 StubbedNetworkingProxy.addStub(stub)
 
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
@@ -618,8 +615,7 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should pass in correct form data") {
-                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
-                stub.returnResponse(status: 200)
+                let stub = NetworkStub(path: .path(Router.passwordlessResend.path))
                 StubbedNetworkingProxy.addStub(stub)
 
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
@@ -802,7 +798,6 @@ class IdentityManagerTests: QuickSpec {
                 StubbedNetworkingProxy.addStub(stub)
 
                 let identityManager = Utils.makeIdentityManager()
-                var errorMaybe: Error?
 
                 identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.invalidUserCredentials(message: nil)))
@@ -1037,12 +1032,6 @@ class IdentityManagerTests: QuickSpec {
         }
 
         describe("Identifier status checks") {
-            // this custom matcher is used, because
-            // the URITemplate matcher with parameters doesn't allow for "=" character,
-            // which is a valid character for base64-encoded identifiers
-            func statusAPIRequestMatcher(_ request: URLRequest) -> Bool {
-                return request.url?.path.hasSuffix("/status") ?? false
-            }
 
             it("Should receive client access token as obtained") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
@@ -1050,7 +1039,7 @@ class IdentityManagerTests: QuickSpec {
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
-                var stubSignup = NetworkStub(path: .path("api/2/email/YnViYmxlQGZhcnQucnVsZXM=/status"))
+                var stubSignup = NetworkStub(path: .path("/status"))
                 stubSignup.returnData(json: .fromFile("id-status-valid-verified"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
@@ -1082,7 +1071,7 @@ class IdentityManagerTests: QuickSpec {
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
-                var stubSignup = NetworkStub(path: .path("api/2/email/YnViYmxlQGZhcnQucnVsZXM=/status"))
+                var stubSignup = NetworkStub(path: .path("/status"))
                 stubSignup.returnData(json: .fromFile("id-status-valid-verified"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
@@ -1099,7 +1088,7 @@ class IdentityManagerTests: QuickSpec {
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
-                var stubSignup = NetworkStub(path: .path("api/2/email/YnViYmxlQGZhcnQucnVsZXM=/status"))
+                var stubSignup = NetworkStub(path: .path("/status"))
                 stubSignup.returnData(json: .fromFile("id-status-valid-available"))
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
