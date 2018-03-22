@@ -59,10 +59,23 @@ class HTTPSessionSharedExamplesConfiguration: QuickConfiguration {
 
                 var doneCounter = 0
                 var tasks: [URLSessionTask] = []
+                var hasLoggedOut = false
                 waitUntil { done in
                     for i in 0..<numTasks {
                         let task = session.dataTask(with: URL(string: wantedUrl + String(i))!) { _, _, error in
-                            expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
+                            if logout == false {
+                                expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
+                            } else {
+                                if case ClientError.invalidUser? = error, hasLoggedOut == false {
+                                    // It's the first invalid user means no more refreshing will happen and we got logged out
+                                    hasLoggedOut = true
+                                }
+                                if hasLoggedOut {
+                                    expect(error).to(matchError(ClientError.invalidUser))
+                                } else {
+                                    expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
+                                }
+                            }
                             doneCounter += 1
                             if doneCounter == numTasks {
                                 done()
@@ -271,9 +284,9 @@ class URLSessionTests: QuickSpec {
                 expect(user.tokens?.refreshToken).to(equal("abc"))
             }
 
-//            itBehavesLike("refresh failure") { ["status": 400, "logout": true] }
-//            itBehavesLike("refresh failure") { ["status": 401, "logout": true] }
-//            itBehavesLike("refresh failure") { ["status": 403, "logout": true] }
+            itBehavesLike("refresh failure") { ["status": 400, "logout": true] }
+            itBehavesLike("refresh failure") { ["status": 401, "logout": true] }
+            itBehavesLike("refresh failure") { ["status": 403, "logout": true] }
             itBehavesLike("refresh failure") { ["status": 500, "logout": false] }
             itBehavesLike("refresh failure") { ["status": 300, "logout": false] }
         }
