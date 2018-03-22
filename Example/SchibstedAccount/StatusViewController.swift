@@ -65,7 +65,12 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didClickPasswordLogin(_: Any) {
-        self.identityUI.presentIdentityProcess(from: self, loginMethod: .password, identityManager: UIApplication.identityManager)
+        self.identityUI.presentIdentityProcess(
+            from: self,
+            loginMethod: .password,
+            localizedTeaserText: "I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser",
+            identityManager: UIApplication.identityManager
+        )
     }
 
     @IBAction func didClickOpenProfile(_: Any) {

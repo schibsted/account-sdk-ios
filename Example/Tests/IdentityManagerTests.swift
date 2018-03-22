@@ -3,7 +3,6 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import Mockingjay
 import Nimble
 import Quick
 @testable import SchibstedAccount
@@ -63,7 +62,10 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should update keychain when user is refreshed") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "valid-refresh", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("valid-refresh"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
                 var newTokens: TokenData?
                 do {
                     Utils.createDummyKeychain()
@@ -93,7 +95,10 @@ class IdentityManagerTests: QuickSpec {
 
         describe("Send code for passwordless signup") {
             it("Should set the proper tokens in token store when all is good") {
-                self.stub(uri("/passwordless/start"), try! Builders.load(file: "valid-passwordless", status: 200))
+                var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
+                stub.returnData(json: .fromFile("valid-passwordless"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.sendCode(to: self.testNumber, completion: { _ in })
@@ -105,7 +110,8 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should pass in correct form data with sms") {
-                self.stub(uri(Router.passwordlessStart.path), http(200))
+                let stub = NetworkStub(path: .path(Router.passwordlessStart.path))
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.sendCode(to: self.testNumber, completion: { _ in })
@@ -120,7 +126,8 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should pass in correct form data with email") {
-                self.stub(uri(Router.passwordlessStart.path), http(200))
+                let stub = NetworkStub(path: .path(Router.passwordlessStart.path))
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.sendCode(to: self.testEmail, completion: { _ in })
@@ -136,7 +143,10 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should handle network errors") {
                 let error = NSError(domain: "Network error", code: 0, userInfo: nil)
-                self.stub(uri("/passwordless/start"), failure(error))
+                var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
+                stub.returnError(error: error)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.sendCode(to: self.testNumber) { result in
@@ -145,7 +155,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should handle when phone number invalid") {
-                self.stub(uri("/passwordless/start"), try! Builders.load(file: "invalid-phone-number-error", status: 400))
+                var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
+                stub.returnData(json: .fromFile("invalid-phone-number-error"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.sendCode(to: self.testNumber) { result in
@@ -154,7 +168,10 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should report invalid e-mail error") {
-                self.stub(uri("/passwordless/start"), try! Builders.load(file: "invalid-email-error", status: 400))
+                var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
+                stub.returnData(json: .fromFile("invalid-email-error"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.sendCode(to: self.testEmail) { result in
@@ -163,7 +180,10 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should report too many requests error") {
-                self.stub(uri("/passwordless/start"), try! Builders.load(file: "too-many-requests", status: 429))
+                var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
+                stub.returnData(json: .fromFile("too-many-requests"))
+                stub.returnResponse(status: 429)
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.sendCode(to: self.testNumber) { result in
@@ -172,7 +192,10 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should handle when the passwordless_token is missing") {
-                self.stub(uri("/passwordless/start"), try! Builders.load(file: "empty", status: 200))
+                var stub = NetworkStub(path: .path(Router.passwordlessStart.path))
+                stub.returnData(json: .fromFile("empty"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.sendCode(to: self.testNumber) { result in
@@ -184,7 +207,11 @@ class IdentityManagerTests: QuickSpec {
         describe("Validating one time code") {
 
             it("Should maintain logged out state when code is invalid") {
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "invalid-authcode", status: 400))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("invalid-authcode"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
 
@@ -194,7 +221,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should set the access token if the correct auth code is provided") {
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("valid-authcode"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
@@ -221,7 +252,11 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should ensure user is logged in on next session if login is persistent") {
                 do {
-                    self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                    var stub = NetworkStub(path: .path(Router.validate.path))
+                    stub.returnData(json: .fromFile("valid-authcode"))
+                    stub.returnResponse(status: 200)
+                    StubbedNetworkingProxy.addStub(stub)
+
                     PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                     let identityManager = Utils.makeIdentityManager()
                     identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: true, completion: { _ in })
@@ -233,7 +268,11 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should ensure user is not logged in on next session if login is not persistent") {
                 do {
-                    self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                    var stub = NetworkStub(path: .path(Router.validate.path))
+                    stub.returnData(json: .fromFile("valid-authcode"))
+                    stub.returnResponse(status: 200)
+                    StubbedNetworkingProxy.addStub(stub)
+
                     PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                     let identityManager = Utils.makeIdentityManager()
                     identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
@@ -248,7 +287,11 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.delegate = delegate
 
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("valid-authcode"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
 
@@ -260,7 +303,11 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.delegate = delegate
 
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("valid-authcode"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
 
@@ -278,14 +325,20 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.delegate = delegate
 
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var wantedStub = NetworkStub(path: .path(Router.validate.path))
+                wantedStub.returnData([
+                    (data: .fromFile("valid-authcode"), statusCode: 200),
+                    (data: .fromFile("valid-authcode-same-id-diff-code"), statusCode: 200),
+                ])
+                StubbedNetworkingProxy.addStub(wantedStub)
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
 
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
 
                 delegate.recordedState = .loggedOut
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode-same-id-diff-code", status: 200))
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
                 expect(delegate.recordedState).toNotEventually(equal(UserState.loggedIn))
@@ -296,21 +349,30 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.delegate = delegate
 
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var wantedStub = NetworkStub(path: .path(Router.validate.path))
+                wantedStub.returnData([
+                    (data: .fromFile("valid-authcode"), statusCode: 200),
+                    (data: .fromFile("valid-authcode-diff-id-same-code"), statusCode: 200),
+                ])
+                StubbedNetworkingProxy.addStub(wantedStub)
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
 
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
 
                 delegate.recordedState = .loggedOut
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode-diff-id-same-code", status: 200))
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
                 expect(delegate.recordedState).toEventually(equal(UserState.loggedIn))
             }
 
             it("Should clean token store after validation") {
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("valid-authcode"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.validate(oneTimeCode: "123", for: self.testNumber, persistUser: false, completion: { _ in })
@@ -319,7 +381,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should use whichever identifier works if identifier not provided") {
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("valid-authcode"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.validate(oneTimeCode: "123", persistUser: false) { result in
@@ -328,7 +394,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should fail if no identifier present when identifier not provided") {
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("valid-authcode"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.validate(oneTimeCode: "123", persistUser: false) { result in
                     struct NothingToValidate: Error {}
@@ -337,18 +407,23 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should fail if both identifiers present but http call fails for both") {
-                self.stub(uri("/oauth/ro"), Builders.load(string: "", status: 400))
+                let expectedError = ClientError.networkingError(NetworkingError.unexpectedStatus(status: 400, data: "".data(using: .utf8)!))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnError(error: expectedError)
+                StubbedNetworkingProxy.addStub(stub)
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testEmail, for: .email)
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.validate(oneTimeCode: "123", persistUser: false) { result in
-                    let expectedError = ClientError.networkingError(NetworkingError.unexpectedStatus(status: 400, data: "".data(using: .utf8)!))
-                    expect(result).to(failWith(expectedError))
+                    expect(result).to(failWith(.networkingError(expectedError)))
                 }
             }
 
             it("Should pass in correct form data") {
-                self.stub(uri(Router.validate.path), http(200))
+                let stub = NetworkStub(path: .path(Router.validate.path))
+                StubbedNetworkingProxy.addStub(stub)
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let identityManager = Utils.makeIdentityManager()
 
@@ -366,7 +441,9 @@ class IdentityManagerTests: QuickSpec {
             it("Should handle network errors") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let error = NSError(domain: "Network error", code: 0, userInfo: nil)
-                self.stub(uri("/oauth/ro"), failure(error))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnError(error: error)
+                StubbedNetworkingProxy.addStub(stub)
 
                 let identityManager = Utils.makeIdentityManager()
 
@@ -377,7 +454,11 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should handle when the access_token is missing") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "invalid-authcode-no-access-token", status: 200))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("invalid-authcode-no-access-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.validate(oneTimeCode: "whatevs", for: self.testNumber, persistUser: false) { result in
@@ -387,7 +468,12 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should set tokens") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "valid-authcode", status: 200))
+
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("valid-authcode"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.validate(oneTimeCode: "whatevs", for: self.testNumber, persistUser: false, completion: { _ in })
@@ -402,7 +488,11 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should handle when code is invalid") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                self.stub(uri("/oauth/ro"), try! Builders.load(file: "invalid-authcode", status: 400))
+                var stub = NetworkStub(path: .path(Router.validate.path))
+                stub.returnData(json: .fromFile("invalid-authcode"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.validate(oneTimeCode: "whatevs", for: self.testNumber, persistUser: false) { result in
@@ -485,7 +575,11 @@ class IdentityManagerTests: QuickSpec {
         describe("Resending") {
 
             it("Should fail if different passwordless token returned") {
-                self.stub(uri("/passwordless/resend"), try! Builders.load(file: "valid-passwordless", status: 200))
+                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                stub.returnData(json: .fromFile("valid-passwordless"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 PasswordlessTokenStore.setData(token: PasswordlessToken("IAmDifferentFromCanned"), identifier: self.testNumber, for: .sms)
                 identityManager.resendCode(to: self.testNumber) { result in
@@ -494,7 +588,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should succeed if correct passwordless token returned") {
-                self.stub(uri("/passwordless/resend"), try! Builders.load(file: "valid-passwordless", status: 200))
+                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                stub.returnData(json: .fromFile("valid-passwordless"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 identityManager.resendCode(to: self.testNumber) { result in
@@ -503,7 +601,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should fail if identifier incorrect") {
-                self.stub(uri("/passwordless/resend"), try! Builders.load(file: "valid-passwordless", status: 200))
+                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                stub.returnData(json: .fromFile("valid-passwordless"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 let expected = Identifier(PhoneNumber(countryCode: "+1", number: "23")!)
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: expected, for: .sms)
@@ -513,7 +615,9 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should pass in correct form data") {
-                self.stub(uri(Router.passwordlessResend.path), http(200))
+                let stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                StubbedNetworkingProxy.addStub(stub)
+
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let identityManager = Utils.makeIdentityManager()
 
@@ -529,7 +633,10 @@ class IdentityManagerTests: QuickSpec {
             it("Should handle network errors") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let error = NSError(domain: "Network error", code: 0, userInfo: nil)
-                self.stub(uri("/passwordless/resend"), failure(error))
+                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                stub.returnError(error: error)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.resendCode(to: self.testNumber) { result in
@@ -539,7 +646,10 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should handle when the passwordless_token is missing") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                self.stub(uri("/passwordless/resend"), try! Builders.load(file: "empty", status: 200))
+                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                stub.returnData(json: .fromFile("empty"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.resendCode(to: self.testNumber) { result in
@@ -549,7 +659,10 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should return passwordless token") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                self.stub(uri("/passwordless/resend"), try! Builders.load(file: "valid-passwordless", status: 200))
+                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                stub.returnData(json: .fromFile("valid-passwordless"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.resendCode(to: self.testNumber, completion: { _ in })
@@ -562,7 +675,10 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should handle when phone number invalid") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                self.stub(uri("/passwordless/resend"), try! Builders.load(file: "invalid-phone-number-error", status: 400))
+                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                stub.returnData(json: .fromFile("invalid-phone-number-error"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.resendCode(to: self.testNumber) { result in
@@ -572,7 +688,11 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should report invalid e-mail error") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testEmail, for: .email)
-                self.stub(uri("/passwordless/resend"), try! Builders.load(file: "invalid-email-error", status: 400))
+                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                stub.returnData(json: .fromFile("invalid-email-error"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.resendCode(to: self.testEmail) { result in
@@ -582,7 +702,11 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should report too many requests error") {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
-                self.stub(uri("/passwordless/resend"), try! Builders.load(file: "too-many-requests", status: 429))
+                var stub = NetworkStub(path: .path(Router.passwordlessResend.path))
+                stub.returnData(json: .fromFile("too-many-requests"))
+                stub.returnResponse(status: 429)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.resendCode(to: self.testNumber) { result in
@@ -593,7 +717,10 @@ class IdentityManagerTests: QuickSpec {
 
         describe("Login with password") {
             it("Should pass in a credential") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "login-valid", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("login-valid"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
 
                 let identityManager = Utils.makeIdentityManager()
 
@@ -607,7 +734,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should change state to be logged in") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "login-valid", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("login-valid"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
 
@@ -617,7 +748,10 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should set auth tokens") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "login-valid", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("login-valid"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.tokens).to(beNil())
 
@@ -630,7 +764,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should set id token if present") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "login-valid-with-id-token", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("login-valid-with-id-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.tokens?.idToken).to(beNil())
 
@@ -640,7 +778,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should parse subjectID from id token if present") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "login-valid-with-id-token", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("login-valid-with-id-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.id).to(beNil())
 
@@ -650,9 +792,12 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should report an error on invalid password") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "login-invalid-password", status: 400))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("login-invalid-password"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
-                var errorMaybe: Error?
 
                 identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.invalidUserCredentials(message: nil)))
@@ -660,7 +805,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should stay logged out on invalid password") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "login-invalid-password", status: 400))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("login-invalid-password"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
 
@@ -670,7 +819,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should return unverifiedEmail error when it is unverified") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "login-invalid-unverified", status: 400))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("login-invalid-unverified"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
 
                 identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
@@ -681,8 +834,15 @@ class IdentityManagerTests: QuickSpec {
 
         describe("Signup") {
             it("Should receive client access token as obtained") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-client-access-token", status: 200))
-                self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-valid", status: 201))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-client-access-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path(Router.signup.path))
+                stubSignup.returnData(json: .fromFile("signup-valid"))
+                stubSignup.returnResponse(status: 201)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
@@ -693,8 +853,15 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should receive email and password") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-client-access-token", status: 200))
-                self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-valid", status: 201))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-client-access-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path(Router.signup.path))
+                stubSignup.returnData(json: .fromFile("signup-valid"))
+                stubSignup.returnResponse(status: 201)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
@@ -711,8 +878,16 @@ class IdentityManagerTests: QuickSpec {
                     clientSecret: "123",
                     appURLScheme: nil
                 )
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-client-access-token", status: 200))
-                self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-valid", status: 201))
+
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-client-access-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path(Router.signup.path))
+                stubSignup.returnData(json: .fromFile("signup-valid"))
+                stubSignup.returnResponse(status: 201)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager(clientConfiguration: configuration)
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
@@ -726,8 +901,16 @@ class IdentityManagerTests: QuickSpec {
 
             it("Should have correct redirect uri with custom scheme") {
                 let configuration = ClientConfiguration.testing
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-client-access-token", status: 200))
-                self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-valid", status: 201))
+
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-client-access-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path(Router.signup.path))
+                stubSignup.returnData(json: .fromFile("signup-valid"))
+                stubSignup.returnResponse(status: 201)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager(clientConfiguration: configuration)
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
@@ -740,9 +923,17 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should report an error on bad email") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-client-access-token", status: 200))
                 // TODO: this is kinda wrong, but this is what we get ATM (see https://jira.schibsted.io/browse/ID-1524 )
-                self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-invalid-duplicate-email", status: 302))
+
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-client-access-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path(Router.signup.path))
+                stubSignup.returnData(json: .fromFile("signup-invalid-duplicate-email"))
+                stubSignup.returnResponse(status: 302)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
@@ -751,8 +942,15 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should report an error on bad password") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-client-access-token", status: 200))
-                self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-invalid-bad-password", status: 409))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-client-access-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path(Router.signup.path))
+                stubSignup.returnData(json: .fromFile("signup-invalid-bad-password"))
+                stubSignup.returnResponse(status: 409)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
@@ -762,8 +960,15 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should report an error on duplicate email") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-client-access-token", status: 200))
-                self.stub(uri("/api/2/signup"), try! Builders.load(file: "signup-invalid-duplicate-email", status: 302))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-client-access-token"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path(Router.signup.path))
+                stubSignup.returnData(json: .fromFile("signup-invalid-duplicate-email"))
+                stubSignup.returnResponse(status: 302)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
@@ -774,7 +979,11 @@ class IdentityManagerTests: QuickSpec {
 
         describe("Signup email validation") {
             it("Should change to logged in state") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-validation-valid", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-validation-valid"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
 
@@ -784,7 +993,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should set auth tokens") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-validation-valid", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-validation-valid"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.validate(authCode: self.testAuthCode, persistUser: false, completion: { _ in })
 
@@ -794,7 +1007,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should report an error on invalid code") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-validation-invalid", status: 400))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-validation-invalid"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.validate(authCode: self.testAuthCode, persistUser: false) { result in
                     expect(result).to(failWith(ClientError.invalidCode))
@@ -802,7 +1019,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should stay logged out on invalid code") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "signup-validation-invalid", status: 400))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("signup-validation-valid"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.validate(authCode: self.testAuthCode, persistUser: false, completion: { _ in })
 
@@ -811,16 +1032,17 @@ class IdentityManagerTests: QuickSpec {
         }
 
         describe("Identifier status checks") {
-            // this custom matcher is used, because
-            // the URITemplate matcher with parameters doesn't allow for "=" character,
-            // which is a valid character for base64-encoded identifiers
-            func statusAPIRequestMatcher(_ request: URLRequest) -> Bool {
-                return request.url?.path.hasSuffix("/status") ?? false
-            }
 
             it("Should receive client access token as obtained") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "client-access-token-valid", status: 200))
-                self.stub(statusAPIRequestMatcher, try! Builders.load(file: "id-status-valid-verified", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("client-access-token-valid"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path("/status"))
+                stubSignup.returnData(json: .fromFile("id-status-valid-verified"))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.fetchStatus(for: self.testEmail, completion: { _ in })
@@ -831,7 +1053,11 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should fail without client access token") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "client-access-token-invalid", status: 400))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("client-access-token-invalid"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.fetchStatus(for: self.testEmail) { result in
                     expect(result).to(failWith(ClientError.invalidClientCredentials))
@@ -840,8 +1066,15 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should get correct status - verified") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "client-access-token-valid", status: 200))
-                self.stub(statusAPIRequestMatcher, try! Builders.load(file: "id-status-valid-verified", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("client-access-token-valid"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path("/status"))
+                stubSignup.returnData(json: .fromFile("id-status-valid-verified"))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.fetchStatus(for: self.testEmail) { result in
@@ -850,8 +1083,15 @@ class IdentityManagerTests: QuickSpec {
             }
 
             it("Should get correct status - available") {
-                self.stub(uri("/oauth/token"), try! Builders.load(file: "client-access-token-valid", status: 200))
-                self.stub(statusAPIRequestMatcher, try! Builders.load(file: "id-status-valid-available", status: 200))
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("client-access-token-valid"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
+
+                var stubSignup = NetworkStub(path: .path("/status"))
+                stubSignup.returnData(json: .fromFile("id-status-valid-available"))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.fetchStatus(for: self.testEmail) { result in
@@ -863,7 +1103,10 @@ class IdentityManagerTests: QuickSpec {
         describe("Agreements links") {
             it("Should return the links") {
                 let identityManager = Utils.makeIdentityManager()
-                self.stub(uri("/api/2/terms"), try! Builders.load(file: "agreements-text-valid", status: 200))
+                var stub = NetworkStub(path: .path(Router.terms.path))
+                stub.returnData(json: .fromFile("agreements-text-valid"))
+                stub.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stub)
 
                 identityManager.fetchTerms { result in
                     guard case let .success(links) = result else {

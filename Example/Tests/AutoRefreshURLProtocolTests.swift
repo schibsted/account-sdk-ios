@@ -4,17 +4,24 @@
 //
 
 import Foundation
-import Mockingjay
 import Nimble
 import Quick
 @testable import SchibstedAccount
 
 class AutoRefreshURLProtocolTests: QuickSpec {
 
+    let prissyBrat = "prissy brat"
+    func addPrissyBratStub() {
+        let url = URL(string: "example.com")!
+        var stub = NetworkStub(path: .url(url))
+        stub.returnData(string: self.prissyBrat)
+        StubbedNetworkingProxy.addStub(stub)
+    }
+
     override func spec() {
 
         it("Should perform a standard data task") {
-            self.stub(uri("example.com"), Builders.load(string: "prissy brat", status: 200))
+            self.addPrissyBratStub()
 
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: .default)
@@ -22,7 +29,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
             waitUntil { done in
                 let task = session.dataTask(with: request) { data, _, _ in
-                    expect(String(data: data!, encoding: .utf8)) == "prissy brat"
+                    expect(String(data: data!, encoding: .utf8)) == self.prissyBrat
                     done()
                 }
 
@@ -39,7 +46,8 @@ class AutoRefreshURLProtocolTests: QuickSpec {
         }
 
         it("Should fail if no user") {
-            self.stub(uri("example.com"), Builders.load(string: "prissy brat", status: 200))
+            self.addPrissyBratStub()
+
             let configuration = URLSessionConfiguration.default
             configuration.protocolClasses = [AutoRefreshURLProtocol.self]
             let session = URLSession(configuration: configuration)
@@ -62,7 +70,8 @@ class AutoRefreshURLProtocolTests: QuickSpec {
                 configuration.protocolClasses = [AutoRefreshURLProtocol.self]
                 session = URLSession(user: user, configuration: URLSessionConfiguration.default)
             }
-            self.stub(uri("example.com"), Builders.load(string: "prissy brat", status: 200))
+
+            self.addPrissyBratStub()
             let request = URLRequest(url: URL(string: "http://example.com")!)
 
             waitUntil { done in
@@ -75,7 +84,8 @@ class AutoRefreshURLProtocolTests: QuickSpec {
         }
 
         it("Should have access token in request") {
-            self.stub(everything, http(200))
+            self.addPrissyBratStub()
+
             let user = User(state: .loggedIn)
             let session = URLSession(user: user, configuration: .default)
             let request = URLRequest(url: URL(string: "http://example.com")!)
@@ -90,12 +100,17 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let refreshUrl = "/oauth/token"
             let successData = "i am not google"
 
-            self.stub(uri(refreshUrl), try! Builders.load(file: "valid-refresh", status: 200))
+            var refreshStub = NetworkStub(path: .path(refreshUrl))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
+            refreshStub.returnResponse(status: 200)
+            StubbedNetworkingProxy.addStub(refreshStub)
 
-            self.stub(uri(wantedUrl), Builders.sequentialBuilder([
-                try! Builders.load(file: "empty", status: 401),
-                Builders.load(string: successData, status: 200),
-            ]))
+            var wantedStub = NetworkStub(path: .path(wantedUrl))
+            wantedStub.returnData([
+                (data: .fromFile("empty"), statusCode: 401),
+                (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
+            ])
+            StubbedNetworkingProxy.addStub(wantedStub)
 
             let user = User(state: .loggedIn)
             let session = URLSession(user: user, configuration: .default)
@@ -128,9 +143,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
         it("Should not refresh on 200") {
             let wantedUrl = "example.com"
-            let successData = "i am not google"
-
-            self.stub(uri(wantedUrl), Builders.load(string: successData, status: 200))
+            self.addPrissyBratStub()
 
             let user = User(state: .loggedIn)
             let session = URLSession(user: user, configuration: .default)
@@ -138,7 +151,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
             waitUntil { done in
                 let task = session.dataTask(with: request) { data, _, _ in
-                    expect(String(data: data!, encoding: .utf8)) == successData
+                    expect(String(data: data!, encoding: .utf8)) == self.prissyBrat
                     done()
                 }
                 task.resume()
@@ -157,13 +170,17 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
         it("Should handle network error") {
             let expectedError = NSError(domain: "getting jiggy with it", code: 501, userInfo: nil)
-            self.stub(everything, failure(expectedError))
+            let url = URL(string: "example.com")!
+            var stub = NetworkStub(path: .url(url))
+            stub.returnError(error: expectedError)
+            stub.returnResponse(status: 501)
+            StubbedNetworkingProxy.addStub(stub)
 
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: URLSessionConfiguration.default)
 
             waitUntil { done in
-                let task = session.dataTask(with: URLRequest(url: URL(string: "whateva")!)) { _, _, error in
+                let task = session.dataTask(with: URLRequest(url: url)) { _, _, error in
                     expect(error).to(matchError(expectedError))
                     done()
                 }
@@ -176,23 +193,24 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let wantedUrl = "http://www.example.com/"
             let refreshUrl = "/oauth/token"
 
-            self.stub(uri(refreshUrl), try! Builders.load(file: "valid-refresh", status: 200))
+            var refreshStub = NetworkStub(path: .path(refreshUrl))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
+            refreshStub.returnResponse(status: 200)
+            StubbedNetworkingProxy.addStub(refreshStub)
 
             let numRequestsToFire = 100
 
-            let failure = try! Builders.load(file: "empty", status: 401)
-            let success = Builders.load(string: "potatoes", status: 200)
-            var builders: [(URLRequest) -> Response] = [failure] // Make first one fail
-
+            var wantedStub = NetworkStub(path: .path(wantedUrl))
+            let failure = (data: Data.fromFile("empty"), statusCode: 401)
+            let success = (data: "potatoes".data(using: .utf8) ?? Data(), statusCode: 200)
+            var requests = [failure]
             // Alternate between a builder that returns 401 and 200.
             for i in 0..<numRequestsToFire {
-                builders.append(i % 2 == 0 ? failure : success)
+                requests.append(i % 2 == 0 ? failure : success)
             }
-            // Since the last builder provided is repeated until we run out of requests, make sure
-            // that it's a success value. Else we go in a forever failure situation
-            builders.append(success)
-
-            self.stub({ $0.url?.host == "www.example.com" }, Builders.sequentialBuilder(builders))
+            requests.append(success)
+            wantedStub.returnData(requests)
+            StubbedNetworkingProxy.addStub(wantedStub)
 
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: URLSessionConfiguration.default)
@@ -228,12 +246,19 @@ class AutoRefreshURLProtocolTests: QuickSpec {
         }
 
         it("Should handle refresh failure") {
-            self.stub(uri("/oauth/token"), Builders.load(string: "", status: 401))
-            self.stub({ $0.url?.host == "www.example.com" }, Builders.load(string: "", status: 401))
+            let url = URL(string: "example.com")!
+            var stub = NetworkStub(path: .path("/oauth/token"))
+            stub.returnResponse(status: 401)
+            StubbedNetworkingProxy.addStub(stub)
+
+            var stub2 = NetworkStub(path: .url(url))
+            stub2.returnResponse(status: 401)
+            StubbedNetworkingProxy.addStub(stub2)
+
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: URLSessionConfiguration.default)
             waitUntil { done in
-                session.dataTask(with: URLRequest(url: URL(string: "https://www.example.com")!)) {
+                session.dataTask(with: URLRequest(url: url)) {
                     expect($2).to(matchError(ClientError.userRefreshFailed(kDummyError)))
                     done()
                 }.resume()
@@ -241,7 +266,11 @@ class AutoRefreshURLProtocolTests: QuickSpec {
         }
 
         it("Should handle cancel") {
-            self.stub({ $0.url?.host == "www.example.com" }, Builders.load(string: "", status: 200))
+            var refreshStub = NetworkStub(path: .path("example.com"))
+            refreshStub.returnData(json: .fromFile("empty"))
+            refreshStub.returnResponse(status: 200)
+            StubbedNetworkingProxy.addStub(refreshStub)
+
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: URLSessionConfiguration.default)
             waitUntil { done in
@@ -260,12 +289,17 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let refreshUrl = "/oauth/token"
             let successData = "i am google"
 
-            self.stub(uri(refreshUrl), try! Builders.load(file: "valid-refresh", status: 200))
+            var refreshStub = NetworkStub(path: .path(refreshUrl))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
+            refreshStub.returnResponse(status: 200)
+            StubbedNetworkingProxy.addStub(refreshStub)
 
-            self.stub(uri(wantedUrl), Builders.sequentialBuilder([
-                try! Builders.load(file: "empty", status: 401),
-                Builders.load(string: successData, status: 200),
-            ]))
+            var wantedStub = NetworkStub(path: .path(wantedUrl))
+            wantedStub.returnData([
+                (data: .fromFile("empty"), statusCode: 401),
+                (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
+            ])
+            StubbedNetworkingProxy.addStub(wantedStub)
 
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: URLSessionConfiguration.default)
@@ -293,12 +327,17 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let refreshUrl = "/oauth/token"
             let successData = "i am google"
 
-            self.stub(uri(refreshUrl), try! Builders.load(file: "valid-refresh", status: 200))
+            var refreshStub = NetworkStub(path: .path(refreshUrl))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
+            refreshStub.returnResponse(status: 200)
+            StubbedNetworkingProxy.addStub(refreshStub)
 
-            self.stub(uri(wantedUrl), Builders.sequentialBuilder([
-                try! Builders.load(file: "empty", status: 401),
-                Builders.load(string: successData, status: 200),
-            ]))
+            var wantedStub = NetworkStub(path: .path(wantedUrl))
+            wantedStub.returnData([
+                (data: .fromFile("empty"), statusCode: 401),
+                (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
+            ])
+            StubbedNetworkingProxy.addStub(wantedStub)
 
             let user = TestingUser(state: .loggedIn)
             let config = URLSessionConfiguration.default
@@ -326,12 +365,17 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let refreshUrl = "/oauth/token"
             let successData = "i am not google"
 
-            self.stub(uri(refreshUrl), try! Builders.load(file: "valid-refresh", status: 200))
+            var refreshStub = NetworkStub(path: .path(refreshUrl))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
+            refreshStub.returnResponse(status: 200)
+            StubbedNetworkingProxy.addStub(refreshStub)
 
-            self.stub(uri(wantedUrl), Builders.sequentialBuilder([
-                try! Builders.load(file: "empty", status: 401),
-                Builders.load(string: successData, status: 200),
-            ]))
+            var wantedStub = NetworkStub(path: .path(wantedUrl))
+            wantedStub.returnData([
+                (data: .fromFile("empty"), statusCode: 401),
+                (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
+            ])
+            StubbedNetworkingProxy.addStub(wantedStub)
 
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: .default)
@@ -362,12 +406,17 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let refreshUrl = "/oauth/token"
             let successData = "i am google"
 
-            self.stub(uri(refreshUrl), try! Builders.load(file: "valid-refresh", status: 200))
+            var refreshStub = NetworkStub(path: .path(refreshUrl))
+            refreshStub.returnData(json: .fromFile("valid-refresh"))
+            refreshStub.returnResponse(status: 200)
+            StubbedNetworkingProxy.addStub(refreshStub)
 
-            self.stub(uri(wantedUrl), Builders.sequentialBuilder([
-                try! Builders.load(file: "empty", status: 401),
-                Builders.load(string: successData, status: 200),
-            ]))
+            var wantedStub = NetworkStub(path: .path(wantedUrl))
+            wantedStub.returnData([
+                (data: .fromFile("empty"), statusCode: 401),
+                (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
+            ])
+            StubbedNetworkingProxy.addStub(wantedStub)
 
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: URLSessionConfiguration.default)

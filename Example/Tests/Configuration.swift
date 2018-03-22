@@ -24,7 +24,15 @@ class SchibstedAccountConfiguration: QuickConfiguration {
 
             Utils.cleanupKeychain()
             PasswordlessTokenStore.clear()
-            Networking.proxy = TestingNetworkingProxy()
+
+            //
+            // Before each test, make sure we reset the proxy to use the testing networking proxy incase a test changes the configuration
+            // And make sure the internal forwarding proxy if the testing proxy is the default one.
+            //
+            let testingNetworkingProxy = TestingNetworkingProxy()
+            testingNetworkingProxy.internalProxy = StubbedNetworkingProxy()
+            Networking.proxy = testingNetworkingProxy
+
             JWTHelper.proxy = TestingJWTHelperProxy()
 
             // The simulator example app creates a user on start up so this can be potentially 1 before anything runs
