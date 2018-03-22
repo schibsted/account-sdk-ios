@@ -1483,8 +1483,8 @@
 			dependencies = (
 				43E160292063B5EC00D9BA3E /* PBXTargetDependency */,
 				43E1602B2063B5EC00D9BA3E /* PBXTargetDependency */,
-				43C24194205BF1BF00154866 /* PBXTargetDependency */,
 				43E1605D2063C7AF00D9BA3E /* PBXTargetDependency */,
+				43C24194205BF1BF00154866 /* PBXTargetDependency */,
 			);
 			name = SchibstedAccountTests;
 			productName = SchibstedAccountTests;
