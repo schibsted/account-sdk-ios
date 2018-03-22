@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import Mockingjay
 import Nimble
 import Quick
 @testable import SchibstedAccount
@@ -16,7 +15,10 @@ class UserProductTests: QuickSpec {
             it("Should have all the fields") {
                 let user = TestingUser(state: .loggedIn)
                 let productID = "123"
-                self.stub(uri("/api/2/user/\(user.id!)/product/\(productID)"), try! Builders.load(file: "user-product-valid", status: 200))
+                var stubSignup = NetworkStub(path: .path(Router.product(userID: user.id!, productID: productID).path))
+                stubSignup.returnData(json: .fromFile("user-product-valid"))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
 
                 user.product.fetch(productID: productID) { result in
                     guard case let .success(product) = result else {

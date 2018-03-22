@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import Mockingjay
 import Nimble
 import Quick
 @testable import SchibstedAccount

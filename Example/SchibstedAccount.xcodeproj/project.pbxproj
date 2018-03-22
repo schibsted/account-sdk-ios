@@ -50,7 +50,6 @@
 		77954CDC202C5D940089D27C /* user-product-valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 77954CDA202C5D940089D27C /* user-product-valid.json */; };
 		A1C50D7AA85E5962AEDDBB70 /* Pods_SchibstedAccount_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46A1D545D458E934B7ACEE8 /* Pods_SchibstedAccount_Tests.framework */; };
 		D370C9A3F1F55278DBE8B1D2 /* Pods_SchibstedAccount_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E2C165C2C881D2B33045F6 /* Pods_SchibstedAccount_Example.framework */; };
-		E1006CBF1D49FD76002C1D48 /* Builders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1006CBE1D49FD76002C1D48 /* Builders.swift */; };
 		E106D7F51F3C4B70005611AD /* UserTokensKeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E106D7F41F3C4B70005611AD /* UserTokensKeychainTests.swift */; };
 		E106D7F91F3DBD6C005611AD /* MockNetworkingProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E106D7F81F3DBD6C005611AD /* MockNetworkingProxy.swift */; };
 		E1199E291F94E72100BF6FC3 /* WebSessionRoutesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1199E281F94E72100BF6FC3 /* WebSessionRoutesTests.swift */; };
@@ -68,12 +67,10 @@
 		E13B2D641CF5DDD800CFC6F6 /* valid-passwordless.json in Resources */ = {isa = PBXBuildFile; fileRef = E13B2D5F1CF5DDD800CFC6F6 /* valid-passwordless.json */; };
 		E141827F1F60083200758377 /* ColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141827E1F60083200758377 /* ColorTests.swift */; };
 		E15135F41EAB5BCC000433B6 /* AutoRefreshURLProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15135F31EAB5BCC000433B6 /* AutoRefreshURLProtocolTests.swift */; };
-		E15D239E1E85517E00324544 /* invalid-phone-number-error.json in Resources */ = {isa = PBXBuildFile; fileRef = E15D239D1E85517E00324544 /* invalid-phone-number-error.json */; };
 		E15D239F1E8551A000324544 /* invalid-phone-number-error.json in Resources */ = {isa = PBXBuildFile; fileRef = E15D239D1E85517E00324544 /* invalid-phone-number-error.json */; };
 		E15D23A51E89CCEC00324544 /* TaskManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15D23A41E89CCEC00324544 /* TaskManagerTests.swift */; };
 		E16AFE001E92E7B400F76B48 /* UserTokensStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16AFDFF1E92E7B400F76B48 /* UserTokensStorageTests.swift */; };
 		E171993B2056A00D00DF8FCB /* NetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E171993A2056A00D00DF8FCB /* NetworkingTests.swift */; };
-		E17555E01D0945C5006FA8B6 /* valid-refresh.json in Resources */ = {isa = PBXBuildFile; fileRef = E17555DF1D0945C5006FA8B6 /* valid-refresh.json */; };
 		E17555E11D0945DF006FA8B6 /* valid-refresh.json in Resources */ = {isa = PBXBuildFile; fileRef = E17555DF1D0945C5006FA8B6 /* valid-refresh.json */; };
 		E17C712A1F20B4AC00A57EB4 /* valid-authcode-same-id-diff-code.json in Resources */ = {isa = PBXBuildFile; fileRef = E17C71291F20B4AC00A57EB4 /* valid-authcode-same-id-diff-code.json */; };
 		E17C712C1F20B4E000A57EB4 /* valid-authcode-diff-id-same-code.json in Resources */ = {isa = PBXBuildFile; fileRef = E17C712B1F20B4E000A57EB4 /* valid-authcode-diff-id-same-code.json */; };
@@ -163,7 +160,6 @@
 		9A914416158B4ADE1DFB6A1B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C46A1D545D458E934B7ACEE8 /* Pods_SchibstedAccount_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SchibstedAccount_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D353FFE653878EEC481678D2 /* Pods-SchibstedAccount_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SchibstedAccount_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SchibstedAccount_Example/Pods-SchibstedAccount_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		E1006CBE1D49FD76002C1D48 /* Builders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Builders.swift; sourceTree = "<group>"; };
 		E106D7F41F3C4B70005611AD /* UserTokensKeychainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTokensKeychainTests.swift; sourceTree = "<group>"; };
 		E106D7F81F3DBD6C005611AD /* MockNetworkingProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetworkingProxy.swift; sourceTree = "<group>"; };
 		E1199E281F94E72100BF6FC3 /* WebSessionRoutesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSessionRoutesTests.swift; sourceTree = "<group>"; };
@@ -422,7 +418,6 @@
 		E19164281D3CD75500061A30 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E1006CBE1D49FD76002C1D48 /* Builders.swift */,
 				E1B3EDEE1D6B174500F1CE5C /* TestingJWTHelperProxy.swift */,
 				E191642A1D3CD78F00061A30 /* TestingNetworkingProxy.swift */,
 				E19164291D3CD78F00061A30 /* TestingIdentityManager.swift */,
@@ -532,11 +527,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E17555E01D0945C5006FA8B6 /* valid-refresh.json in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				E126007720528DFC006083A7 /* ClientConfiguration.json in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				E15D239E1E85517E00324544 /* invalid-phone-number-error.json in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -625,17 +618,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SchibstedAccount_Tests/Pods-SchibstedAccount_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Mockingjay/Mockingjay.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-				"${BUILT_PRODUCTS_DIR}/URITemplate/URITemplate.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mockingjay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/URITemplate.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -763,7 +752,6 @@
 				E1B3EDEF1D6B174500F1CE5C /* TestingJWTHelperProxy.swift in Sources */,
 				E141827F1F60083200758377 /* ColorTests.swift in Sources */,
 				089764561EFBB4A8000755E7 /* UserProfileSessionTests.swift in Sources */,
-				E1006CBF1D49FD76002C1D48 /* Builders.swift in Sources */,
 				E1212BCD1E81CE6B00ECA17D /* UserAgreementsTests.swift in Sources */,
 				77954CD7202C5D590089D27C /* UserProductTests.swift in Sources */,
 				E19164151D304A9C00061A30 /* Configuration.swift in Sources */,
