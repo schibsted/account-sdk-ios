@@ -16,6 +16,9 @@ public enum ClientError: Error {
     /// Occurs when `IdentityManager.validate(oneTimeCode:)` is given an incorrect code
     case invalidCode
 
+    /// Occurs when you request a scope that you do not have access to
+    case invalidScope
+
     /// Occurs when `IdentityManager.resendCode` cannot resend the code
     case unableToResend
 
@@ -109,6 +112,8 @@ extension ClientError: CustomStringConvertible {
             return "Missing accept in agreements"
         case let .requiredField(fields):
             return "Required fields are failing validation: \(fields)"
+        case .invalidScope:
+            return "One or more specified scopes are invalid"
         }
     }
 }

@@ -342,10 +342,11 @@ public class IdentityManager: IdentityManagerProtocol {
 
      - parameter username: `Identifier` representing the username to login with. Only email is supported.
      - parameter password: the password for the identifier
+     - parameter scopes: array of scopes you want the token to contain
      - parameter persistUser: whether the login status should be persistent on app's relaunches
      - parameter completion: a callback that is called after the credential is checked.
      */
-    public func login(username: Identifier, password: String, persistUser: Bool, completion: @escaping NoValueCallback) {
+    public func login(username: Identifier, password: String, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
         guard case .email = username else {
             completion(.failure(ClientError.unexpectedIdentifier(actual: username, expected: "only EmailAddress supported")))
             return
@@ -357,7 +358,7 @@ public class IdentityManager: IdentityManagerProtocol {
             refreshToken: nil,
             username: username.normalizedString,
             password: password,
-            scope: ["openid"]
+            scope: scopes + ["openid"]
         ) { [weak self] result in
             self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }

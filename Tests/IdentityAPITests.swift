@@ -20,6 +20,7 @@ class IdentityAPITests: QuickSpec {
     let testClientSecret = "clientSecret"
     let testOauthToken = "oauth"
     let testUserID = "userID"
+    let testPassword = "huckleberryfinn"
     let testLocale = Locale.canonicalLanguageIdentifier(from: Locale.current.identifier)
     let testBasePath = URL(string: "http://localhost:5050")!
 
@@ -330,6 +331,32 @@ class IdentityAPITests: QuickSpec {
                         scope: ["openid"]
                     ) { result in
                         expect(result).to(failWith(ClientError.invalidCode))
+                        done()
+                    }
+                }
+            }
+        }
+
+        describe("request access token") {
+
+            fit("should error with invalid scope specified") {
+                var stub = NetworkStub(path: .path(Router.oauthToken.path))
+                stub.returnData(json: .fromFile("password-grant-invalid-scope"))
+                stub.returnResponse(status: 400)
+                StubbedNetworkingProxy.addStub(stub)
+
+                let api = IdentityAPI(basePath: self.testBasePath)
+
+                waitUntil { done in
+                    api.requestAccessToken(
+                        clientID: self.testClientID,
+                        clientSecret: self.testClientSecret,
+                        grantType: .password,
+                        username: self.testEmail,
+                        password: self.testPassword,
+                        scope: ["whatever"]
+                    ) { result in
+                        expect(result).to(failWith(ClientError.invalidScope))
                         done()
                     }
                 }

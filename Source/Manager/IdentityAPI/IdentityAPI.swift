@@ -323,6 +323,8 @@ class IdentityAPI {
             return .invalidClientCredentials
         case .string("unverified_user", "OAuthException", 400):
             return .unverifiedEmail
+        case .string("invalid_scope", "OAuthException", _):
+            return .invalidScope
         case let .object("invalid_request", .string(string), _) where string.contains("*phone_number*"):
             return .invalidPhoneNumber
         case let .object("invalid_request", .string(string), _) where string.contains("*email*"):
