@@ -171,6 +171,7 @@ class URLSessionTests: QuickSpec {
             }
 
             it("Should do an automatic refresh") {
+                Logger.shared.addTransport { print($0) }
                 let (session, user) = Utils.makeURLSession()
 
                 let wantedUrl = "example.com"
