@@ -123,10 +123,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func ensureAcceptanceOfNewTerms(identityManager: IdentityManager) {
-        self.user?.needsAcceptanceOfNewTerms { [weak self] result in
+        self.user?.hasAcceptedLatestTerms { [weak self] result in
             switch result {
-            case let .success(needsAcceptance):
-                guard needsAcceptance, let vc = self?.window?.rootViewController else {
+            case let .success(hasAcceptedLatestTerms):
+                if hasAcceptedLatestTerms {
+                    // Latest terms already accepted, nothing else to do.
+                    return
+                }
+                
+                // Present UI to accept new terms.
+                guard let vc = self?.window?.rootViewController else {
                     return
                 }
                 self?.identityUI = IdentityUI(configuration: .default)

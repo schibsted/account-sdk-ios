@@ -145,7 +145,7 @@ public class User: UserProtocol {
 
      - parameter completion: Callback that is called after acceptance status has been checked.
      */
-    public func needsAcceptanceOfNewTerms(completion: @escaping BoolResultCallback) {
+    public func hasAcceptedLatestTerms(completion: @escaping BoolResultCallback) {
         self.agreements.status(completion: completion)
     }
 
