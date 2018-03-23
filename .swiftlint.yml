@@ -1,10 +1,10 @@
 included:
   - Example/SchibstedAccount
   - Example/Tests
-  - SchibstedAccount
+  - Source
 
 excluded:
-  - SchibstedAccount/Base/IdentityAPI
+  - Source/Base/IdentityAPI
 
 disabled_rules:
  - cyclomatic_complexity

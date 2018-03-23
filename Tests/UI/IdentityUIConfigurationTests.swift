@@ -14,7 +14,7 @@ class IdentityUIConfigurationTests: QuickSpec {
 
         it("Should get bundle name as appName if not set") {
             let configuration = IdentityUIConfiguration.testing
-            expect(configuration.appName) == "SchibstedAccount_Example"
+            expect(configuration.appName) == "Example"
         }
 
         it("Should get set name as appName") {
