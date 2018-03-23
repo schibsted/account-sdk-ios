@@ -15,6 +15,6 @@ coverage:
 comment: false
 
 ignore:
-  - "SchibstedAccount/UI/*"
+  - "Source/UI/*"
   - "Example/*"
   - "DemoApp/*"

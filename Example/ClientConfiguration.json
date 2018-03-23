@@ -1,0 +1,16 @@
+{
+    "environment": {
+        "preproduction": {
+            "clientID": "5a6719bee090171db298db69",
+            "clientSecret": "SuXbvREutNHrgkWxlorf",
+            "clientScheme": "com.sdk-example.pre.5a6719bee090171db298db69",
+            "webClientID": "599fd705ed21dc0d55011d2a"
+        },
+        "development": {
+            "clientID": "5a6848cd3c61340f7a2aa1ee",
+            "clientSecret": "Mzseldz4cwvsuPikar1c",
+            "clientScheme": "com.sdk-example.dev.5a6848cd3c61340f7a2aa1ee",
+            "webClientID": "594ba4beac790b0df7aefa8f"
+        }
+    }
+}

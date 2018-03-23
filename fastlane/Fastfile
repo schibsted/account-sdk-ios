@@ -8,28 +8,25 @@ platform :ios do
   desc '- `COVERAGE`: To coverage or not to doc (default to NO)'
   lane :test do
     scan(
-      workspace: 'Example/SchibstedAccount.xcworkspace',
-      scheme: 'SchibstedAccount-Example',
+      scheme: 'SchibstedAccount',
       derived_data_path: 'build/DerivedData',
       output_directory: 'build/',
       device: 'iPhone 8', # Make sure this matches with pre sim opening in scripts/travis_env_tests.sh
       buildlog_path: 'build/logs',
-      skip_build: true,
       code_coverage: true
     )
 
     slather(
         binary_basename: 'SchibstedAccount',
-        ignore: ['SchibstedAccount/UI/*'],
+        ignore: ['Source/UI/*'],
         cobertura_xml: true,
         travis: true,
         use_bundle_exec: true,
         source_directory: "SchibstedAccount/",
         output_directory: "build/reports/coverage/xml",
         build_directory: "build/DerivedData",
-        workspace: "Example/SchibstedAccount.xcworkspace",
-        scheme: "SchibstedAccount-Example",
-        proj: "Example/SchibstedAccount.xcodeproj"
+        scheme: "SchibstedAccount",
+        proj: "SchibstedAccount.xcodeproj"
       )
 
   end

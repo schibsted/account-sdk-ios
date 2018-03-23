@@ -62,6 +62,14 @@ There's a DemoApp that is deployed to HockeyAPP, the following should work if yo
 open DemoApp/SchibstedAccountDemo.xcworkspace
 ```
 
+## Development
+
+All development should be done in [SchibstedAccount.xcodeproj](SchibstedAccount.xcodeproj).
+
+```bash
+open SchibstedAccount.xcodeproj
+```
+
 ## Code style
 
 We try to keep the code base consistent and we have a number of checks in place but also rely on each other to maintain consistency across the code base. It's recommended to familiarize yourself with the Swift community practices found [here](https://swift.org/documentation/api-design-guidelines/). If you are looking for a source of inspiration then the Swiftified Foundation classes and the Swift standard libraries should be your go to references.
