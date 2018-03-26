@@ -12,7 +12,6 @@ public typealias NoValue = ()
  A result object is generally used for asynchronous callbacks in the SDK
  */
 public enum Result<T, E: Error> {
-
     /// Denotes a successful journey of bits and instructions through the virtual world.
     /// Contains the value that was meant to be received in a success case.
     case success(T)

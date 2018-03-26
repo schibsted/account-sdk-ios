@@ -7,7 +7,6 @@ import SchibstedAccount
 import UIKit
 
 class PasswordFlowViewController: UIViewController {
-
     @IBOutlet var emailField: UITextField!
     @IBOutlet var passwordField: UITextField!
     @IBOutlet var shouldPersistUserSwitch: UISwitch!

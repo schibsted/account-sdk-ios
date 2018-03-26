@@ -49,7 +49,6 @@ iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#
 
  */
 public struct ClientConfiguration {
-
     /**
      Determines which backend requests will be sent to. Most of the values here are
      explained on the SPiD self service site where you also must set up your client.

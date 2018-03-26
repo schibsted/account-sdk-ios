@@ -9,7 +9,6 @@ import Foundation
  SPID web page URLs useful for web views in hybrid apps.
 */
 public class WebSessionRoutes {
-
     private let clientConfiguration: ClientConfiguration
 
     func makeURLFromPath(_ path: String, redirectPath: String?, queryItems: [URLQueryItem]) -> URL {

@@ -4,7 +4,6 @@
 //
 
 class Checkbox: UIButton, Themeable {
-
     var theme: IdentityUITheme?
 
     private var stateColor: UIColor {

@@ -7,7 +7,6 @@ import SchibstedAccount
 import UIKit
 
 class PaswordlessFlowViewController: UIViewController {
-
     @IBOutlet var countryCodeField: UITextField!
     @IBOutlet var phoneNumberField: UITextField!
     @IBOutlet var authCodeField: UITextField!

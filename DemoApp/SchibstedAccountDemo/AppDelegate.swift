@@ -1,3 +1,8 @@
+//
+// Copyright 2011 - 2018 Schibsted Products & Technology AS.
+// Licensed under the terms of the MIT license. See LICENSE in the project root.
+//
+
 import SchibstedAccount
 import UIKit
 
@@ -15,9 +20,9 @@ struct ConfigurationLoader {
 
         guard
             let jsonData = (try? JSONSerialization.jsonObject(with: Data(contentsOf: configURL)))
-                as? [String: [String: [String: String]]],
+            as? [String: [String: [String: String]]],
             let configurations = jsonData["configurations"]
-            else {
+        else {
             preconditionFailure("Failed to get json data out of ClientConfiguration.json")
         }
 
@@ -33,7 +38,7 @@ extension SchibstedAccount.ClientConfiguration {
     static let config = ConfigurationLoader()
 
     static let iosDefault = {
-        return ClientConfiguration(
+        ClientConfiguration(
             environment: .preproduction,
             clientID: config.clientID,
             clientSecret: config.clientSecret,
@@ -49,7 +54,7 @@ extension IdentityUIConfiguration {
         let clientConfiguration: SchibstedAccount.ClientConfiguration = .current
         return IdentityUIConfiguration(clientConfiguration: clientConfiguration, theme: .default)
     }()
-    
+
     static let current = IdentityUIConfiguration.default
 }
 
@@ -96,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         alert.addAction(action)
         self.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
-    
+
     func updateUserLabel() {
         ((self.window?.rootViewController as? UINavigationController)?.topViewController as? ViewController)?.updateUserLabel()
     }

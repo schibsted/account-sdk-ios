@@ -7,7 +7,6 @@ import SchibstedAccount
 import UIKit
 
 class TokenExchangeViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }

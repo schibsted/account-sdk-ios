@@ -4,7 +4,6 @@
 //
 
 class FetchUserProfileTask: TaskProtocol {
-
     private weak var user: User?
 
     init(user: User?) {

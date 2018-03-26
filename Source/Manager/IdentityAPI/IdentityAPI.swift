@@ -93,7 +93,6 @@ class IdentityAPI {
                             redirectURI: String? = nil,
                             scope: [String]? = nil,
                             completion: @escaping ((Result<TokenData, ClientError>) -> Void)) {
-
         let formData: [String: String?] = [
             "client_id": clientID,
             "client_secret": clientSecret,
@@ -118,7 +117,6 @@ class IdentityAPI {
         connection: Connection,
         completion: @escaping ((Result<PasswordlessToken, ClientError>) -> Void)
     ) {
-
         var formData = [
             "client_id": clientID,
             "client_secret": clientSecret,
@@ -189,7 +187,6 @@ class IdentityAPI {
                        type: TokenExchangeType,
                        redirectURI: String? = nil,
                        completion: @escaping ((Result<TokenExchange, ClientError>) -> Void)) {
-
         let formData = [
             "clientId": clientID,
             "type": type.rawValue,
@@ -305,7 +302,6 @@ class IdentityAPI {
             }
 
             if let object = try? json.jsonObject(for: "error"), let type = try? object.string(for: "type") {
-
                 if let description = try? object.string(for: "description") {
                     return .object(type: type, description: .string(description), code: statusCode)
                 }

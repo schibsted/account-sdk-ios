@@ -7,7 +7,6 @@ import Foundation
 
 /// Represents an email address as a string
 public struct EmailAddress: IdentifierProtocol {
-
     let emailAddress: String
 
     /// The string that is provided during initialization

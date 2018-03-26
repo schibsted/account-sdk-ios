@@ -7,7 +7,6 @@ import SchibstedAccount
 import UIKit
 
 class ProfileViewController: UIViewController {
-
     @IBOutlet var givenNameTextField: UITextField!
     @IBOutlet var familyNameTextField: UITextField!
 

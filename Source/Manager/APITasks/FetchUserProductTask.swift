@@ -4,7 +4,6 @@
 //
 
 class FetchUserProductTask: TaskProtocol {
-
     private weak var user: User?
     private let productID: String
 

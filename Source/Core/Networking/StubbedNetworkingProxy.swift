@@ -311,7 +311,6 @@ class StubbedNetworkingProxy: NetworkingProxy {
         request: URLRequest,
         completion: URLSessionTaskCallback?
     ) -> URLSessionDataTask {
-
         guard let url = request.url, let completion = completion else {
             return URLSessionDataTask()
         }

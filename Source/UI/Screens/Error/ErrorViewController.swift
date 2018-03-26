@@ -4,7 +4,6 @@
 //
 
 class ErrorViewController: IdentityUIViewController {
-
     var didDismiss: (() -> Void)?
 
     @IBOutlet var headingLabel: Heading! {

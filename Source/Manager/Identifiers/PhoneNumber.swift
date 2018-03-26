@@ -13,7 +13,6 @@ private extension CharacterSet {
 
 /// Represents a phone number string
 public struct PhoneNumber: IdentifierProtocol {
-
     let phoneNumber: String
     let normalizedPhoneNumber: String
 

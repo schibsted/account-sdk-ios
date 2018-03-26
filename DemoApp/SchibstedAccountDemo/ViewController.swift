@@ -1,25 +1,30 @@
+//
+// Copyright 2011 - 2018 Schibsted Products & Technology AS.
+// Licensed under the terms of the MIT license. See LICENSE in the project root.
+//
+
 import SchibstedAccount
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet private weak var showTeaserSwitch: UISwitch!
-    @IBOutlet private weak var userLabel: UILabel!
-    @IBOutlet private weak var versionLabel: UILabel!
-    
+    @IBOutlet private var showTeaserSwitch: UISwitch!
+    @IBOutlet var showLogoSwitch: UISwitch!
+    @IBOutlet private var userLabel: UILabel!
+    @IBOutlet private var versionLabel: UILabel!
+
     var identityUI: IdentityUI?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
-            let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        {
+            let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
             self.versionLabel.text = "SDK \(SchibstedAccount.sdkVersion) — Demo App \(appVersion) (\(buildVersion))"
         }
-        
+
         self.updateUserLabel()
     }
-    
+
     func updateUserLabel() {
         guard let user = (UIApplication.shared.delegate as? AppDelegate)?.user else {
             return
@@ -38,13 +43,21 @@ class ViewController: UIViewController {
             loginMethod = .password
         }
 
-        
+        let config: IdentityUIConfiguration
+        if self.showLogoSwitch.isOn {
+            var theme: IdentityUITheme = .default
+            theme.titleLogo = #imageLiteral(resourceName: "logo")
+            config = IdentityUIConfiguration(clientConfiguration: .current, theme: theme)
+        } else {
+            config = .current
+        }
+
         let teaserText = self.showTeaserSwitch.isOn ? NSLocalizedString("This is an optional teaser text whose text can be customized.", comment: "") : nil
-        self.identityUI = IdentityUI(configuration: .current)
+        self.identityUI = IdentityUI(configuration: config)
         self.identityUI?.delegate = UIApplication.shared.delegate as! AppDelegate
         self.identityUI?.presentIdentityProcess(from: self, loginMethod: loginMethod, localizedTeaserText: teaserText)
     }
-    
+
     @IBAction func didTapOpenProfileWebPage() {
         let identityManager = self.identityUI?.identityManager ?? IdentityManager(clientConfiguration: .current)
         let accountSummaryURL = identityManager.routes.accountSummaryURL

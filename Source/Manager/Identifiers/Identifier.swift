@@ -9,7 +9,6 @@ import Foundation
  Represents an identier that is used to initiate login processes
  */
 public enum Identifier: IdentifierProtocol {
-
     /// User identifier representing a phone number
     case phone(PhoneNumber)
 

@@ -16,7 +16,6 @@ protocol JSONObjectProtocol {
 extension Dictionary: JSONObjectProtocol {}
 
 extension JSONObjectProtocol where Key == String, Value == Any {
-
     func value(for key: Key) throws -> Value {
         guard let value = self[key] else {
             throw JSONError.noKey(key)

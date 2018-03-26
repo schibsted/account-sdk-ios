@@ -9,7 +9,6 @@ import Foundation
  Convenience overloads for IdentityManager methods.
  */
 public extension IdentityManagerProtocol {
-
     /// - SeeAlso: `IdentityManager.sendCode(...)`
     public func sendCode(to email: EmailAddress, completion: @escaping NoValueCallback) {
         return self.sendCode(to: Identifier(email), completion: completion)

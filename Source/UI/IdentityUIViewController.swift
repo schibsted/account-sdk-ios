@@ -33,7 +33,6 @@ struct NavigationSettings {
 }
 
 class IdentityUIViewController: UIViewController {
-
     class var nibName: String? {
         return String(describing: self)
     }
