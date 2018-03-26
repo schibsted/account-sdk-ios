@@ -23,7 +23,7 @@ extension User {
          then you should then present a screen where the user can review and accept the updated terms.
 
          The recommended way of presenting the terms acceptance screen is by using the provided UI flows, thus by calling`IdentityUI.presentTerms(for:from:)`.
-         It is important that you pass the same instance of `User` you previously obtained and storeed, otherwise you won't get logout notifications for that
+         It is important that you pass the same instance of `User` you previously obtained and stored, otherwise you won't get logout notifications for that
          user in case the user is logged out for not having accepted the new terms.
 
          If you are using the headless approach instead, you should then present your own UI and manually call `accept(:)`, if the user accepted the new terms,

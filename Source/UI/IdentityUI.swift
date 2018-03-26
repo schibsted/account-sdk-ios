@@ -107,6 +107,20 @@ public class IdentityUI {
 
     private static var updatedTermsCoordinator: UpdatedTermsCoordinator?
 
+    /**
+     Present a screen where the user can review and accept updated terms and conditions.
+
+     In order to comply with privacy regulations, you need to make sure that the user accepts any update to terms and conditions that may have been issued since
+     the last visit. For this reason, at the startup of your app, right after having obtained the `IdentityManager.currentUser` and verified the login status,
+     if the user is logged-in you should call `user.agreements.status(:)`, and in case of `false` result (meaning the user has yet to accepted the latest terms)
+     call this function to present the updated terms. If the user fails to accept the terms, a logout will automatically be forced.
+
+     - parameter: user: The user that requires acceptance of new terms. It is important that you pass the same instance of `User` you previously obtained from
+       an `IdentityManager` and stored, otherwise you won't get logout notifications for that user in case the user is logged out for not having accepted the
+       new terms.
+     - parameter: viewController: The view controller to present the screen from.
+     - parameter: configuration: The UI configuration.
+     */
     public static func presentTerms(for user: User, from viewController: UIViewController, configuration: IdentityUIConfiguration) {
         guard self.presentedIdentityUI == nil, self.updatedTermsCoordinator == nil else {
             // Another screen of the Identity UI is already presented.
