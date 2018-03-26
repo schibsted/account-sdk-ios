@@ -3,6 +3,7 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet private weak var showTeaserSwitch: UISwitch!
+    @IBOutlet weak var showLogoSwitch: UISwitch!
     @IBOutlet private weak var userLabel: UILabel!
     @IBOutlet private weak var versionLabel: UILabel!
     
@@ -38,9 +39,17 @@ class ViewController: UIViewController {
             loginMethod = .password
         }
 
-        
+        let config: IdentityUIConfiguration
+        if self.showLogoSwitch.isOn {
+            var theme: IdentityUITheme = .default
+            theme.titleLogo = #imageLiteral(resourceName: "logo")
+            config = IdentityUIConfiguration(clientConfiguration: .current, theme: theme)
+        } else {
+            config = .current
+        }
+
         let teaserText = self.showTeaserSwitch.isOn ? NSLocalizedString("This is an optional teaser text whose text can be customized.", comment: "") : nil
-        self.identityUI = IdentityUI(configuration: .current)
+        self.identityUI = IdentityUI(configuration: config)
         self.identityUI?.delegate = UIApplication.shared.delegate as! AppDelegate
         self.identityUI?.presentIdentityProcess(from: self, loginMethod: loginMethod, localizedTeaserText: teaserText)
     }
