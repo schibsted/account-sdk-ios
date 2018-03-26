@@ -116,19 +116,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_: UIApplication, didFinishLaunchingWithOptions options: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let identityManager = IdentityManager(clientConfiguration: .current)
-        self.user = identityManager.currentUser
-        
+        self.user = IdentityManager(clientConfiguration: .current).currentUser
+
         let doesLaunchOptionsContainRecognizedURL = AppLaunchData(launchOptions: options, clientConfiguration: .current) != nil
         if !doesLaunchOptionsContainRecognizedURL, self.user?.state == .loggedIn {
-            self.ensureAcceptanceOfNewTerms(identityManager: identityManager)
+            self.ensureAcceptanceOfNewTerms()
             return true
         }
-        
+
         return true
     }
-    
-    private func ensureAcceptanceOfNewTerms(identityManager: IdentityManager) {
+
+    private func ensureAcceptanceOfNewTerms() {
         self.user?.agreements.status { [weak self] result in
             switch result {
             case let .success(hasAcceptedLatestTerms):
@@ -136,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     // Latest terms already accepted, nothing else to do.
                     return
                 }
-                
+
                 // Present UI to accept new terms.
                 guard let viewController = self?.window?.rootViewController, let user = self?.user else {
                     return
