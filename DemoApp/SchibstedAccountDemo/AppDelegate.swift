@@ -114,7 +114,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let identityManager = IdentityManager(clientConfiguration: .current)
         self.user = identityManager.currentUser
         
-        if !AppLaunchData.doesLaunchOptionsContainRecognizedURL(options, for: .current), self.user?.state == .loggedIn {
+        let doesLaunchOptionsContainRecognizedURL = AppLaunchData(launchOptions: options, clientConfiguration: .current) != nil
+        if !doesLaunchOptionsContainRecognizedURL, self.user?.state == .loggedIn {
             self.ensureAcceptanceOfNewTerms(identityManager: identityManager)
             return true
         }
@@ -123,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func ensureAcceptanceOfNewTerms(identityManager: IdentityManager) {
-        self.user?.hasAcceptedLatestTerms { [weak self] result in
+        self.user?.agreements.status { [weak self] result in
             switch result {
             case let .success(hasAcceptedLatestTerms):
                 if hasAcceptedLatestTerms {

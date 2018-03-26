@@ -99,14 +99,4 @@ extension AppLaunchData {
 
         return nil
     }
-
-    /**
-     Returns whether the given launch options contain a URL that is recognized as a deep link to the SchibstedAccount SDK.
-
-     - parameter launchOptions: The launch options you get through `UIApplicationDelegate.application(_:url:options:)`.
-     - parameter clientConfiguration: The current client configuration.
-     */
-    public static func doesLaunchOptionsContainRecognizedURL(_ launchOptions: [AnyHashable: Any]?, for clientConfiguration: ClientConfiguration) -> Bool {
-        return AppLaunchData(launchOptions: launchOptions, clientConfiguration: clientConfiguration) != nil
-    }
 }
