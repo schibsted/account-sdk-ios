@@ -34,7 +34,7 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
                 self.dismissURLPresenting()
             }
             return .handled
-        case .validateAuthCode, .presentUpdatedTerms:
+        case .validateAuthCode:
             break
         }
 

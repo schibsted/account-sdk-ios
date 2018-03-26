@@ -133,16 +133,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
                 // Present UI to accept new terms.
-                guard let vc = self?.window?.rootViewController else {
+                guard let viewController = self?.window?.rootViewController, let user = self?.user else {
                     return
                 }
-                self?.identityUI = IdentityUI(configuration: .default)
-                self?.identityUI?.delegate = self
-                
-                // It is crucial that you pass the same instance of `IdentityManager` used to obtain the current logged-in user (that is stored in `self.user`
-                // in this example app), otherwise you won't get logout notifications for that user in case the user is logged out for not having accepted the
-                // new terms.
-                self?.identityUI?.presentIdentityProcess(from: vc, route: .presentUpdatedTerms, identityManager: identityManager)
+                // It is important that you pass the same instance of `User` that you previously stored, otherwise you won't get logout notifications for that
+                // user in case the user is logged out for not having accepted the new terms.
+                IdentityUI.presentTerms(for: user, from: viewController, configuration: .current)
             case let .failure(error):
                 // Fail silently, retry will occur on next app's launch.
                 print("Error attempting to fetch availability of new terms: \(error)")

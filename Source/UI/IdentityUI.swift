@@ -103,6 +103,34 @@ public class IdentityUI {
     // 2. When handling a universal link, the currently presented process (if any) can be retrieved.
     private static var presentedIdentityUI: IdentityUI?
 
+    private static var updatedTermsCoordinator: UpdatedTermsCoordinator?
+
+    public static func presentTerms(for user: User, from viewController: UIViewController, configuration: IdentityUIConfiguration) {
+        guard self.presentedIdentityUI == nil, self.updatedTermsCoordinator == nil else {
+            // Another screen of the Identity UI is already presented.
+            return
+        }
+
+        let navigationController = UINavigationController()
+
+        self.updatedTermsCoordinator = UpdatedTermsCoordinator(navigationController: navigationController, configuration: configuration)
+        self.updatedTermsCoordinator?.start(input: user) { output in
+            self.updatedTermsCoordinator = nil
+
+            switch output {
+            case .success:
+                break
+            case .cancel:
+                // Since user has not accepted the updated terms, we force a logout :'(
+                user.logout()
+            }
+
+            navigationController.dismiss(animated: true, completion: nil)
+        }
+
+        viewController.present(navigationController, animated: true, completion: nil)
+    }
+
     /**
      Creates an IdentityUI object
      */
@@ -226,6 +254,11 @@ extension IdentityUI: FlowCoordinator {
     }
 
     func start(input: Input, completion: @escaping (Output) -> Void) {
+        guard type(of: self).updatedTermsCoordinator == nil else {
+            // Already presenting updated terms screen.
+            return
+        }
+
         if let presentedIdentityUI = IdentityUI.presentedIdentityUI {
             // A login flow is already in progress. It should not be allowed to have multiple login flows at the same time, but if we ended up here because
             // of a route, we need to give the currently presented login flow a chance to handle it.
@@ -394,30 +427,6 @@ extension IdentityUI {
             }
         }
     }
-
-    private func spawnUpdatedTermsCoordinator(
-        identityManager: IdentityManager,
-        completion: @escaping (Output) -> Void
-    ) {
-        let updatedTermsCoordinator = UpdatedTermsCoordinator(
-            navigationController: self.navigationController,
-            identityManager: identityManager,
-            configuration: self.configuration
-        )
-
-        self.child = ChildFlowCoordinator(updatedTermsCoordinator, input: identityManager.currentUser) { [weak self] output in
-            self?.child = nil
-
-            switch output {
-            case .success:
-                completion(.onlyDismiss)
-            case .cancel:
-                // Since user has not accepted the updated terms, we force a logout :'(
-                identityManager.currentUser.logout()
-                completion(.onlyDismiss)
-            }
-        }
-    }
 }
 
 extension IdentityUI {
@@ -457,16 +466,6 @@ extension IdentityUI {
 
             // We don't want to present a new login flow yet, since if the verification code validates then we don't need to display any UI.
             return
-
-        case .presentUpdatedTerms:
-            guard presentingViewController != nil else {
-                // Do not present the updated terms if another login flow is already in progress.
-                return
-            }
-
-            self.spawnUpdatedTermsCoordinator(identityManager: identityManager) { [weak self] output in
-                self?.complete(with: output)
-            }
         }
 
         if self.navigationController.presentingViewController == nil, let presentingViewController = presentingViewController {
