@@ -59,23 +59,15 @@ class HTTPSessionSharedExamplesConfiguration: QuickConfiguration {
 
                 var doneCounter = 0
                 var tasks: [URLSessionTask] = []
-                var hasLoggedOut = false
                 waitUntil { done in
                     for i in 0..<numTasks {
                         let task = session.dataTask(with: URL(string: wantedUrl + String(i))!) { _, _, error in
-                            if logout == false {
-                                expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
-                            } else {
-                                if case ClientError.invalidUser? = error, hasLoggedOut == false {
-                                    // It's the first invalid user means no more refreshing will happen and we got logged out
-                                    hasLoggedOut = true
-                                }
-                                if hasLoggedOut {
-                                    expect(error).to(matchError(ClientError.invalidUser))
-                                } else {
-                                    expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
-                                }
-                            }
+                            expect(error).to(
+                                satisfyAnyOf(
+                                    matchError(ClientError.userRefreshFailed(kDummyError)),
+                                    matchError(ClientError.invalidUser)
+                                )
+                            )
                             doneCounter += 1
                             if doneCounter == numTasks {
                                 done()

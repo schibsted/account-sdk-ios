@@ -197,7 +197,7 @@ struct Utils {
         do {
             try keychain.saveInKeychain()
         } catch {
-            fail("Error saving to keychain")
+            fail("Error saving to keychain \(error)")
         }
     }
 

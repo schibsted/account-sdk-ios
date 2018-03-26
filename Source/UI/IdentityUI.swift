@@ -274,7 +274,7 @@ extension IdentityUI {
         completion: @escaping (Output) -> Void
     ) -> UIViewController {
         let navigationSettings = NavigationSettings(
-            back: configuration.isCancelable ? { completion(.cancel) } : nil
+            cancel: configuration.isCancelable ? { completion(.cancel) } : nil
         )
         let viewModel = IdentifierViewModel(
             loginMethod: loginMethod,

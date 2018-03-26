@@ -7,7 +7,7 @@ exclude:
   - ExampleUI/**
 github_url: https://www.github.com/schibsted/account-sdk-ios
 copyright: © 2016-2018 Schibsted Products & Technology
-xcodebuild_arguments: ["-workspace", "Example/SchibstedAccount.xcworkspace", "-scheme", "SchibstedAccount-Example", "-sdk", "iphonesimulator", "-derivedDataPath", "build/DerivedData"]
+xcodebuild_arguments: ["-scheme", "SchibstedAccount", "-sdk", "iphonesimulator", "-derivedDataPath", "build/DerivedData"]
 
 custom_categories:
   - name: "Creating a User"
