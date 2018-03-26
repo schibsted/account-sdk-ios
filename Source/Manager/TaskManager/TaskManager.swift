@@ -31,7 +31,6 @@ class TaskManager {
     }
 
     func add<T: TaskProtocol>(task: T, completion: ((Result<T.SuccessType, ClientError>) -> Void)? = nil) -> TaskHandle {
-
         let handle = OwnedTaskHandle(owner: self)
 
         let executor: (@escaping () -> Void) -> Void = { [weak self, weak handle, weak task] done in
@@ -103,7 +102,6 @@ class TaskManager {
     }
 
     func refresh(handle: OwnedTaskHandle) {
-
         guard let user = self.user else {
             log(from: self, "user dead. kthxbye.")
             return
@@ -169,7 +167,6 @@ class TaskManager {
             }
 
             do {
-
                 try result.materialize()
 
                 strongSelf.lock.lock()

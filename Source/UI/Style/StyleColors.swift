@@ -72,7 +72,6 @@ public enum StyleColorKind: String {
  get them. This object intentionally has no public initializer
  */
 public struct StyleColors {
-
     private static var colors: [String: UIColor] = {
         let json = [
             "primary": "#1D72DB",

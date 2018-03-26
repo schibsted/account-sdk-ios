@@ -181,7 +181,6 @@ class VerifyViewController: IdentityUIViewController {
 }
 
 extension VerifyViewController: UITextFieldDelegate {
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.didClickVerify(textField)
         return true

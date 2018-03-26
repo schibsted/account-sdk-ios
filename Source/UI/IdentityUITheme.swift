@@ -9,7 +9,6 @@ import Foundation
   Can be used to customize the UI
  */
 public struct IdentityUITheme {
-
     /// Default UI theme object
     public static let `default` = IdentityUITheme()
 

@@ -4,7 +4,6 @@
 //
 
 class UpdateUserProfileTask: TaskProtocol {
-
     private weak var user: User?
     private var profile: UserProfile
 

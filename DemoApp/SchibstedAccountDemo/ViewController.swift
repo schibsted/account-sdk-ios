@@ -1,26 +1,30 @@
+//
+// Copyright 2011 - 2018 Schibsted Products & Technology AS.
+// Licensed under the terms of the MIT license. See LICENSE in the project root.
+//
+
 import SchibstedAccount
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet private weak var showTeaserSwitch: UISwitch!
-    @IBOutlet weak var showLogoSwitch: UISwitch!
-    @IBOutlet private weak var userLabel: UILabel!
-    @IBOutlet private weak var versionLabel: UILabel!
-    
+    @IBOutlet private var showTeaserSwitch: UISwitch!
+    @IBOutlet var showLogoSwitch: UISwitch!
+    @IBOutlet private var userLabel: UILabel!
+    @IBOutlet private var versionLabel: UILabel!
+
     var identityUI: IdentityUI?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
-            let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        {
+            let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
             self.versionLabel.text = "SDK \(SchibstedAccount.sdkVersion) — Demo App \(appVersion) (\(buildVersion))"
         }
-        
+
         self.updateUserLabel()
     }
-    
+
     func updateUserLabel() {
         guard let user = (UIApplication.shared.delegate as? AppDelegate)?.user else {
             return
@@ -53,7 +57,7 @@ class ViewController: UIViewController {
         self.identityUI?.delegate = UIApplication.shared.delegate as! AppDelegate
         self.identityUI?.presentIdentityProcess(from: self, loginMethod: loginMethod, localizedTeaserText: teaserText)
     }
-    
+
     @IBAction func didTapOpenProfileWebPage() {
         let identityManager = self.identityUI?.identityManager ?? IdentityManager(clientConfiguration: .current)
         let accountSummaryURL = identityManager.routes.accountSummaryURL

@@ -4,7 +4,6 @@
 //
 
 class TextView: UITextView, Themeable {
-
     override func updateConstraints() {
         self.heightAnchor.constraint(equalToConstant: self.sizeThatFits(self.bounds.size).height).isActive = true
         super.updateConstraints()

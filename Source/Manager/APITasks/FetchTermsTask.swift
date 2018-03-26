@@ -6,7 +6,6 @@
 import Foundation
 
 class FetchTermsTask: TaskProtocol {
-
     private weak var user: User?
 
     init(user: User?) {

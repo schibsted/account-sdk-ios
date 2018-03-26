@@ -7,7 +7,6 @@ import CoreTelephony
 import Foundation
 
 struct CountryDialingCodeHelper {
-
     // map of MCC to country code prefix
     // got this from: https://gist.github.com/willyaranda/11376151
     static let mccToDialingCode = [

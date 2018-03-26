@@ -6,7 +6,6 @@
 import Foundation
 
 class AutoRefreshTask: TaskProtocol {
-
     #if DEBUG
         static var counter = AtomicInt(0)
     #endif
@@ -64,7 +63,6 @@ class AutoRefreshTask: TaskProtocol {
 }
 
 class AutoRefreshURLProtocol: URLProtocol {
-
     #if DEBUG
         static var counter = AtomicInt(0)
     #endif

@@ -4,7 +4,6 @@
 //
 
 class ErrorViewController: IdentityUIViewController {
-
     @IBOutlet var headingLabel: Heading! {
         didSet {
             switch self.dataSource {

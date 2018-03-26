@@ -68,7 +68,6 @@ extension AppLaunchData {
      Takes a redirect payload and creates the approprriate app launch information
      */
     public init?(payload: ClientConfiguration.RedirectPayload) {
-
         // Note: make sure to validate an variable input when possible
 
         guard let path = payload.path else {
