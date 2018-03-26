@@ -6,7 +6,6 @@
 import Foundation
 
 class FetchAgreementsStatusTask: TaskProtocol {
-
     private weak var user: User?
 
     init(user: User?) {

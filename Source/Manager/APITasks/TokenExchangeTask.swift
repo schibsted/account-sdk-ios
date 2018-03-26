@@ -6,7 +6,6 @@
 import Foundation
 
 class TokenExchangeTask: TaskProtocol {
-
     private weak var user: User?
     private var type: TokenExchangeType
     private var redirectURL: URL?

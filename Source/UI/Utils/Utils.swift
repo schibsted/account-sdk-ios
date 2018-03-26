@@ -38,7 +38,6 @@ extension UIColor {
 
 extension UIViewController {
     func shakeAnimation(_ constraint: NSLayoutConstraint) {
-
         // FIXME: Oh God, there must be a better way...
         func generateAnimation(positions: [CGFloat]) {
             if positions.count == 0 {

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ -z "${TRAVIS}" ]]; then
-    Example/Pods/SwiftFormat/CommandLineTool/swiftformat Source/ Example/ \
+    DemoApp/Pods/SwiftFormat/CommandLineTool/swiftformat Source/ Example/ DemoApp/ \
         --exclude Example/Pods/ \
         --comments ignore \
         --ranges nospace \

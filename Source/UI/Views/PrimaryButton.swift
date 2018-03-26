@@ -4,7 +4,6 @@
 //
 
 class PrimaryButton: UIButton, Themeable {
-
     var isAnimating = false {
         didSet {
             guard oldValue != self.isAnimating else {

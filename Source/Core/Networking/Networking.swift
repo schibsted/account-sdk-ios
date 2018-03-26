@@ -45,7 +45,6 @@ struct Networking {
         formData: [String: String]? = nil,
         completion: URLSessionTaskCallback? = nil
     ) -> URLSessionDataTask {
-
         var request = URLRequest(url: url)
         request.httpMethod = httpMethod.rawValue
 

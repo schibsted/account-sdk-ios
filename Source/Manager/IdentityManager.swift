@@ -63,7 +63,6 @@ public protocol IdentityManagerDelegate: class {
 
  */
 public class IdentityManager: IdentityManagerProtocol {
-
     /**
      The delegate that will receive events related to the manager's state.
      */
@@ -272,7 +271,6 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter completion: the callback that is called after the auth code is checked
      */
     public func validate(oneTimeCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
-
         enum ValidateCallbackStatus {
             case success
             case failure

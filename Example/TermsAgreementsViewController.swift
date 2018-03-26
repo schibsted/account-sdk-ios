@@ -7,7 +7,6 @@ import SchibstedAccount
 import UIKit
 
 class TermsAgreementsViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }

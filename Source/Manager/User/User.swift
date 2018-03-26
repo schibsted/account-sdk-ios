@@ -25,7 +25,6 @@ import Foundation
  use it for whatever else.
 */
 public class User: UserProtocol {
-
     static var globalStore = SynchronizedWeakDictionary<Int, User>()
 
     enum Failure: Error {
@@ -159,7 +158,6 @@ public class User: UserProtocol {
         userID newUserID: String? = nil,
         makePersistent: Bool? = nil
     ) throws {
-
         //
         // This sync block makes sure that the only way new tokens are set on this user object is if we have both an
         // access token and a refresh token, and either an idToken or a userID

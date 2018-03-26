@@ -7,7 +7,6 @@ import Foundation
 @testable import SchibstedAccount
 
 extension NetworkStub {
-
     static let userID = "mockUserID"
 
     static func clientAccessToken() -> NetworkStub {

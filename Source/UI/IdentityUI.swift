@@ -217,7 +217,6 @@ public class IdentityUI {
 }
 
 extension IdentityUI: FlowCoordinator {
-
     enum Input {
         case byLoginMethod(LoginMethod, presentingViewController: UIViewController, localizedTeaserText: String?)
         case byRoute(Route, presentingViewController: UIViewController)
@@ -255,7 +254,6 @@ extension IdentityUI: FlowCoordinator {
 }
 
 extension IdentityUI {
-
     func showIdentifierViewController(input: Input, completion: @escaping (Output) -> Void) {
         switch input {
         case let .byRoute(route, vc):

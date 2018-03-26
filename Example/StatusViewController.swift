@@ -43,7 +43,6 @@ extension StatusViewController: IdentityUIDelegate {
 }
 
 class StatusViewController: UIViewController {
-
     let identityUI = IdentityUI(configuration: .current, identityManager: UIApplication.identityManager)
     var session: URLSession?
 
@@ -130,7 +129,6 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didTapReadProfileButton(_: UIButton) {
-
         UIApplication.identityManager.currentUser.profile.fetch { result in
             switch result {
             case let .success(profile):
