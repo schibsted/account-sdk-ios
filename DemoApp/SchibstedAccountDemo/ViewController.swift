@@ -46,7 +46,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func didTapOpenProfileWebPage() {
-        let identityManager = IdentityManager(clientConfiguration: .current)
+        let identityManager = self.identityUI?.identityManager ?? IdentityManager(clientConfiguration: .current)
         let accountSummaryURL = identityManager.routes.accountSummaryURL
         UIApplication.shared.openURL(accountSummaryURL)
     }

@@ -158,7 +158,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if let vc = self.window?.rootViewController, let identityUI = self.statusViewController?.identityUI, let route = IdentityUI.Route(payload: payload) {
-            identityUI.presentIdentityProcess(from: vc, route: route, identityManager: nil)
+            identityUI.presentIdentityProcess(from: vc, route: route)
             return true
         }
 

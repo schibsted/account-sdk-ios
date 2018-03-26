@@ -157,7 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.identityUI = IdentityUI(configuration: .default)
         self.identityUI?.delegate = self
-        self.identityUI?.presentIdentityProcess(from: vc, route: route, identityManager: nil)
+        self.identityUI?.presentIdentityProcess(from: vc, route: route)
 
         return true
     }
