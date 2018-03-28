@@ -1,10 +1,10 @@
-"GlobalString.platformName" = "SPiD";
-"GlobalString.done" = "Ferdig";
+"GlobalString.platformName" = "Schibsted-konto";
+"GlobalString.done" = "Fortsett";
 
 "IdentifierScreenString.title.sms" = "Logg inn eller opprett bruker";
 "IdentifierScreenString.title.email" = "Logg inn eller opprett bruker";
-"IdentifierScreenString.inputTitle.phone" = "Telefonnummer";
-"IdentifierScreenString.inputTitle.email" = "E-postadresse";
+"IdentifierScreenString.inputTitle.phone" = "Skriv inn din telefonnummer";
+"IdentifierScreenString.inputTitle.email" = "Skriv inn din e-postadresse";
 "IdentifierScreenString.inputTitle.password" = "Skriv inn din e-postadresse";
 "IdentifierScreenString.privacyText.phone" = " Vi vil aldri dele telefonnummeret ditt uten ditt samtykke.";
 "IdentifierScreenString.privacyText.email" = "Vi vil aldri dele e-postadressen din uten ditt samtykke.";
@@ -16,7 +16,7 @@
 "PasswordScreenString.inputTitle" = "Vennligst oppgi passordet ditt";
 "PasswordScreenString.proceed" = "Fortsett";
 "PasswordScreenString.invalidPassword" = "Passordet du oppga er feil. Prøv igjen senere.";
-"PasswordScreenString.change" = "Endre e-post";
+"PasswordScreenString.change" = "Ikke deg?";
 "PasswordScreenString.cancel" = "Avbryt";
 "PasswordScreenString.info" = "Minst 8 tegn";
 "PasswordScreenString.forgotPassword" = "Glemt passord?";
@@ -24,9 +24,9 @@
 
 "VerifyScreenString.title" = "Vi har sendt deg en kode";
 "VerifyScreenString.subtext" = "Tast inn bekreftelseskoden vi sendte til: ";
-"VerifyScreenString.inputTitle" = "Bekreftelseskode";
-"VerifyScreenString.resend" = "Sende";
-"VerifyScreenString.change" = "Endre";
+"VerifyScreenString.inputTitle" = "Skriv inn kode";
+"VerifyScreenString.resend" = "Send koden igjen";
+"VerifyScreenString.change" = "Ikke deg?";
 "VerifyScreenString.proceed" = "Fortsett";
 
 "ResendScreenString.header" = "Vi har sendt deg en ny bekreftelseskode";
@@ -49,8 +49,8 @@
 
 "TermsSummaryScreenString.title" = "Oppdaterte brukervilkår og betingelser";
 
-"CheckInboxScreenStrings.sentLink" = "Vi har sendt enbekreftelseskobling til";
-"CheckInboxScreenStrings.change" = "Bruk annen e-post";
+"CheckInboxScreenStrings.sentLink" = "Vi har sendt enbekreftelseskobling til: ";
+"CheckInboxScreenStrings.change" = "Bruk en annen e-postadresse";
 "CheckInboxScreenStrings.title" = "Sjekk innboksen din";
 
 "RequiredFieldsScreenString.title" = "Fullfør";
@@ -59,12 +59,12 @@
 
 "RequiredField.givenName.title" = "Fornavn";
 "RequiredField.familyName.title" = "Etternavn";
-"RequiredField.birthday.title" = "Bursdag";
+"RequiredField.birthday.title" = "Fødselsdag";
 "RequiredField.birthday.placeholder" = "YYYY-MM-DD";
 
 "RequiredField.error.missing" = "Dette feltet må fylles ut.";
 "RequiredField.error.lessThanThree" = "Dette feltet må bestå av minst 3 tegn.";
-"RequiredField.error.birthdateInvalid" = "Denne datoen er ugyldig";
+"RequiredField.error.birthdateInvalid" = "Denne datoen er ugyldig.";
 
 "ErrorScreenString.heading" = "Noe gikk galt!";
 "ErrorScreenString.proceed" = "OK";
@@ -78,3 +78,4 @@
 "ErrorString.connectionTimeout" = "Tilkoblingen ble tidsavbrutt. Prøv igjen.";
 "ErrorString.noInternetConnection" = "Kan ikke koble til internett. Sjekk tilkoblingen din.";
 "ErrorString.unableToResend" = "Klarte ikke å sende koden på nytt. Prøv igjen senere.";
+

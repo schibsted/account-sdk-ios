@@ -1,5 +1,5 @@
-"GlobalString.platformName" = "SPiD";
-"GlobalString.done" = "Gjort";
+"GlobalString.platformName" = "Schibsted-konto";
+"GlobalString.done" = "Fortsätt";
 
 "IdentifierScreenString.title.sms" = "Logga in eller skapa konto";
 "IdentifierScreenString.title.email" = "Logga in eller skapa konto";
@@ -8,25 +8,25 @@
 "IdentifierScreenString.inputTitle.password" = "Ange din e-postadress";
 "IdentifierScreenString.privacyText.phone" = "Vi kommer aldrig dela ditt telefonnummer med någon utan ditt medgivande.";
 "IdentifierScreenString.privacyText.email" = "Vi kommer aldrig att dela din e-postadress med någon utan ditt medgivande.";
-"IdentifierScreenString.needHelp" = "Behövs hjälp?";
+"IdentifierScreenString.needHelp" = "Behöver du hjälp?";
 "IdentifierScreenString.proceed" = "Fortsätt";
 
 "PasswordScreenString.title.signin" = "Välkommen tillbaka";
 "PasswordScreenString.title.signup" = "Skapa konto";
 "PasswordScreenString.inputTitle" = "Ange ditt lösenord";
 "PasswordScreenString.proceed" = "Fortsätt";
-"PasswordScreenString.invalidPassword" = "Iösenordet du angav är felaktigt. Försök igen.";
+"PasswordScreenString.invalidPassword" = "Lösenordet du angav är felaktigt. Försök igen.";
 "PasswordScreenString.change" = "Inte du?";
-"PasswordScreenString.cancel" = "Annullera";
+"PasswordScreenString.cancel" = "Avbryt";
 "PasswordScreenString.info" = "Minst 8 tecken";
 "PasswordScreenString.forgotPassword" = "Glömt lösenordet?";
 "PasswordScreenString.persistentLogin" = "Håll mig inloggad";
 
 "VerifyScreenString.title" = "Vi har skickat en kod till dig";
 "VerifyScreenString.subtext" = "Ange verifieringskoden vi skickade till: ";
-"VerifyScreenString.inputTitle" = "Verifieringskod";
-"VerifyScreenString.resend" = "Skicka igen";
-"VerifyScreenString.change" = "Ändra";
+"VerifyScreenString.inputTitle" = "Ange din verifieringskod";
+"VerifyScreenString.resend" = "Skicka koden igen";
+"VerifyScreenString.change" = "Inte du?";
 "VerifyScreenString.proceed" = "Fortsätt";
 
 "ResendScreenString.header" = "Vi har skickat en ny verifieringskod";
@@ -42,15 +42,15 @@
 "TermsScreenString.client.terms" = " och $0";
 "TermsScreenString.platform.privacy" = "Jag godkänner sekretesspolicyn för $0 ";
 "TermsScreenString.client.privacy" = " och $0";
-"TermsScreenString.proceed" = "Accept";
+"TermsScreenString.proceed" = "Acceptera";
 "TermsScreenString.acceptTermError" = "Vänligen acceptera användarvillkoren för att fortsätta.";
 "TermsScreenString.acceptPrivacyError" = "Vänligen acceptera sekretesspolicyn för att fortsätta.";
 "TermsScreenString.learnMore" = "Läs mer om uppdateringen";
 
-"TermsSummaryScreenString.title" = "Uppdaterade Användarvillkoren";
+"TermsSummaryScreenString.title" = "Uppdaterade användarvillkoren";
 
 "CheckInboxScreenStrings.sentLink" = "Vi har skickat en verifieringlänk till:";
-"CheckInboxScreenStrings.change" = "Använd annan e-post";
+"CheckInboxScreenStrings.change" = "Använd en annan e-postadress";
 "CheckInboxScreenStrings.title" = "Kolla din inkorg";
 
 "RequiredFieldsScreenString.title" = "Avsluta";
@@ -78,3 +78,4 @@
 "ErrorString.connectionTimeout" = "Uppkopplingen avbröts. Försök igen.";
 "ErrorString.noInternetConnection" = "Det gick inte att ansluta till internet. Kontrollera din anslutning.";
 "ErrorString.unableToResend" = "Kan inte skicka om koden. Försök igen senare.";
+
