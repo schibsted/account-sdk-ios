@@ -275,6 +275,7 @@
 		B01D7FE467756DB12531438F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D738D65712CD22B987537 /* Storage.swift */; };
 		B01D7FF32DE3A0D668785961 /* ClientError+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D75141A07D790A4BB2511 /* ClientError+localized.swift */; };
 		B01D7FFAA457B1DE22C33090 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B01D7D686EF4DF53996801EA /* Localizable.strings */; };
+		E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */ = {isa = PBXBuildFile; fileRef = E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */; };
 		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
 /* End PBXBuildFile section */
 
@@ -716,6 +717,7 @@
 		B01D7FA9FD6A1552F6F2AFC2 /* FetchStatusInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchStatusInteractor.swift; sourceTree = "<group>"; };
 		B01D7FAC65185FEEDB2C7E5B /* UpdateUserProfileTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserProfileTask.swift; sourceTree = "<group>"; };
 		B01D7FD3E6A4D7737E916326 /* TestingUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingUser.swift; sourceTree = "<group>"; };
+		E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "password-grant-invalid-scope.json"; sourceTree = "<group>"; };
 		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -910,6 +912,7 @@
 		B01D7238937C70222349809B /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */,
 				B01D7E07BA4E1DAEE0FB4F56 /* valid-authcode-diff-id-same-code.json */,
 				B01D76E8DD8EF78D9EA32B7D /* bad.json */,
 				B01D7484D48D9C7155871648 /* empty.json */,
@@ -1757,6 +1760,7 @@
 				B01D7B9E1C40F4481F533DC9 /* id-status-valid-available.json in Resources */,
 				B01D7C2464B591F41590E8FA /* login-valid-with-id-token.json in Resources */,
 				B01D7C6078988EB72CDC66B0 /* signup-validation-invalid.json in Resources */,
+				E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */,
 				B01D700933201D1FBCC62175 /* invalid-phone-number-error.json in Resources */,
 				B01D7C969537E13DF6CF003D /* signup-client-access-token.json in Resources */,
 				B01D7B9F12DAD726C4651A9D /* agreements-valid-unaccepted.json in Resources */,

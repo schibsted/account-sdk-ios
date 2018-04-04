@@ -339,7 +339,7 @@ class IdentityAPITests: QuickSpec {
 
         describe("request access token") {
 
-            fit("should error with invalid scope specified") {
+            it("should error with invalid scope specified") {
                 var stub = NetworkStub(path: .path(Router.oauthToken.path))
                 stub.returnData(json: .fromFile("password-grant-invalid-scope"))
                 stub.returnResponse(status: 400)
