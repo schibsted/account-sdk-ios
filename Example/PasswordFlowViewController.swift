@@ -27,7 +27,7 @@ class PasswordFlowViewController: UIViewController {
 
     @IBAction func login(_: UIButton) {
         guard let email = self.email, let password = self.password else { return }
-        UIApplication.identityManager.login(email: email, password: password, scopes: ["random_scope haha"], persistUser: self.shouldPersistUserSwitch.isOn) { result in
+        UIApplication.identityManager.login(email: email, password: password, scopes: ["random_scope"], persistUser: self.shouldPersistUserSwitch.isOn) { result in
             print(result)
         }
     }

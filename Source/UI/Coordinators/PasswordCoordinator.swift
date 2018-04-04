@@ -14,7 +14,7 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     }
 
     override func start(input: Input, completion: @escaping (Output) -> Void) {
-        self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, completion: completion)
+        self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
     }
 
     func handle(route: IdentityUI.Route) -> RouteHandlerResult {
@@ -46,6 +46,7 @@ extension PasswordCoordinator {
     private func showPasswordView(
         for identifier: Identifier,
         on loginFlowVariant: LoginMethod.FlowVariant,
+        scopes: [String],
         completion: @escaping (Output) -> Void
     ) {
         let navigationSettings = NavigationSettings(
@@ -62,11 +63,11 @@ extension PasswordCoordinator {
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(password, shouldPersistUser):
-                self?.submit(password: password, for: identifier, on: loginFlowVariant, persistUser: shouldPersistUser, completion: completion)
+                self?.submit(password: password, for: identifier, on: loginFlowVariant, persistUser: shouldPersistUser, scopes: scopes, completion: completion)
             case .changeIdentifier:
                 completion(.changeIdentifier)
             case .forgotPassword:
-                self?.forgotPassword(for: identifier)
+                self?.forgotPassword(for: identifier, scopes: scopes)
             case .back:
                 completion(.back)
             case .cancel:
@@ -77,9 +78,9 @@ extension PasswordCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
 
-    private func forgotPassword(for identifier: Identifier) {
+    private func forgotPassword(for identifier: Identifier, scopes: [String]) {
         if case let .email(email) = identifier {
-            IdentityUI.Route.persistMetadata(for: .enterPassword(for: email))
+            IdentityUI.Route.persistMetadata(for: .enterPassword(for: email, scopes: scopes))
         }
         self.present(url: self.identityManager.routes.forgotPasswordURL)
     }
@@ -89,6 +90,7 @@ extension PasswordCoordinator {
         for identifier: Identifier,
         on loginFlowVariant: LoginMethod.FlowVariant,
         persistUser: Bool,
+        scopes: [String],
         completion: @escaping (Output) -> Void
     ) {
         if loginFlowVariant == .signup {
@@ -97,7 +99,7 @@ extension PasswordCoordinator {
         }
 
         self.presentedViewController?.startLoading()
-        self.signinInteractor.login(username: identifier, password: password, persistUser: persistUser) { [weak self] result in
+        self.signinInteractor.login(username: identifier, password: password, scopes: scopes, persistUser: persistUser) { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {

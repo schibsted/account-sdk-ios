@@ -197,19 +197,26 @@ public class IdentityUI {
      `presentIdentityProcess(from:)` on an instance of `IdentityUI` initialized with a route (e.g. with `init(configuration:route:)`) will automatically handle
      the case of an existing identity process (if any) for you.
 
-     - parameter: viewController: which view controller to present the login UI from
-     - parameter: localizedTeaserText: an optional text that will be displayed above the identifier text field in the login screen (may be used to provide the
+     - parameter viewController: which view controller to present the login UI from
+     - parameter loginMethod: which login method to use
+     - parameter localizedTeaserText: an optional text that will be displayed above the identifier text field in the login screen (may be used to provide the
        user with some context about the login). Text longer than three lines will be truncated with ellipsis. Note that you should supply a localized text.
-     - parameter: localizedTeaserText: If provided, the identifier screen will show this text at the top.
+     - parameter scopes: which scopes you want your logged in user to have accesst to. See `IdentityManager` for more details
      */
     public func presentIdentityProcess(
         from viewController: UIViewController,
         loginMethod: LoginMethod,
-        localizedTeaserText: String? = nil
+        localizedTeaserText: String? = nil,
+        scopes: [String] = []
     ) {
         self.configuration.tracker?.loginMethod = loginMethod
         self.start(
-            input: .byLoginMethod(loginMethod, presentingViewController: viewController, localizedTeaserText: localizedTeaserText)
+            input: .byLoginMethod(
+                loginMethod,
+                presentingViewController: viewController,
+                localizedTeaserText: localizedTeaserText,
+                scopes: scopes
+            )
         ) { [weak self] output in
             self?.complete(with: output)
         }
@@ -279,7 +286,7 @@ public class IdentityUI {
 
 extension IdentityUI: FlowCoordinator {
     enum Input {
-        case byLoginMethod(LoginMethod, presentingViewController: UIViewController, localizedTeaserText: String?)
+        case byLoginMethod(LoginMethod, presentingViewController: UIViewController, localizedTeaserText: String?, scopes: [String])
         case byRoute(Route, presentingViewController: UIViewController)
     }
 
@@ -324,10 +331,11 @@ extension IdentityUI {
         switch input {
         case let .byRoute(route, vc):
             self.handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, completion: completion)
-        case let .byLoginMethod(loginMethod, vc, localizedTeaserText):
+        case let .byLoginMethod(loginMethod, vc, localizedTeaserText, scopes):
             let viewController = self.makeIdentifierViewController(
                 loginMethod: loginMethod,
                 localizedTeaserText: localizedTeaserText,
+                scopes: scopes,
                 completion: completion
             )
             self.navigationController.viewControllers = [viewController]
@@ -338,6 +346,7 @@ extension IdentityUI {
     private func makeIdentifierViewController(
         loginMethod: LoginMethod,
         localizedTeaserText: String?,
+        scopes: [String],
         completion: @escaping (Output) -> Void
     ) -> UIViewController {
         let navigationSettings = NavigationSettings(
@@ -366,6 +375,7 @@ extension IdentityUI {
                             loginMethod.authenticationType,
                             for: identifier,
                             on: loginFlowVariant,
+                            scopes: scopes,
                             completion: completion
                         )
                     case let .abort(shouldDismiss):
@@ -410,6 +420,7 @@ extension IdentityUI {
         _ authenticationType: LoginMethod.AuthenticationType,
         for identifier: Identifier,
         on loginFlowVariant: LoginMethod.FlowVariant,
+        scopes: [String],
         completion: @escaping (Output) -> Void
     ) {
         let coordinator: AuthenticationCoordinator
@@ -429,7 +440,7 @@ extension IdentityUI {
             )
         }
 
-        let input = AuthenticationCoordinator.Input(identifier: identifier, loginFlowVariant: loginFlowVariant)
+        let input = AuthenticationCoordinator.Input(identifier: identifier, loginFlowVariant: loginFlowVariant, scopes: scopes)
         self.child = ChildFlowCoordinator(coordinator, input: input) { [weak self] output in
             self?.child = nil
 
@@ -462,13 +473,14 @@ extension IdentityUI {
         case .login:
             // Either we have a child that can handle the route or we have nothing else to do (since we are already in the root, a.k.a. login screen).
             self.attemptToPropagateRouteToChild(route)
-        case let .enterPassword(for: email):
+        case let .enterPassword(for: email, scopes: scopes):
+
             if !self.attemptToPropagateRouteToChild(route) {
                 // If no child handled the route, we need to present the password screen.
 
                 // The user changed her password after requesting a password change: we present a new login flow with the email prefilled (since we previously
                 // saved it on password change request).
-                self.spawnCoordinator(.password, for: Identifier(email), on: .signin) { [weak self] output in
+                self.spawnCoordinator(.password, for: Identifier(email), on: .signin, scopes: scopes) { [weak self] output in
                     self?.complete(with: output)
                 }
             }
@@ -505,7 +517,14 @@ extension IdentityUI {
         byPresentingIn presentingViewController: UIViewController,
         completion: @escaping (Output) -> Void
     ) {
-        let viewController = self.makeIdentifierViewController(loginMethod: route.loginMethod, localizedTeaserText: nil, completion: completion)
+        var scopes: [String]
+        switch route {
+        case let .enterPassword(_, scopes: storedScopes):
+            scopes = storedScopes
+        default:
+            scopes = []
+        }
+        let viewController = self.makeIdentifierViewController(loginMethod: route.loginMethod, localizedTeaserText: nil, scopes: scopes, completion: completion)
         self.navigationController.viewControllers = [viewController]
         self.handle(route: route, byPresentingIn: presentingViewController)
     }

@@ -105,6 +105,9 @@ extension UIApplication {
     static var identityManager: IdentityManager {
         return (UIApplication.shared.delegate as! AppDelegate).identityManager // swiftlint:disable:this force_cast
     }
+    static var identityUI: IdentityUI {
+        return (UIApplication.shared.delegate as! AppDelegate).identityUI // swiftlint:disable:this force_cast
+    }
 }
 
 private struct InitializeLogger {
@@ -121,6 +124,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var offlineMode = false
 
     let identityManager: IdentityManager = IdentityManager(clientConfiguration: .current)
+    lazy var identityUI = {
+        return IdentityUI(configuration: .current, identityManager: self.identityManager)
+    }()
 
     var passwordFlowViewController: PasswordFlowViewController? {
         // swiftlint:disable:next force_cast
@@ -201,8 +207,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
 
-        if let vc = self.window?.rootViewController, let identityUI = self.statusViewController?.identityUI, let route = IdentityUI.Route(payload: payload) {
-            identityUI.presentIdentityProcess(from: vc, route: route)
+        if let vc = self.window?.rootViewController, let route = IdentityUI.Route(payload: payload) {
+            self.identityUI.presentIdentityProcess(from: vc, route: route)
             return true
         }
 

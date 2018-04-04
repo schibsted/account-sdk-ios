@@ -275,6 +275,7 @@
 		B01D7FE467756DB12531438F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D738D65712CD22B987537 /* Storage.swift */; };
 		B01D7FF32DE3A0D668785961 /* ClientError+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D75141A07D790A4BB2511 /* ClientError+localized.swift */; };
 		B01D7FFAA457B1DE22C33090 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B01D7D686EF4DF53996801EA /* Localizable.strings */; };
+		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -431,6 +432,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 43E160492063C7A200D9BA3E;
 			remoteInfo = Example;
+		};
+		E18F86D520739B8B0074BE41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43C2417F205BF1BE00154866 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 43C24187205BF1BE00154866;
+			remoteInfo = SchibstedAccount;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -708,6 +716,7 @@
 		B01D7FA9FD6A1552F6F2AFC2 /* FetchStatusInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchStatusInteractor.swift; sourceTree = "<group>"; };
 		B01D7FAC65185FEEDB2C7E5B /* UpdateUserProfileTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserProfileTask.swift; sourceTree = "<group>"; };
 		B01D7FD3E6A4D7737E916326 /* TestingUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingUser.swift; sourceTree = "<group>"; };
+		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -980,6 +989,7 @@
 				B01D7403795B93AFCE069B69 /* JSONObject.swift */,
 				B01D76D2F05639801DE64404 /* JSONParsable.swift */,
 				B01D7D0051FA3E12837D9259 /* Data+jsonObject.swift */,
+				E1CDD5022065208100B23063 /* JSONObject+Data.swift */,
 			);
 			path = JSON;
 			sourceTree = "<group>";
@@ -1500,6 +1510,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E18F86D620739B8B0074BE41 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -1839,6 +1850,7 @@
 				B01D79AB5D409EBAE9D32E00 /* Client.swift in Sources */,
 				B01D7D5E08F7D6B83727421A /* IDToken.swift in Sources */,
 				B01D786E47A1C5F1E3782CBC /* Birthdate.swift in Sources */,
+				E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */,
 				B01D776522D14BF4ABF4DDFC /* TokenData.swift in Sources */,
 				B01D71C2CCD7FF65A150E6ED /* UserModel.swift in Sources */,
 				B01D76F4291B9D49A438CEDB /* Agreements.swift in Sources */,
@@ -2020,6 +2032,11 @@
 			isa = PBXTargetDependency;
 			target = 43E160492063C7A200D9BA3E /* Example */;
 			targetProxy = 43E1605C2063C7AF00D9BA3E /* PBXContainerItemProxy */;
+		};
+		E18F86D620739B8B0074BE41 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 43C24187205BF1BE00154866 /* SchibstedAccount */;
+			targetProxy = E18F86D520739B8B0074BE41 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

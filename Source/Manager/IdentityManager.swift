@@ -57,6 +57,11 @@ public protocol IdentityManagerDelegate: class {
  Currently the keychain user is a singleton. So the last user that is "validated" will be persisted. And the last user that is persisted
  will be the one that is loaded by a new instance of the `IdentityManager`.
 
+ ### Scopes
+
+ Some of the functions take a scope parameter. This is related to OAuth scopes. If you want to add the ability to specify custom scopes or you
+ want access to some already available predefined scopes, then you'll have to send a support request to support@spid.no
+
  ### **Support**
 
  The visual login via the `IdentityUI` is the recommended approach to creating a `User`. This `IdentityManager` should just be
@@ -351,6 +356,7 @@ public class IdentityManager: IdentityManagerProtocol {
             completion(.failure(ClientError.unexpectedIdentifier(actual: username, expected: "only EmailAddress supported")))
             return
         }
+
         self.api.requestAccessToken(
             clientID: self.clientConfiguration.clientID,
             clientSecret: self.clientConfiguration.clientSecret,

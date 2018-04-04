@@ -316,6 +316,8 @@ class IdentityAPI {
             return nil
         }
 
+        log(from: self, "parsed spid error: \(spidError)")
+
         switch spidError {
         case .string("invalid_user_credentials", "OAuthException", 400):
             return .invalidUserCredentials(message: nil)
