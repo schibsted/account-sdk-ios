@@ -3,7 +3,7 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import SchibstedAccount
+@testable import SchibstedAccount
 import UIKit
 
 extension StatusViewController: IdentityManagerDelegate {
@@ -103,6 +103,33 @@ class StatusViewController: UIViewController {
         })
 
         self.present(alert, animated: true, completion: nil)
+    }
+
+    @IBAction func didClickScopes(_ sender: Any) {
+        var message: String = "n/a"
+        if let scopes = UIApplication.identityManager.currentUser.tokens?.accessToken {
+            if let jwt = try? JWTHelper.toJSON(string: scopes) {
+                do {
+                    message = try jwt.string(for: "scope").replacingOccurrences(of: " ", with: "\n")
+                } catch {
+                    message = "\(error)"
+                }
+            }
+        }
+        let alert = UIAlertController(title: "Scopes", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    @IBAction func didClickRefresh(_ sender: Any) {
+        UIApplication.identityManager.currentUser.refresh { result in
+            switch result {
+            case .success:
+                print("refresh succeeded")
+            case let .failure(error):
+                print(error)
+            }
+        }
     }
 
     override func viewDidLoad() {
