@@ -1,8 +1,8 @@
-"GlobalString.platformName" = "SPiD";
-"GlobalString.done" = "Done";
+"GlobalString.platformName" = "Schibsted account";
+"GlobalString.done" = "Continue";
 
-"IdentifierScreenString.title.sms" = "Login or register";
-"IdentifierScreenString.title.email" = "Login or register";
+"IdentifierScreenString.title.sms" = "Log in or create account";
+"IdentifierScreenString.title.email" = "Log in or create account";
 "IdentifierScreenString.inputTitle.phone" = "Enter your phone number";
 "IdentifierScreenString.inputTitle.email" = "Enter your email address";
 "IdentifierScreenString.inputTitle.password" = "Enter your email address";
@@ -16,7 +16,7 @@
 "PasswordScreenString.inputTitle" = "Enter your password";
 "PasswordScreenString.proceed" = "Continue";
 "PasswordScreenString.invalidPassword" = "The password you entered is incorrect. Please try again.";
-"PasswordScreenString.change" = "Change email";
+"PasswordScreenString.change" = "Not you?";
 "PasswordScreenString.cancel" = "Cancel";
 "PasswordScreenString.info" = "Minimum 8 characters";
 "PasswordScreenString.forgotPassword" = "Forgot password?";
@@ -24,9 +24,9 @@
 
 "VerifyScreenString.title" = "We sent you a code";
 "VerifyScreenString.subtext" = "Enter the verification code we sent to:";
-"VerifyScreenString.inputTitle" = "Verification code";
-"VerifyScreenString.resend" = "Resend";
-"VerifyScreenString.change" = "Change";
+"VerifyScreenString.inputTitle" = "Enter your code";
+"VerifyScreenString.resend" = "Resend the code";
+"VerifyScreenString.change" = "Not you?";
 "VerifyScreenString.proceed" = "Continue";
 
 "ResendScreenString.header" = "We sent you a new verification code";
@@ -57,14 +57,14 @@
 "RequiredFieldsScreenString.subtext" = "Fill in some additional details for your profile";
 "RequiredFieldsScreenString.proceed" = "Continue";
 
-"RequiredField.givenName.title" = "Given name";
-"RequiredField.familyName.title" = "Family name";
+"RequiredField.givenName.title" = "First name";
+"RequiredField.familyName.title" = "Last name";
 "RequiredField.birthday.title" = "Birthday";
 "RequiredField.birthday.placeholder" = "YYYY-MM-DD";
 
 "RequiredField.error.missing" = "This field is required.";
-"RequiredField.error.lessThanThree" = "This field must be at least 3 characters";
-"RequiredField.error.birthdateInvalid" = "This date is invalid";
+"RequiredField.error.lessThanThree" = "This field must be at least 3 characters.";
+"RequiredField.error.birthdateInvalid" = "This date is invalid.";
 
 "ErrorScreenString.heading" = "Something went wrong!";
 "ErrorScreenString.proceed" = "OK";
@@ -77,4 +77,4 @@
 "ErrorString.tooManyRequests" = "You have sent too many code requests. Please try again later.";
 "ErrorString.connectionTimeout" = "The connection has timed out. Please try again.";
 "ErrorString.noInternetConnection" = "Unable to connect to the internet. Please check your connection.";
-"ErrorString.unableToResend" = "Could not resend code.";
+"ErrorString.unableToResend" = "Unable to resend code. Please try again later.";

@@ -1,10 +1,10 @@
-"GlobalString.platformName" = "SPiD";
-"GlobalString.done" = "Valmis";
+"GlobalString.platformName" = "Schibsted-tili";
+"GlobalString.done" = "Jatka";
 
 "IdentifierScreenString.title.sms" = "Kirjaudu sisään tai luo tili";
 "IdentifierScreenString.title.email" = "Kirjaudu sisään tai luo tili";
-"IdentifierScreenString.inputTitle.phone" = "Puhelinnumero";
-"IdentifierScreenString.inputTitle.email" = "Sähköpostiosoite";
+"IdentifierScreenString.inputTitle.phone" = "Kirjoita puhelinnumerosi";
+"IdentifierScreenString.inputTitle.email" = "Anna sähköpostiosoitteesi";
 "IdentifierScreenString.inputTitle.password" = "Anna sähköpostiosoitteesi";
 "IdentifierScreenString.privacyText.phone" = "Emme koskaan anna puhelinnumeroasi eteenpäin ilman lupaasi.";
 "IdentifierScreenString.privacyText.email" = "Emme koskaan anna sähköpostiosoitettasi eteenpäin ilman lupaasi.";
@@ -15,8 +15,8 @@
 "PasswordScreenString.title.signup" = "Luo tili";
 "PasswordScreenString.inputTitle" = "Kirjoita salasanasi";
 "PasswordScreenString.proceed" = "Jatka";
-"PasswordScreenString.invalidPassword" = "Salasana ei kelpaa";
-"PasswordScreenString.change" = "Vaihda sähköpostiosoite";
+"PasswordScreenString.invalidPassword" = "Syöttämäsi salasana on virheellinen. Yritä uudelleen.";
+"PasswordScreenString.change" = "Et sinä?";
 "PasswordScreenString.cancel" = "Peruuta";
 "PasswordScreenString.info" = "Vähintään 8 merkkiä";
 "PasswordScreenString.forgotPassword" = "Unohtuiko salasana?";
@@ -24,9 +24,9 @@
 
 "VerifyScreenString.title" = "Koodi on lähetetty sinulle";
 "VerifyScreenString.subtext" = "Kirjoita vahvistuskoodi, jonka lähetimme, vastaanottaja:";
-"VerifyScreenString.inputTitle" = "Vahvistuskoodi";
-"VerifyScreenString.resend" = "Lähetä uudelleen";
-"VerifyScreenString.change" = "Vaihda";
+"VerifyScreenString.inputTitle" = "Anna koodi";
+"VerifyScreenString.resend" = "Lähetä koodi uudelleen";
+"VerifyScreenString.change" = "Et sinä?";
 "VerifyScreenString.proceed" = "Jatka";
 
 "ResendScreenString.header" = "Uusi vahvistuskoodi on lähetetty sinulle";
@@ -63,8 +63,8 @@
 "RequiredField.birthday.placeholder" = "YYYY-MM-DD";
 
 "RequiredField.error.missing" = "Tämä kenttä vaaditaan.";
-"RequiredField.error.lessThanThree" = "Tässä kentässä tulee olla vähintään 3 merkkiä";
-"RequiredField.error.birthdateInvalid" = "Tämä päivämäärä on virheellinen";
+"RequiredField.error.lessThanThree" = "Tässä kentässä tulee olla vähintään 3 merkkiä.";
+"RequiredField.error.birthdateInvalid" = "Tämä päivämäärä on virheellinen.";
 
 "ErrorScreenString.heading" = "Jokin meni pieleen!";
 "ErrorScreenString.proceed" = "OK";
@@ -78,3 +78,4 @@
 "ErrorString.connectionTimeout" = "Yhteys on aikakatkaistu. Yritä uudelleen.";
 "ErrorString.noInternetConnection" = "Yhteyttä ei voitu muodostaa. Tarkista internetyhteys.";
 "ErrorString.unableToResend" = "Koodia ei onnistuttu lähettämään uudelleen. Yritä myöhemmin uudelleen.";
+
