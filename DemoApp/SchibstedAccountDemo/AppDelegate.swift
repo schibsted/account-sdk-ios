@@ -4,6 +4,8 @@
 //
 
 import SchibstedAccount
+import SchibstedIDTracking
+import SchibstedTracking
 import UIKit
 
 struct ConfigurationLoader {
@@ -52,7 +54,14 @@ extension SchibstedAccount.ClientConfiguration {
 extension IdentityUIConfiguration {
     static let `default`: IdentityUIConfiguration = {
         let clientConfiguration: SchibstedAccount.ClientConfiguration = .current
-        return IdentityUIConfiguration(clientConfiguration: clientConfiguration, theme: .default)
+        let tracker = PulseTrackingEventsHandler(
+            globalTracker: AppDelegate.pulseTracker.global
+        )
+        return IdentityUIConfiguration(
+            clientConfiguration: clientConfiguration,
+            theme: .default,
+            tracker: tracker
+        )
     }()
 
     static let current = IdentityUIConfiguration.default
@@ -87,6 +96,14 @@ extension UIApplication {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    static var pulseTracker: PulseTracker = {
+        let hostAppClientId = "schibsted-account"
+        let globalTracker = GlobalPulseTracker.create(clientId: hostAppClientId)
+        globalTracker.logLevel = .debug
+        return globalTracker.update(Transforms.globalDefaults(globalTracker))
+            .update(Transforms.debugMode(deployTag: "account-sdk-demo-app"))
+    }()
+
     func showAlert(for state: UserState) {
         let message: String
         switch state {
@@ -117,6 +134,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.user = IdentityManager(clientConfiguration: .current).currentUser
+
+        AppDelegate.pulseTracker.track([
+            "demo-app-launch": [
+                "user": String(describing: self.user),
+            ],
+        ])
+
         return true
     }
 
