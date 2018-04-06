@@ -189,10 +189,16 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SchibstedAccountDemo/Pods-SchibstedAccountDemo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SchibstedAccount/SchibstedAccount.framework",
+				"${BUILT_PRODUCTS_DIR}/SchibstedIDTracking/SchibstedIDTracking.framework",
+				"${BUILT_PRODUCTS_DIR}/SchibstedTracking/SchibstedTracking.framework",
+				"${BUILT_PRODUCTS_DIR}/SchibstedTrackingCommon/SchibstedTrackingCommon.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SchibstedAccount.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SchibstedIDTracking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SchibstedTracking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SchibstedTrackingCommon.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
