@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         if self.showLogoSwitch.isOn {
             var theme: IdentityUITheme = .default
             theme.titleLogo = #imageLiteral(resourceName: "logo")
-            config = IdentityUIConfiguration(clientConfiguration: .current, theme: theme)
+            config = IdentityUIConfiguration.current.replacing(theme: theme)
         } else {
             config = .current
         }
