@@ -10,20 +10,20 @@ PODS:
   - SchibstedIDTracking (0.3.0):
     - SchibstedAccount/UI (~> 1.0.0-rc)
     - SchibstedTracking
-  - SchibstedTracking (0.6.0):
-    - SchibstedTracking/Tracker (= 0.6.0)
-  - SchibstedTracking/Environment (0.6.0):
+  - SchibstedTracking (0.7.0):
+    - SchibstedTracking/Tracker (= 0.7.0)
+  - SchibstedTracking/Environment (0.7.0):
     - SchibstedTracking/Logging
     - SchibstedTracking/Shared
     - SchibstedTrackingCommon
-  - SchibstedTracking/Logging (0.6.0)
-  - SchibstedTracking/Networking (0.6.0):
+  - SchibstedTracking/Logging (0.7.0)
+  - SchibstedTracking/Networking (0.7.0):
     - SchibstedTracking/Logging
-  - SchibstedTracking/Shared (0.6.0)
-  - SchibstedTracking/Storage (0.6.0):
+  - SchibstedTracking/Shared (0.7.0)
+  - SchibstedTracking/Storage (0.7.0):
     - SchibstedTracking/Logging
     - SchibstedTracking/Shared
-  - SchibstedTracking/Tracker (0.6.0):
+  - SchibstedTracking/Tracker (0.7.0):
     - SchibstedTracking/Environment
     - SchibstedTracking/Logging
     - SchibstedTracking/Networking
@@ -35,20 +35,28 @@ PODS:
 DEPENDENCIES:
   - SchibstedAccount (from `../`)
   - SchibstedAccount/UI (from `../`)
-  - SchibstedIDTracking
+  - SchibstedIDTracking (from `git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking.git`, branch `master`)
   - SwiftFormat/CLI
 
 EXTERNAL SOURCES:
   SchibstedAccount:
     :path: ../
+  SchibstedIDTracking:
+    :branch: master
+    :git: git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking.git
+
+CHECKOUT OPTIONS:
+  SchibstedIDTracking:
+    :commit: 0a0e86f5418f4bc8b411765c033ed64e14f8c26a
+    :git: git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking.git
 
 SPEC CHECKSUMS:
   SchibstedAccount: 9ad1c65017ea25773e65513870d174daa7307852
-  SchibstedIDTracking: dbde6cb7c465d4a85dc6a7331d8a2c3a81d6134f
-  SchibstedTracking: 683f180e68d61186fdac775d51dc2e49f6da2bbb
+  SchibstedIDTracking: 4b0f35ae9af7c2904fcea918b5cae23b77d36364
+  SchibstedTracking: bc12b41c68f51a23bae33b4e2e1f144381972bf4
   SchibstedTrackingCommon: 8494b87a1070f9f7340987ae8f548ef71f189653
   SwiftFormat: 13fd81206cf4453c19f1a5c51768c8c0d9165c30
 
-PODFILE CHECKSUM: 984803ef2108ffc2a1920a1dca74376dca1e5dda
+PODFILE CHECKSUM: 43ac59fc55a54e549a1b0d6675ee4b98e0182009
 
 COCOAPODS: 1.4.0
