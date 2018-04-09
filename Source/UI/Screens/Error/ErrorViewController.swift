@@ -4,8 +4,6 @@
 //
 
 class ErrorViewController: IdentityUIViewController {
-    var didDismiss: (() -> Void)?
-
     @IBOutlet var headingLabel: Heading! {
         didSet {
             switch self.dataSource {
@@ -90,7 +88,6 @@ class ErrorViewController: IdentityUIViewController {
 
     @IBAction func didTapOKButton(_: UIButton) {
         self.dismiss(animated: true, completion: nil)
-        self.didDismiss?()
     }
 
     override func viewDidLoad() {
