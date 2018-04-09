@@ -102,19 +102,17 @@ public class IdentityManager: IdentityManagerProtocol {
 
      - parameter clientConfiguration: defines your configuration
      */
-    public required convenience init(clientConfiguration: ClientConfiguration) {
-        let currentUser = User(clientConfiguration: clientConfiguration)
-        try? currentUser.loadStoredTokens()
-        self.init(currentUser: currentUser, clientConfiguration: clientConfiguration)
-        self.currentUser.delegate = self
-        log(from: self, "user: \(self.currentUser)")
-    }
-
-    init(currentUser: User, clientConfiguration: ClientConfiguration) {
+    public required init(clientConfiguration: ClientConfiguration) {
         self.clientConfiguration = clientConfiguration
         self.api = IdentityAPI(basePath: clientConfiguration.serverURL)
         self.routes = WebSessionRoutes(clientConfiguration: clientConfiguration)
-        self.currentUser = currentUser
+
+        self.currentUser = User(clientConfiguration: clientConfiguration)
+        self.currentUser.delegate = self
+
+        try? self.currentUser.loadStoredTokens()
+
+        log(from: self, "user: \(self.currentUser)")
     }
 
     private func dispatchIfSelf(_ block: @escaping () -> Void) {
