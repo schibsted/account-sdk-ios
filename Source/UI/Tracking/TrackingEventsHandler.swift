@@ -14,6 +14,8 @@ import Foundation
  */
 public protocol TrackingEventsHandler: class {
     /// Will be set by IdentityUI on UI initialization
+    var clientConfiguration: ClientConfiguration? { get set }
+    /// Will be set by IdentityUI on UI initialization
     var loginMethod: LoginMethod? { get set }
     /// Does the user want to login or create an account
     var loginFlowVariant: LoginMethod.FlowVariant? { get set }

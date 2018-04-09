@@ -51,7 +51,7 @@ Pods/
 /keyrings/live/pubring.gpg~
 /keyrings/live/pubring.kbx~
 /keyrings/live/secring.gpg
-/Example/SchibstedAccount/ClientConfiguration.json
-/Example/SchibstedAccount/Info.plist
+/Example/ClientConfiguration.json
+/Example/Info.plist
 /DemoApp/SchibstedAccountDemo/ClientConfiguration.json
 /DemoApp/SchibstedAccountDemo/Info.plist

@@ -163,6 +163,7 @@ public class IdentityUI {
         self.identityManager = identityManager
         self.fetchStatusInteractor = FetchStatusInteractor(identityManager: identityManager)
         self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: identityManager)
+        self.configuration.tracker?.clientConfiguration = self.configuration.clientConfiguration
     }
 
     /**
