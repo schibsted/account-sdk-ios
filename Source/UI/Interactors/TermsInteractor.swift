@@ -10,15 +10,7 @@ class TermsInteractor {
         self.identityManager = identityManager
     }
 
-    func fetchStatus(for user: User, completion: @escaping BoolResultCallback) {
-        user.agreements.status(completion: completion)
-    }
-
     func fetchTerms(completion: @escaping TermsResultCallback) {
         self.identityManager.fetchTerms(completion: completion)
-    }
-
-    func acceptTerms(onBehalfOf user: User, completion: @escaping NoValueCallback) {
-        user.agreements.accept(completion: completion)
     }
 }

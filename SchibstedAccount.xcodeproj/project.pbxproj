@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DE37BF4207B625700110614 /* UserTermsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE37BF3207B625700110614 /* UserTermsInteractor.swift */; };
 		0DFBB1342068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */; };
 		0DFBB1392068ED0B0055F6B8 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DFBB1362068ED0B0055F6B8 /* LoadingViewController.xib */; };
 		0DFBB13A2068ED0B0055F6B8 /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFBB1372068ED0B0055F6B8 /* LoadingViewModel.swift */; };
@@ -437,6 +438,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DE37BF3207B625700110614 /* UserTermsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTermsInteractor.swift; sourceTree = "<group>"; };
 		0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatedTermsCoordinator.swift; sourceTree = "<group>"; };
 		0DFBB1362068ED0B0055F6B8 /* LoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
 		0DFBB1372068ED0B0055F6B8 /* LoadingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
@@ -1061,6 +1063,7 @@
 			isa = PBXGroup;
 			children = (
 				B01D71E5C14B6FF51B5AD7D1 /* TermsInteractor.swift */,
+				0DE37BF3207B625700110614 /* UserTermsInteractor.swift */,
 				B01D72039AB48F6A1DA73169 /* SigninInteractor.swift */,
 				B01D7C5351342B85585272CE /* SignupInteractor.swift */,
 				B01D7FA9FD6A1552F6F2AFC2 /* FetchStatusInteractor.swift */,
@@ -1851,6 +1854,7 @@
 				B01D7B5A68E565A37A5568E4 /* EmailAddress.swift in Sources */,
 				B01D7750F38D5AA5A950721D /* IdentifierProtocol.swift in Sources */,
 				B01D710C32A0B926D594EDE4 /* Terms.swift in Sources */,
+				0DE37BF4207B625700110614 /* UserTermsInteractor.swift in Sources */,
 				B01D79AB5D409EBAE9D32E00 /* Client.swift in Sources */,
 				B01D7D5E08F7D6B83727421A /* IDToken.swift in Sources */,
 				B01D786E47A1C5F1E3782CBC /* Birthdate.swift in Sources */,

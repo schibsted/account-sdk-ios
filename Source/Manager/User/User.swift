@@ -27,10 +27,11 @@ import Foundation
  In order to comply with privacy regulations, you need to make sure that the user accepts any update
  to terms and conditions that may have been issued since the last visit. For this reason, at the
  startup of your app, right after having obtained the `IdentityManager.currentUser` and verified the
- login status, you should call `user.agreements.status(:)` and in case of `false` result (meaning the
- user has yet to accepted the latest terms) present a screen where the user can review and accept the
- updated terms. The recommended way of presenting the screen is by using the provided UI flows, thus by
- calling `IdentityUI.presentTerms(for:from:)`.
+ login status, if the user is logged-in you should call `user.agreements.status(:)` and, in case of
+ `false` result (meaning the user has yet to accepted the latest terms), obtain the latest terms by
+ calling `IdentityManager.fetchTerms(:) and finally present a screen where the user can review and accept
+ the updated terms. The recommended way of presenting the screen is by using the provided UI flows, thus
+ by calling `IdentityUI.presentTerms(for:from:)`.
 
  If you are using the headless approach instead, you should then present your own UI and manually
  call `user.agreements.accept(:)`, if the user accepted the new terms, or `logout()`, if the user

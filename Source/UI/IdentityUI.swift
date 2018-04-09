@@ -112,25 +112,28 @@ public class IdentityUI {
 
      In order to comply with privacy regulations, you need to make sure that the user accepts any update to terms and conditions that may have been issued since
      the last visit. For this reason, at the startup of your app, right after having obtained the `IdentityManager.currentUser` and verified the login status,
-     if the user is logged-in you should call `user.agreements.status(:)`, and in case of `false` result (meaning the user has yet to accepted the latest terms)
-     call this function to present the updated terms. If the user fails to accept the terms, a logout will automatically be forced.
+     if the user is logged-in you should call `user.agreements.status(:)` and, in case of `false` result (meaning the user has yet to accepted the latest
+     terms), obtain the latest terms by calling `IdentityManager.fetchTerms(:)` and finally call this method to present the updated terms. If the user fails to
+     accept the terms, a logout will automatically be forced.
 
+     - parameter: terms: The terms that the user should accept. They should be obtained by calling `IdentityManager.fetchTerms(:)`.
      - parameter: user: The user that requires acceptance of new terms. It is important that you pass the same instance of `User` you previously obtained from
        an `IdentityManager` and stored, otherwise you won't get logout notifications for that user in case the user is logged out for not having accepted the
        new terms.
      - parameter: viewController: The view controller to present the screen from.
      - parameter: configuration: The UI configuration.
      */
-    public static func presentTerms(for user: User, from viewController: UIViewController, configuration: IdentityUIConfiguration) {
+    public static func presentTerms(_ terms: Terms, for user: User, from viewController: UIViewController, configuration: IdentityUIConfiguration) {
         guard self.presentedIdentityUI == nil, self.updatedTermsCoordinator == nil else {
             // Another screen of the Identity UI is already presented.
             return
         }
 
         let navigationController = UINavigationController()
+        let input = UpdatedTermsCoordinator.Input(currentUser: user, terms: terms)
 
         self.updatedTermsCoordinator = UpdatedTermsCoordinator(navigationController: navigationController, configuration: configuration)
-        self.updatedTermsCoordinator?.start(input: user) { output in
+        self.updatedTermsCoordinator?.start(input: input) { output in
             self.updatedTermsCoordinator = nil
 
             switch output {

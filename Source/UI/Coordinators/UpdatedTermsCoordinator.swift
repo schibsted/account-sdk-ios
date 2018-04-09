@@ -6,6 +6,11 @@
 import UIKit
 
 class UpdatedTermsCoordinator: FlowCoordinator {
+    struct Input {
+        let currentUser: User
+        let terms: Terms
+    }
+
     enum Output {
         case success
         case cancel
@@ -16,49 +21,32 @@ class UpdatedTermsCoordinator: FlowCoordinator {
 
     var child: ChildFlowCoordinator?
 
+    private var userTermsInteractor: UserTermsInteractor?
+
     init(navigationController: UINavigationController, configuration: IdentityUIConfiguration) {
         self.navigationController = navigationController
         self.configuration = configuration
     }
 
-    func start(input currentUser: User, completion: @escaping (Output) -> Void) {
-        let identityManager = IdentityManager(currentUser: currentUser, clientConfiguration: self.configuration.clientConfiguration)
-        let termsInteractor = TermsInteractor(identityManager: identityManager)
+    func start(input: Input, completion: @escaping (Output) -> Void) {
+        let userTermsInteractor = UserTermsInteractor(user: input.currentUser)
+        self.userTermsInteractor = userTermsInteractor
 
-        let loadingViewController = showLoadingView(didCancel: { completion(.cancel) })
-        loadingViewController.startLoading()
-
-        termsInteractor.fetchTerms { [weak self] result in
+        self.showAcceptTermsView(for: input.terms) { [weak self] result in
             switch result {
-            case let .success(terms):
-                loadingViewController.endLoading { [weak self] in
-                    self?.showAcceptTermsView(for: terms) { [weak self] result in
-                        self?.handleResult(result, for: currentUser, termsInteractor: termsInteractor, completion: completion)
+            case .success:
+                userTermsInteractor.acceptTerms { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.configuration.tracker?.engagement(.network(.agreementAccepted))
+                        completion(.success)
+                    case let .failure(error):
+                        self?.present(error: error)
                     }
                 }
-            case let .failure(error):
-                loadingViewController.endLoading()
-                self?.present(error: error) {
-                    completion(.cancel)
-                }
+            case .cancel:
+                completion(.cancel)
             }
-        }
-    }
-
-    private func handleResult(_ result: Output, for currentUser: User, termsInteractor: TermsInteractor, completion: @escaping (Output) -> Void) {
-        switch result {
-        case .success:
-            termsInteractor.acceptTerms(onBehalfOf: currentUser) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.configuration.tracker?.engagement(.network(.agreementAccepted))
-                    completion(.success)
-                case let .failure(error):
-                    self?.present(error: error)
-                }
-            }
-        case .cancel:
-            completion(.cancel)
         }
     }
 }
