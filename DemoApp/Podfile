@@ -7,7 +7,7 @@ platform :ios, '9.0'
 target 'SchibstedAccountDemo' do
     pod 'SchibstedAccount', :path => '../'
     pod 'SchibstedAccount/UI', :path => '../'
-    pod 'SchibstedIDTracking'
+    pod 'SchibstedIDTracking', :git => 'git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking.git', :branch => 'master'
 
     if !ENV['TRAVIS']
         pod 'SwiftFormat/CLI'
