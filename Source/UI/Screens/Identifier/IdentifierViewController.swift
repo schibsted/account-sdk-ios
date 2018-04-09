@@ -37,9 +37,7 @@ class IdentifierViewController: IdentityUIViewController {
         }
     }
     @IBAction func didClickNeedHelp(_: Any) {
-        if let trackerViewID = self.trackerViewID {
-            self.configuration.tracker?.engagement(.click(.help, trackerViewID))
-        }
+        self.configuration.tracker?.engagement(.click(.help, self.trackerViewID))
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
     }
 
@@ -162,9 +160,7 @@ class IdentifierViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        if let trackerViewID = self.trackerViewID {
-            self.configuration.tracker?.engagement(.click(.submit, trackerViewID))
-        }
+        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID))
 
         let identifier: Identifier
 
@@ -224,10 +220,7 @@ class IdentifierViewController: IdentityUIViewController {
             return false
         }
 
-        if let trackerViewID = self.trackerViewID {
-            self.configuration.tracker?.error(.validation(error), in: trackerViewID)
-        }
-
+        self.configuration.tracker?.error(.validation(error), in: self.trackerViewID)
         self.inputError.text = message
         self.inputError.isHidden = false
         switch self.viewModel.loginMethod.identifierType {

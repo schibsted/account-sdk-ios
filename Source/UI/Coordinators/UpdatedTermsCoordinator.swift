@@ -90,17 +90,3 @@ extension UpdatedTermsCoordinator {
         self.presentAsPopup(viewController)
     }
 }
-
-extension UpdatedTermsCoordinator {
-    private func showLoadingView(didCancel: @escaping () -> Void) -> LoadingViewController {
-        let navigationSettings = NavigationSettings(
-            cancel: { didCancel() },
-            back: nil
-        )
-        let viewModel = LoadingViewModel(localizationBundle: self.configuration.localizationBundle)
-        let loadingViewController = LoadingViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-        self.navigationController.viewControllers = [loadingViewController]
-
-        return loadingViewController
-    }
-}

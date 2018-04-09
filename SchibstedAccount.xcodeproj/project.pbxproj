@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		0DE37BF4207B625700110614 /* UserTermsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE37BF3207B625700110614 /* UserTermsInteractor.swift */; };
 		0DFBB1342068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */; };
-		0DFBB1392068ED0B0055F6B8 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DFBB1362068ED0B0055F6B8 /* LoadingViewController.xib */; };
-		0DFBB13A2068ED0B0055F6B8 /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFBB1372068ED0B0055F6B8 /* LoadingViewModel.swift */; };
-		0DFBB13B2068ED0B0055F6B8 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFBB1382068ED0B0055F6B8 /* LoadingViewController.swift */; };
 		43C24192205BF1BF00154866 /* SchibstedAccount.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C24188205BF1BE00154866 /* SchibstedAccount.framework */; };
 		43C24199205BF1BF00154866 /* SchibstedAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C2418B205BF1BE00154866 /* SchibstedAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		43C241B0205C015A00154866 /* SPiDKeychainWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C241AC205C015A00154866 /* SPiDKeychainWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -440,9 +437,6 @@
 /* Begin PBXFileReference section */
 		0DE37BF3207B625700110614 /* UserTermsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTermsInteractor.swift; sourceTree = "<group>"; };
 		0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatedTermsCoordinator.swift; sourceTree = "<group>"; };
-		0DFBB1362068ED0B0055F6B8 /* LoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
-		0DFBB1372068ED0B0055F6B8 /* LoadingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
-		0DFBB1382068ED0B0055F6B8 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		43C24188205BF1BE00154866 /* SchibstedAccount.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SchibstedAccount.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C2418B205BF1BE00154866 /* SchibstedAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchibstedAccount.h; sourceTree = "<group>"; };
 		43C2418C205BF1BE00154866 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -744,16 +738,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0DFBB1352068ED0B0055F6B8 /* Loading */ = {
-			isa = PBXGroup;
-			children = (
-				0DFBB1362068ED0B0055F6B8 /* LoadingViewController.xib */,
-				0DFBB1372068ED0B0055F6B8 /* LoadingViewModel.swift */,
-				0DFBB1382068ED0B0055F6B8 /* LoadingViewController.swift */,
-			);
-			path = Loading;
-			sourceTree = "<group>";
-		};
 		43B8CF77205F9A0C00FA3003 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1093,7 +1077,6 @@
 			isa = PBXGroup;
 			children = (
 				B01D752D1AE8BFA2AC06B9AE /* Error */,
-				0DFBB1352068ED0B0055F6B8 /* Loading */,
 				B01D70398AEC4C0940626ABA /* Terms */,
 				B01D7E41655CFB26E7F6D203 /* Resend */,
 				B01D79E4E1554A49A106AFD6 /* Verify */,
@@ -1722,7 +1705,6 @@
 				B01D7DE7AC848424E3E1EB41 /* PasswordViewController.xib in Resources */,
 				B01D7E3ECB7DD0234010B688 /* CheckInboxViewController.xib in Resources */,
 				B01D701AB31648115F3D5625 /* IdentifierViewController.xib in Resources */,
-				0DFBB1392068ED0B0055F6B8 /* LoadingViewController.xib in Resources */,
 				B01D754C58C02ECF988F0BA7 /* TermsSummaryViewController.xib in Resources */,
 				B01D79B87F85EC8EAC5911A2 /* RequiredFieldsViewController.xib in Resources */,
 				43E1602D2063BE8C00D9BA3E /* Images.xcassets in Resources */,
@@ -1806,7 +1788,6 @@
 				B01D7FE467756DB12531438F /* Storage.swift in Sources */,
 				B01D76247C9415A476084D39 /* Settings.swift in Sources */,
 				B01D76E8840A30CCA395E120 /* SettingsProxy.swift in Sources */,
-				0DFBB13A2068ED0B0055F6B8 /* LoadingViewModel.swift in Sources */,
 				B01D7B33D43CF4FBFEEC3189 /* DefaultSettingsProxy.swift in Sources */,
 				B01D76C2825A03B168B743C2 /* UserAgent.swift in Sources */,
 				B01D7D5D37AB21E39063541C /* Networking.swift in Sources */,
@@ -1950,7 +1931,6 @@
 				B01D75CA0F9830B13AA3C4CE /* CompleteProfileCoordinator.swift in Sources */,
 				B01D74B319A62269534D99EB /* Themeable.swift in Sources */,
 				B01D78DBDE0F44395218BB89 /* IdentityUI.swift in Sources */,
-				0DFBB13B2068ED0B0055F6B8 /* LoadingViewController.swift in Sources */,
 				B01D719DA7EAB579B69EA861 /* IdentityUIRoute.swift in Sources */,
 				B01D79CE4B5E5D9020574601 /* IdentityUITheme.swift in Sources */,
 				B01D781BE1E74E3AF1C4E356 /* IdentityUIDelegate.swift in Sources */,

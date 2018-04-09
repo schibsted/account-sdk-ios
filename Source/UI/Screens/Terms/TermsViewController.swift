@@ -70,9 +70,7 @@ class TermsViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickLearnMore(_: Any) {
-        if let trackerViewID = self.trackerViewID {
-            self.configuration.tracker?.engagement(.click(.agreementsSummary, trackerViewID))
-        }
+        self.configuration.tracker?.engagement(.click(.agreementsSummary, trackerViewID))
 
         guard let summary = self.viewModel.terms.summary else {
             return
@@ -96,9 +94,7 @@ class TermsViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        if let trackerViewID = self.trackerViewID {
-            self.configuration.tracker?.engagement(.click(.accept, trackerViewID))
-        }
+        self.configuration.tracker?.engagement(.click(.accept, self.trackerViewID))
 
         let termOneAccepted = self.termOneCheck.isChecked
         let termTwoAccepted = self.termTwoCheck.isChecked
@@ -145,16 +141,14 @@ extension TermsViewController: UITextViewDelegate {
     func textView(_: UITextView, shouldInteractWith url: URL, in _: NSRange) -> Bool {
         let terms = self.viewModel.terms
 
-        if let trackerViewID = self.trackerViewID {
-            if terms.clientPrivacyURL == url {
-                self.configuration.tracker?.engagement(.click(.privacyClient, trackerViewID))
-            } else if terms.platformPrivacyURL == url {
-                self.configuration.tracker?.engagement(.click(.privacySPiD, trackerViewID))
-            } else if terms.clientTermsURL == url {
-                self.configuration.tracker?.engagement(.click(.agreementsClient, trackerViewID))
-            } else if terms.platformTermsURL == url {
-                self.configuration.tracker?.engagement(.click(.agreementsSPiD, trackerViewID))
-            }
+        if terms.clientPrivacyURL == url {
+            self.configuration.tracker?.engagement(.click(.privacyClient, self.trackerViewID))
+        } else if terms.platformPrivacyURL == url {
+            self.configuration.tracker?.engagement(.click(.privacySPiD, self.trackerViewID))
+        } else if terms.clientTermsURL == url {
+            self.configuration.tracker?.engagement(.click(.agreementsClient, self.trackerViewID))
+        } else if terms.platformTermsURL == url {
+            self.configuration.tracker?.engagement(.click(.agreementsSPiD, self.trackerViewID))
         }
 
         self.didRequestAction?(.open(url: url))
@@ -180,8 +174,6 @@ extension TermsViewController {
             self.termTwoError.isHidden = true
         }
 
-        if let trackerViewID = self.trackerViewID {
-            self.configuration.tracker?.error(.validation(.agreements), in: trackerViewID)
-        }
+        self.configuration.tracker?.error(.validation(.agreements), in: self.trackerViewID)
     }
 }

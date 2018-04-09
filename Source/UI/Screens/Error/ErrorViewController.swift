@@ -116,8 +116,6 @@ class ErrorViewController: IdentityUIViewController {
             errorType = .generic(nsError)
         }
 
-        if let trackerViewID = originViewController.trackerViewID {
-            self.configuration.tracker?.error(errorType, in: trackerViewID)
-        }
+        self.configuration.tracker?.error(errorType, in: originViewController.trackerViewID)
     }
 }

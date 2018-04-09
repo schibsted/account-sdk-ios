@@ -154,9 +154,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        if let trackerViewID = self.trackerViewID {
-            self.configuration.tracker?.engagement(.click(.submit, trackerViewID))
-        }
+        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID))
 
         guard let valuesToUpdate = self.valuesToUpdate() else {
             return
@@ -294,8 +292,6 @@ extension RequiredFieldsViewController {
 
         let errorMessages = ascendingIndices.map { self.viewModel.requiredFieldID(at: $0.index) }
 
-        if let trackerViewID = self.trackerViewID {
-            self.configuration.tracker?.error(.validation(.requiredField(errorMessages)), in: trackerViewID)
-        }
+        self.configuration.tracker?.error(.validation(.requiredField(errorMessages)), in: self.trackerViewID)
     }
 }
