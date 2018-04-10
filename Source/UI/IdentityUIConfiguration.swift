@@ -48,18 +48,49 @@ public struct IdentityUIConfiguration {
      - parameter isCancelable: If this is false then the user cannot cancel the UI flow unless you complete it
      - parameter tracker: Required implementation of the trackinge events handler
      - parameter localizationBundle: If you have any custom localizations you want to use
+     - parameter appName: If you want to customize the app name display in the UI
     */
     public init(
         clientConfiguration: ClientConfiguration,
-        theme: IdentityUITheme,
+        theme: IdentityUITheme = .default,
         isCancelable: Bool = true,
         tracker: TrackingEventsHandler? = nil,
-        localizationBundle: Bundle? = nil
+        localizationBundle: Bundle? = nil,
+        appName: String? = nil
     ) {
         self.clientConfiguration = clientConfiguration
         self.theme = theme
         self.isCancelable = isCancelable
         self.localizationBundle = localizationBundle ?? IdentityUI.bundle
         self.tracker = tracker
+        if let appName = appName {
+            self.appName = appName
+        }
+    }
+
+    /**
+     Call this to replace "parts" of the configuration
+
+     - parameter theme: The `IdentityUITheme` object
+     - parameter isCancelable: If this is false then the user cannot cancel the UI flow unless you complete it
+     - parameter tracker: Required implementation of the trackinge events handler
+     - parameter localizationBundle: If you have any custom localizations you want to use
+     - parameter appName: If you want to customize the app name display in the UI
+    */
+    public func replacing(
+        theme: IdentityUITheme? = nil,
+        isCancelable: Bool? = nil,
+        tracker: TrackingEventsHandler? = nil,
+        localizationBundle: Bundle? = nil,
+        appName: String? = nil
+    ) -> IdentityUIConfiguration {
+        return IdentityUIConfiguration(
+            clientConfiguration: self.clientConfiguration,
+            theme: theme ?? self.theme,
+            isCancelable: isCancelable ?? self.isCancelable,
+            tracker: tracker ?? self.tracker,
+            localizationBundle: localizationBundle ?? self.localizationBundle,
+            appName: appName ?? self.appName
+        )
     }
 }
