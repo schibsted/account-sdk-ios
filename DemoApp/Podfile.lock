@@ -1,11 +1,11 @@
 PODS:
-  - SchibstedAccount (1.0.0-rc1):
-    - SchibstedAccount/Manager (= 1.0.0-rc1)
-    - SchibstedAccount/UI (= 1.0.0-rc1)
-  - SchibstedAccount/Core (1.0.0-rc1)
-  - SchibstedAccount/Manager (1.0.0-rc1):
+  - SchibstedAccount (1.0.0-rc2):
+    - SchibstedAccount/Manager (= 1.0.0-rc2)
+    - SchibstedAccount/UI (= 1.0.0-rc2)
+  - SchibstedAccount/Core (1.0.0-rc2)
+  - SchibstedAccount/Manager (1.0.0-rc2):
     - SchibstedAccount/Core
-  - SchibstedAccount/UI (1.0.0-rc1):
+  - SchibstedAccount/UI (1.0.0-rc2):
     - SchibstedAccount/Manager
   - SchibstedIDTracking (0.3.0):
     - SchibstedAccount/UI (~> 1.0.0-rc)
@@ -51,7 +51,7 @@ CHECKOUT OPTIONS:
     :git: git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking.git
 
 SPEC CHECKSUMS:
-  SchibstedAccount: 9ad1c65017ea25773e65513870d174daa7307852
+  SchibstedAccount: e9544789fcc8c5c7c695da90d42f6f5bd14db5eb
   SchibstedIDTracking: 4b0f35ae9af7c2904fcea918b5cae23b77d36364
   SchibstedTracking: bc12b41c68f51a23bae33b4e2e1f144381972bf4
   SchibstedTrackingCommon: 8494b87a1070f9f7340987ae8f548ef71f189653
