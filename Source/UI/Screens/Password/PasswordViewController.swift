@@ -16,7 +16,11 @@ class PasswordViewController: IdentityUIViewController {
 
     var didRequestAction: ((Action) -> Void)?
 
-    @IBOutlet var shouldPersistUserCheck: Checkbox!
+    @IBOutlet var shouldPersistUserCheck: Checkbox! {
+        didSet {
+            self.shouldPersistUserCheck.isChecked = true
+        }
+    }
     @IBOutlet var shouldPersistUserText: NormalLabel! {
         didSet {
             self.shouldPersistUserText.text = self.viewModel.persistentLogin
