@@ -51,7 +51,7 @@ CHECKOUT OPTIONS:
     :git: git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking.git
 
 SPEC CHECKSUMS:
-  SchibstedAccount: f8eae35a06092f2350e3a51ff909f95f88efee64
+  SchibstedAccount: 9ad1c65017ea25773e65513870d174daa7307852
   SchibstedIDTracking: 4b0f35ae9af7c2904fcea918b5cae23b77d36364
   SchibstedTracking: bc12b41c68f51a23bae33b4e2e1f144381972bf4
   SchibstedTrackingCommon: 8494b87a1070f9f7340987ae8f548ef71f189653
