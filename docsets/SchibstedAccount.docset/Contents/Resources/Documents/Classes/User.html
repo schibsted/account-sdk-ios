@@ -50,9 +50,6 @@
                 <a href="../Classes/User.html">User</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/User/Agreements.html">– Agreements</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
@@ -60,6 +57,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/User/Profile.html">– Profile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Agreements.html">– Agreements</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/UserDelegate.html">UserDelegate</a>
@@ -638,9 +638,9 @@ via the <code><a href="../Classes/IdentityUI.html">IdentityUI</a></code> or the 
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC10AgreementsC"></a>
-                    <a name="//apple_ref/swift/Class/Agreements" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC10AgreementsC">Agreements</a>
+                    <a name="/s:s23CustomStringConvertibleP11descriptionSSv"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSv">description</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -648,18 +648,44 @@ via the <code><a href="../Classes/IdentityUI.html">IdentityUI</a></code> or the 
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Agreement related APIs that give you information about the status of this user&rsquo;s agreements acceptance.</p>
-
-<p>Agreements consists of terms and conditions and privacy policies. Acccepting agreements means the user
-has accepted all the agreements fetchable via <code>IdentityManager.fetchAgreements(...)</code></p>
-
-                        <a href="../Classes/User/Agreements.html" class="slightly-smaller">See more</a>
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Agreements</span><span class="p">:</span> <span class="kt"><a href="../Protocols/UserAgreementsAPI.html">UserAgreementsAPI</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount4UserC2eeoiSbAC_ACtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC2eeoiSbAC_ACtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Compare User objects by <q>id</q>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">User</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">User</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -769,9 +795,9 @@ has accepted all the agreements fetchable via <code>IdentityManager.fetchAgreeme
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s23CustomStringConvertibleP11descriptionSSv"></a>
-                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSv">description</a>
+                    <a name="/s:16SchibstedAccount4UserC10AgreementsC"></a>
+                    <a name="//apple_ref/swift/Class/Agreements" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC10AgreementsC">Agreements</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -779,44 +805,18 @@ has accepted all the agreements fetchable via <code>IdentityManager.fetchAgreeme
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Agreement related APIs that give you information about the status of this user&rsquo;s agreements acceptance.</p>
+
+<p>Agreements consists of terms and conditions and privacy policies. Acccepting agreements means the user
+has accepted all the agreements fetchable via <code>IdentityManager.fetchAgreements(...)</code></p>
+
+                        <a href="../Classes/User/Agreements.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount4UserC2eeoiSbAC_ACtFZ"></a>
-                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC2eeoiSbAC_ACtFZ">==(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Compare User objects by <q>id</q>.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">User</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">User</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Agreements</span><span class="p">:</span> <span class="kt"><a href="../Protocols/UserAgreementsAPI.html">UserAgreementsAPI</a></span></code></pre>
 
                         </div>
                       </div>

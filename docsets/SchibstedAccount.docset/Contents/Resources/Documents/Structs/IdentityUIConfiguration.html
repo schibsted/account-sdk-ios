@@ -50,9 +50,6 @@
                 <a href="../Classes/User.html">User</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/User/Agreements.html">– Agreements</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
@@ -60,6 +57,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/User/Profile.html">– Profile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User/Agreements.html">– Agreements</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/UserDelegate.html">UserDelegate</a>
@@ -494,9 +494,9 @@ so you can set this to override it</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount23IdentityUIConfigurationVAcA19ClientConfigurationV06clientF0_AA0C7UIThemeV5themeSb12isCancelableAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationP0tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(clientConfiguration:theme:isCancelable:tracker:localizationBundle:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount23IdentityUIConfigurationVAcA19ClientConfigurationV06clientF0_AA0C7UIThemeV5themeSb12isCancelableAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationP0tcfc">init(clientConfiguration:theme:isCancelable:tracker:localizationBundle:)</a>
+                    <a name="/s:16SchibstedAccount23IdentityUIConfigurationVAcA19ClientConfigurationV06clientF0_AA0C7UIThemeV5themeSb12isCancelableAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationP0SSSg7appNametcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(clientConfiguration:theme:isCancelable:tracker:localizationBundle:appName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount23IdentityUIConfigurationVAcA19ClientConfigurationV06clientF0_AA0C7UIThemeV5themeSb12isCancelableAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationP0SSSg7appNametcfc">init(clientConfiguration:theme:isCancelable:tracker:localizationBundle:appName:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -512,10 +512,11 @@ so you can set this to override it</p>
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span>
     <span class="nv">clientConfiguration</span><span class="p">:</span> <span class="kt"><a href="../Structs/ClientConfiguration.html">ClientConfiguration</a></span><span class="p">,</span>
-    <span class="nv">theme</span><span class="p">:</span> <span class="kt"><a href="../Structs/IdentityUITheme.html">IdentityUITheme</a></span><span class="p">,</span>
+    <span class="nv">theme</span><span class="p">:</span> <span class="kt"><a href="../Structs/IdentityUITheme.html">IdentityUITheme</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
     <span class="nv">isCancelable</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
     <span class="nv">tracker</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-    <span class="nv">localizationBundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="nv">localizationBundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">appName</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
 <span class="p">)</span></code></pre>
 
                         </div>
@@ -581,6 +582,118 @@ so you can set this to override it</p>
                               <td>
                                 <div>
                                   <p>If you have any custom localizations you want to use</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>appName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If you want to customize the app name display in the UI</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount23IdentityUIConfigurationV9replacingAcA0C7UIThemeVSg5theme_SbSg12isCancelableAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationN0SSSg7appNametF"></a>
+                    <a name="//apple_ref/swift/Method/replacing(theme:isCancelable:tracker:localizationBundle:appName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount23IdentityUIConfigurationV9replacingAcA0C7UIThemeVSg5theme_SbSg12isCancelableAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationN0SSSg7appNametF">replacing(theme:isCancelable:tracker:localizationBundle:appName:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Call this to replace <q>parts</q> of the configuration</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">replacing</span><span class="p">(</span>
+    <span class="nv">theme</span><span class="p">:</span> <span class="kt"><a href="../Structs/IdentityUITheme.html">IdentityUITheme</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">isCancelable</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">tracker</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">localizationBundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">appName</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">IdentityUIConfiguration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>theme</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code><a href="../Structs/IdentityUITheme.html">IdentityUITheme</a></code> object</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isCancelable</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If this is false then the user cannot cancel the UI flow unless you complete it</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tracker</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Required implementation of the trackinge events handler</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>localizationBundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If you have any custom localizations you want to use</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>appName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If you want to customize the app name display in the UI</p>
                                 </div>
                               </td>
                             </tr>
