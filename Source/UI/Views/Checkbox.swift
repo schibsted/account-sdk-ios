@@ -27,5 +27,12 @@ class Checkbox: UIButton, Themeable {
         self.sendActions(for: .valueChanged)
     }
 
-    var isChecked: Bool { return self.isSelected }
+    var isChecked: Bool {
+        get {
+            return self.isSelected
+        }
+        set {
+            self.isSelected = newValue
+        }
+    }
 }
