@@ -174,9 +174,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         guard let viewController = self?.window?.rootViewController, let user = self?.identityManager.currentUser else {
                             return
                         }
-                        // It is important that you pass the same instance of `User` that you previously stored, otherwise you won't get logout notifications
-                        // for that user in case the user is logged out for not having accepted the new terms.
-                        IdentityUI.presentTerms(terms, for: user, from: viewController, configuration: .current)
+
+                        do {
+                            // It is important that you pass the same instance of `User` that you previously stored, otherwise you won't get logout
+                            // notifications for that user in case the user is logged out for not having accepted the new terms.
+                            try IdentityUI.presentTerms(terms, for: user, from: viewController, configuration: .current)
+                        } catch {
+                            preconditionFailure("Attempt to initialize IdentityUI with wrong configuration")
+                        }
                     case let .failure(error):
                         // Fail silently, retry will occur on next app's launch.
                         print("Error attempting to fetch updated terms: \(error)")

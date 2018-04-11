@@ -86,6 +86,12 @@ public enum LoginMethod {
  that is generally used to continue a flow from the deep link.
  */
 public class IdentityUI {
+    /// Errors thrown when setting up `IdentityUI`.
+    public enum Error: Swift.Error {
+        /// The client configuration owned by a given instance (e.g. a `User`) is not the same as the client configuration owned by the given UI configuration.
+        case mismatchingClientConfiguration
+    }
+
     ///
     public weak var delegate: IdentityUIDelegate?
     ///
@@ -122,8 +128,15 @@ public class IdentityUI {
        new terms.
      - parameter: viewController: The view controller to present the screen from.
      - parameter: configuration: The UI configuration.
+
+     - Throws: `IdentityUI.Error.mismatchingClientConfiguration` if the client configuration owned by the given `User` instance is not the same as the one owned
+       by the given UI configuration.
      */
-    public static func presentTerms(_ terms: Terms, for user: User, from viewController: UIViewController, configuration: IdentityUIConfiguration) {
+    public static func presentTerms(_ terms: Terms, for user: User, from viewController: UIViewController, configuration: IdentityUIConfiguration) throws {
+        guard user.clientConfiguration == configuration.clientConfiguration else {
+            throw Error.mismatchingClientConfiguration
+        }
+
         guard self.presentedIdentityUI == nil, self.updatedTermsCoordinator == nil else {
             // Another screen of the Identity UI is already presented.
             return

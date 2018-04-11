@@ -273,3 +273,17 @@ public struct ClientConfiguration {
         }
     }
 }
+
+extension ClientConfiguration: Equatable {
+    public static func == (lhs: ClientConfiguration, rhs: ClientConfiguration) -> Bool {
+        return lhs.serverURL == rhs.serverURL
+            && lhs.providerComponent == rhs.providerComponent
+            && lhs.clientID == rhs.clientID
+            && lhs.clientSecret == rhs.clientSecret
+            && lhs.locale == rhs.locale
+            && lhs.appURLScheme == rhs.appURLScheme
+            && lhs.defaultAppURLScheme == rhs.defaultAppURLScheme
+            && lhs.environment == rhs.environment
+            && lhs.redirectURLRoot == rhs.redirectURLRoot
+    }
+}
