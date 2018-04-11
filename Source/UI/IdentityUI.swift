@@ -137,9 +137,15 @@ public class IdentityUI {
             throw Error.mismatchingClientConfiguration
         }
 
-        guard self.presentedIdentityUI == nil, self.updatedTermsCoordinator == nil else {
+        if self.presentedIdentityUI == nil, self.updatedTermsCoordinator == nil {
             // Another screen of the Identity UI is already presented.
-            return
+
+            guard user.state == .loggedIn else {
+                // The user logged out in the meantime, we ignore the presentation of the terms.
+                return
+            }
+
+            preconditionFailure("Attempt to present updated terms while another Identity UI flow is already presented.")
         }
 
         let navigationController = UINavigationController()
