@@ -63,6 +63,7 @@ public class WebSessionRoutes {
      - parameter redirectQueryItems: any query items you want the redirect url to contain
      */
     public func forgotPasswordURL(withRedirectPath path: String? = nil, redirectQueryItems: [URLQueryItem]? = nil) -> URL {
+        Settings.setValue(path, forKey: ClientConfiguration.RedirectInfo.ForgotPassword.settingsKey)
         return self.makeURLFromPath("/flow/password", redirectPath: path, queryItems: [], redirectQueryItems: redirectQueryItems)
     }
 

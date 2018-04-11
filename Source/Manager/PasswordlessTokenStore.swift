@@ -47,16 +47,7 @@ struct PasswordlessTokenStore {
     }
 
     static func setData(token: PasswordlessToken, identifier: Identifier, for connection: Connection) {
-        let stringToStore: String
-
-        switch identifier {
-        case let .email(email):
-            stringToStore = "\(email.normalizedString):\(token)"
-        case let .phone(phoneNumber):
-            let (normalizedCountryCode, normalizedNumber) = phoneNumber.normalizedValue
-            stringToStore = "\(normalizedCountryCode)-\(normalizedNumber):\(token)"
-        }
-
+        let stringToStore = "\(token):" + identifier.serializedString
         let key = Key(connection)
         Settings.setValue(stringToStore, forKey: String(describing: key))
         log("\(key) -> \(stringToStore)")
@@ -70,37 +61,13 @@ struct PasswordlessTokenStore {
         }
 
         let components = data.components(separatedBy: ":")
-
-        guard components.count == 2 && !components[0].isEmpty && !components[1].isEmpty else {
+        guard let token = components.first else {
             throw PasswordlessTokenStoreError.invalidData(connection, data)
         }
 
-        let identifierString = components[0]
-        let token = components[1]
-
-        var maybeIdentifier: Identifier?
-        switch connection {
-        case .email:
-            if let email = EmailAddress(identifierString) {
-                maybeIdentifier = Identifier(email)
-            }
-        case .sms:
-            let phoneComponents = identifierString.components(separatedBy: "-")
-
-            guard phoneComponents.count == 2 && !phoneComponents[0].isEmpty && !phoneComponents[1].isEmpty else {
-                throw PasswordlessTokenStoreError.invalidData(connection, data)
-            }
-
-            let countryCode = phoneComponents[0]
-            let number = phoneComponents[1]
-
-            if let phone = PhoneNumber(countryCode: countryCode, number: number) {
-                maybeIdentifier = Identifier(phone)
-            }
-        }
-
-        guard let identifier = maybeIdentifier else {
-            throw PasswordlessTokenStoreError.invalidIdentifier(connection, identifierString)
+        let serelizedIdentifier = components.dropFirst().joined(separator: ":")
+        guard let identifier = Identifier(serializedString: serelizedIdentifier) else {
+            throw PasswordlessTokenStoreError.invalidIdentifier(connection, serelizedIdentifier)
         }
 
         return (identifier: identifier, token: PasswordlessToken(token))

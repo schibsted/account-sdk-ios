@@ -79,10 +79,15 @@ extension PasswordCoordinator {
     }
 
     private func forgotPassword(for identifier: Identifier, scopes: [String]) {
-        if case let .email(email) = identifier {
-            IdentityUI.Route.persistMetadata(for: .enterPassword(for: email, scopes: scopes))
-        }
-        self.present(url: self.identityManager.routes.forgotPasswordURL)
+        let localID = identifier.localID()
+        let url = self.identityManager.routes.forgotPasswordURL(
+            withRedirectPath: ClientConfiguration.RedirectInfo.ForgotPassword.path,
+            redirectQueryItems: [
+                URLQueryItem(name: "local_id", value: localID),
+                URLQueryItem(name: "scopes", value: scopes.joined(separator: " "))
+            ]
+        )
+        self.present(url: url)
     }
 
     private func submit(
