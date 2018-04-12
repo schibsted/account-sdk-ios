@@ -5,6 +5,15 @@
 
 import Foundation
 
+private func keyValueTuples(_ array: [JSONObject]) -> [(key: String, value: String)] {
+    return array
+        .compactOrFlatMap { (json) -> (key: String, value: String)? in
+            guard let key = try? json.string(for: "key") else { return nil }
+            guard let value = try? json.string(for: "value") else { return nil }
+            return (key, value)
+    }
+}
+
 /**
  Represents an identier that is used to initiate login processes
  */
@@ -91,32 +100,30 @@ public enum Identifier: IdentifierProtocol {
         }
         return nil
     }
-
     /**
      Creates a locally static (application wide) id for an identifier so that you can send that
      around the wire instead of sendin the actual ID.
      */
     func localID() -> String {
+        let maxCount = 12
+
         /* Stored in JSON format:
-         {
-           "key0": { value: value0 }
-           "key1": { value: value1 }
+         [
+           { "key": "key0", value: value0 },
+           { "key": "key1", value: value1 },
            ...
-           "keyN": { value: valueN }
-         }
+           { "key": "keyN", value: valueN },
+         ]
+
+         It is stored in an array so it can be used as a FIFO
         */
 
         // First check if we already have a key mapping for this identifier
-        var json = (Settings.value(forKey: Identifier.mappingsKey) as? JSONObject) ?? [:]
+        var array = (Settings.value(forKey: Identifier.mappingsKey) as? [JSONObject]) ?? []
         let serializedString = self.serializedString
 
-        let maybeKey = json
-            .map { (key: $0.key, data: $0.value as? JSONObject) }
-            .filter {
-                guard let data = $0.data else { return false }
-                guard let value = try? data.string(for: "value") else { return false }
-                return value == serializedString
-            }
+        let maybeKey = keyValueTuples(array)
+            .filter { $0.value == serializedString }
             .first?
             .key
 
@@ -128,24 +135,30 @@ public enum Identifier: IdentifierProtocol {
         let uuid = UUID().uuidString
         let key = String(uuid[..<uuid.index(uuid.startIndex, offsetBy: 8)])
 
-        json[key] = [
-            "value": serializedString,
-        ]
+        while array.count >= maxCount {
+            array.remove(at: 0)
+        }
 
-        Settings.setValue(json, forKey: Identifier.mappingsKey)
+        array.append([
+            "key": key,
+            "value": serializedString,
+        ])
+
+        Settings.setValue(array, forKey: Identifier.mappingsKey)
         return key
     }
 
     init?(localID: String) {
-        guard let json = Settings.value(forKey: Identifier.mappingsKey) as? JSONObject else {
+        guard let array = Settings.value(forKey: Identifier.mappingsKey) as? [JSONObject] else {
             return nil
         }
 
-        guard let data = try? json.jsonObject(for: localID) else {
-            return nil
-        }
+        let maybeValue = keyValueTuples(array)
+            .filter { $0.key == localID }
+            .first?
+            .value
 
-        guard let value = try? data.string(for: "value") else {
+        guard let value = maybeValue else {
             return nil
         }
 
