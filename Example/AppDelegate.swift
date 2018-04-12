@@ -140,14 +140,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return nil
     }
 
-    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_: UIApplication, didFinishLaunchingWithOptions options: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let urlTypes = Bundle.main.infoDictionary!["CFBundleURLTypes"] as? [[String: Any]]
         let urlSchemes = urlTypes?[0]["CFBundleURLSchemes"] as? [String]
         let clientConfig = SchibstedAccount.ClientConfiguration.current
         if urlSchemes?.contains(clientConfig.appURLScheme) == false {
             print("WARN: Register '\(clientConfig.appURLScheme)' as a custom URL scheme in the Info.plist")
         }
+
+        let doesLaunchOptionsContainRecognizedURL = AppLaunchData(launchOptions: options, clientConfiguration: .current) != nil
+        if !doesLaunchOptionsContainRecognizedURL, self.identityManager.currentUser.state == .loggedIn {
+            self.ensureAcceptanceOfNewTerms()
+            return true
+        }
+
         return true
+    }
+
+    private func ensureAcceptanceOfNewTerms() {
+        self.identityManager.currentUser.agreements.status { [weak self] result in
+            switch result {
+            case let .success(hasAcceptedLatestTerms):
+                if hasAcceptedLatestTerms {
+                    // Latest terms already accepted, nothing else to do.
+                    return
+                }
+
+                // Fetch the latest terms.
+                self?.identityManager.fetchTerms { [weak self] result in
+                    switch result {
+                    case let .success(terms):
+                        // Present UI to accept new terms.
+                        guard let viewController = self?.window?.rootViewController, let user = self?.identityManager.currentUser else {
+                            return
+                        }
+
+                        do {
+                            // It is important that you pass the same instance of `User` that you previously stored, otherwise you won't get logout
+                            // notifications for that user in case the user is logged out for not having accepted the new terms.
+                            try IdentityUI.presentTerms(terms, for: user, from: viewController, configuration: .current)
+                        } catch {
+                            preconditionFailure("Attempt to initialize IdentityUI with wrong configuration")
+                        }
+                    case let .failure(error):
+                        // Fail silently, retry will occur on next app's launch.
+                        print("Error attempting to fetch updated terms: \(error)")
+                    }
+                }
+            case let .failure(error):
+                // Fail silently, retry will occur on next app's launch.
+                print("Error attempting to fetch availability of new terms: \(error)")
+            }
+        }
     }
 
     private func openDeepLink(url: URL, fromSourceApplication _: String?) -> Bool {

@@ -29,7 +29,8 @@ public protocol IdentityManagerDelegate: class {
 
  The general approach is to first create an IdentityManager with a `ClientConfiguration`. After that you may check if there already
  is a user that was previously persisted. This can be checked via `IdentityManager.currentUser`'s `User.state` which will tell you if the internal
- user is in a logged in or logged out state.
+ user is in a logged in or logged out state. In order to comply with privacy regulations, you also need to make sure that the user accepts any update to terms
+ and conditions that may have been issued since the user's last visit: see `User`'s documentation for more details on how to do that.
 
  The objective of the identity manager is to create a user object. There should be no need to keep an identity manager lying around once
  you have a reference to the internal user object.

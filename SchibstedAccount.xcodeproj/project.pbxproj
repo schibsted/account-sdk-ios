@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DE37BF4207B625700110614 /* UserTermsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE37BF3207B625700110614 /* UserTermsInteractor.swift */; };
+		0DFBB1342068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */; };
 		43C24192205BF1BF00154866 /* SchibstedAccount.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C24188205BF1BE00154866 /* SchibstedAccount.framework */; };
 		43C24199205BF1BF00154866 /* SchibstedAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C2418B205BF1BE00154866 /* SchibstedAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		43C241B0205C015A00154866 /* SPiDKeychainWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C241AC205C015A00154866 /* SPiDKeychainWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -433,6 +435,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DE37BF3207B625700110614 /* UserTermsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTermsInteractor.swift; sourceTree = "<group>"; };
+		0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatedTermsCoordinator.swift; sourceTree = "<group>"; };
 		43C24188205BF1BE00154866 /* SchibstedAccount.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SchibstedAccount.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C2418B205BF1BE00154866 /* SchibstedAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchibstedAccount.h; sourceTree = "<group>"; };
 		43C2418C205BF1BE00154866 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1043,6 +1047,7 @@
 			isa = PBXGroup;
 			children = (
 				B01D71E5C14B6FF51B5AD7D1 /* TermsInteractor.swift */,
+				0DE37BF3207B625700110614 /* UserTermsInteractor.swift */,
 				B01D72039AB48F6A1DA73169 /* SigninInteractor.swift */,
 				B01D7C5351342B85585272CE /* SignupInteractor.swift */,
 				B01D7FA9FD6A1552F6F2AFC2 /* FetchStatusInteractor.swift */,
@@ -1063,6 +1068,7 @@
 				B01D78A1746E83042A8A0DAE /* PasswordlessCoordinator.swift */,
 				B01D783ED1F2B73B7CE6F8A5 /* AuthenticationCoordinator.swift */,
 				B01D739FA5AC38261ED7F6D5 /* CompleteProfileCoordinator.swift */,
+				0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1829,6 +1835,7 @@
 				B01D7B5A68E565A37A5568E4 /* EmailAddress.swift in Sources */,
 				B01D7750F38D5AA5A950721D /* IdentifierProtocol.swift in Sources */,
 				B01D710C32A0B926D594EDE4 /* Terms.swift in Sources */,
+				0DE37BF4207B625700110614 /* UserTermsInteractor.swift in Sources */,
 				B01D79AB5D409EBAE9D32E00 /* Client.swift in Sources */,
 				B01D7D5E08F7D6B83727421A /* IDToken.swift in Sources */,
 				B01D786E47A1C5F1E3782CBC /* Birthdate.swift in Sources */,
@@ -1841,6 +1848,7 @@
 				B01D78143268D33ADC81E560 /* TokenExchange.swift in Sources */,
 				B01D781705E7FF15EB2BAF7F /* RequiredFields.swift in Sources */,
 				B01D7E247C793EFB3D4BECE8 /* IdentifierStatus.swift in Sources */,
+				0DFBB1342068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift in Sources */,
 				43C241B2205C015A00154866 /* SPiDAccessToken.m in Sources */,
 				B01D762E102B78560BE87702 /* PasswordlessToken.swift in Sources */,
 				B01D7167E324373011B91014 /* Router.swift in Sources */,
