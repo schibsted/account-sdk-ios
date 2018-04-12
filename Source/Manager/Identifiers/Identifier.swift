@@ -53,35 +53,28 @@ public enum Identifier: IdentifierProtocol {
     var serializedString: String {
         switch self {
         case let .email(email):
-            return "\(self.typeString):\(email.normalizedString)"
+            return "\(EmailAddress.self):\(email.normalizedString)"
         case let .phone(phoneNumber):
             let (normalizedCountryCode, normalizedNumber) = phoneNumber.normalizedValue
-            return "\(self.typeString):\(normalizedCountryCode):\(normalizedNumber)"
+            return "\(PhoneNumber.self):\(normalizedCountryCode):\(normalizedNumber)"
         }
     }
 
     private static let mappingsKey = "identifier.mappings"
-    private static let emailTypeString = "email"
-    private static let phoneTypeString = "phone"
-    private var typeString: String {
-        switch self {
-        case .email:
-            return Identifier.emailTypeString
-        case .phone:
-            return Identifier.phoneTypeString
-        }
-    }
 
     init?(serializedString: String) {
         let components = serializedString.components(separatedBy: ":")
         let value = components.dropFirst().joined(separator: ":")
-        switch components.first {
-        case .some(Identifier.emailTypeString):
+        guard let typeString = components.first else {
+            return nil
+        }
+        switch typeString {
+        case "\(EmailAddress.self)":
             if let email = EmailAddress(value) {
                 self = Identifier(email)
                 return
             }
-        case .some(Identifier.phoneTypeString):
+        case "\(PhoneNumber.self)":
             let phoneComponents = value.split(separator: ":").map { String($0) }
             guard phoneComponents.count == 2 && !phoneComponents[0].isEmpty && !phoneComponents[1].isEmpty else {
                 return nil

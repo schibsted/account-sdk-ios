@@ -84,7 +84,7 @@ extension PasswordCoordinator {
             withRedirectPath: ClientConfiguration.RedirectInfo.ForgotPassword.path,
             redirectQueryItems: [
                 URLQueryItem(name: "local_id", value: localID),
-                URLQueryItem(name: "scopes", value: scopes.joined(separator: " "))
+                URLQueryItem(name: "scopes", value: scopes.joined(separator: " ")),
             ]
         )
         self.present(url: url)
