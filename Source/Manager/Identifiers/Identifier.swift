@@ -112,7 +112,11 @@ public enum Identifier: IdentifierProtocol {
 
         let maybeKey = json
             .map { (key: $0.key, data: $0.value as? JSONObject) }
-            .filter { (try? $0.data?.string(for: "value")) == serializedString }
+            .filter {
+                guard let data = $0.data else { return false }
+                guard let value = try? data.string(for: "value") else { return false }
+                return value == serializedString
+            }
             .first?
             .key
 
