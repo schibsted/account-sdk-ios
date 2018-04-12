@@ -61,7 +61,7 @@ struct PasswordlessTokenStore {
         }
 
         let components = data.components(separatedBy: ":")
-        guard let token = components.first else {
+        guard let token = components.first, !token.isEmpty else {
             throw PasswordlessTokenStoreError.invalidData(connection, data)
         }
 

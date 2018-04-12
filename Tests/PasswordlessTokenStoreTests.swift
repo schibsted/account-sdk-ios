@@ -52,10 +52,6 @@ class PasswordlessTokenStoreTests: QuickSpec {
             }
 
             it("Should throw if phone's number is in the old format (i.e. without a separated country code)") {
-                Settings.setValue("\(self.testCountryCode)-\(self.testPhoneNumber):\(self.testToken)", forKey: "passwordless-token.sms")
-                let data = try? PasswordlessTokenStore.getData(for: .sms)
-                expect(data?.identifier.normalizedString).to(equal(self.testCountryCode + self.testPhoneNumber))
-
                 Settings.setValue("\(self.testCountryCode)\(self.testPhoneNumber):\(self.testToken)", forKey: "passwordless-token.sms")
                 expect { try PasswordlessTokenStore.getData(for: .email) }.to(throwError())
             }
