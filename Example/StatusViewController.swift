@@ -105,7 +105,7 @@ class StatusViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
-    @IBAction func didClickScopes(_ sender: Any) {
+    @IBAction func didClickScopes(_: Any) {
         var message: String = "n/a"
         if let scopes = UIApplication.identityManager.currentUser.tokens?.accessToken {
             if let jwt = try? JWTHelper.toJSON(string: scopes) {
@@ -121,7 +121,7 @@ class StatusViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
-    @IBAction func didClickRefresh(_ sender: Any) {
+    @IBAction func didClickRefresh(_: Any) {
         UIApplication.identityManager.currentUser.refresh { result in
             switch result {
             case .success:

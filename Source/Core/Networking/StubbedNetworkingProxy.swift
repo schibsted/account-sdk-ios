@@ -252,7 +252,10 @@ class StubbedNetworkingProxy: NetworkingProxy {
         let config = URLSessionConfiguration.default
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
         config.urlCache = nil
-        config.httpAdditionalHeaders = [Networking.Header.userAgent.rawValue: UserAgent().value]
+        config.httpAdditionalHeaders = [
+            Networking.Header.userAgent.rawValue: UserAgent().value,
+            Networking.Header.xOIDC.rawValue: "true",
+        ]
         return URLSession(configuration: config)
     }
 

@@ -11,7 +11,7 @@ private func keyValueTuples(_ array: [JSONObject]) -> [(key: String, value: Stri
             guard let key = try? json.string(for: "key") else { return nil }
             guard let value = try? json.string(for: "value") else { return nil }
             return (key, value)
-    }
+        }
 }
 
 /**

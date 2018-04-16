@@ -125,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let identityManager: IdentityManager = IdentityManager(clientConfiguration: .current)
     lazy var identityUI = {
-        return IdentityUI(configuration: .current, identityManager: self.identityManager)
+        IdentityUI(configuration: .current, identityManager: self.identityManager)
     }()
 
     var passwordFlowViewController: PasswordFlowViewController? {

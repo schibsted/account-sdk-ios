@@ -8,6 +8,31 @@ import Nimble
 import Quick
 @testable import SchibstedAccount
 
+private func haveStandardHeadersSet() -> Predicate<Dictionary<String, String>> {
+    return Predicate({ (expression) -> PredicateResult in
+        let expected = [
+            Networking.Header.userAgent.rawValue: UserAgent().value,
+            Networking.Header.xOIDC.rawValue: "true",
+        ]
+        let unexpected = [
+            Networking.Header.xSchibstedAccountUserAgent.rawValue,
+        ]
+        let msg = ExpectationMessage.expectedActualValueTo("be \(expected)")
+        guard let actual = try expression.evaluate() else {
+            return PredicateResult(status: .fail, message: msg)
+        }
+
+        for key in unexpected where actual.keys.contains(key) {
+            return PredicateResult(status: .fail, message: msg)
+        }
+
+        for (key, value) in expected where actual[key] != value {
+            return PredicateResult(status: .fail, message: msg)
+        }
+
+        return PredicateResult(status: .matches, message: msg)
+    })
+}
 class IdentityAPITests: QuickSpec {
 
     let testNumber = "+4712345678"
@@ -53,8 +78,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedFormData?["client_secret"]).to(equal(self.testClientSecret))
                 expect(callData.passedFormData?["connection"]).to(equal("sms"))
                 expect(callData.passedFormData?["locale"]).to(equal(self.testLocale))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("Should pass in correct form data with email") {
@@ -82,8 +106,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedFormData?["client_id"]).to(equal(self.testClientID))
                 expect(callData.passedFormData?["connection"]).to(equal("email"))
                 expect(callData.passedFormData?["locale"]).to(equal(self.testLocale))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("Should pass in correct form data with email containing plus character") {
@@ -111,8 +134,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedFormData?["client_id"]).to(equal(self.testClientID))
                 expect(callData.passedFormData?["connection"]).to(equal("email"))
                 expect(callData.passedFormData?["locale"]).to(equal(self.testLocale))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("Should handle network errors") {
@@ -231,8 +253,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedFormData?["code"]) == self.testAuthCode
                 expect(callData.passedFormData?["passwordless_token"]) == String(describing: self.testPasswordlessToken)
                 expect(callData.passedFormData?["scope"]) == "openid"
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("Should handle network errors") {
@@ -386,8 +407,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedFormData?["client_id"]).to(equal(self.testClientID))
                 expect(callData.passedFormData?["grant_type"]).to(equal("refresh_token"))
                 expect(callData.passedFormData?["refresh_token"]).to(equal(self.testRefreshToken))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("Should handle network errors") {
@@ -478,8 +498,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedFormData?["client_id"]) == self.testClientID
                 expect(callData.passedFormData?["passwordless_token"]) == String(describing: self.testPasswordlessToken)
                 expect(callData.passedFormData?["locale"]) == self.testLocale
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("Should handle network errors") {
@@ -566,8 +585,7 @@ class IdentityAPITests: QuickSpec {
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain(self.testUserID))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
         }
 
@@ -589,8 +607,7 @@ class IdentityAPITests: QuickSpec {
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain(self.testUserID))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
         }
 
@@ -638,8 +655,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedFormData?["client_id"]).to(equal(self.testClientID))
                 expect(callData.passedFormData?["client_secret"]).to(equal("clientSecret"))
                 expect(callData.passedFormData?["grant_type"]).to(equal("client_credentials"))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
         }
 
@@ -663,8 +679,7 @@ class IdentityAPITests: QuickSpec {
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain("phone"))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("should pass in correct data") {
@@ -686,8 +701,7 @@ class IdentityAPITests: QuickSpec {
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain("email"))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
         }
 
@@ -710,8 +724,7 @@ class IdentityAPITests: QuickSpec {
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain(self.testUserID))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
         }
 
@@ -732,8 +745,7 @@ class IdentityAPITests: QuickSpec {
                 expect(Networking.testingProxy.calledOnce).to(beTrue())
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
         }
 
@@ -758,8 +770,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedFormData?["email"]).to(equal(self.testEmail))
                 expect(callData.passedFormData?["password"]).to(equal("password"))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("Should get the usermodel back") {
@@ -802,8 +813,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedFormData?["clientId"]).to(equal(self.testClientID))
                 expect(callData.passedFormData?["type"]).to(equal(TokenExchangeType.code.rawValue))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("should pass in correct data session") {
@@ -826,8 +836,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedFormData?["clientId"]).to(equal(self.testClientID))
                 expect(callData.passedFormData?["type"]).to(equal(TokenExchangeType.session.rawValue))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
         }
 
@@ -853,8 +862,7 @@ class IdentityAPITests: QuickSpec {
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedFormData?["name"]).to(contain("new name"))
                 expect(callData.passedUrl?.absoluteString).to(contain(self.testUserID))
-                expect(callData.sentHTTPHeaders?[Networking.Header.userAgent.rawValue]).to(equal(UserAgent().value))
-                expect(callData.sentHTTPHeaders?[Networking.Header.uniqueUserAgent.rawValue]).to(beNil())
+                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
             }
 
             it("should get the new profile returned") {

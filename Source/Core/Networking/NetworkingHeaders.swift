@@ -9,7 +9,8 @@ extension Networking {
         case authorization = "Authorization"
         case contentLength = "Content-Length"
         case userAgent = "User-Agent"
-        case uniqueUserAgent = "X-Identity-User-Agent"
+        case xSchibstedAccountUserAgent = "X-Schibsted-Account-User-Agent"
+        case xOIDC = "X-OIDC"
     }
 }
 
