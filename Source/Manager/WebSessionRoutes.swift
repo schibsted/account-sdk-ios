@@ -11,8 +11,8 @@ import Foundation
 public class WebSessionRoutes {
     private let clientConfiguration: ClientConfiguration
 
-    func makeURLFromPath(_ path: String, redirectPath: String?, queryItems: [URLQueryItem]) -> URL {
-        let redirectURL = self.clientConfiguration.redirectBaseURL(withPathComponent: redirectPath)
+    func makeURLFromPath(_ path: String, redirectPath: String?, queryItems: [URLQueryItem], redirectQueryItems: [URLQueryItem]?) -> URL {
+        let redirectURL = self.clientConfiguration.redirectBaseURL(withPathComponent: redirectPath, additionalQueryItems: redirectQueryItems)
         guard var urlComponents = URLComponents(url: self.clientConfiguration.serverURL, resolvingAgainstBaseURL: true) else {
             preconditionFailure("Failed to create URLComponents from \(self.clientConfiguration.serverURL)")
         }
@@ -44,7 +44,7 @@ public class WebSessionRoutes {
     }
     /// Allows to customize redirectPath
     public func logoutURL(withRedirectPath path: String? = nil) -> URL {
-        return self.makeURLFromPath("/logout", redirectPath: path, queryItems: [])
+        return self.makeURLFromPath("/logout", redirectPath: path, queryItems: [], redirectQueryItems: nil)
     }
 
     /**
@@ -55,10 +55,16 @@ public class WebSessionRoutes {
     public var forgotPasswordURL: URL {
         return self.forgotPasswordURL(withRedirectPath: ClientConfiguration.RedirectInfo.ForgotPassword.path)
     }
-    /// Allows to customize redirectPath
-    public func forgotPasswordURL(withRedirectPath path: String? = nil) -> URL {
+
+    /**
+     Same as `forgotPasswordURL` but customizable
+
+     - parameter withRedirectPath: the redirect path that will be injected in the URL
+     - parameter redirectQueryItems: any query items you want the redirect url to contain
+     */
+    public func forgotPasswordURL(withRedirectPath path: String? = nil, redirectQueryItems: [URLQueryItem]? = nil) -> URL {
         Settings.setValue(path, forKey: ClientConfiguration.RedirectInfo.ForgotPassword.settingsKey)
-        return self.makeURLFromPath("/flow/password", redirectPath: path, queryItems: [])
+        return self.makeURLFromPath("/flow/password", redirectPath: path, queryItems: [], redirectQueryItems: redirectQueryItems)
     }
 
     /**
@@ -67,10 +73,16 @@ public class WebSessionRoutes {
      Navigate a web view with this URL to go to user accounts page
      */
     public var accountSummaryURL: URL {
-        return self.accountSummaryURL(withRedirectPath: nil)
+        return self.accountSummaryURL(withRedirectPath: ClientConfiguration.RedirectInfo.AccountSummary.path)
     }
-    /// Allows to customize redirectPath
-    public func accountSummaryURL(withRedirectPath path: String? = nil) -> URL {
-        return self.makeURLFromPath("/account/summary", redirectPath: path, queryItems: [])
+
+    /**
+     Same as `accountSummaryURL` but customizable
+
+     - parameter withRedirectPath: the redirect path that will be injected in the URL
+     - parameter redirectQueryItems: any query items you want the redirect url to contain
+     */
+    public func accountSummaryURL(withRedirectPath path: String? = nil, redirectQueryItems: [URLQueryItem]? = nil) -> URL {
+        return self.makeURLFromPath("/account/summary", redirectPath: path, queryItems: [], redirectQueryItems: redirectQueryItems)
     }
 }

@@ -30,7 +30,7 @@ extension ClientError {
             return "ErrorString.unableToResend".localized(from: localizationBundle)
         case .invalidUserCredentials:
             return "PasswordScreenString.invalidPassword".localized(from: localizationBundle)
-        case .invalidClientCredentials, .invalidUser, .unexpectedIdentifier, .unverifiedEmail, .alreadyRegistered, .userRefreshFailed:
+        case .invalidClientCredentials, .invalidUser, .unexpectedIdentifier, .unverifiedEmail, .alreadyRegistered, .userRefreshFailed, .invalidScope:
             //
             // These do not have translations deliberately because they don't make sense to a user when trying to visually login, or
             // they are handled in some other way in the UI flows:

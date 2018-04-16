@@ -7,6 +7,7 @@ class AuthenticationCoordinator: FlowCoordinator {
     struct Input {
         let identifier: Identifier
         let loginFlowVariant: LoginMethod.FlowVariant
+        let scopes: [String]
     }
 
     enum Output {
