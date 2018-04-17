@@ -5,6 +5,10 @@
 
 import Foundation
 
+public protocol TrackingEventsHandlerDelegate: class {
+    func trackingEventsHandlerDidReceivedJWE(_ jwe: String)
+}
+
 /**
  Used by some internal objects to handle tracking data
 
@@ -13,6 +17,8 @@ import Foundation
  pass that along to the objects that require tracking
  */
 public protocol TrackingEventsHandler: class {
+    /// This is used by the IdentityUI to know when there's some extra information available for it to use
+    var delegate: TrackingEventsHandlerDelegate? { get set }
     /// Will be set by IdentityUI on UI initialization
     var clientConfiguration: ClientConfiguration? { get set }
     /// Will be set by IdentityUI on UI initialization

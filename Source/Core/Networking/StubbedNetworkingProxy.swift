@@ -248,6 +248,8 @@ private extension String {
 }
 
 class StubbedNetworkingProxy: NetworkingProxy {
+    var additionalHeaders: [String : String]? = nil
+
     let session: URLSession = {
         return DefaultNetworkingProxy().session
     }()

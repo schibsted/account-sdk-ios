@@ -186,6 +186,7 @@ public class IdentityUI {
         self.fetchStatusInteractor = FetchStatusInteractor(identityManager: identityManager)
         self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: identityManager)
         self.configuration.tracker?.clientConfiguration = self.configuration.clientConfiguration
+        self.configuration.tracker?.delegate = self
     }
 
     /**
@@ -550,6 +551,14 @@ extension IdentityUI {
         case .cannotHandle:
             return false
         }
+    }
+}
+
+extension IdentityUI: TrackingEventsHandlerDelegate {
+    public func trackingEventsHandlerDidReceivedJWE(_ jwe: String) {
+        var previousHeaders = Networking.additoionalHeaders ?? [:]
+        previousHeaders[Networking.Header.pulseJWE.rawValue] = jwe
+        Networking.additoionalHeaders = previousHeaders
     }
 }
 

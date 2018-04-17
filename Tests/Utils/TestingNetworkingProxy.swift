@@ -43,6 +43,15 @@ class TestingNetworkingProxy: NetworkingProxy {
         return self.internalProxy.session
     }
 
+    var additionalHeaders: [String : String]? {
+        set(newValue) {
+            self.internalProxy.additionalHeaders = newValue
+        }
+        get {
+            return self.internalProxy.additionalHeaders
+        }
+    }
+
     var internalProxy: NetworkingProxy = StubbedNetworkingProxy()
 
     var calledOnce: Bool {

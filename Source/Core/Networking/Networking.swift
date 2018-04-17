@@ -30,6 +30,15 @@ extension URLSessionTask.State: CustomStringConvertible {
 struct Networking {
     static var proxy: NetworkingProxy = DefaultNetworkingProxy()
 
+    static var additoionalHeaders: [String: String]? {
+        get {
+            return self.proxy.additionalHeaders
+        }
+        set(newValue) {
+            self.proxy.additionalHeaders = newValue
+        }
+    }
+
     static func dataTask(
         for session: URLSession,
         request: URLRequest,
@@ -52,6 +61,10 @@ struct Networking {
             request.httpBody = data
             request.setValue("\(data.count)", for: .contentLength)
             request.setValue("application/x-www-form-urlencoded", for: .contentType)
+        }
+
+        for (key, value) in self.proxy.additionalHeaders ?? [:] {
+            request.setValue(value, forHTTPHeaderField: key)
         }
 
         for (key, value) in headers ?? [:] {
