@@ -29,7 +29,7 @@ You will not be able to compile the Example app out of the box without doing one
 
 **Core Developer**:
 
-We use blackbox for secrets. The Example and DemoApp use configuration files that are only available to active developers of the SDK. To use the example app out of the box, you will need to ask for permission to be added to the blackbox admins.
+We use blackbox for secrets. The Example app uses configuration files that are only available to active developers of the SDK. To use the example app out of the box, you will need to ask for permission to be added to the blackbox admins.
     1. Go [here](https://github.com/StackExchange/blackbox) and follow installation instructions.
     1. [Add yourself](https://github.com/StackExchange/blackbox#how-to-indoctrinate-a-new-user-into-the-system) and push a PR.
     1. Wait till an admin re-encrypts files with your credentials and merges your PR.
@@ -44,23 +44,7 @@ The Example app will then at least build and there's an offline mode switch (exp
 
 **Building**:
 
-In CocoaPods-based projects you work within the project of the example application, which is inside the "Example" folder. At first the workspace needs to be created by running `pod install` in the terminal, this has been wrapped in a script:
-
-```bash
-./pod_install.sh
-open Example/SchibstedAccount.xcworkspace
-```
-
-The last command will open "SchibstedAccount.xcworkspace" file in Xcode.
-Run the application using &#8984;R (Product - Run).
-Make sure that the "SchibstedAccount-Example" scheme is selected.
-
-For core developers:
-There's a DemoApp that is deployed to HockeyAPP, the following should work if you have been added to the blackbox keyring:
-
-```bash
-open DemoApp/SchibstedAccountDemo.xcworkspace
-```
+Open up SchibstedAccount.xcodeproj and build away.
 
 ## Development
 
