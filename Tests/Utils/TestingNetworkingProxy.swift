@@ -110,6 +110,12 @@ class TestingNetworkingProxy: NetworkingProxy {
         let dataTask = self.internalProxy.dataTask(for: session, request: request, completion: decoratedCallback)
         let requestHeaders = request.allHTTPHeaderFields ?? [:]
         let sessionHeaders = session.configuration.httpAdditionalHeaders as? [String: String] ?? [:]
+        if let headers = session.configuration.httpAdditionalHeaders {
+            precondition(
+                headers is [String: String],
+                "You've done something weird, HTTP headers should always be [String: String]"
+            )
+        }
         callData.sentHTTPHeaders = requestHeaders.merging(sessionHeaders) { current, _ in current }
         return dataTask
     }

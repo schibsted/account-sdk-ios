@@ -29,7 +29,6 @@ extension IdentityUI {
 }
 
 extension IdentityUI.Route {
-
     /// Initializes a new route from the given universal (i.e. deep) link URL and configuration. The initializer returns `nil` in case the given URL isn't
     /// recognized as part of an identity process (so that you can possibly handle it in a different way in case you have universal links other than the ones
     /// coming from the identity process).
@@ -63,7 +62,7 @@ extension IdentityUI.Route {
                 let localID = payload.queryComponents["local_id"]?.first,
                 let identifier = Identifier(localID: localID),
                 case let .email(email) = identifier
-                else {
+            else {
                 self = .login
                 return
             }
