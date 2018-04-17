@@ -262,6 +262,7 @@ extension IdentityUI {
         case let .byLoginMethod(loginMethod, vc, localizedTeaserText):
             let viewController = self.makeIdentifierViewController(loginMethod: loginMethod, localizedTeaserText: localizedTeaserText, completion: completion)
             self.navigationController.viewControllers = [viewController]
+            configuration.presentationHook?(self.navigationController)
             vc.present(self.navigationController, animated: true)
         }
     }
@@ -433,6 +434,7 @@ extension IdentityUI {
     ) {
         let viewController = self.makeIdentifierViewController(loginMethod: route.loginMethod, localizedTeaserText: nil, completion: completion)
         self.navigationController.viewControllers = [viewController]
+        configuration.presentationHook?(self.navigationController)
         self.handle(route: route, byPresentingIn: presentingViewController)
     }
 
