@@ -13,6 +13,8 @@ private func haveStandardHeadersSet() -> Predicate<Dictionary<String, String>> {
         let expected = [
             Networking.Header.userAgent.rawValue: UserAgent().value,
             Networking.Header.xOIDC.rawValue: "true",
+            Networking.Header.sdkVersion.rawValue: sdkVersion,
+            Networking.Header.sdkType.rawValue: "ios",
         ]
         let unexpected = [
             Networking.Header.xSchibstedAccountUserAgent.rawValue,

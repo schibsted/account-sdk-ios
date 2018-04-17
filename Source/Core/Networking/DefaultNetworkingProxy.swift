@@ -13,6 +13,8 @@ class DefaultNetworkingProxy: NetworkingProxy {
         config.httpAdditionalHeaders = [
             Networking.Header.userAgent.rawValue: UserAgent().value,
             Networking.Header.xOIDC.rawValue: "true",
+            Networking.Header.sdkVersion.rawValue: sdkVersion,
+            Networking.Header.sdkType.rawValue: "ios",
         ]
         return URLSession(configuration: config)
     }()

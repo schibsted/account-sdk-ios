@@ -11,6 +11,8 @@ extension Networking {
         case userAgent = "User-Agent"
         case xSchibstedAccountUserAgent = "X-Schibsted-Account-User-Agent"
         case xOIDC = "X-OIDC"
+        case sdkType = "SDK-Type"
+        case sdkVersion = "SDK-Version"
     }
 }
 
