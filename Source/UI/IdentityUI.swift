@@ -165,7 +165,7 @@ public class IdentityUI {
 
             navigationController.dismiss(animated: true, completion: nil)
         }
-
+        configuration.presentationHook?(navigationController)
         viewController.present(navigationController, animated: true, completion: nil)
     }
 
