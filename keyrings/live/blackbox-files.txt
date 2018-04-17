@@ -1,4 +1,3 @@
-DemoApp/SchibstedAccountDemo/ClientConfiguration.json
 DemoApp/SchibstedAccountDemo/Info.plist
 Example/ClientConfiguration.json
 Example/Info.plist
