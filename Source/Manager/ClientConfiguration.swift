@@ -196,6 +196,23 @@ public struct ClientConfiguration {
 
     /**
      Base URL for redirects that will be created by the SDK for various API calls.
+
+     The way this is constructed depends on your `appURLScheme`. The SDK currently supports two formats that SPiD uses:
+
+     1. format0 - this is in the format of "spid-<client-id>" - SDK treats this as default.
+     1. format1 - this is in the format of "<reverse-dns-of-your-service-domain>.<client-id>"
+
+     SPiD has a number of default routes set up for mobile clients (referred to as roots in the SDK - see `redirectURLRoot`). The way these are added
+     to a redirect depends on the format of your app scheme.
+
+     With format0 SPiD adds the root s a URL host component. I.e. scheme://root. This is usually "login" and the SDK defaults to that, but it
+     can be others (see your self service and they will be listed there). For format1, the root is a URL path component. I.e. scheme://host/path-component.
+     And the host (or more accurately "authority") URL component is omitted, which means the format is: scheme:/root
+
+     - parameter withPathComponent: if specified, a "path" url query item will be added to the URL with the value of this argument
+     - parameter additionalQueryItems: if you want any additional query items added to the URL
+
+     - SeeAlso `redirectURLRoot`
      */
     public func redirectBaseURL(withPathComponent path: String?, additionalQueryItems: [URLQueryItem]? = nil) -> URL {
         var components = URLComponents()
@@ -271,5 +288,24 @@ public struct ClientConfiguration {
             static let settingsKey = "RedirectInfo.ForgotPassword"
             static let path = "enter-password"
         }
+
+        struct AccountSummary {
+            static let settingsKey = "RedirectInfo.AccountSummary"
+            static let path = "account-summary"
+        }
+    }
+}
+
+extension ClientConfiguration: Equatable {
+    public static func == (lhs: ClientConfiguration, rhs: ClientConfiguration) -> Bool {
+        return lhs.serverURL == rhs.serverURL
+            && lhs.providerComponent == rhs.providerComponent
+            && lhs.clientID == rhs.clientID
+            && lhs.clientSecret == rhs.clientSecret
+            && lhs.locale == rhs.locale
+            && lhs.appURLScheme == rhs.appURLScheme
+            && lhs.defaultAppURLScheme == rhs.defaultAppURLScheme
+            && lhs.environment == rhs.environment
+            && lhs.redirectURLRoot == rhs.redirectURLRoot
     }
 }

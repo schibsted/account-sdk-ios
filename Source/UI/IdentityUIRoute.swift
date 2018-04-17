@@ -14,7 +14,7 @@ extension IdentityUI {
 
         /// Route to the screen where the user can enter her password. The user's email should have previously been saved by calling
         /// `IdentityUI.Route.storePersistentMetadata(for:)`, so it's made available again as an associated value when constructing the route from a URL.
-        case enterPassword(for: EmailAddress)
+        case enterPassword(for: EmailAddress, scopes: [String])
 
         /// Route to the next step after email validation occurred after signup.
         case validateAuthCode(code: String, shouldPersistUser: Bool)
@@ -57,42 +57,24 @@ extension IdentityUI.Route {
 
         switch launchData {
         case .afterForgotPassword:
-            guard let string: String = IdentityUI.Route.loadLastPersistedMetadata(), let email = EmailAddress(string) else {
+            let scopes = payload.queryComponents["scopes"]?.first?.split(separator: " ").map { String($0) } ?? []
+            guard
+                let localID = payload.queryComponents["local_id"]?.first,
+                let identifier = Identifier(localID: localID),
+                case let .email(email) = identifier
+            else {
                 self = .login
                 return
             }
-            self = .enterPassword(for: email)
+            self = .enterPassword(for: email, scopes: scopes)
+            return
         case let .codeAfterSignup(code, shouldPersistUser):
             self = .validateAuthCode(code: code, shouldPersistUser: shouldPersistUser)
+            return
         case let .codeAfterUnvalidatedLogin(code):
             // We have no way to retrieve the `shouldPersistUser` flag from the redirect URL in this case, so we just fall back to `false`.
             self = .validateAuthCode(code: code, shouldPersistUser: false)
-        }
-    }
-}
-
-extension IdentityUI.Route {
-    private static let lastPersistentMetadataStoredKey = "route.persistent-metadata"
-
-    /// Should be called to persistently store some data associated to the route so that it can later been retrieved when the same route is constructed to
-    /// handle a universal (i.e. deep) link. For instance, it is used to store the user's email when requesting a password change, so that the email can later
-    /// be prefilled when opening the app due to the change confirmation deep link.
-    ///
-    /// - Parameter route: The route with associated metadata to be stored. At the moment, only `.enterPassword` is supported.
-    ///
-    /// - Note: Metadata for a single route can be persisted at a time, since persisting new metadata will replace previously persisted one.
-    static func persistMetadata(for route: IdentityUI.Route) {
-        switch route {
-        case .login, .validateAuthCode(code: _):
-            // No persistent metadata need to be stored.
             return
-        case let .enterPassword(for: email):
-            // Metadata replaces old one (if any).
-            Settings.setValue(email.normalizedString, forKey: IdentityUI.Route.lastPersistentMetadataStoredKey)
         }
-    }
-
-    fileprivate static func loadLastPersistedMetadata<T>() -> T? {
-        return Settings.value(forKey: IdentityUI.Route.lastPersistentMetadataStoredKey) as? T
     }
 }

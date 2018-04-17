@@ -29,7 +29,8 @@ public protocol IdentityManagerDelegate: class {
 
  The general approach is to first create an IdentityManager with a `ClientConfiguration`. After that you may check if there already
  is a user that was previously persisted. This can be checked via `IdentityManager.currentUser`'s `User.state` which will tell you if the internal
- user is in a logged in or logged out state.
+ user is in a logged in or logged out state. In order to comply with privacy regulations, you also need to make sure that the user accepts any update to terms
+ and conditions that may have been issued since the user's last visit: see `User`'s documentation for more details on how to do that.
 
  The objective of the identity manager is to create a user object. There should be no need to keep an identity manager lying around once
  you have a reference to the internal user object.
@@ -55,6 +56,11 @@ public protocol IdentityManagerDelegate: class {
 
  Currently the keychain user is a singleton. So the last user that is "validated" will be persisted. And the last user that is persisted
  will be the one that is loaded by a new instance of the `IdentityManager`.
+
+ ### Scopes
+
+ Some of the functions take a scope parameter. This is related to OAuth scopes. If you want to add the ability to specify custom scopes or you
+ want access to some already available predefined scopes, then you'll have to send a support request to support@spid.no
 
  ### **Support**
 
@@ -341,14 +347,16 @@ public class IdentityManager: IdentityManagerProtocol {
 
      - parameter username: `Identifier` representing the username to login with. Only email is supported.
      - parameter password: the password for the identifier
+     - parameter scopes: array of scopes you want the token to contain
      - parameter persistUser: whether the login status should be persistent on app's relaunches
      - parameter completion: a callback that is called after the credential is checked.
      */
-    public func login(username: Identifier, password: String, persistUser: Bool, completion: @escaping NoValueCallback) {
+    public func login(username: Identifier, password: String, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
         guard case .email = username else {
             completion(.failure(ClientError.unexpectedIdentifier(actual: username, expected: "only EmailAddress supported")))
             return
         }
+
         self.api.requestAccessToken(
             clientID: self.clientConfiguration.clientID,
             clientSecret: self.clientConfiguration.clientSecret,
@@ -356,7 +364,7 @@ public class IdentityManager: IdentityManagerProtocol {
             refreshToken: nil,
             username: username.normalizedString,
             password: password,
-            scope: ["openid"]
+            scope: scopes + ["openid"]
         ) { [weak self] result in
             self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }

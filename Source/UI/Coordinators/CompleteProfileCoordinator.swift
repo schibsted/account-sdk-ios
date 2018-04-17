@@ -21,6 +21,7 @@ class CompleteProfileCoordinator: FlowCoordinator {
     var child: ChildFlowCoordinator?
 
     private let termsInteractor: TermsInteractor
+    private var userTermsInteractor: UserTermsInteractor?
     private let requiredFieldsInteractor: RequiredFieldsInteractor
 
     init(
@@ -142,7 +143,8 @@ extension CompleteProfileCoordinator {
         if loginFlowVariant == .signin, let currentUser = currentUser {
             self.presentedViewController?.startLoading()
 
-            self.termsInteractor.fetchStatus(for: currentUser) { [weak self] result in
+            self.userTermsInteractor = UserTermsInteractor(user: currentUser)
+            self.userTermsInteractor?.fetchStatus { [weak self] result in
                 self?.presentedViewController?.endLoading()
 
                 switch result {
@@ -190,14 +192,14 @@ extension CompleteProfileCoordinator {
         )
 
         let viewController = TermsViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-        viewController.didRequestAction = { action in
+        viewController.didRequestAction = { [weak self] action in
             switch action {
             case .acceptTerms:
                 completion(.wereJustAccepted)
             case let .learnMore(summary):
-                self.showTermsSummaryView(summary)
+                self?.showTermsSummaryView(summary)
             case let .open(url):
-                self.present(url: url)
+                self?.present(url: url)
             case .back:
                 completion(.back)
             case .cancel:

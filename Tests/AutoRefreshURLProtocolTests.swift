@@ -34,7 +34,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
                 }
 
                 expect(task.currentRequest?.allHTTPHeaderFields?[Networking.Header.userAgent.rawValue]).to(beNil())
-                expect(task.currentRequest?.allHTTPHeaderFields?[Networking.Header.uniqueUserAgent.rawValue]) == UserAgent().value
+                expect(task.currentRequest?.allHTTPHeaderFields?[Networking.Header.xSchibstedAccountUserAgent.rawValue]) == UserAgent().value
 
                 task.resume()
             }

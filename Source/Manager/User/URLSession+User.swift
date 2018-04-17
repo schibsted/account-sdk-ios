@@ -48,7 +48,7 @@ extension URLSession {
     public convenience init(user: User, configuration: URLSessionConfiguration, delegate: URLSessionDelegate?, delegateQueue: OperationQueue?) {
         var adjustedheaders = configuration.httpAdditionalHeaders ?? [AnyHashable: Any]()
         adjustedheaders.updateValue(String(describing: ObjectIdentifier(user).hashValue), forKey: AutoRefreshURLProtocol.key)
-        adjustedheaders.updateValue(UserAgent().value, forKey: Networking.Header.uniqueUserAgent.rawValue)
+        adjustedheaders.updateValue(UserAgent().value, forKey: Networking.Header.xSchibstedAccountUserAgent.rawValue)
         let configurationCopy = configuration
         configurationCopy.httpAdditionalHeaders = adjustedheaders
         configurationCopy.protocolClasses = [AutoRefreshURLProtocol.self]

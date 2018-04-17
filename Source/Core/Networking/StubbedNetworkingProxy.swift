@@ -248,13 +248,9 @@ private extension String {
 }
 
 class StubbedNetworkingProxy: NetworkingProxy {
-    var session: URLSession {
-        let config = URLSessionConfiguration.default
-        config.requestCachePolicy = .reloadIgnoringLocalCacheData
-        config.urlCache = nil
-        config.httpAdditionalHeaders = [Networking.Header.userAgent.rawValue: UserAgent().value]
-        return URLSession(configuration: config)
-    }
+    let session: URLSession = {
+        return DefaultNetworkingProxy().session
+    }()
 
     static func insert<K>(in dictionary: inout SynchronizedDictionary<K, [NetworkStub]>, key: K, stub: NetworkStub) {
         dictionary.getAndSet(key: key) { stubs in

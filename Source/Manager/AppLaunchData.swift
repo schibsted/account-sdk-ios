@@ -41,9 +41,9 @@ extension AppLaunchData {
         case persistUser = "persist-user"
     }
     /**
-     Initializes this object if the launchOptions contains a valid url that is parsable by the SDK.
+     Initializes this object if url is a valid deep link.
 
-     - parameter launchOptions: Options you get through `UIApplicationDelegate.application(_:didFinishLaunchingWithOptions:)`
+     - parameter url: The url you get through `UIApplicationDelegate.application(_:url:options:)`.
      */
     public init?(launchOptions: [AnyHashable: Any]?, clientConfiguration: ClientConfiguration) {
         guard let maybeURL = launchOptions?[UIApplicationLaunchOptionsKey.url], let url = maybeURL as? URL else {

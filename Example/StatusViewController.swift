@@ -3,7 +3,7 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import SchibstedAccount
+@testable import SchibstedAccount
 import UIKit
 
 extension StatusViewController: IdentityManagerDelegate {
@@ -43,7 +43,6 @@ extension StatusViewController: IdentityUIDelegate {
 }
 
 class StatusViewController: UIViewController {
-    let identityUI = IdentityUI(configuration: .current, identityManager: UIApplication.identityManager)
     var session: URLSession?
 
     @IBOutlet var userStateLabel: UILabel!
@@ -56,18 +55,19 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didClickPasswordlessEmailLogin(_: Any) {
-        self.identityUI.presentIdentityProcess(from: self, loginMethod: .email)
+        UIApplication.identityUI.presentIdentityProcess(from: self, loginMethod: .email)
     }
 
     @IBAction func didClickPasswordlessPhoneLogin(_: Any) {
-        self.identityUI.presentIdentityProcess(from: self, loginMethod: .phone)
+        UIApplication.identityUI.presentIdentityProcess(from: self, loginMethod: .phone)
     }
 
     @IBAction func didClickPasswordLogin(_: Any) {
-        self.identityUI.presentIdentityProcess(
+        UIApplication.identityUI.presentIdentityProcess(
             from: self,
             loginMethod: .password,
-            localizedTeaserText: "I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser"
+            localizedTeaserText: "I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser",
+            scopes: ["random_scope"]
         )
     }
 
@@ -105,11 +105,38 @@ class StatusViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
+    @IBAction func didClickScopes(_: Any) {
+        var message: String = "n/a"
+        if let scopes = UIApplication.identityManager.currentUser.tokens?.accessToken {
+            if let jwt = try? JWTHelper.toJSON(string: scopes) {
+                do {
+                    message = try jwt.string(for: "scope").replacingOccurrences(of: " ", with: "\n")
+                } catch {
+                    message = "\(error)"
+                }
+            }
+        }
+        let alert = UIAlertController(title: "Scopes", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    @IBAction func didClickRefresh(_: Any) {
+        UIApplication.identityManager.currentUser.refresh { result in
+            switch result {
+            case .success:
+                print("refresh succeeded")
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         UIApplication.identityManager.delegate = self
-        self.identityUI.delegate = self
+        UIApplication.identityUI.delegate = self
 
         self.updateFromCurrentUser()
     }

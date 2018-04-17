@@ -86,6 +86,12 @@ public enum LoginMethod {
  that is generally used to continue a flow from the deep link.
  */
 public class IdentityUI {
+    /// Errors thrown when setting up `IdentityUI`.
+    public enum Error: Swift.Error {
+        /// The client configuration owned by a given instance (e.g. a `User`) is not the same as the client configuration owned by the given UI configuration.
+        case mismatchingClientConfiguration
+    }
+
     ///
     public weak var delegate: IdentityUIDelegate?
     ///
@@ -104,6 +110,64 @@ public class IdentityUI {
     // 1. The presentation of one process at a time can be enforced.
     // 2. When handling a universal link, the currently presented process (if any) can be retrieved.
     private static var presentedIdentityUI: IdentityUI?
+
+    private static var updatedTermsCoordinator: UpdatedTermsCoordinator?
+
+    /**
+     Present a screen where the user can review and accept updated terms and conditions.
+
+     In order to comply with privacy regulations, you need to make sure that the user accepts any update to terms and conditions that may have been issued since
+     the last visit. For this reason, at the startup of your app, right after having obtained the `IdentityManager.currentUser` and verified the login status,
+     if the user is logged-in you should call `user.agreements.status(:)` and, in case of `false` result (meaning the user has yet to accepted the latest
+     terms), obtain the latest terms by calling `IdentityManager.fetchTerms(:)` and finally call this method to present the updated terms. If the user fails to
+     accept the terms, a logout will automatically be forced.
+
+     - parameter: terms: The terms that the user should accept. They should be obtained by calling `IdentityManager.fetchTerms(:)`.
+     - parameter: user: The user that requires acceptance of new terms. It is important that you pass the same instance of `User` you previously obtained from
+       an `IdentityManager` and stored, otherwise you won't get logout notifications for that user in case the user is logged out for not having accepted the
+       new terms.
+     - parameter: viewController: The view controller to present the screen from.
+     - parameter: configuration: The UI configuration.
+
+     - Throws: `IdentityUI.Error.mismatchingClientConfiguration` if the client configuration owned by the given `User` instance is not the same as the one owned
+       by the given UI configuration.
+     */
+    public static func presentTerms(_ terms: Terms, for user: User, from viewController: UIViewController, configuration: IdentityUIConfiguration) throws {
+        guard user.clientConfiguration == configuration.clientConfiguration else {
+            throw Error.mismatchingClientConfiguration
+        }
+
+        if self.presentedIdentityUI == nil, self.updatedTermsCoordinator == nil {
+            // Another screen of the Identity UI is already presented.
+
+            guard user.state == .loggedIn else {
+                // The user logged out in the meantime, we ignore the presentation of the terms.
+                return
+            }
+
+            preconditionFailure("Attempt to present updated terms while another Identity UI flow is already presented.")
+        }
+
+        let navigationController = UINavigationController()
+        let input = UpdatedTermsCoordinator.Input(currentUser: user, terms: terms)
+
+        self.updatedTermsCoordinator = UpdatedTermsCoordinator(navigationController: navigationController, configuration: configuration)
+        self.updatedTermsCoordinator?.start(input: input) { output in
+            self.updatedTermsCoordinator = nil
+
+            switch output {
+            case .success:
+                break
+            case .cancel:
+                // Since user has not accepted the updated terms, we force a logout :'(
+                user.logout()
+            }
+
+            navigationController.dismiss(animated: true, completion: nil)
+        }
+
+        viewController.present(navigationController, animated: true, completion: nil)
+    }
 
     /**
      Creates an IdentityUI object
@@ -133,22 +197,25 @@ public class IdentityUI {
      `presentIdentityProcess(from:)` on an instance of `IdentityUI` initialized with a route (e.g. with `init(configuration:route:)`) will automatically handle
      the case of an existing identity process (if any) for you.
 
-     - parameter: viewController: which view controller to present the login UI from
-     - parameter: localizedTeaserText: an optional text that will be displayed above the identifier text field in the login screen (may be used to provide the
+     - parameter viewController: which view controller to present the login UI from
+     - parameter loginMethod: which login method to use
+     - parameter localizedTeaserText: an optional text that will be displayed above the identifier text field in the login screen (may be used to provide the
        user with some context about the login). Text longer than three lines will be truncated with ellipsis. Note that you should supply a localized text.
-     - parameter: localizedTeaserText: If provided, the identifier screen will show this text at the top.
+     - parameter scopes: which scopes you want your logged in user to have accesst to. See `IdentityManager` for more details
      */
     public func presentIdentityProcess(
         from viewController: UIViewController,
         loginMethod: LoginMethod,
-        localizedTeaserText: String? = nil
+        localizedTeaserText: String? = nil,
+        scopes: [String] = []
     ) {
         self.configuration.tracker?.loginMethod = loginMethod
         self.start(
             input: .byLoginMethod(
                 loginMethod,
                 presentingViewController: viewController,
-                localizedTeaserText: localizedTeaserText
+                localizedTeaserText: localizedTeaserText,
+                scopes: scopes
             )
         ) { [weak self] output in
             self?.complete(with: output)
@@ -219,7 +286,7 @@ public class IdentityUI {
 
 extension IdentityUI: FlowCoordinator {
     enum Input {
-        case byLoginMethod(LoginMethod, presentingViewController: UIViewController, localizedTeaserText: String?)
+        case byLoginMethod(LoginMethod, presentingViewController: UIViewController, localizedTeaserText: String?, scopes: [String])
         case byRoute(Route, presentingViewController: UIViewController)
     }
 
@@ -231,6 +298,11 @@ extension IdentityUI: FlowCoordinator {
     }
 
     func start(input: Input, completion: @escaping (Output) -> Void) {
+        guard type(of: self).updatedTermsCoordinator == nil else {
+            // Already presenting updated terms screen.
+            return
+        }
+
         if let presentedIdentityUI = IdentityUI.presentedIdentityUI {
             // A login flow is already in progress. It should not be allowed to have multiple login flows at the same time, but if we ended up here because
             // of a route, we need to give the currently presented login flow a chance to handle it.
@@ -250,17 +322,22 @@ extension IdentityUI: FlowCoordinator {
         // This is now the currently presented login flow.
         IdentityUI.presentedIdentityUI = self
         // Show the first screen in the flow.
-        self.showIdentifierViewController(input: input, completion: completion)
+        self.show(input: input, completion: completion)
     }
 }
 
 extension IdentityUI {
-    func showIdentifierViewController(input: Input, completion: @escaping (Output) -> Void) {
+    func show(input: Input, completion: @escaping (Output) -> Void) {
         switch input {
         case let .byRoute(route, vc):
             self.handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, completion: completion)
-        case let .byLoginMethod(loginMethod, vc, localizedTeaserText):
-            let viewController = self.makeIdentifierViewController(loginMethod: loginMethod, localizedTeaserText: localizedTeaserText, completion: completion)
+        case let .byLoginMethod(loginMethod, vc, localizedTeaserText, scopes):
+            let viewController = self.makeIdentifierViewController(
+                loginMethod: loginMethod,
+                localizedTeaserText: localizedTeaserText,
+                scopes: scopes,
+                completion: completion
+            )
             self.navigationController.viewControllers = [viewController]
             configuration.presentationHook?(self.navigationController)
             vc.present(self.navigationController, animated: true)
@@ -270,6 +347,7 @@ extension IdentityUI {
     private func makeIdentifierViewController(
         loginMethod: LoginMethod,
         localizedTeaserText: String?,
+        scopes: [String],
         completion: @escaping (Output) -> Void
     ) -> UIViewController {
         let navigationSettings = NavigationSettings(
@@ -294,7 +372,13 @@ extension IdentityUI {
                     }
                     switch disposition {
                     case .continue:
-                        self?.spawnCoordinator(loginMethod.authenticationType, for: identifier, on: loginFlowVariant, completion: completion)
+                        self?.spawnCoordinator(
+                            loginMethod.authenticationType,
+                            for: identifier,
+                            on: loginFlowVariant,
+                            scopes: scopes,
+                            completion: completion
+                        )
                     case let .abort(shouldDismiss):
                         if shouldDismiss {
                             self?.complete(with: .onlyDismiss)
@@ -337,6 +421,7 @@ extension IdentityUI {
         _ authenticationType: LoginMethod.AuthenticationType,
         for identifier: Identifier,
         on loginFlowVariant: LoginMethod.FlowVariant,
+        scopes: [String],
         completion: @escaping (Output) -> Void
     ) {
         let coordinator: AuthenticationCoordinator
@@ -356,7 +441,7 @@ extension IdentityUI {
             )
         }
 
-        let input = AuthenticationCoordinator.Input(identifier: identifier, loginFlowVariant: loginFlowVariant)
+        let input = AuthenticationCoordinator.Input(identifier: identifier, loginFlowVariant: loginFlowVariant, scopes: scopes)
         self.child = ChildFlowCoordinator(coordinator, input: input) { [weak self] output in
             self?.child = nil
 
@@ -389,13 +474,14 @@ extension IdentityUI {
         case .login:
             // Either we have a child that can handle the route or we have nothing else to do (since we are already in the root, a.k.a. login screen).
             self.attemptToPropagateRouteToChild(route)
-        case let .enterPassword(for: email):
+        case let .enterPassword(for: email, scopes: scopes):
+
             if !self.attemptToPropagateRouteToChild(route) {
                 // If no child handled the route, we need to present the password screen.
 
                 // The user changed her password after requesting a password change: we present a new login flow with the email prefilled (since we previously
                 // saved it on password change request).
-                self.spawnCoordinator(.password, for: Identifier(email), on: .signin) { [weak self] output in
+                self.spawnCoordinator(.password, for: Identifier(email), on: .signin, scopes: scopes) { [weak self] output in
                     self?.complete(with: output)
                 }
             }
@@ -432,7 +518,14 @@ extension IdentityUI {
         byPresentingIn presentingViewController: UIViewController,
         completion: @escaping (Output) -> Void
     ) {
-        let viewController = self.makeIdentifierViewController(loginMethod: route.loginMethod, localizedTeaserText: nil, completion: completion)
+        var scopes: [String]
+        switch route {
+        case let .enterPassword(_, scopes: storedScopes):
+            scopes = storedScopes
+        default:
+            scopes = []
+        }
+        let viewController = self.makeIdentifierViewController(loginMethod: route.loginMethod, localizedTeaserText: nil, scopes: scopes, completion: completion)
         self.navigationController.viewControllers = [viewController]
         configuration.presentationHook?(self.navigationController)
         self.handle(route: route, byPresentingIn: presentingViewController)

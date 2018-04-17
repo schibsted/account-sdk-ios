@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DE37BF4207B625700110614 /* UserTermsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE37BF3207B625700110614 /* UserTermsInteractor.swift */; };
+		0DFBB1342068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */; };
 		43C24192205BF1BF00154866 /* SchibstedAccount.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C24188205BF1BE00154866 /* SchibstedAccount.framework */; };
 		43C24199205BF1BF00154866 /* SchibstedAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C2418B205BF1BE00154866 /* SchibstedAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		43C241B0205C015A00154866 /* SPiDKeychainWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C241AC205C015A00154866 /* SPiDKeychainWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -273,6 +275,8 @@
 		B01D7FE467756DB12531438F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D738D65712CD22B987537 /* Storage.swift */; };
 		B01D7FF32DE3A0D668785961 /* ClientError+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D75141A07D790A4BB2511 /* ClientError+localized.swift */; };
 		B01D7FFAA457B1DE22C33090 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B01D7D686EF4DF53996801EA /* Localizable.strings */; };
+		E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */ = {isa = PBXBuildFile; fileRef = E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */; };
+		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -430,9 +434,18 @@
 			remoteGlobalIDString = 43E160492063C7A200D9BA3E;
 			remoteInfo = Example;
 		};
+		E18F86D520739B8B0074BE41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43C2417F205BF1BE00154866 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 43C24187205BF1BE00154866;
+			remoteInfo = SchibstedAccount;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DE37BF3207B625700110614 /* UserTermsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTermsInteractor.swift; sourceTree = "<group>"; };
+		0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatedTermsCoordinator.swift; sourceTree = "<group>"; };
 		43C24188205BF1BE00154866 /* SchibstedAccount.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SchibstedAccount.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C2418B205BF1BE00154866 /* SchibstedAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SchibstedAccount.h; sourceTree = "<group>"; };
 		43C2418C205BF1BE00154866 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -704,6 +717,8 @@
 		B01D7FA9FD6A1552F6F2AFC2 /* FetchStatusInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchStatusInteractor.swift; sourceTree = "<group>"; };
 		B01D7FAC65185FEEDB2C7E5B /* UpdateUserProfileTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserProfileTask.swift; sourceTree = "<group>"; };
 		B01D7FD3E6A4D7737E916326 /* TestingUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingUser.swift; sourceTree = "<group>"; };
+		E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "password-grant-invalid-scope.json"; sourceTree = "<group>"; };
+		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -897,6 +912,7 @@
 		B01D7238937C70222349809B /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */,
 				B01D7E07BA4E1DAEE0FB4F56 /* valid-authcode-diff-id-same-code.json */,
 				B01D76E8DD8EF78D9EA32B7D /* bad.json */,
 				B01D7484D48D9C7155871648 /* empty.json */,
@@ -976,6 +992,7 @@
 				B01D7403795B93AFCE069B69 /* JSONObject.swift */,
 				B01D76D2F05639801DE64404 /* JSONParsable.swift */,
 				B01D7D0051FA3E12837D9259 /* Data+jsonObject.swift */,
+				E1CDD5022065208100B23063 /* JSONObject+Data.swift */,
 			);
 			path = JSON;
 			sourceTree = "<group>";
@@ -1043,6 +1060,7 @@
 			isa = PBXGroup;
 			children = (
 				B01D71E5C14B6FF51B5AD7D1 /* TermsInteractor.swift */,
+				0DE37BF3207B625700110614 /* UserTermsInteractor.swift */,
 				B01D72039AB48F6A1DA73169 /* SigninInteractor.swift */,
 				B01D7C5351342B85585272CE /* SignupInteractor.swift */,
 				B01D7FA9FD6A1552F6F2AFC2 /* FetchStatusInteractor.swift */,
@@ -1063,6 +1081,7 @@
 				B01D78A1746E83042A8A0DAE /* PasswordlessCoordinator.swift */,
 				B01D783ED1F2B73B7CE6F8A5 /* AuthenticationCoordinator.swift */,
 				B01D739FA5AC38261ED7F6D5 /* CompleteProfileCoordinator.swift */,
+				0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1494,6 +1513,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E18F86D620739B8B0074BE41 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -1740,6 +1760,7 @@
 				B01D7B9E1C40F4481F533DC9 /* id-status-valid-available.json in Resources */,
 				B01D7C2464B591F41590E8FA /* login-valid-with-id-token.json in Resources */,
 				B01D7C6078988EB72CDC66B0 /* signup-validation-invalid.json in Resources */,
+				E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */,
 				B01D700933201D1FBCC62175 /* invalid-phone-number-error.json in Resources */,
 				B01D7C969537E13DF6CF003D /* signup-client-access-token.json in Resources */,
 				B01D7B9F12DAD726C4651A9D /* agreements-valid-unaccepted.json in Resources */,
@@ -1829,9 +1850,11 @@
 				B01D7B5A68E565A37A5568E4 /* EmailAddress.swift in Sources */,
 				B01D7750F38D5AA5A950721D /* IdentifierProtocol.swift in Sources */,
 				B01D710C32A0B926D594EDE4 /* Terms.swift in Sources */,
+				0DE37BF4207B625700110614 /* UserTermsInteractor.swift in Sources */,
 				B01D79AB5D409EBAE9D32E00 /* Client.swift in Sources */,
 				B01D7D5E08F7D6B83727421A /* IDToken.swift in Sources */,
 				B01D786E47A1C5F1E3782CBC /* Birthdate.swift in Sources */,
+				E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */,
 				B01D776522D14BF4ABF4DDFC /* TokenData.swift in Sources */,
 				B01D71C2CCD7FF65A150E6ED /* UserModel.swift in Sources */,
 				B01D76F4291B9D49A438CEDB /* Agreements.swift in Sources */,
@@ -1841,6 +1864,7 @@
 				B01D78143268D33ADC81E560 /* TokenExchange.swift in Sources */,
 				B01D781705E7FF15EB2BAF7F /* RequiredFields.swift in Sources */,
 				B01D7E247C793EFB3D4BECE8 /* IdentifierStatus.swift in Sources */,
+				0DFBB1342068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift in Sources */,
 				43C241B2205C015A00154866 /* SPiDAccessToken.m in Sources */,
 				B01D762E102B78560BE87702 /* PasswordlessToken.swift in Sources */,
 				B01D7167E324373011B91014 /* Router.swift in Sources */,
@@ -2012,6 +2036,11 @@
 			isa = PBXTargetDependency;
 			target = 43E160492063C7A200D9BA3E /* Example */;
 			targetProxy = 43E1605C2063C7AF00D9BA3E /* PBXContainerItemProxy */;
+		};
+		E18F86D620739B8B0074BE41 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 43C24187205BF1BE00154866 /* SchibstedAccount */;
+			targetProxy = E18F86D520739B8B0074BE41 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
