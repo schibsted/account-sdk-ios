@@ -19,6 +19,8 @@ public struct IdentityUIConfiguration {
     public let tracker: TrackingEventsHandler?
     ///
     public let isCancelable: Bool
+    ///
+    public let presentationHook: ((UIViewController) -> Void)?
 
     private var _appName: String?
 
@@ -46,6 +48,7 @@ public struct IdentityUIConfiguration {
      - parameter clientConfiguration: the `ClientConfiguration` object
      - parameter theme: The `IdentityUITheme` object
      - parameter isCancelable: If this is false then the user cannot cancel the UI flow unless you complete it
+     - parameter presentationHook: Block called with the IdentityUI ViewController before it being presented.
      - parameter tracker: Required implementation of the trackinge events handler
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
@@ -54,6 +57,7 @@ public struct IdentityUIConfiguration {
         clientConfiguration: ClientConfiguration,
         theme: IdentityUITheme = .default,
         isCancelable: Bool = true,
+        presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
         appName: String? = nil
@@ -61,6 +65,7 @@ public struct IdentityUIConfiguration {
         self.clientConfiguration = clientConfiguration
         self.theme = theme
         self.isCancelable = isCancelable
+        self.presentationHook = presentationHook
         self.localizationBundle = localizationBundle ?? IdentityUI.bundle
         self.tracker = tracker
         if let appName = appName {
@@ -73,6 +78,7 @@ public struct IdentityUIConfiguration {
 
      - parameter theme: The `IdentityUITheme` object
      - parameter isCancelable: If this is false then the user cannot cancel the UI flow unless you complete it
+     - parameter presentationHook: Block called with the IdentityUI ViewController before it being presented.
      - parameter tracker: Required implementation of the trackinge events handler
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
@@ -80,6 +86,7 @@ public struct IdentityUIConfiguration {
     public func replacing(
         theme: IdentityUITheme? = nil,
         isCancelable: Bool? = nil,
+        presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
         appName: String? = nil
@@ -88,6 +95,7 @@ public struct IdentityUIConfiguration {
             clientConfiguration: self.clientConfiguration,
             theme: theme ?? self.theme,
             isCancelable: isCancelable ?? self.isCancelable,
+            presentationHook: presentationHook ?? self.presentationHook,
             tracker: tracker ?? self.tracker,
             localizationBundle: localizationBundle ?? self.localizationBundle,
             appName: appName ?? self.appName

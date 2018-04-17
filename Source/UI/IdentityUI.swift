@@ -165,7 +165,7 @@ public class IdentityUI {
 
             navigationController.dismiss(animated: true, completion: nil)
         }
-
+        configuration.presentationHook?(navigationController)
         viewController.present(navigationController, animated: true, completion: nil)
     }
 
@@ -339,6 +339,7 @@ extension IdentityUI {
                 completion: completion
             )
             self.navigationController.viewControllers = [viewController]
+            configuration.presentationHook?(self.navigationController)
             vc.present(self.navigationController, animated: true)
         }
     }
@@ -526,6 +527,7 @@ extension IdentityUI {
         }
         let viewController = self.makeIdentifierViewController(loginMethod: route.loginMethod, localizedTeaserText: nil, scopes: scopes, completion: completion)
         self.navigationController.viewControllers = [viewController]
+        configuration.presentationHook?(self.navigationController)
         self.handle(route: route, byPresentingIn: presentingViewController)
     }
 
