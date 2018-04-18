@@ -12,6 +12,7 @@ protocol NetworkingProxy {
         request: URLRequest,
         completion: URLSessionTaskCallback?
     ) -> URLSessionDataTask
+    var additionalHeaders: [String: String]? { get set }
 }
 
 extension NetworkingProxy {

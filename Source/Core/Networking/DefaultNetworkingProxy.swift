@@ -6,6 +6,8 @@
 import Foundation
 
 class DefaultNetworkingProxy: NetworkingProxy {
+    var additionalHeaders: [String: String]?
+
     let session: URLSession = {
         let config = URLSessionConfiguration.default
         config.requestCachePolicy = .reloadIgnoringLocalCacheData

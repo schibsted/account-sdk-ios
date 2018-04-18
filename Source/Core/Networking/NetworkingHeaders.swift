@@ -13,6 +13,7 @@ extension Networking {
         case xOIDC = "X-OIDC"
         case sdkType = "SDK-Type"
         case sdkVersion = "SDK-Version"
+        case pulseJWE = "pulse-jwe"
     }
 }
 

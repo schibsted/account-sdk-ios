@@ -109,7 +109,7 @@ extension PasswordCoordinator {
 
             switch result {
             case let .success(currentUser):
-                self?.configuration.tracker?.loginID = currentUser.id
+                self?.configuration.tracker?.loginID = currentUser.legacyID
                 self?.spawnCompleteProfileCoordinator(for: .signin(currentUser), completion: completion)
             case let .failure(error):
                 if self?.presentedViewController?.showInlineError(error) == true {

@@ -5,7 +5,7 @@
 
 import Foundation
 
-public typealias JSONObject = [String: Any]
+typealias JSONObject = [String: Any]
 
 protocol JSONObjectProtocol {
     associatedtype Key
