@@ -248,8 +248,10 @@ private extension String {
 }
 
 class StubbedNetworkingProxy: NetworkingProxy {
+    var additionalHeaders: [String: String]?
+
     let session: URLSession = {
-        return DefaultNetworkingProxy().session
+        DefaultNetworkingProxy().session
     }()
 
     static func insert<K>(in dictionary: inout SynchronizedDictionary<K, [NetworkStub]>, key: K, stub: NetworkStub) {

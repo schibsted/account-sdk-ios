@@ -137,7 +137,7 @@ public class IdentityUI {
             throw Error.mismatchingClientConfiguration
         }
 
-        if self.presentedIdentityUI == nil, self.updatedTermsCoordinator == nil {
+        if self.presentedIdentityUI != nil || self.updatedTermsCoordinator != nil {
             // Another screen of the Identity UI is already presented.
 
             guard user.state == .loggedIn else {
@@ -186,6 +186,7 @@ public class IdentityUI {
         self.fetchStatusInteractor = FetchStatusInteractor(identityManager: identityManager)
         self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: identityManager)
         self.configuration.tracker?.clientConfiguration = self.configuration.clientConfiguration
+        self.configuration.tracker?.delegate = self
     }
 
     /**
@@ -550,6 +551,15 @@ extension IdentityUI {
         case .cannotHandle:
             return false
         }
+    }
+}
+
+extension IdentityUI: TrackingEventsHandlerDelegate {
+    /// Used by the tracking implementation to set internal tokens
+    public func trackingEventsHandlerDidReceivedJWE(_ jwe: String) {
+        var previousHeaders = Networking.additionalHeaders ?? [:]
+        previousHeaders[Networking.Header.pulseJWE.rawValue] = jwe
+        Networking.additionalHeaders = previousHeaders
     }
 }
 
