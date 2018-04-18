@@ -5,7 +5,7 @@
 
 import Foundation
 
-public typealias URLSessionTaskCallback = (Data?, URLResponse?, Error?) -> Void
+typealias URLSessionTaskCallback = (Data?, URLResponse?, Error?) -> Void
 
 //
 // printing NSURLSessionTaskState enum actually just prings

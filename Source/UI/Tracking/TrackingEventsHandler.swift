@@ -5,7 +5,17 @@
 
 import Foundation
 
+/**
+ The TrackingEventsHandler can inform of certain events. These are sent
+ through this delegate
+*/
 public protocol TrackingEventsHandlerDelegate: class {
+    /**
+      Should be called when a new JWE is returned
+
+      This is used by the `IdentityUI` to link tracking events between
+      the SDK and the SPiD backend
+     */
     func trackingEventsHandlerDidReceivedJWE(_ jwe: String)
 }
 
