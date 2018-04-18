@@ -26,8 +26,6 @@ vendor/
 
 Example/*.xcworkspace/
 Example/*/ClientConfiguration.json
-DemoApp/*.xcworkspace/
-DemoApp/*/ClientConfiguration.json
 
 # Fastlane
 fastlane/*
@@ -53,5 +51,3 @@ Pods/
 /keyrings/live/secring.gpg
 /Example/ClientConfiguration.json
 /Example/Info.plist
-/DemoApp/SchibstedAccountDemo/ClientConfiguration.json
-/DemoApp/SchibstedAccountDemo/Info.plist
