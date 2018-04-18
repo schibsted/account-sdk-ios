@@ -6,7 +6,7 @@
 import Foundation
 
 class DefaultNetworkingProxy: NetworkingProxy {
-    var additionalHeaders: [String : String]? = nil
+    var additionalHeaders: [String: String]?
 
     let session: URLSession = {
         let config = URLSessionConfiguration.default
