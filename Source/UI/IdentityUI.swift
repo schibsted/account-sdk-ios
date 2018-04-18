@@ -137,7 +137,7 @@ public class IdentityUI {
             throw Error.mismatchingClientConfiguration
         }
 
-        if self.presentedIdentityUI == nil, self.updatedTermsCoordinator == nil {
+        if self.presentedIdentityUI != nil || self.updatedTermsCoordinator != nil {
             // Another screen of the Identity UI is already presented.
 
             guard user.state == .loggedIn else {
