@@ -30,7 +30,7 @@ extension URLSessionTask.State: CustomStringConvertible {
 struct Networking {
     static var proxy: NetworkingProxy = DefaultNetworkingProxy()
 
-    static var additoionalHeaders: [String: String]? {
+    static var additionalHeaders: [String: String]? {
         get {
             return self.proxy.additionalHeaders
         }

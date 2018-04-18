@@ -557,9 +557,9 @@ extension IdentityUI {
 extension IdentityUI: TrackingEventsHandlerDelegate {
     /// Used by the tracking implementation to set internal tokens
     public func trackingEventsHandlerDidReceivedJWE(_ jwe: String) {
-        var previousHeaders = Networking.additoionalHeaders ?? [:]
+        var previousHeaders = Networking.additionalHeaders ?? [:]
         previousHeaders[Networking.Header.pulseJWE.rawValue] = jwe
-        Networking.additoionalHeaders = previousHeaders
+        Networking.additionalHeaders = previousHeaders
     }
 }
 
