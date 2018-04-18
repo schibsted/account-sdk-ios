@@ -5,22 +5,19 @@ cache:
 
 bundler_args: --without documentation --without development --deployment --jobs=3 --retry=3
 
-env:
-  - FASTLANE_SKIP_UPDATE_CHECK=true
-
 matrix:
   include:
+    - env:
+        - COMMAND=FASTLANE_ALL
       script:
+        - scripts/travis_env_lint.sh
         - scripts/populate-dummy-secrets.sh
-        - fastlane all
+        - FASTLANE_SKIP_UPDATE_CHECK=true fastlane all
       after_success:
-       - bash <(curl -s https://codecov.io/bash) -f build/reports/coverage/xml/cobertura.xml
+        - bash <(curl -s https://codecov.io/bash) -f build/reports/coverage/xml/cobertura.xml
       after_failure:
         - scripts/print_simulator_crashlogs.sh
       deploy:
-        # https://github.com/travis-ci/travis-ci/issues/9312
-        edge:
-          branch: v1.8.47
         local_dir: docs
         provider: pages
         skip_cleanup: true
@@ -29,3 +26,9 @@ matrix:
         on:
           branch: master
           tags: true
+    - env:
+        - COMMAND=POD_LIB_LINT
+      if: branch != master
+      script:
+        - pod lib lint
+

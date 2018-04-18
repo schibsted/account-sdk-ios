@@ -11,7 +11,7 @@ platform :ios do
       scheme: 'SchibstedAccount',
       derived_data_path: 'build/DerivedData',
       output_directory: 'build/',
-      device: 'iPhone 8', # Make sure this matches with pre sim opening in scripts/travis_env_tests.sh
+      device: 'iPhone 8',
       buildlog_path: 'build/logs',
       code_coverage: true
     )
@@ -47,6 +47,8 @@ platform :ios do
         'https://github.com/CocoaPods/Specs.git',
       ]
     )
+
+    sh "cd .. && scripts/format.sh"
   end
 
   desc 'Generate documentation for the source code'

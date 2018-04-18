@@ -2,7 +2,7 @@
 
 set -e
 
-bundlePrefix=Schibsted
+bundlePrefix=Example
 scriptName=$(basename "$0")
 
 ls -1 $HOME/Library/Logs/DiagnosticReports/$bundlePrefix*.crash 2> /dev/null | while read logFileName

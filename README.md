@@ -9,8 +9,8 @@ The SchibstedAccount iOS SDK provides you access to Schibsted identity services 
 
 [![Build Status](https://travis-ci.org/schibsted/account-sdk-ios.svg?branch=master)](https://travis-ci.org/schibsted/account-sdk-ios) [![license](https://img.shields.io/github/license/schibsted/account-sdk-ios.svg)](https://github.com/schibsted/account-sdk-ios/blob/master/LICENSE) [![codecov](https://codecov.io/gh/schibsted/account-sdk-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/schibsted/account-sdk-ios)
 
-- [Documentation](https://schibsted.github.io/account-sdk-ios/)
-- [Contributing](https://github.com/schibsted/account-sdk-ios/blob/master/CONTRIBUTING.md)
+- [Documentation](https://schibsted.github.io/account-sdk-ios/): Here's the documentation to the _latest tagged release_ (which can be different than the version that's in master).
+- [Contributing](https://github.com/schibsted/account-sdk-ios/blob/master/CONTRIBUTING.md): For details on getting up and running if you are thinking of contributing
 
 ## Setup
 
@@ -28,34 +28,34 @@ The SDK is divided in to different subspecs:
 The UI does some internal tracking, and allows a `TrackingEventsHandler` to be set in the UI's configuration.
 To fulfill this, you can either implement it yourself or use one which is already implemented.
 
-
 **Internal**: There is an internal Schibsted Tracking implementation for the identity SDK availabe [here](https://github.schibsted.io/spt-identity/identity-sdk-ios-tracking) and is available from `source "git@github.schibsted.io:CocoaPods/Specs.git`, so in your pod file you may:
 
 - `pod 'SchibstedIDTracking'`: Adds dependency to the [new](https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios) pulse SDK
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
-**WIP**:
-
-Add this to `Cartfile`
+Add this to your `Cartfile`
 
 ```ruby
-git "git@github.schibsted.io:spt-identity/identity-sdk-ios.git"
+git "git@github.com:schibsted/account-sdk-ios.git"
 ```
 
-Or, if you also want to include support for tracking events in the identity UI with the [new pulse SDK](https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios), add this instead
-
-```ruby
-git "git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking.git"
+Then run:
+```bash
+$ carthage bootstrap --platform ios
 ```
-
-in either case, run:
-
+or
 ```bash
 $ carthage update --platform ios
 ```
 
-`carthage update` will build the frameworks you need to link in your project, so make sure you follow [these steps](https://github.com/Carthage/Carthage#getting-started) to include all of them in your project and you should be up and running. If there is something missing -> [email us](mailto:support@spid.no ).
+**Internal**: And, if you also want to include support for tracking events in the identity UI with the [new pulse SDK](https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios), add this
+
+```ruby
+git "git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking"
+```
+
+Carthage will build the frameworks you need to link in your project, so make sure you follow [these steps](https://github.com/Carthage/Carthage#getting-started) to include all of them in your project and you should be up and running. If there is something missing -> [email us](mailto:support@spid.no ).
 
 ### **Get some client credentials**
 
