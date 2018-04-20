@@ -5,23 +5,13 @@
 1. Install Xcode: the easiest is to install it as a [free app from the Mac AppStore](https://itunes.apple.com/us/app/xcode/id497799835?mt=12).
 1. Clone the [repo](github.com/schibsted/account-sdk-ios).
 1. Install required development tools:
-    1. **Option 1:** If you want to install all the tools at once, get [Bundler](https://bundler.io/) and then install with:
+    If you want to install all the tools at once, get [Bundler](https://bundler.io/) and then install with:
 
-            bundler install
-            pod setup --verbose
+        bundler install
 
-        this will install everything with known working versions from the [Gemfile](Gemfile), including [CocoaPods](https://cocoapods.org/).
+    this will install everything with known working versions from the [Gemfile](https://github.com/schibsted/account-sdk-ios/blob/master/Gemfile), including [CocoaPods](https://cocoapods.org/).
 
-        **Note**: Installing a ruby version manager such as [RVM](https://rvm.io) will make life a little easier
-
-    1. **Option 2:** If you want to just be able to build and test with Xcode, install [CocoaPods](https://cocoapods.org/) by running in the terminal:
-
-            sudo gem install cocoapods
-            pod setup --verbose
-
-        If there's a problem in [Podfile.lock](Example/Podfile.lock) having unquoted paths, update psych:
-
-            sudo gem install psych -v 2.2.2
+    **Note**: Installing a ruby version manager such as [RVM](https://rvm.io) will make life a little easier
 
 ### Getting Example app to build
 
@@ -40,32 +30,25 @@ To get the Example app to compile if you are not a core developer, you need to r
 
     ./scripts/populate-dummy-secrets.sh
 
-The Example app will then at least build and there's an offline mode switch (experimental) to see various functionality in action, but you will not be able to make real requests to Schibsted's backend without getting some client credentials.
+The Example app will then build and there's an offline mode switch (experimental) to see various functionality in action, but you will not be able to make real requests to Schibsted's backend without getting some client credentials. The [README](https://github.com/schibsted/account-sdk-ios/blob/master/README.md) containts details on how to get credentials.
 
 **Building**:
 
-Open up SchibstedAccount.xcodeproj and build away.
-
-## Development
-
-All development should be done in [SchibstedAccount.xcodeproj](SchibstedAccount.xcodeproj).
-
-```bash
-open SchibstedAccount.xcodeproj
-```
+Open up SchibstedAccount.xcodeproj and hack away.
 
 ## Code style
 
 We try to keep the code base consistent and we have a number of checks in place but also rely on each other to maintain consistency across the code base. It's recommended to familiarize yourself with the Swift community practices found [here](https://swift.org/documentation/api-design-guidelines/). If you are looking for a source of inspiration then the Swiftified Foundation classes and the Swift standard libraries should be your go to references.
 
-**Linting**: The CI will also run the changes through `swiftlint` from the project directory.
-You can install [Swiftlint](https://github.com/realm/SwiftLint) with Homebrew if you have it or they have an installer as well - "SwiftLint.pkg".
+**Linting**: The CI will also run the changes through `swiftlint` from the project directory. You can install [Swiftlint](https://github.com/realm/SwiftLint) with Homebrew if you have it or they have an installer as well - "SwiftLint.pkg".
 
-**Formatting**: [Swiftformat](https://github.com/nicklockwood/SwiftFormat) is used as a pre testing step to apply some automatic formatting to your code and as a pre commit git hook.
+**Formatting**: The CI will also make sure swiftformat has been run. You can install [Swiftformat](https://github.com/nicklockwood/SwiftFormat) with Homebrew as well, or check the site for other optionas.
 
-**Editorconfig**: There is also a [editorconfig](.editorconfig) file that ensure a few consistencies if your editor has [editorconfig support](http://editorconfig.org/#download).
+**Editorconfig**: There is also an [editorconfig](https://github.com/schibsted/account-sdk-ios/blob/master/.editorconfig) file that ensures a few consistencies if your editor has [editorconfig support](http://editorconfig.org/#download).
 
-## Pre-commit hooks
+## Pre-commit hooks and CI
+
+**NOTE** The CI will fail if the commands in the pre commit hooks produce errors.
 
 There are some git pre-commit hooks you should use that could possibly save you from failing CI builds because of forgetting to fix a silly lint error for eg. There is also a install script provided to set them up in your repo. Run the following form your root to set it up
 
@@ -93,14 +76,14 @@ For example:
 deprecated. Use the overloads which take Options objects instead.`
 * `Removed: Removed deprecated Manager.init(...) overloads.`
 * `Fixed: Fixes a bug where client tokens would not be refreshed correctly.`
-* `Security: Fixes a concern where user credentials were vulnerable to attacks based on redirects.
+* `Security: Fixes a concern where user credentials were vulnerable to attacks based on redirects.`
 
 ## **Running the tests**
 
-In XCode: run the tests using &#8984;U (Product - Test).
-Make sure that the "SchibstedAccount-Example" scheme is selected.
+In Xcode: run the tests using &#8984;U (Product - Test). Make sure that the "Example" scheme is selected.
 
 With fastlane it's just `fastlane test` from your command line.
+
 If you did not install via bundler, you can install [Fastlane](https://github.com/fastlane/fastlane) manually (if gem install fastlane doesn't work then "Installer Script" approach might work better with a default macOS Ruby without RVM).
 
 If you make a pull request github, a Travis CI bot will run the tests for you.
@@ -114,3 +97,5 @@ gem install jazzy
 jazzy
 open docs/index.html
 ```
+
+Documentation is updated and deployed whenever there is a tagged commit.

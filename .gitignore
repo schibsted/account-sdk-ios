@@ -51,3 +51,6 @@ Pods/
 /keyrings/live/secring.gpg
 /Example/ClientConfiguration.json
 /Example/Info.plist
+
+# This is because of the scripts/format.sh
+swiftformat_result
