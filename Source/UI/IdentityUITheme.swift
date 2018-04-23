@@ -105,7 +105,7 @@ public struct IdentityUITheme {
         public var centeredNormalParagraph = Style.fonts.body.attributed(alignment: .center)
         ///
         public var infoParagraph = Style.fonts.body.attributed(alignment: .center).mergedByOverwriting(with: [
-            .foregroundColor: UIColor.schibstedDarkGray
+            .foregroundColor: UIColor.schibstedDarkGray,
         ])
         ///
         public var linkButton = {

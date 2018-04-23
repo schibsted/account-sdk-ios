@@ -6,7 +6,6 @@
 import UIKit
 
 class InfoViewController: IdentityUIViewController {
-
     @IBOutlet var headerLabel: Heading! {
         didSet {
             self.headerLabel.text = self.heading
