@@ -168,52 +168,33 @@ extension CompleteProfileCoordinator {
 
             switch result {
             case let .success(terms):
-                self?.showAcceptTermsView(for: terms, on: loginFlowVariant, completion: completion)
+                self?.spawnShowTermsCoordinator(for: terms, on: loginFlowVariant, completion: completion)
             case let .failure(error):
                 if self?.handle(error: error) != true { completion(.error(error)) }
             }
         }
     }
 
-    private func showAcceptTermsView(
+    private func spawnShowTermsCoordinator(
         for terms: Terms,
         on loginFlowVariant: LoginMethod.FlowVariant,
         completion: @escaping (AgreementsAcceptanceResult) -> Void
     ) {
-        let navigationSettings = NavigationSettings(
-            cancel: configuration.isCancelable ? { completion(.cancel) } : nil,
-            back: { completion(.back) }
-        )
-        let viewModel = TermsViewModel(
-            terms: terms,
-            loginFlowVariant: loginFlowVariant,
-            appName: self.configuration.appName,
-            localizationBundle: self.configuration.localizationBundle
-        )
+        let showTermsCoordinator = ShowTermsCoordinator(navigationController: self.navigationController, configuration: self.configuration)
+        let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: loginFlowVariant, presentationStyle: .pushToExistingNavigationFlow)
 
-        let viewController = TermsViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-        viewController.didRequestAction = { [weak self] action in
-            switch action {
-            case .acceptTerms:
+        self.child = ChildFlowCoordinator(showTermsCoordinator, input: input) { [weak self] output in
+            self?.child = nil
+
+            switch output {
+            case .success:
                 completion(.wereJustAccepted)
-            case let .learnMore(summary):
-                self?.showTermsSummaryView(summary)
-            case let .open(url):
-                self?.present(url: url)
-            case .back:
-                completion(.back)
             case .cancel:
                 completion(.cancel)
+            case .back:
+                completion(.back)
             }
         }
-
-        self.navigationController.pushViewController(viewController, animated: true)
-    }
-
-    private func showTermsSummaryView(_ summary: String) {
-        let viewModel = TermsSummaryViewModel(summary: summary, localizationBundle: self.configuration.localizationBundle)
-        let viewController = TermsSummaryViewController(configuration: self.configuration, viewModel: viewModel)
-        self.presentAsPopup(viewController)
     }
 }
 

@@ -31,9 +31,19 @@ class UpdatedTermsCoordinator: FlowCoordinator {
     func start(input: Input, completion: @escaping (Output) -> Void) {
         let userTermsInteractor = UserTermsInteractor(user: input.currentUser)
         self.userTermsInteractor = userTermsInteractor
+        self.spawnShowTermsCoordinator(with: input.terms, userTermsInteractor: userTermsInteractor, completion: completion)
+    }
+}
 
-        self.showAcceptTermsView(for: input.terms) { [weak self] result in
-            switch result {
+extension UpdatedTermsCoordinator {
+    private func spawnShowTermsCoordinator(with terms: Terms, userTermsInteractor: UserTermsInteractor, completion: @escaping (Output) -> Void) {
+        let showTermsCoordinator = ShowTermsCoordinator(navigationController: self.navigationController, configuration: self.configuration)
+        let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: .signin, presentationStyle: .replaceNavigationFlow)
+
+        self.child = ChildFlowCoordinator(showTermsCoordinator, input: input) { [weak self] output in
+            self?.child = nil
+
+            switch output {
             case .success:
                 userTermsInteractor.acceptTerms { [weak self] result in
                     switch result {
@@ -44,49 +54,11 @@ class UpdatedTermsCoordinator: FlowCoordinator {
                         self?.present(error: error)
                     }
                 }
-            case .cancel:
+            case .cancel, .back:
+                // Since user has not accepted the updated terms, we force a logout :'(
+                userTermsInteractor.user.logout()
                 completion(.cancel)
             }
         }
-    }
-}
-
-extension UpdatedTermsCoordinator {
-    private func showAcceptTermsView(
-        for terms: Terms,
-        completion: @escaping (Output) -> Void
-    ) {
-        let navigationSettings = NavigationSettings(
-            cancel: { completion(.cancel) },
-            back: nil
-        )
-        let viewModel = TermsViewModel(
-            terms: terms,
-            loginFlowVariant: .signin,
-            appName: self.configuration.appName,
-            localizationBundle: self.configuration.localizationBundle
-        )
-
-        let viewController = TermsViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-        viewController.didRequestAction = { [weak self] action in
-            switch action {
-            case .acceptTerms:
-                completion(.success)
-            case let .learnMore(summary):
-                self?.showTermsSummaryView(summary)
-            case let .open(url):
-                self?.present(url: url)
-            case .back, .cancel:
-                completion(.cancel)
-            }
-        }
-
-        self.navigationController.viewControllers = [viewController]
-    }
-
-    private func showTermsSummaryView(_ summary: String) {
-        let viewModel = TermsSummaryViewModel(summary: summary, localizationBundle: self.configuration.localizationBundle)
-        let viewController = TermsSummaryViewController(configuration: self.configuration, viewModel: viewModel)
-        self.presentAsPopup(viewController)
     }
 }
