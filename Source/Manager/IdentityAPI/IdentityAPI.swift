@@ -343,6 +343,8 @@ class IdentityAPI {
             return .invalidPhoneNumber
         case let .object("ApiException", .string(string), 302):
             return .alreadyRegistered(message: string)
+        case let .object("ApiException", .string(string), 404) where string == "No access to that product.":
+            return .noAccess
         case let .object("ApiException", .object(object), code):
             if let existsMessage = object["exists"] as? String, code == 302 {
                 if Router.signup.matches(path: path) {
