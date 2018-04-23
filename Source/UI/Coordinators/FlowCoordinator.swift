@@ -62,6 +62,15 @@ extension FlowCoordinator {
         self.presentAsPopup(viewController)
     }
 
+    func presentInfo(title: String, text: String) {
+        let viewController = InfoViewController(
+            configuration: self.configuration,
+            title: title,
+            text: text
+        )
+        self.presentAsPopup(viewController)
+    }
+
     func presentError(title: String, description: String) {
         let strings = ErrorScreenStrings(localizationBundle: self.configuration.localizationBundle)
         let viewController = ErrorViewController(
