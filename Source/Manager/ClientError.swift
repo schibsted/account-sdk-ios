@@ -60,6 +60,9 @@ public enum ClientError: Error {
 
     /// Will happen if a required field is failing validation
     case requiredField([String])
+
+    /// Occurs when user does not have access to a requested resource (e.g. a product)
+    case noAccess
 }
 
 extension ClientError {
@@ -114,6 +117,8 @@ extension ClientError: CustomStringConvertible {
             return "Required fields are failing validation: \(fields)"
         case .invalidScope:
             return "One or more specified scopes are invalid"
+        case .noAccess:
+            return "Access is not allowed"
         }
     }
 }

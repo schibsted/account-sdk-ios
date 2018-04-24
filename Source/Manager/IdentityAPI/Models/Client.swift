@@ -31,6 +31,7 @@ private extension RequiredField {
 
 struct Client: JSONParsable {
     var requiredFields: [RequiredField] = []
+    let merchantID: String?
 
     init(from json: JSONObject) throws {
         let data = try json.jsonObject(for: "data")
@@ -49,6 +50,12 @@ struct Client: JSONParsable {
             case .displayName:
                 self.requiredFields.append(.displayName)
             }
+        }
+
+        if let merchantID = try? data.number(for: "merchantId") {
+            self.merchantID = String(describing: Int(merchantID))
+        } else {
+            self.merchantID = nil
         }
     }
 }
