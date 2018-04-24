@@ -4,14 +4,19 @@
 //
 
 class TextView: UITextView, Themeable {
-    override func updateConstraints() {
-        self.heightAnchor.constraint(equalToConstant: self.sizeThatFits(self.bounds.size).height).isActive = true
-        super.updateConstraints()
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        self.commonInit()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.commonInit()
+    }
+
+    private func commonInit() {
         self.textContainerInset = .zero
+        self.textContainer.lineFragmentPadding = 0
     }
 
     func applyTheme(theme: IdentityUITheme) {

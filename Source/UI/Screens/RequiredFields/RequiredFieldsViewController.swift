@@ -18,9 +18,11 @@ class RequiredFieldsViewController: IdentityUIViewController {
 
     var didRequestAction: ((Action) -> Void)?
 
-    @IBOutlet var textLabel: NormalLabel! {
+    @IBOutlet var subtext: TextView! {
         didSet {
-            self.textLabel.text = self.viewModel.subtext
+            self.subtext.isEditable = false
+            self.subtext.delegate = self
+            self.subtext.attributedText = NSAttributedString(string: self.viewModel.subtext)
         }
     }
 
@@ -229,6 +231,9 @@ class RequiredFieldsViewController: IdentityUIViewController {
         super.endLoading()
         self.continueButton.isAnimating = false
     }
+}
+
+extension RequiredFieldsViewController: UITextViewDelegate {
 }
 
 extension RequiredFieldsViewController: UITextFieldDelegate {

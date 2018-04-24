@@ -15,7 +15,7 @@
                 <outlet property="continueButton" destination="yqI-Ms-4ff" id="vLZ-36-Ful"/>
                 <outlet property="requiredFieldsStackView" destination="f4L-Tl-jFz" id="SfA-Ds-t49"/>
                 <outlet property="scrollView" destination="iev-hC-9g1" id="tgZ-CE-bvA"/>
-                <outlet property="textLabel" destination="0ba-nY-hTs" id="mWE-Ef-ZGF"/>
+                <outlet property="subtext" destination="B1X-CN-sF8" id="Nu7-7o-Zls"/>
                 <outlet property="view" destination="GXN-bq-3oH" id="fGH-U5-iAv"/>
             </connections>
         </placeholder>
@@ -27,30 +27,36 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YG2-ap-J6Y">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="135"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="151"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="f4L-Tl-jFz">
-                                    <rect key="frame" x="16" y="98.5" width="343" height="20.5"/>
+                                    <rect key="frame" x="16" y="114.5" width="343" height="20.5"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" placeholder="YES" id="uL1-fy-98e"/>
                                     </constraints>
                                 </stackView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fill in some additional details for your profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ba-nY-hTs" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
-                                    <rect key="frame" x="16" y="38" width="343" height="20.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B1X-CN-sF8" customClass="TextView" customModule="SchibstedAccount" customModuleProvider="target">
+                                    <rect key="frame" x="16" y="38" width="343" height="36.5"/>
+                                    <attributedString key="attributedText">
+                                        <fragment content="Info text">
+                                            <attributes>
+                                                <font key="NSFont" size="17" name=".SFNSText"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="0ba-nY-hTs" firstAttribute="leading" secondItem="YG2-ap-J6Y" secondAttribute="leading" constant="16" id="3GD-kx-3VT"/>
-                                <constraint firstAttribute="trailing" secondItem="0ba-nY-hTs" secondAttribute="trailing" constant="16" id="6aO-BQ-FcL"/>
                                 <constraint firstAttribute="trailing" secondItem="f4L-Tl-jFz" secondAttribute="trailing" constant="16" id="7jL-pV-ZZ5"/>
+                                <constraint firstItem="f4L-Tl-jFz" firstAttribute="top" secondItem="B1X-CN-sF8" secondAttribute="bottom" constant="40" id="PvX-0D-epX"/>
                                 <constraint firstAttribute="bottom" secondItem="f4L-Tl-jFz" secondAttribute="bottom" constant="16" id="Wbq-wm-M9T"/>
-                                <constraint firstItem="f4L-Tl-jFz" firstAttribute="top" secondItem="0ba-nY-hTs" secondAttribute="bottom" constant="40" id="Yjh-ME-6GH"/>
+                                <constraint firstAttribute="trailing" secondItem="B1X-CN-sF8" secondAttribute="trailing" constant="16" id="Z6L-Sn-uqR"/>
+                                <constraint firstItem="B1X-CN-sF8" firstAttribute="top" secondItem="YG2-ap-J6Y" secondAttribute="top" constant="38" id="gts-sK-258"/>
+                                <constraint firstItem="B1X-CN-sF8" firstAttribute="leading" secondItem="YG2-ap-J6Y" secondAttribute="leading" constant="16" id="itj-Lc-ctx"/>
                                 <constraint firstItem="f4L-Tl-jFz" firstAttribute="leading" secondItem="YG2-ap-J6Y" secondAttribute="leading" constant="16" id="mRF-Ga-d1P"/>
-                                <constraint firstItem="0ba-nY-hTs" firstAttribute="top" secondItem="YG2-ap-J6Y" secondAttribute="top" constant="38" id="vIZ-2f-OyB"/>
                             </constraints>
                         </view>
                     </subviews>

@@ -54,7 +54,7 @@
 "CheckInboxScreenStrings.title" = "Check your inbox";
 
 "RequiredFieldsScreenString.title" = "Finalise";
-"RequiredFieldsScreenString.subtext" = "Fill in some additional details for your profile";
+"RequiredFieldsScreenString.subtext" = "We use this information for things like improving our services and giving you relevant ads and content.\n\nYou can adjust your privacy choices at any time or learn more about Schibsted, data and you.";
 "RequiredFieldsScreenString.proceed" = "Continue";
 
 "RequiredField.givenName.title" = "First name";

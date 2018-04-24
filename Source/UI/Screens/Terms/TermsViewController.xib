@@ -33,7 +33,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tCZ-nC-j3g">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="303.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="269.5"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="HHS-o8-qe0">
                                     <rect key="frame" x="16" y="40" width="375" height="58.5"/>
@@ -54,20 +54,20 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="vW9-PF-Mtr" userLabel="TermsStackView">
-                                    <rect key="frame" x="16" y="122.5" width="375" height="165"/>
+                                    <rect key="frame" x="16" y="122.5" width="375" height="131"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="0Ub-gW-7pi" userLabel="Terms1StackView">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="57.5"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aKB-yQ-muL" userLabel="Term1Checkbox" customClass="Checkbox" customModule="SchibstedAccount" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="19" height="22"/>
+                                                <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aKB-yQ-muL" userLabel="Term1Checkbox" customClass="Checkbox" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="18" height="22"/>
                                                     <state key="normal" image="unchecked-box"/>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="XZa-57-dmi">
-                                                    <rect key="frame" x="35" y="0.0" width="324" height="74.5"/>
+                                                    <rect key="frame" x="34" y="0.0" width="375" height="57.5"/>
                                                     <subviews>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c6t-Z1-YQW" userLabel="Term1Text" customClass="TextView" customModule="SchibstedAccount" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="324" height="50"/>
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c6t-Z1-YQW" userLabel="Term1Text" customClass="TextView" customModule="SchibstedAccount" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="33"/>
                                                             <attributedString key="attributedText">
                                                                 <fragment content="Terms one">
                                                                     <attributes>
@@ -78,7 +78,7 @@
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="NormalLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hz8-Vo-kCX" userLabel="Term1Error" customClass="ErrorLabel" customModule="SchibstedAccount" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="54" width="324" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="37" width="375" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -88,17 +88,17 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="iXT-rL-2dg" userLabel="Terms2StackView">
-                                            <rect key="frame" x="0.0" y="90.5" width="375" height="74.5"/>
+                                            <rect key="frame" x="0.0" y="73.5" width="375" height="57.5"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="etL-Yi-5ZV" userLabel="Term2Checkbox" customClass="Checkbox" customModule="SchibstedAccount" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="19" height="22"/>
+                                                <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="etL-Yi-5ZV" userLabel="Term2Checkbox" customClass="Checkbox" customModule="SchibstedAccount" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="18" height="22"/>
                                                     <state key="normal" image="unchecked-box"/>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="c4g-uQ-A7S">
-                                                    <rect key="frame" x="35" y="0.0" width="324" height="74.5"/>
+                                                    <rect key="frame" x="34" y="0.0" width="375" height="57.5"/>
                                                     <subviews>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Exj-RD-MBi" userLabel="Term2Text" customClass="TextView" customModule="SchibstedAccount" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="324" height="50"/>
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Exj-RD-MBi" userLabel="Term2Text" customClass="TextView" customModule="SchibstedAccount" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="33"/>
                                                             <attributedString key="attributedText">
                                                                 <fragment content="Terms two">
                                                                     <attributes>
@@ -109,7 +109,7 @@
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="NormalLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Va-90-S6Y" userLabel="Term2Error" customClass="ErrorLabel" customModule="SchibstedAccount" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="54" width="324" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="37" width="375" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
