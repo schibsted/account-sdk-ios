@@ -32,6 +32,14 @@ private extension RequiredField {
 struct Client: JSONParsable {
     var requiredFields: [RequiredField] = []
     let merchantID: String?
+    let merchandName: String?
+
+    enum Kind: String {
+        case `internal`
+        case external
+    }
+
+    let kind: Kind?
 
     init(from json: JSONObject) throws {
         let data = try json.jsonObject(for: "data")
@@ -57,5 +65,9 @@ struct Client: JSONParsable {
         } else {
             self.merchantID = nil
         }
+
+        let merchantData = (try? data.jsonObject(for: "merchant")) ?? [:]
+        self.merchandName = try? merchantData.string(for: "name")
+        self.kind = Kind(rawValue: (try? merchantData.string(for: "type")) ?? "")
     }
 }
