@@ -62,6 +62,8 @@ extension PasswordlessCoordinator {
                 completion(.changeIdentifier)
             case .cancel:
                 completion(.cancel)
+            case let .info(title, text):
+                self?.presentInfo(title: title, text: text)
             }
         }
         self.navigationController.pushViewController(viewController, animated: true)
