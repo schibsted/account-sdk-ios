@@ -12,6 +12,19 @@ class PasswordViewController: IdentityUIViewController {
         case forgotPassword
         case back
         case cancel
+        case info(title: String, text: String)
+    }
+
+    @IBOutlet var whatsThisButton: UIButton! {
+        didSet {
+            self.whatsThisButton.titleLabel?.text = self.viewModel.whatsThis
+        }
+    }
+    @IBAction func didClickWhatLink(_: Any) {
+        self.didRequestAction?(.info(
+            title: self.viewModel.persistentLogin,
+            text: self.viewModel.rememberMe
+        ))
     }
 
     var didRequestAction: ((Action) -> Void)?

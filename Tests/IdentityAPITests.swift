@@ -890,5 +890,29 @@ class IdentityAPITests: QuickSpec {
                 }
             }
         }
+
+        describe("fetch product") {
+
+            it("Should handle no access to product") {
+                let productID = "123"
+                var stub = NetworkStub(path: .path(Router.product(userID: self.testUserID, productID: productID).path))
+                stub.returnData(json: .fromFile("product-no-access"))
+                stub.returnResponse(status: 404)
+                StubbedNetworkingProxy.addStub(stub)
+
+                let api = IdentityAPI(basePath: self.testBasePath)
+
+                waitUntil { done in
+                    api.fetchUserProduct(
+                        oauthToken: self.testOauthToken,
+                        userID: self.testUserID,
+                        productID: productID
+                    ) { result in
+                        expect(result).to(failWith(ClientError.noAccess))
+                        done()
+                    }
+                }
+            }
+        }
     }
 }

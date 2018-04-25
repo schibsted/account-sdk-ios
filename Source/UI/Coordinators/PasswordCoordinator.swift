@@ -72,6 +72,8 @@ extension PasswordCoordinator {
                 completion(.back)
             case .cancel:
                 completion(.cancel)
+            case let .info(title: title, text: text):
+                self?.presentInfo(title: title, text: text)
             }
         }
 

@@ -276,6 +276,10 @@
 		B01D7FE467756DB12531438F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D738D65712CD22B987537 /* Storage.swift */; };
 		B01D7FF32DE3A0D668785961 /* ClientError+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D75141A07D790A4BB2511 /* ClientError+localized.swift */; };
 		B01D7FFAA457B1DE22C33090 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B01D7D686EF4DF53996801EA /* Localizable.strings */; };
+		E18394C8208DD31800B05EC9 /* product-no-access.json in Resources */ = {isa = PBXBuildFile; fileRef = E18394B5208DD31700B05EC9 /* product-no-access.json */; };
+		E18394E2208DF43300B05EC9 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18394CD208DF43300B05EC9 /* InfoViewController.swift */; };
+		E18394E3208DF43300B05EC9 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18394CE208DF43300B05EC9 /* InfoViewModel.swift */; };
+		E18394E4208DF43300B05EC9 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18394CF208DF43300B05EC9 /* InfoViewController.xib */; };
 		E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */ = {isa = PBXBuildFile; fileRef = E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */; };
 		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
 /* End PBXBuildFile section */
@@ -719,6 +723,10 @@
 		B01D7FA9FD6A1552F6F2AFC2 /* FetchStatusInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchStatusInteractor.swift; sourceTree = "<group>"; };
 		B01D7FAC65185FEEDB2C7E5B /* UpdateUserProfileTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserProfileTask.swift; sourceTree = "<group>"; };
 		B01D7FD3E6A4D7737E916326 /* TestingUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingUser.swift; sourceTree = "<group>"; };
+		E18394B5208DD31700B05EC9 /* product-no-access.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "product-no-access.json"; sourceTree = "<group>"; };
+		E18394CD208DF43300B05EC9 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		E18394CE208DF43300B05EC9 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
+		E18394CF208DF43300B05EC9 /* InfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
 		E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "password-grant-invalid-scope.json"; sourceTree = "<group>"; };
 		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -914,6 +922,7 @@
 		B01D7238937C70222349809B /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				E18394B5208DD31700B05EC9 /* product-no-access.json */,
 				E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */,
 				B01D7E07BA4E1DAEE0FB4F56 /* valid-authcode-diff-id-same-code.json */,
 				B01D76E8DD8EF78D9EA32B7D /* bad.json */,
@@ -1092,6 +1101,7 @@
 		B01D74C2523500A5606D4313 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				E18394CC208DF43300B05EC9 /* Info */,
 				B01D752D1AE8BFA2AC06B9AE /* Error */,
 				B01D70398AEC4C0940626ABA /* Terms */,
 				B01D7E41655CFB26E7F6D203 /* Resend */,
@@ -1449,6 +1459,16 @@
 			path = sv.lproj;
 			sourceTree = "<group>";
 		};
+		E18394CC208DF43300B05EC9 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				E18394CD208DF43300B05EC9 /* InfoViewController.swift */,
+				E18394CE208DF43300B05EC9 /* InfoViewModel.swift */,
+				E18394CF208DF43300B05EC9 /* InfoViewController.xib */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1723,6 +1743,7 @@
 				B01D7E3ECB7DD0234010B688 /* CheckInboxViewController.xib in Resources */,
 				B01D701AB31648115F3D5625 /* IdentifierViewController.xib in Resources */,
 				B01D754C58C02ECF988F0BA7 /* TermsSummaryViewController.xib in Resources */,
+				E18394E4208DF43300B05EC9 /* InfoViewController.xib in Resources */,
 				B01D79B87F85EC8EAC5911A2 /* RequiredFieldsViewController.xib in Resources */,
 				43E1602D2063BE8C00D9BA3E /* Images.xcassets in Resources */,
 				B01D729A0872A5F8191D9B60 /* Localizable.strings in Resources */,
@@ -1745,6 +1766,7 @@
 				B01D755661F50572CB83D40D /* valid-refresh.json in Resources */,
 				B01D7CAD53895B896F153617 /* valid-authcode.json in Resources */,
 				B01D7288D000E9D03EE12E06 /* invalid-authcode.json in Resources */,
+				E18394C8208DD31800B05EC9 /* product-no-access.json in Resources */,
 				B01D7348268A0207C4A10F3C /* too-many-requests.json in Resources */,
 				B01D75ECCB9E7DAAE2AFAC5C /* user-product-valid.json in Resources */,
 				B01D7AF803A4A9B35B180B1A /* user-profile-valid.json in Resources */,
@@ -1892,6 +1914,7 @@
 				B01D7CD79400977BAD2910DB /* ClientCallbackTypes.swift in Sources */,
 				B01D7265B0EFC8296B77D69B /* ClientConfiguration.swift in Sources */,
 				B01D76558E8434158DD52DC2 /* AutoRefreshURLProtocol.swift in Sources */,
+				E18394E2208DF43300B05EC9 /* InfoViewController.swift in Sources */,
 				B01D7F9BE1BF5BBCB859D1ED /* PasswordlessTokenStore.swift in Sources */,
 				B01D7AB1DE2646927E9EA26E /* IdentityManagerOverloads.swift in Sources */,
 				B01D722B49E274DEDB9A05E4 /* Style.swift in Sources */,
@@ -1906,6 +1929,7 @@
 				B01D7C14CD83A42717986437 /* Heading.swift in Sources */,
 				B01D7299449EF35C2BA75884 /* Checkbox.swift in Sources */,
 				B01D7F8188A43DFE4CADF41E /* TextView.swift in Sources */,
+				E18394E3208DF43300B05EC9 /* InfoViewModel.swift in Sources */,
 				B01D7F5499041E306775A378 /* InfoLabel.swift in Sources */,
 				B01D7A15FA6D21F8E0E05BC5 /* TextField.swift in Sources */,
 				B01D77ADE8FE5C43C3EAD594 /* ErrorLabel.swift in Sources */,

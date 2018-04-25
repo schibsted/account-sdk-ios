@@ -1,6 +1,8 @@
 "GlobalString.platformName" = "Schibsted account";
 "GlobalString.done" = "Continue";
 
+"InfoString.rememberMe" = "This means Schibsted will place a cookie on your device to keep you logged in. You can change this option later by logging out.";
+
 "IdentifierScreenString.title.sms" = "Log in or create account";
 "IdentifierScreenString.title.email" = "Log in or create account";
 "IdentifierScreenString.inputTitle.phone" = "Enter your phone number";
@@ -20,7 +22,8 @@
 "PasswordScreenString.cancel" = "Cancel";
 "PasswordScreenString.info" = "Minimum 8 characters";
 "PasswordScreenString.forgotPassword" = "Forgot password?";
-"PasswordScreenString.persistentLogin" = "Keep me logged in";
+"PasswordScreenString.persistentLogin" = "Remember me on this device";
+"PasswordScreenString.whatsThis" = "What's this?";
 
 "VerifyScreenString.title" = "We sent you a code";
 "VerifyScreenString.subtext" = "Enter the verification code we sent to:";
@@ -54,7 +57,7 @@
 "CheckInboxScreenStrings.title" = "Check your inbox";
 
 "RequiredFieldsScreenString.title" = "Finalise";
-"RequiredFieldsScreenString.subtext" = "Fill in some additional details for your profile";
+"RequiredFieldsScreenString.subtext" = "We use this information for things like improving our services and giving you relevant ads and content.\n\nYou can adjust your privacy choices at any time or learn more about Schibsted, data and you.";
 "RequiredFieldsScreenString.proceed" = "Continue";
 
 "RequiredField.givenName.title" = "First name";
