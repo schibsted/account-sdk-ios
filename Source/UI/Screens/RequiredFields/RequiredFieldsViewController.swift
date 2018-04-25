@@ -21,7 +21,6 @@ class RequiredFieldsViewController: IdentityUIViewController {
     @IBOutlet var subtext: TextView! {
         didSet {
             self.subtext.isEditable = false
-            self.subtext.delegate = self
             self.subtext.attributedText = NSAttributedString(string: self.viewModel.subtext)
         }
     }
@@ -231,9 +230,6 @@ class RequiredFieldsViewController: IdentityUIViewController {
         super.endLoading()
         self.continueButton.isAnimating = false
     }
-}
-
-extension RequiredFieldsViewController: UITextViewDelegate {
 }
 
 extension RequiredFieldsViewController: UITextFieldDelegate {
