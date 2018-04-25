@@ -38,7 +38,7 @@ class UpdatedTermsCoordinator: FlowCoordinator {
 extension UpdatedTermsCoordinator {
     private func spawnShowTermsCoordinator(with terms: Terms, userTermsInteractor: UserTermsInteractor, completion: @escaping (Output) -> Void) {
         let showTermsCoordinator = ShowTermsCoordinator(navigationController: self.navigationController, configuration: self.configuration)
-        let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: .signin, presentationStyle: .replaceNavigationFlow)
+        let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: .signin)
 
         self.child = ChildFlowCoordinator(showTermsCoordinator, input: input) { [weak self] output in
             self?.child = nil

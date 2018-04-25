@@ -181,7 +181,7 @@ extension CompleteProfileCoordinator {
         completion: @escaping (AgreementsAcceptanceResult) -> Void
     ) {
         let showTermsCoordinator = ShowTermsCoordinator(navigationController: self.navigationController, configuration: self.configuration)
-        let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: loginFlowVariant, presentationStyle: .pushToExistingNavigationFlow)
+        let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: loginFlowVariant)
 
         self.child = ChildFlowCoordinator(showTermsCoordinator, input: input) { [weak self] output in
             self?.child = nil

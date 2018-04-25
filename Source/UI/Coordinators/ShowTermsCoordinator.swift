@@ -7,23 +7,8 @@ import UIKit
 
 class ShowTermsCoordinator: FlowCoordinator {
     struct Input {
-        enum PresentationStyle {
-            case replaceNavigationFlow
-            case pushToExistingNavigationFlow
-
-            fileprivate var hasBackButton: Bool {
-                switch self {
-                case .replaceNavigationFlow:
-                    return false
-                case .pushToExistingNavigationFlow:
-                    return true
-                }
-            }
-        }
-
         let terms: Terms
         let loginFlowVariant: LoginMethod.FlowVariant
-        let presentationStyle: PresentationStyle
     }
 
     enum Output {
@@ -46,7 +31,6 @@ class ShowTermsCoordinator: FlowCoordinator {
         self.showAcceptTermsView(
             for: input.terms,
             loginFlowVariant: input.loginFlowVariant,
-            presentationStyle: input.presentationStyle,
             completion: completion
         )
     }
@@ -56,12 +40,13 @@ extension ShowTermsCoordinator {
     private func showAcceptTermsView(
         for terms: Terms,
         loginFlowVariant: LoginMethod.FlowVariant,
-        presentationStyle: Input.PresentationStyle,
         completion: @escaping (Output) -> Void
     ) {
+        let isFirstViewController = self.navigationController.viewControllers.count == 0
+
         let navigationSettings = NavigationSettings(
             cancel: { completion(.cancel) },
-            back: presentationStyle.hasBackButton ? { completion(.back) } : nil
+            back: isFirstViewController ? nil : { completion(.back) }
         )
         let viewModel = TermsViewModel(
             terms: terms,
@@ -86,11 +71,10 @@ extension ShowTermsCoordinator {
             }
         }
 
-        switch presentationStyle {
-        case .pushToExistingNavigationFlow:
-            self.navigationController.pushViewController(viewController, animated: true)
-        case .replaceNavigationFlow:
+        if isFirstViewController {
             self.navigationController.viewControllers = [viewController]
+        } else {
+            self.navigationController.pushViewController(viewController, animated: true)
         }
     }
 
