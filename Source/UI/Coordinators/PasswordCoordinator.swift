@@ -155,9 +155,7 @@ extension PasswordCoordinator {
             configuration: self.configuration
         )
 
-        self.child = ChildFlowCoordinator(completeProfileCoordinator, input: completeProfileInteractor) { [weak self] output in
-            self?.child = nil
-
+        self.spawnChild(completeProfileCoordinator, input: completeProfileInteractor) { [weak self] output in
             switch output {
             case let .success(currentUser):
                 switch variant {
