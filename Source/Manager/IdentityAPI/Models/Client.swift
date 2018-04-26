@@ -29,17 +29,30 @@ private extension RequiredField {
     }
 }
 
-struct Client: JSONParsable {
-    var requiredFields: [RequiredField] = []
-    let merchantID: String?
-    let merchandName: String?
+/// Represents a client in [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
+public struct Client: JSONParsable {
 
-    enum Kind: String {
+    /// Which fields are required by your client
+    public var requiredFields: [RequiredField] = []
+
+    /// Your merchant ID
+    public let merchantID: String?
+
+    /// Your merchant name
+    public let merchandName: String?
+
+    ///
+    public enum Kind: String {
+        /// internal schibsted client
         case `internal`
+        /// 3rd party client
         case external
+        /// could not be determined
+        case unknown
     }
 
-    let kind: Kind?
+    /// What kind of client are your (internal or 3rd party)
+    public let kind: Kind
 
     init(from json: JSONObject) throws {
         let data = try json.jsonObject(for: "data")
@@ -68,6 +81,6 @@ struct Client: JSONParsable {
 
         let merchantData = (try? data.jsonObject(for: "merchant")) ?? [:]
         self.merchandName = try? merchantData.string(for: "name")
-        self.kind = Kind(rawValue: (try? merchantData.string(for: "type")) ?? "")
+        self.kind = Kind(rawValue: (try? merchantData.string(for: "type")) ?? "unknown") ?? .unknown
     }
 }
