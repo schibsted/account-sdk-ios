@@ -31,7 +31,6 @@ private extension RequiredField {
 
 /// Represents a client in [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
 public struct Client: JSONParsable {
-
     /// Which fields are required by your client
     public var requiredFields: [RequiredField] = []
 
@@ -47,12 +46,10 @@ public struct Client: JSONParsable {
         case `internal`
         /// 3rd party client
         case external
-        /// could not be determined
-        case unknown
     }
 
     /// What kind of client are your (internal or 3rd party)
-    public let kind: Kind
+    public let kind: Kind?
 
     init(from json: JSONObject) throws {
         let data = try json.jsonObject(for: "data")
@@ -81,6 +78,10 @@ public struct Client: JSONParsable {
 
         let merchantData = (try? data.jsonObject(for: "merchant")) ?? [:]
         self.merchandName = try? merchantData.string(for: "name")
-        self.kind = Kind(rawValue: (try? merchantData.string(for: "type")) ?? "unknown") ?? .unknown
+        if let kindValue = try? merchantData.string(for: "type") {
+            self.kind = Kind(rawValue: kindValue)
+        } else {
+            self.kind = nil
+        }
     }
 }

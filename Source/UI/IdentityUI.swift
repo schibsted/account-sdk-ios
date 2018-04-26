@@ -105,6 +105,7 @@ public class IdentityUI {
 
     private let fetchStatusInteractor: FetchStatusInteractor
     private let authenticationCodeInteractor: AuthenticationCodeInteractor
+    private let clientInfoInteractor: ClientInfoInteractor
 
     // Used to store the currently presented identity process so that:
     // 1. The presentation of one process at a time can be enforced.
@@ -176,6 +177,7 @@ public class IdentityUI {
         self.identityManager = identityManager
         self.fetchStatusInteractor = FetchStatusInteractor(identityManager: identityManager)
         self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: identityManager)
+        self.clientInfoInteractor = ClientInfoInteractor(identityManager: identityManager)
         self.configuration.tracker?.clientConfiguration = self.configuration.clientConfiguration
         self.configuration.tracker?.delegate = self
     }
@@ -201,16 +203,26 @@ public class IdentityUI {
         localizedTeaserText: String? = nil,
         scopes: [String] = []
     ) {
-        self.configuration.tracker?.loginMethod = loginMethod
-        self.start(
-            input: .byLoginMethod(
-                loginMethod,
-                presentingViewController: viewController,
-                localizedTeaserText: localizedTeaserText,
-                scopes: scopes
-            )
-        ) { [weak self] output in
-            self?.complete(with: output)
+        self.clientInfoInteractor.fetchClient { [weak self] result in
+            guard let strongSelf = self else { return }
+            switch result {
+            case let .success(client):
+                strongSelf.configuration.tracker?.loginMethod = loginMethod
+                strongSelf.start(
+                    input: .byLoginMethod(
+                        loginMethod,
+                        presentingViewController: viewController,
+                        localizedTeaserText: localizedTeaserText,
+                        scopes: scopes,
+                        kind: client.kind,
+                        merchantName: client.merchandName ?? "unknown"
+                    )
+                ) { output in
+                    self?.complete(with: output)
+                }
+            case let .failure(error):
+                strongSelf.complete(with: .notStarted(error))
+            }
         }
     }
 
@@ -244,8 +256,11 @@ public class IdentityUI {
         case .cancel:
             self.configuration.tracker?.loginID = nil
             uiResult = .canceled
-        case .notStarted:
+        case let .notStarted(maybeError):
             // Nothing else to do, since the flow was never really started.
+            if let error = maybeError {
+                self.delegate?.didFinish(result: .failed(error))
+            }
             return
         case .onlyDismiss:
             uiResult = nil
@@ -278,14 +293,20 @@ public class IdentityUI {
 
 extension IdentityUI: FlowCoordinator {
     enum Input {
-        case byLoginMethod(LoginMethod, presentingViewController: UIViewController, localizedTeaserText: String?, scopes: [String])
+        case byLoginMethod(
+            LoginMethod,
+            presentingViewController: UIViewController,
+            localizedTeaserText: String?, scopes: [String],
+            kind: Client.Kind?,
+            merchantName: String
+        )
         case byRoute(Route, presentingViewController: UIViewController)
     }
 
     enum Output {
         case success(User)
         case cancel
-        case notStarted
+        case notStarted(Swift.Error?)
         case onlyDismiss
     }
 
@@ -306,7 +327,7 @@ extension IdentityUI: FlowCoordinator {
             presentedIdentityUI.handleRouteForPresentingUI(route: route)
 
             // This new flow will not be started.
-            completion(.notStarted)
+            completion(.notStarted(nil))
 
             return
         }
@@ -323,13 +344,16 @@ extension IdentityUI {
         switch input {
         case let .byRoute(route, vc):
             self.handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, completion: completion)
-        case let .byLoginMethod(loginMethod, vc, localizedTeaserText, scopes):
+        case let .byLoginMethod(loginMethod, vc, localizedTeaserText, scopes, kind, merchantName):
             let viewController = self.makeIdentifierViewController(
                 loginMethod: loginMethod,
                 localizedTeaserText: localizedTeaserText,
                 scopes: scopes,
+                kind: kind,
+                merchantName: merchantName,
                 completion: completion
             )
+
             self.navigationController.viewControllers = [viewController]
             configuration.presentationHook?(self.navigationController)
             vc.present(self.navigationController, animated: true)
@@ -340,6 +364,8 @@ extension IdentityUI {
         loginMethod: LoginMethod,
         localizedTeaserText: String?,
         scopes: [String],
+        kind: Client.Kind?,
+        merchantName: String,
         completion: @escaping (Output) -> Void
     ) -> UIViewController {
         let navigationSettings = NavigationSettings(
@@ -347,6 +373,8 @@ extension IdentityUI {
         )
         let viewModel = IdentifierViewModel(
             loginMethod: loginMethod,
+            kind: kind,
+            merchantName: merchantName,
             localizedTeaserText: localizedTeaserText,
             localizationBundle: self.configuration.localizationBundle
         )
@@ -517,10 +545,25 @@ extension IdentityUI {
         default:
             scopes = []
         }
-        let viewController = self.makeIdentifierViewController(loginMethod: route.loginMethod, localizedTeaserText: nil, scopes: scopes, completion: completion)
-        self.navigationController.viewControllers = [viewController]
-        configuration.presentationHook?(self.navigationController)
-        self.handle(route: route, byPresentingIn: presentingViewController)
+        self.clientInfoInteractor.fetchClient { [weak self] result in
+            guard let strongSelf = self else { return }
+            switch result {
+            case let .success(client):
+                let viewController = strongSelf.makeIdentifierViewController(
+                    loginMethod: route.loginMethod,
+                    localizedTeaserText: nil,
+                    scopes: scopes,
+                    kind: client.kind,
+                    merchantName: client.merchandName ?? "unknown",
+                    completion: completion
+                )
+                strongSelf.navigationController.viewControllers = [viewController]
+                strongSelf.configuration.presentationHook?(strongSelf.navigationController)
+                strongSelf.handle(route: route, byPresentingIn: presentingViewController)
+            case let .failure(error):
+                completion(.notStarted(error))
+            }
+        }
     }
 
     private func handleRouteForPresentingUI(route: IdentityUI.Route) {

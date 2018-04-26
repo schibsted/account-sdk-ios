@@ -27,6 +27,8 @@ extension StatusViewController: IdentityUIDelegate {
         case let .completed(user):
             self.session = URLSession(user: user, configuration: URLSessionConfiguration.default)
             print("User logged in - \(user)")
+        case let .failed(error):
+            print("Failed to login with UI - \(error)")
         }
     }
 

@@ -19,11 +19,11 @@ class IdentifierViewController: IdentityUIViewController {
             self.lockImage.tintColor = self.theme.colors.iconTint
         }
     }
-    @IBOutlet var helpButton: UIButton! {
+    @IBOutlet var whastThisButton: UIButton! {
         didSet {
-            self.helpButton.setTitle(self.viewModel.needHelp, for: .normal)
-            self.helpButton.titleLabel?.font = self.theme.fonts.info
-            self.helpButton.contentEdgeInsets.top = 1
+            self.whastThisButton.setTitle(self.viewModel.whatsThis, for: .normal)
+            self.whastThisButton.titleLabel?.font = self.theme.fonts.info
+            self.whastThisButton.contentEdgeInsets.top = 1
         }
     }
     @IBOutlet var backgroundView: UIView! {
@@ -36,7 +36,7 @@ class IdentifierViewController: IdentityUIViewController {
             self.contentView.layer.cornerRadius = 12
         }
     }
-    @IBAction func didClickNeedHelp(_: Any) {
+    @IBAction func didClickWhatsThis(_: Any) {
         self.configuration.tracker?.engagement(.click(.help, self.trackerViewID))
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
     }
@@ -84,10 +84,10 @@ class IdentifierViewController: IdentityUIViewController {
             self.inputTitle.text = self.viewModel.inputTitle
         }
     }
-    @IBOutlet var privacyText: UILabel! {
+    @IBOutlet var infoText: UILabel! {
         didSet {
-            self.privacyText.attributedText = NSAttributedString(
-                string: self.viewModel.privacyText,
+            self.infoText.attributedText = NSAttributedString(
+                string: self.viewModel.infoText,
                 attributes: self.theme.textAttributes.smallParagraph
             )
         }
@@ -156,7 +156,7 @@ class IdentifierViewController: IdentityUIViewController {
             self.phoneNumber.text = numberText
         }
 
-        self.helpButton.isHidden = self.viewModel.loginMethod.authenticationType != .password
+        self.whastThisButton.isHidden = true
     }
 
     @IBAction func didClickContinue(_: Any) {
