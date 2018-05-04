@@ -152,17 +152,8 @@ public class IdentityUI {
         let input = UpdatedTermsCoordinator.Input(currentUser: user, terms: terms)
 
         self.updatedTermsCoordinator = UpdatedTermsCoordinator(navigationController: navigationController, configuration: configuration)
-        self.updatedTermsCoordinator?.start(input: input) { output in
+        self.updatedTermsCoordinator?.start(input: input) { _ in
             self.updatedTermsCoordinator = nil
-
-            switch output {
-            case .success:
-                break
-            case .cancel:
-                // Since user has not accepted the updated terms, we force a logout :'(
-                user.logout()
-            }
-
             navigationController.dismiss(animated: true, completion: nil)
         }
         configuration.presentationHook?(navigationController)
