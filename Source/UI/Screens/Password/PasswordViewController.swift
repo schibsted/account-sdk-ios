@@ -150,7 +150,7 @@ class PasswordViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        guard let password = self.password.text, password.count >= 8 else {
+        guard let password = self.password.text, ((self.viewModel.loginFlowVariant == .signin && password.count >= 1) || password.count >= 8) else {
             self.showInlineError(.invalidUserCredentials(message: nil))
             return
         }
