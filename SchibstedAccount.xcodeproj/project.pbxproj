@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D5A7FFE208DF0F800B5D21F /* ShowTermsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5A7FFD208DF0F800B5D21F /* ShowTermsCoordinator.swift */; };
 		0DE37BF4207B625700110614 /* UserTermsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE37BF3207B625700110614 /* UserTermsInteractor.swift */; };
 		0DFBB1342068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */; };
 		43C24192205BF1BF00154866 /* SchibstedAccount.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C24188205BF1BE00154866 /* SchibstedAccount.framework */; };
@@ -464,6 +465,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0D5A7FFD208DF0F800B5D21F /* ShowTermsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTermsCoordinator.swift; sourceTree = "<group>"; };
 		0DE37BF3207B625700110614 /* UserTermsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTermsInteractor.swift; sourceTree = "<group>"; };
 		0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatedTermsCoordinator.swift; sourceTree = "<group>"; };
 		43C24188205BF1BE00154866 /* SchibstedAccount.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SchibstedAccount.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1108,6 +1110,7 @@
 				B01D783ED1F2B73B7CE6F8A5 /* AuthenticationCoordinator.swift */,
 				B01D739FA5AC38261ED7F6D5 /* CompleteProfileCoordinator.swift */,
 				0DFBB1212068ECEB0055F6B8 /* UpdatedTermsCoordinator.swift */,
+				0D5A7FFD208DF0F800B5D21F /* ShowTermsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1871,6 +1874,7 @@
 				B01D7B7BE2BAD7D47776B7A6 /* User+Agreements.swift in Sources */,
 				B01D7D4BBB9590376EAA738C /* TokenData+anyUserID.swift in Sources */,
 				B01D7F932357AF608B43570E /* FetchTermsTask.swift in Sources */,
+				0D5A7FFE208DF0F800B5D21F /* ShowTermsCoordinator.swift in Sources */,
 				43E15FE62063B24000D9BA3E /* LogoView.swift in Sources */,
 				B01D786509649C0694D68D76 /* TokenExchangeTask.swift in Sources */,
 				B01D733F76A227C1B49808FC /* FetchRequiredFields.swift in Sources */,
