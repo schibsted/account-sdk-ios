@@ -162,7 +162,9 @@ class URLSessionTests: QuickSpec {
                 expect(call2Headers?["Authorization"]).to(equal("Bearer 123"))
             }
 
-            it("Should do an automatic refresh") {
+            for _ in 1..<1000 {
+            fit("Should do an automatic refresh") {
+                Logger.shared.addTransport { print($0) }
                 let (session, user) = Utils.makeURLSession()
 
                 let wantedUrl = "example.com"
@@ -194,6 +196,8 @@ class URLSessionTests: QuickSpec {
                 expect(call2.passedUrl?.absoluteString).to(contain(Router.oauthToken.path))
                 expect(call3.passedUrl?.absoluteString).to(equal(wantedUrl))
                 expect(user.tokens?.refreshToken).to(equal("abc"))
+                Logger.shared.removeTransports()
+            }
             }
 
             it("Should handle butt loads of requests") {
