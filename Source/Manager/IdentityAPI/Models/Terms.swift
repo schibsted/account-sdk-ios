@@ -29,6 +29,8 @@ public struct Terms: JSONParsable {
     ///
     public let clientTermsURL: URL?
     ///
+    public let terms: String?
+    ///
     public let summary: String?
 
     init(from json: JSONObject) throws {
@@ -37,6 +39,7 @@ public struct Terms: JSONParsable {
         self.platformTermsURL = URL(string: try? data.string(for: "platform_terms_url"))
         self.clientPrivacyURL = URL(string: try? data.string(for: "privacy_url"))
         self.clientTermsURL = URL(string: try? data.string(for: "terms_url"))
+        self.terms = try? data.string(for: "terms")
 
         if let summaryArray = try? data.jsonArray(of: String.self, for: "summary"), summaryArray.count > 0 {
             self.summary = summaryArray.joined()
