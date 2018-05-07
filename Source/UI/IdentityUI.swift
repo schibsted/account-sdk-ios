@@ -103,7 +103,7 @@ public class IdentityUI {
     // Used to store the currently presented identity process so that:
     // 1. The presentation of one process at a time can be enforced.
     // 2. When handling a universal link, the currently presented process (if any) can be retrieved.
-    private static var presentedIdentityUI: IdentityUI?
+    private weak static var presentedIdentityUI: IdentityUI?
 
     /**
      Creates an IdentityUI object
