@@ -43,7 +43,7 @@ class UserTokensKeychain: KeychainGenericPasswordType {
     var dataToStore: [String: Any] {
         return self.fetchedData
     }
-    let accountName = "SchibstedAccount"
+    let accountName = "SchibstedID"
 
     func data() -> [TokenData] {
         guard let loggedInUsers = (try? self.fetchedData.jsonObject(for: Keys.loggedInUsers)) as? [String: JSONObject] else {
