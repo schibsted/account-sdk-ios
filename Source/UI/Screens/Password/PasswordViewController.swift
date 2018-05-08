@@ -17,7 +17,7 @@ class PasswordViewController: IdentityUIViewController {
 
     @IBOutlet var whatsThisButton: UIButton! {
         didSet {
-            self.whatsThisButton.titleLabel?.text = self.viewModel.whatsThis
+            self.whatsThisButton.setTitle(self.viewModel.whatsThis, for: .normal)
         }
     }
     @IBAction func didClickWhatLink(_: Any) {
