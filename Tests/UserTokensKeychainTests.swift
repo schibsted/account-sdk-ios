@@ -24,7 +24,7 @@ func storeWithPreviousKeychainLayout(tokens: TokenData) throws {
     attributes[String(kSecClass)] = kSecClassGenericPassword
     attributes[String(kSecAttrAccessible)] = String(kSecAttrAccessibleWhenUnlocked)
     attributes[String(kSecAttrService)] = "swift.keychain.service"
-    attributes[String(kSecAttrAccount)] = "SchibstedAccount"
+    attributes[String(kSecAttrAccount)] = "SchibstedID"
     attributes[String(kSecValueData)] = archivedData
 
     var statusCode = SecItemAdd(attributes as CFDictionary, nil)
@@ -45,7 +45,7 @@ func loadWithPreviousKeychainLayout() throws -> TokenData {
     attributes[String(kSecClass)] = kSecClassGenericPassword
     attributes[String(kSecAttrAccessible)] = String(kSecAttrAccessibleWhenUnlocked)
     attributes[String(kSecAttrService)] = "swift.keychain.service"
-    attributes[String(kSecAttrAccount)] = "SchibstedAccount"
+    attributes[String(kSecAttrAccount)] = "SchibstedID"
     attributes[String(kSecReturnData)] = kCFBooleanTrue
     attributes[String(kSecReturnAttributes)] = kCFBooleanTrue
 
