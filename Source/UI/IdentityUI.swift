@@ -78,6 +78,39 @@ public enum LoginMethod {
     }
 }
 
+private class InternalLoadingAlertController: UIAlertController {}
+
+private extension UIViewController {
+    func showLoadingIndicator(message: String, leftSpacting: CGFloat, topSpacing: CGFloat) {
+        let alert = InternalLoadingAlertController(
+            title: nil,
+            message: message,
+            preferredStyle: .alert
+        )
+
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(
+            x: leftSpacting,
+            y: topSpacing,
+            width: 50,
+            height: 50)
+        )
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = .gray
+        loadingIndicator.startAnimating()
+
+        alert.view.addSubview(loadingIndicator)
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func dismissLoadingIndicator(animated _: Bool = true, completion: (() -> Void)?) {
+        if self.self.presentedViewController is InternalLoadingAlertController? {
+            self.dismiss(animated: true) {
+                completion?()
+            }
+        }
+    }
+}
+
 /**
  This is the main IdentityUI object that can be used to create a user object via a UI flow.
 
@@ -203,25 +236,33 @@ public class IdentityUI {
         localizedTeaserText: String? = nil,
         scopes: [String] = []
     ) {
-        self.clientInfoInteractor.fetchClient { [weak self] result in
-            guard let strongSelf = self else { return }
-            switch result {
-            case let .success(client):
-                strongSelf.configuration.tracker?.loginMethod = loginMethod
-                strongSelf.start(
-                    input: .byLoginMethod(
-                        loginMethod,
-                        presentingViewController: viewController,
-                        localizedTeaserText: localizedTeaserText,
-                        scopes: scopes,
-                        kind: client.kind,
-                        merchantName: client.merchandName ?? "unknown"
-                    )
-                ) { output in
-                    self?.complete(with: output)
+        viewController.showLoadingIndicator(
+            message: "GlobalString.loading".localized(from: self.configuration.localizationBundle),
+            leftSpacting: self.configuration.theme.geometry.groupedViewSpacing,
+            topSpacing: self.configuration.theme.geometry.groupedViewSpacing
+        )
+        self.clientInfoInteractor.fetchClient { [weak self, weak viewController] result in
+            viewController?.dismissLoadingIndicator {
+                guard let strongSelf = self else { return }
+                guard let strongViewController = viewController else { return }
+                switch result {
+                case let .success(client):
+                    strongSelf.configuration.tracker?.loginMethod = loginMethod
+                    strongSelf.start(
+                        input: .byLoginMethod(
+                            loginMethod,
+                            presentingViewController: strongViewController,
+                            localizedTeaserText: localizedTeaserText,
+                            scopes: scopes,
+                            kind: client.kind,
+                            merchantName: client.merchandName ?? "unknown"
+                        )
+                    ) { output in
+                        self?.complete(with: output)
+                    }
+                case let .failure(error):
+                    strongSelf.complete(with: .notStarted(error))
                 }
-            case let .failure(error):
-                strongSelf.complete(with: .notStarted(error))
             }
         }
     }
@@ -545,23 +586,31 @@ extension IdentityUI {
         default:
             scopes = []
         }
-        self.clientInfoInteractor.fetchClient { [weak self] result in
-            guard let strongSelf = self else { return }
-            switch result {
-            case let .success(client):
-                let viewController = strongSelf.makeIdentifierViewController(
-                    loginMethod: route.loginMethod,
-                    localizedTeaserText: nil,
-                    scopes: scopes,
-                    kind: client.kind,
-                    merchantName: client.merchandName ?? "unknown",
-                    completion: completion
-                )
-                strongSelf.navigationController.viewControllers = [viewController]
-                strongSelf.configuration.presentationHook?(strongSelf.navigationController)
-                strongSelf.handle(route: route, byPresentingIn: presentingViewController)
-            case let .failure(error):
-                completion(.notStarted(error))
+        presentingViewController.showLoadingIndicator(
+            message: "GlobalString.loading".localized(from: self.configuration.localizationBundle),
+            leftSpacting: self.configuration.theme.geometry.groupedViewSpacing,
+            topSpacing: self.configuration.theme.geometry.groupedViewSpacing
+        )
+        self.clientInfoInteractor.fetchClient { [weak self, weak presentingViewController] result in
+            presentingViewController?.dismissLoadingIndicator {
+                guard let strongSelf = self else { return }
+                guard let strongPresentingViewController = presentingViewController else { return }
+                switch result {
+                case let .success(client):
+                    let viewController = strongSelf.makeIdentifierViewController(
+                        loginMethod: route.loginMethod,
+                        localizedTeaserText: nil,
+                        scopes: scopes,
+                        kind: client.kind,
+                        merchantName: client.merchandName ?? "unknown",
+                        completion: completion
+                    )
+                    strongSelf.navigationController.viewControllers = [viewController]
+                    strongSelf.configuration.presentationHook?(strongSelf.navigationController)
+                    strongSelf.handle(route: route, byPresentingIn: strongPresentingViewController)
+                case let .failure(error):
+                    completion(.notStarted(error))
+                }
             }
         }
     }

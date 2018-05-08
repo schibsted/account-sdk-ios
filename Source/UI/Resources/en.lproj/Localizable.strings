@@ -1,5 +1,6 @@
 "GlobalString.platformName" = "Schibsted account";
 "GlobalString.done" = "Continue";
+"GlobalString.loading" = "Loading...";
 
 "InfoString.rememberMe" = "This means Schibsted will place a cookie on your device to keep you logged in. You can change this option later by logging out.";
 
