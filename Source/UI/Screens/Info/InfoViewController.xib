@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfoViewController">
             <connections>
                 <outlet property="headerLabel" destination="C50-p2-Oen" id="WrQ-Kn-R4F"/>
+                <outlet property="infoImage" destination="WXA-dw-n7f" id="EKV-Cr-oXW"/>
                 <outlet property="ok" destination="GJI-Ep-0LG" id="aOC-PV-4tW"/>
                 <outlet property="stackBackground" destination="mGy-Rh-1tb" id="BYf-Oh-pH9"/>
                 <outlet property="textLabel" destination="fGD-Xo-XZV" id="XDk-pA-oGS"/>
@@ -28,24 +29,24 @@
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mGy-Rh-1tb" userLabel="stack background">
-                    <rect key="frame" x="16" y="83" width="343" height="501.5"/>
+                    <rect key="frame" x="16" y="86" width="343" height="495.5"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="PtW-8I-W47">
-                            <rect key="frame" x="0.0" y="0.0" width="343" height="501.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="495.5"/>
                             <subviews>
                                 <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iz1-ar-GAn">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="136"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="130"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="740" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="WXA-dw-n7f">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="136"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="740" translatesAutoresizingMaskIntoConstraints="NO" id="WXA-dw-n7f">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="130"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="136" id="GJe-QU-1WX"/>
+                                                <constraint firstAttribute="height" constant="130" id="HqI-yg-RCO"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
                                 </stackView>
                                 <view contentMode="scaleToFill" verticalHuggingPriority="248" translatesAutoresizingMaskIntoConstraints="NO" id="xHu-tU-CZc">
-                                    <rect key="frame" x="0.0" y="152" width="343" height="349.5"/>
+                                    <rect key="frame" x="0.0" y="146" width="343" height="349.5"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="56" translatesAutoresizingMaskIntoConstraints="NO" id="1fN-fS-XWB">
                                             <rect key="frame" x="16" y="16" width="311" height="317.5"/>
@@ -125,7 +126,4 @@
         </view>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>
-    <resources>
-        <image name="placeholder" width="984" height="411"/>
-    </resources>
 </document>
