@@ -1,5 +1,6 @@
 "GlobalString.platformName" = "Schibsted account";
 "GlobalString.done" = "Continue";
+"GlobalString.loading" = "Loading...";
 
 "InfoString.rememberMe" = "This means Schibsted will place a cookie on your device to keep you logged in. You can change this option later by logging out.";
 
@@ -8,9 +9,10 @@
 "IdentifierScreenString.inputTitle.phone" = "Enter your phone number";
 "IdentifierScreenString.inputTitle.email" = "Enter your email address";
 "IdentifierScreenString.inputTitle.password" = "Enter your email address";
-"IdentifierScreenString.privacyText.phone" = "We'll never share your phone number without your consent.";
-"IdentifierScreenString.privacyText.email" = "We'll never share your email address without your consent.";
-"IdentifierScreenString.needHelp" = "Need help?";
+"IdentifierScreenString.infoText.internal" = "$0 is part of Schibsted.";
+"IdentifierScreenString.infoText.external" = "$0 collaborates with Schibsted.";
+"IdentifierScreenString.infoText.rest" = "You'll need a Schibsted account to continue. You can use this account accross all Schibsted sites.";
+"IdentifierScreenString.whatsThis" = "What is a Schibsted account?";
 "IdentifierScreenString.proceed" = "Continue";
 
 "PasswordScreenString.title.signin" = "Welcome back";

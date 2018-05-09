@@ -654,6 +654,55 @@ public class IdentityManager: IdentityManagerProtocol {
             }
         }
     }
+
+    /**
+     Retrieve information from self serivice about your app
+
+     Some information from spid that is associated with your client ID and can be set in
+     [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
+
+     - parameter completion: a callback that receives the `Client` model.
+     */
+    public func fetchClient(completion: @escaping ClientResultCallback) {
+        self.api.fetchClientAccessToken(
+            clientID: self.clientConfiguration.clientID,
+            clientSecret: self.clientConfiguration.clientSecret
+        ) { [weak self] result in
+            log(from: self, "clientToken: \(result)")
+
+            let clientTokenData: TokenData
+            switch result {
+            case let .success(data):
+                clientTokenData = data
+            case let .failure(error):
+                self?.dispatchIfSelf {
+                    completion(.failure(ClientError(error)))
+                }
+                return
+            }
+
+            guard let strongSelf = self else { return }
+
+            strongSelf.api.fetchClient(
+                oauthToken: clientTokenData.accessToken,
+                clientID: strongSelf.clientConfiguration.clientID
+            ) { [weak self] result in
+
+                log(from: self, result)
+
+                switch result {
+                case let .success(terms):
+                    self?.dispatchIfSelf {
+                        completion(.success(terms))
+                    }
+                case let .failure(error):
+                    self?.dispatchIfSelf {
+                        completion(.failure(ClientError(error)))
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension IdentityManager: UserDelegate {
