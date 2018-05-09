@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,17 +17,16 @@
                 <outlet property="continueButton" destination="kaw-tF-5AU" id="I7k-fI-X8s"/>
                 <outlet property="countryCode" destination="0qS-6C-iFm" id="279-FZ-5dU"/>
                 <outlet property="emailAddress" destination="KeK-Pk-rYA" id="4Ji-Jh-VPe"/>
-                <outlet property="helpButton" destination="hSi-bS-tNY" id="Mc1-84-VtM"/>
+                <outlet property="infoText" destination="CZp-Li-kvw" id="s1E-or-ClO"/>
                 <outlet property="inputError" destination="Ziq-TS-JKS" id="QfL-AI-BSh"/>
                 <outlet property="inputTitle" destination="MrD-sI-hSd" id="6xu-1x-gpH"/>
-                <outlet property="lockImage" destination="XW0-E0-ndf" id="bab-cO-sbh"/>
                 <outlet property="numberStackView" destination="E1A-Rx-9fe" id="zXk-Dr-VGo"/>
                 <outlet property="phoneNumber" destination="ZeN-LP-RPp" id="sS1-uF-s3O"/>
-                <outlet property="privacyText" destination="CZp-Li-kvw" id="6Oc-bV-xhN"/>
                 <outlet property="scrollView" destination="SyO-au-Era" id="luv-KM-eqL"/>
                 <outlet property="teaser" destination="lKU-ue-rCx" id="C3h-X1-1A2"/>
                 <outlet property="teaserView" destination="JpK-Kl-xqq" id="EBc-AN-Vuj"/>
                 <outlet property="view" destination="ETQ-ha-3W8" id="Mjd-3i-TWy"/>
+                <outlet property="whastThisButton" destination="hSi-bS-tNY" id="WwH-cK-VWu"/>
             </connections>
         </placeholder>
         <view contentMode="scaleToFill" id="ETQ-ha-3W8">
@@ -123,23 +122,20 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cIa-P1-gNm" userLabel="PrivacyStackView">
                                                     <rect key="frame" x="16" y="153" width="343" height="219.5"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" image="lock-outline" translatesAutoresizingMaskIntoConstraints="NO" id="XW0-E0-ndf">
-                                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                        </imageView>
-                                                        <stackView opaque="NO" contentMode="left" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="9Qw-VW-lWj">
-                                                            <rect key="frame" x="40" y="0.0" width="303" height="49.5"/>
+                                                        <stackView opaque="NO" contentMode="left" axis="vertical" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9Qw-VW-lWj">
+                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Privacy text" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZp-Li-kvw">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="303" height="19.5"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Info text" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZp-Li-kvw">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="58" height="19.5"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hSi-bS-tNY" userLabel="HelpButton">
-                                                                    <rect key="frame" x="0.0" y="19.5" width="46" height="30"/>
-                                                                    <state key="normal" title="Button"/>
+                                                                    <rect key="frame" x="0.0" y="27.5" width="52" height="30"/>
+                                                                    <state key="normal" title="What is"/>
                                                                     <connections>
-                                                                        <action selector="didClickNeedHelp:" destination="-1" eventType="touchUpInside" id="7RG-7B-db9"/>
+                                                                        <action selector="didClickWhatsThis:" destination="-1" eventType="touchUpInside" id="pd9-n7-c4v"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
@@ -213,7 +209,4 @@
         </view>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>
-    <resources>
-        <image name="lock-outline" width="24" height="24"/>
-    </resources>
 </document>

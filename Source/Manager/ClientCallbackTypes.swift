@@ -24,6 +24,10 @@ public typealias IdentifierStatusResultCallback = (Result<IdentifierStatus, Clie
 /// - seeAlso: `IdentityManager.fetchTerms`
 public typealias TermsResultCallback = (Result<Terms, ClientError>) -> Void
 
+/// Callback that returns information about the your client
+/// - seeAlso: `IdentityManager.fetchClient`
+public typealias ClientResultCallback = (Result<Client, ClientError>) -> Void
+
 /// Callback that returns the required fields
 /// -seeAlso `IdentityManager.requiredFields
 /// -seeAlso 'UserProfileAPI.requiredFields

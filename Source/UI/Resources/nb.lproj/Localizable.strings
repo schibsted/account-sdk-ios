@@ -8,7 +8,7 @@
 "IdentifierScreenString.inputTitle.password" = "Skriv inn din e-postadresse";
 "IdentifierScreenString.privacyText.phone" = " Vi vil aldri dele telefonnummeret ditt uten ditt samtykke.";
 "IdentifierScreenString.privacyText.email" = "Vi vil aldri dele e-postadressen din uten ditt samtykke.";
-"IdentifierScreenString.needHelp" = "Trenger hjelp?";
+"IdentifierScreenString.whatsThis" = "Trenger hjelp?";
 "IdentifierScreenString.proceed" = "Fortsett";
 
 "PasswordScreenString.title.signin" = "Velkommen tilbake";
