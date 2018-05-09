@@ -11,6 +11,8 @@ public enum IdentityUIResult {
     case completed(User)
     /// The process was cancelled by the user
     case canceled
+    /// There was an error during the UI process before there was a UI to display
+    case failed(Error)
 }
 
 /**
