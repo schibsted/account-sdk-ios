@@ -83,6 +83,11 @@ public class WebSessionRoutes {
      - parameter redirectQueryItems: any query items you want the redirect url to contain
      */
     public func accountSummaryURL(withRedirectPath path: String? = nil, redirectQueryItems: [URLQueryItem]? = nil) -> URL {
-        return self.makeURLFromPath("/account/summary", redirectPath: path, queryItems: [], redirectQueryItems: redirectQueryItems)
+        return self.makeURLFromPath(
+            "/account/summary",
+            redirectPath: path,
+            queryItems: [URLQueryItem(name: "response_type", value: "code")],
+            redirectQueryItems: redirectQueryItems
+        )
     }
 }
