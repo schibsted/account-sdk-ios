@@ -74,7 +74,7 @@ extension SchibstedAccount.ClientConfiguration {
 
 extension SchibstedAccount.ClientConfiguration {
     var webClientID: String? {
-        return ClientConfiguration.config[self.environment!].clientID
+        return ClientConfiguration.config[self.environment!].webClientID
     }
 
     var sdkExampleRedirectURL: URL? {
