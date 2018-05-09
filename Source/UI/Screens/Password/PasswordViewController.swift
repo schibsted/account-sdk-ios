@@ -64,6 +64,12 @@ class PasswordViewController: IdentityUIViewController {
         self.didRequestAction?(.forgotPassword)
     }
 
+    @IBOutlet var ageLabel: InfoLabel! {
+        didSet {
+            self.ageLabel.text = self.viewModel.ageLimit
+            self.ageLabel.isHidden = true
+        }
+    }
     @IBOutlet var infoLabel: InfoLabel! {
         didSet {
             self.infoLabel.text = self.viewModel.info
@@ -142,6 +148,7 @@ class PasswordViewController: IdentityUIViewController {
             self.infoLabel.isHidden = false
             self.infoLabelHeight.constant = 200 // (less than or equal of some big value).
             self.forgotPasswordButton.isHidden = true
+            self.ageLabel.isHidden = false
         case .signin:
             self.infoLabel.isHidden = true
             self.infoLabelHeight.constant = 0
