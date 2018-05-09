@@ -9,6 +9,8 @@ class IdentifierViewModel {
     let loginMethod: LoginMethod
     let localizedTeaserText: String?
     let localizationBundle: Bundle
+    let kind: Client.Kind
+    let merchantName: String
 
     var helpURL: URL {
         guard let url = URL(string: "https://www.schibstedpayment.com/hc/sv/#faq") else {
@@ -17,21 +19,40 @@ class IdentifierViewModel {
         return url
     }
 
-    init(loginMethod: LoginMethod, localizedTeaserText: String?, localizationBundle: Bundle) {
+    init(loginMethod: LoginMethod, kind: Client.Kind?, merchantName: String, localizedTeaserText: String?, localizationBundle: Bundle) {
         self.loginMethod = loginMethod
+        self.kind = kind ?? .internal
+        self.merchantName = merchantName
         self.localizedTeaserText = localizedTeaserText
         self.localizationBundle = localizationBundle
     }
 }
 
-extension IdentifierViewModel {
-    var privacyText: String {
-        switch self.loginMethod.identifierType {
-        case .email:
-            return "IdentifierScreenString.privacyText.email".localized(from: self.localizationBundle)
-        case .phone:
-            return "IdentifierScreenString.privacyText.phone".localized(from: self.localizationBundle)
+private extension NSMutableString {
+    @discardableResult
+    func replace(string target: String, with value: String) -> NSRange? {
+        let range = self.range(of: target)
+        if range.location != NSNotFound {
+            self.replaceCharacters(in: range, with: value)
+            return NSRange(location: range.location, length: value.count)
         }
+        return nil
+    }
+}
+
+extension IdentifierViewModel {
+    var infoText: String {
+        let startText: String
+        switch self.kind {
+        case .internal:
+            startText = "IdentifierScreenString.infoText.internal".localized(from: self.localizationBundle)
+        case .external:
+            startText = "IdentifierScreenString.infoText.external".localized(from: self.localizationBundle)
+        }
+
+        let mutableString = NSMutableString(string: startText)
+        mutableString.replace(string: "$0", with: self.merchantName)
+        return mutableString as String + " " + "IdentifierScreenString.infoText.rest".localized(from: self.localizationBundle)
     }
 
     var proceed: String {
@@ -70,7 +91,7 @@ extension IdentifierViewModel {
         return ClientError.invalidPhoneNumber.localized(from: self.localizationBundle)
     }
 
-    var needHelp: String {
-        return "IdentifierScreenString.needHelp".localized(from: self.localizationBundle)
+    var whatsThis: String {
+        return "IdentifierScreenString.whatsThis".localized(from: self.localizationBundle)
     }
 }

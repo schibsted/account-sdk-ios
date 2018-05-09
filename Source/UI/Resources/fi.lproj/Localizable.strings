@@ -8,7 +8,7 @@
 "IdentifierScreenString.inputTitle.password" = "Anna sähköpostiosoitteesi";
 "IdentifierScreenString.privacyText.phone" = "Emme koskaan anna puhelinnumeroasi eteenpäin ilman lupaasi.";
 "IdentifierScreenString.privacyText.email" = "Emme koskaan anna sähköpostiosoitettasi eteenpäin ilman lupaasi.";
-"IdentifierScreenString.needHelp" = "Tarvitsetko apua?";
+"IdentifierScreenString.whatsThis" = "Tarvitsetko apua?";
 "IdentifierScreenString.proceed" = "Jatka";
 
 "PasswordScreenString.title.signin" = "Tervetuloa takaisin";

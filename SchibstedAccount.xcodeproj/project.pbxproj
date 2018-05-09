@@ -278,6 +278,7 @@
 		B01D7FFAA457B1DE22C33090 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B01D7D686EF4DF53996801EA /* Localizable.strings */; };
 		E1656760209C787100F2C091 /* SchibstedAccount.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C24188205BF1BE00154866 /* SchibstedAccount.framework */; };
 		E1656761209C787100F2C091 /* SchibstedAccount.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 43C24188205BF1BE00154866 /* SchibstedAccount.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E143801B20909E2E00F037FA /* ClientInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E143801A20909E2E00F037FA /* ClientInfoInteractor.swift */; };
 		E18394C8208DD31800B05EC9 /* product-no-access.json in Resources */ = {isa = PBXBuildFile; fileRef = E18394B5208DD31700B05EC9 /* product-no-access.json */; };
 		E18394E2208DF43300B05EC9 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18394CD208DF43300B05EC9 /* InfoViewController.swift */; };
 		E18394E3208DF43300B05EC9 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18394CE208DF43300B05EC9 /* InfoViewModel.swift */; };
@@ -739,6 +740,7 @@
 		B01D7FA9FD6A1552F6F2AFC2 /* FetchStatusInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchStatusInteractor.swift; sourceTree = "<group>"; };
 		B01D7FAC65185FEEDB2C7E5B /* UpdateUserProfileTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserProfileTask.swift; sourceTree = "<group>"; };
 		B01D7FD3E6A4D7737E916326 /* TestingUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingUser.swift; sourceTree = "<group>"; };
+		E143801A20909E2E00F037FA /* ClientInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientInfoInteractor.swift; sourceTree = "<group>"; };
 		E18394B5208DD31700B05EC9 /* product-no-access.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "product-no-access.json"; sourceTree = "<group>"; };
 		E18394CD208DF43300B05EC9 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		E18394CE208DF43300B05EC9 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
@@ -1097,6 +1099,7 @@
 				B01D7E434D36E2D0C5ED33EE /* RequiredFieldsInteractor.swift */,
 				B01D7807AB304CECAD280C19 /* CompleteProfileInteractor.swift */,
 				B01D7A46797691C27A8A0723 /* AuthenticationCodeInteractor.swift */,
+				E143801A20909E2E00F037FA /* ClientInfoInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -1955,6 +1958,7 @@
 				B01D7499A8B45AA490B27375 /* PrimaryButton.swift in Sources */,
 				B01D7E0E1A875DF3587E2175 /* SecondaryButton.swift in Sources */,
 				B01D74C1CCFEB87CB3C17E33 /* ValidateTextField.swift in Sources */,
+				E143801B20909E2E00F037FA /* ClientInfoInteractor.swift in Sources */,
 				B01D76CB9A500C65AD87ED96 /* ViewContainingExpandedSubviews.swift in Sources */,
 				B01D7296681467B377B377D0 /* ErrorScreenStrings.swift in Sources */,
 				B01D77FD683B424423E8EA29 /* ErrorViewController.swift in Sources */,
