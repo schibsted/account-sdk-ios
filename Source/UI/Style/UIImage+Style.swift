@@ -10,4 +10,6 @@ extension UIImage {
     static var schibstedCross: UIImage { return Style.icons[.cross] }
     static var schibstedChevronLeft: UIImage { return Style.icons[.chevronLeft] }
     static var schibstedClearInput: UIImage { return Style.icons[.clearInput] }
+    static var schibstedRememberMeInfo: UIImage { return Style.icons[.rememberMeInfo] }
+    static var schibstedInfoPlaceholder: UIImage { return Style.icons[.infoPlaceholder] }
 }
