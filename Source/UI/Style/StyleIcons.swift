@@ -19,6 +19,10 @@ public enum StyleIconKind: String {
     case chevronLeft = "chevron-left"
     ///
     case clearInput = "clear-input"
+    ///
+    case rememberMeInfo = "remember-me-info"
+    ///
+    case infoPlaceholder = "placeholder"
 }
 
 extension UIImage {

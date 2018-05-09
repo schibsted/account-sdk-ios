@@ -25,13 +25,16 @@ class InfoViewController: IdentityUIViewController {
         }
     }
     @IBOutlet var stackBackground: UIView!
+    @IBOutlet var infoImage: UIImageView!
 
+    let titleImage: UIImage?
     let heading: String
     let text: String
 
-    init(configuration: IdentityUIConfiguration, title: String, text: String) {
+    init(configuration: IdentityUIConfiguration, title: String, text: String, titleImage: UIImage?) {
         self.heading = title
         self.text = text
+        self.titleImage = titleImage
         super.init(configuration: configuration, navigationSettings: NavigationSettings(), trackerViewID: .passwordlessResend)
     }
 
@@ -42,6 +45,11 @@ class InfoViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.stackBackground.layer.cornerRadius = self.theme.geometry.cornerRadius
+        if let image = self.titleImage {
+            self.infoImage.image = image
+        } else {
+            self.infoImage.image = .schibstedInfoPlaceholder
+        }
     }
 
     @IBAction func didClickContinue(_: Any) {
