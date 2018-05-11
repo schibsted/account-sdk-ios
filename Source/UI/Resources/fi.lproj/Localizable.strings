@@ -26,6 +26,7 @@
 "PasswordScreenString.forgotPassword" = "Unohtuiko salasana?";
 "PasswordScreenString.persistentLogin" = "Muista minut tällä laitteella";
 "PasswordScreenString.whatsThis" = "Mikä tämä on?";
+"PasswordScreenString.ageLimit" = "Sinun tulee olla vähintään 16 vuoden ikäinen, jotta voit luoda Schibsted-tilin"
 
 "VerifyScreenString.title" = "Koodi on lähetetty sinulle";
 "VerifyScreenString.subtext" = "Kirjoita vahvistuskoodi, jonka lähetimme, vastaanottaja:";
