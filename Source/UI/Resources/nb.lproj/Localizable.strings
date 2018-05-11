@@ -1,14 +1,18 @@
 "GlobalString.platformName" = "Schibsted-konto";
 "GlobalString.done" = "Fortsett";
+"GlobalString.loading" = "Laster...";
+
+"InfoString.rememberMe" = "Vi plasserer en informasjonskapsel på enheten din for å holde deg logget inn. Du kan endre dette alternativet senere, ved å logge deg ut eller slette informasjonskapselen.";
 
 "IdentifierScreenString.title.sms" = "Logg inn eller opprett bruker";
 "IdentifierScreenString.title.email" = "Logg inn eller opprett bruker";
 "IdentifierScreenString.inputTitle.phone" = "Skriv inn din telefonnummer";
 "IdentifierScreenString.inputTitle.email" = "Skriv inn din e-postadresse";
 "IdentifierScreenString.inputTitle.password" = "Skriv inn din e-postadresse";
-"IdentifierScreenString.privacyText.phone" = " Vi vil aldri dele telefonnummeret ditt uten ditt samtykke.";
-"IdentifierScreenString.privacyText.email" = "Vi vil aldri dele e-postadressen din uten ditt samtykke.";
-"IdentifierScreenString.whatsThis" = "Trenger hjelp?";
+"IdentifierScreenString.infoText.internal" = "$0 er en del av Schibsted.";
+"IdentifierScreenString.infoText.external" = "$0 er i samarbeid med Schibsted. ";
+"IdentifierScreenString.infoText.rest" = "Du trenger en Schibsted-konto for å fortsette. Du kan bruke denne kontoen på alle Schibsted-sider.";
+"IdentifierScreenString.whatsThis" = "Hva er en Schibsted-konto?";
 "IdentifierScreenString.proceed" = "Fortsett";
 
 "PasswordScreenString.title.signin" = "Velkommen tilbake";
@@ -20,7 +24,8 @@
 "PasswordScreenString.cancel" = "Avbryt";
 "PasswordScreenString.info" = "Minst 8 tegn";
 "PasswordScreenString.forgotPassword" = "Glemt passord?";
-"PasswordScreenString.persistentLogin" = "Forbli innlogget";
+"PasswordScreenString.persistentLogin" = "Husk meg på denne enheten";
+"PasswordScreenString.whatsThis" = "Hva er dette?";
 
 "VerifyScreenString.title" = "Vi har sendt deg en kode";
 "VerifyScreenString.subtext" = "Tast inn bekreftelseskoden vi sendte til: ";
@@ -54,7 +59,7 @@
 "CheckInboxScreenStrings.title" = "Sjekk innboksen din";
 
 "RequiredFieldsScreenString.title" = "Fullfør";
-"RequiredFieldsScreenString.subtext" = "Vennligst legg til mer informasjon i din profil";
+"RequiredFieldsScreenString.subtext" = "Vi bruker denne informasjonen til for eksempel å forbedre tjenesten vår og gi deg relevant reklame og innhold.\n \nDu kan justere personvernvalgene dine når som helst, eller finne ut mer om Schibsted, data og deg.";
 "RequiredFieldsScreenString.proceed" = "Fortsett";
 
 "RequiredField.givenName.title" = "Fornavn";
@@ -78,4 +83,3 @@
 "ErrorString.connectionTimeout" = "Tilkoblingen ble tidsavbrutt. Prøv igjen.";
 "ErrorString.noInternetConnection" = "Kan ikke koble til internett. Sjekk tilkoblingen din.";
 "ErrorString.unableToResend" = "Klarte ikke å sende koden på nytt. Prøv igjen senere.";
-
