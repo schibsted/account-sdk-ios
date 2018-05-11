@@ -1,14 +1,18 @@
 "GlobalString.platformName" = "Schibsted-tili";
 "GlobalString.done" = "Jatka";
+"GlobalString.loading" = "Sisältöä...";
+
+"InfoString.rememberMe" = "Tallennamme tietoa istunnostasi sinun laitteellesi, jotta voit pysyä kirjautuneena. Voit muuttaa asetusta myöhemmin kirjautumalla ulos.";
 
 "IdentifierScreenString.title.sms" = "Kirjaudu sisään tai luo tili";
 "IdentifierScreenString.title.email" = "Kirjaudu sisään tai luo tili";
 "IdentifierScreenString.inputTitle.phone" = "Kirjoita puhelinnumerosi";
 "IdentifierScreenString.inputTitle.email" = "Anna sähköpostiosoitteesi";
 "IdentifierScreenString.inputTitle.password" = "Anna sähköpostiosoitteesi";
-"IdentifierScreenString.privacyText.phone" = "Emme koskaan anna puhelinnumeroasi eteenpäin ilman lupaasi.";
-"IdentifierScreenString.privacyText.email" = "Emme koskaan anna sähköpostiosoitettasi eteenpäin ilman lupaasi.";
-"IdentifierScreenString.whatsThis" = "Tarvitsetko apua?";
+"IdentifierScreenString.infoText.internal" = "$0 on osa Schibsted-konsernia.";
+"IdentifierScreenString.infoText.external" = "$0 on Schibsted-yhteistyökumppani. ";
+"IdentifierScreenString.infoText.rest" = "Jatkaaksesi tarvitset Schibsted-tilin. Voit käyttää samaa tiliä kaikilla Schibsted-sivustoilla.";
+"IdentifierScreenString.whatsThis" = "Mikä Schibsted-tili on?";
 "IdentifierScreenString.proceed" = "Jatka";
 
 "PasswordScreenString.title.signin" = "Tervetuloa takaisin";
@@ -20,7 +24,8 @@
 "PasswordScreenString.cancel" = "Peruuta";
 "PasswordScreenString.info" = "Vähintään 8 merkkiä";
 "PasswordScreenString.forgotPassword" = "Unohtuiko salasana?";
-"PasswordScreenString.persistentLogin" = "Pidä minut kirjautuneena";
+"PasswordScreenString.persistentLogin" = "Muista minut tällä laitteella";
+"PasswordScreenString.whatsThis" = "Mikä tämä on?";
 
 "VerifyScreenString.title" = "Koodi on lähetetty sinulle";
 "VerifyScreenString.subtext" = "Kirjoita vahvistuskoodi, jonka lähetimme, vastaanottaja:";
@@ -54,7 +59,7 @@
 "CheckInboxScreenStrings.title" = "Tarkista postilaatikkosi";
 
 "RequiredFieldsScreenString.title" = "Viimeistele";
-"RequiredFieldsScreenString.subtext" = "Täytä lisätietoja profiiliisi";
+"RequiredFieldsScreenString.subtext" = "Käytämme tietoja esimerkiksi parantamaan palvelujamme ja näyttämään sinulle mielekkäitä mainoksia ja sisältöä.\n \nVoit muuttaa yksityisyysasetuksia milloin hyvänsä tai lukea lisää Schisbstedistä, tiedoista ja sinusta.";
 "RequiredFieldsScreenString.proceed" = "Jatka";
 
 "RequiredField.givenName.title" = "Etunimi";
@@ -78,4 +83,3 @@
 "ErrorString.connectionTimeout" = "Yhteys on aikakatkaistu. Yritä uudelleen.";
 "ErrorString.noInternetConnection" = "Yhteyttä ei voitu muodostaa. Tarkista internetyhteys.";
 "ErrorString.unableToResend" = "Koodia ei onnistuttu lähettämään uudelleen. Yritä myöhemmin uudelleen.";
-
