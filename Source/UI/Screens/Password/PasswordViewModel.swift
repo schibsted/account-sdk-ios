@@ -54,6 +54,10 @@ extension PasswordViewModel {
         return "PasswordScreenString.info".localized(from: self.localizationBundle)
     }
 
+    var ageLimit: String {
+        return "PasswordScreenString.ageLimit".localized(from: self.localizationBundle)
+    }
+
     var forgotPassword: String {
         return "PasswordScreenString.forgotPassword".localized(from: self.localizationBundle)
     }
