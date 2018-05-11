@@ -5,13 +5,26 @@
 
 import Foundation
 
+private extension NSMutableString {
+    func replace(string target: String, with value: String) -> NSRange? {
+        let range = self.range(of: target)
+        if range.location != NSNotFound {
+            self.replaceCharacters(in: range, with: value)
+            return NSRange(location: range.location, length: value.count)
+        }
+        return nil
+    }
+}
+
 class RequiredFieldsViewModel {
     let supportedRequiredFields: [SupportedRequiredField]
     let localizationBundle: Bundle
+    let locale: Locale
 
-    init(requiredFields: [RequiredField], localizationBundle: Bundle) {
+    init(requiredFields: [RequiredField], localizationBundle: Bundle, locale: Locale) {
         self.supportedRequiredFields = SupportedRequiredField.from(requiredFields)
         self.localizationBundle = localizationBundle
+        self.locale = locale
     }
 }
 
@@ -56,8 +69,31 @@ extension RequiredFieldsViewModel {
         return "RequiredFieldsScreenString.title".localized(from: self.localizationBundle)
     }
 
-    var subtext: String {
-        return "RequiredFieldsScreenString.subtext".localized(from: self.localizationBundle)
+    var subtext: NSAttributedString {
+        let text = "RequiredFieldsScreenString.subtext".localized(from: self.localizationBundle)
+        let link0 = "RequiredFieldsScreenString.subtext.link0".localized(from: self.localizationBundle)
+        let link1 = "RequiredFieldsScreenString.subtext.link1".localized(from: self.localizationBundle)
+
+        guard let controlYouPrivacyURL = URL(string: "https://info.privacy.schibsted.com/" + locale.gdprLanguageCode + "/S007") else {
+            return NSAttributedString(string: text)
+        }
+        guard let dataAndYouURL = URL(string: "https://info.privacy.schibsted.com/" + locale.gdprLanguageCode + "/S012") else {
+            return NSAttributedString(string: text)
+        }
+
+        let mutableString = NSMutableString(string: text)
+        guard let r1 = mutableString.replace(string: "$0", with: link0), let r2 = mutableString.replace(string: "$1", with: link1) else {
+            return NSAttributedString(string: text)
+        }
+
+        let attributedString = NSMutableAttributedString(string: mutableString as String)
+        attributedString.addAttribute(.link, value: controlYouPrivacyURL.absoluteString, range: r1)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: r1)
+
+        attributedString.addAttribute(.link, value: dataAndYouURL.absoluteString, range: r2)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: r2)
+
+        return attributedString
     }
 
     func string(for error: SupportedRequiredField.ValidationError) -> String {

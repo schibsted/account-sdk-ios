@@ -5,24 +5,6 @@
 
 import Foundation
 
-private extension Locale {
-    var gdprLanguageCode: String {
-        guard let code = self.languageCode else {
-            return "en"
-        }
-        switch code {
-        case "nb", "no", "nn":
-            return "no"
-        case "sv":
-            return "se"
-        case "fi":
-            return "fi"
-        default:
-            return "en"
-        }
-    }
-}
-
 class IdentifierViewModel {
     let loginMethod: LoginMethod
     let localizedTeaserText: String?

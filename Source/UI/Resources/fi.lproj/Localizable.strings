@@ -26,7 +26,7 @@
 "PasswordScreenString.forgotPassword" = "Unohtuiko salasana?";
 "PasswordScreenString.persistentLogin" = "Muista minut tällä laitteella";
 "PasswordScreenString.whatsThis" = "Mikä tämä on?";
-"PasswordScreenString.ageLimit" = "Sinun tulee olla vähintään 16 vuoden ikäinen, jotta voit luoda Schibsted-tilin"
+"PasswordScreenString.ageLimit" = "Sinun tulee olla vähintään 16 vuoden ikäinen, jotta voit luoda Schibsted-tilin";
 
 "VerifyScreenString.title" = "Koodi on lähetetty sinulle";
 "VerifyScreenString.subtext" = "Kirjoita vahvistuskoodi, jonka lähetimme, vastaanottaja:";
@@ -60,7 +60,9 @@
 "CheckInboxScreenStrings.title" = "Tarkista postilaatikkosi";
 
 "RequiredFieldsScreenString.title" = "Viimeistele";
-"RequiredFieldsScreenString.subtext" = "Käytämme tietoja esimerkiksi parantamaan palvelujamme ja näyttämään sinulle mielekkäitä mainoksia ja sisältöä.\n \nVoit muuttaa yksityisyysasetuksia milloin hyvänsä tai lukea lisää Schisbstedistä, tiedoista ja sinusta.";
+"RequiredFieldsScreenString.subtext" = "Käytämme tietoja esimerkiksi parantamaan palvelujamme ja näyttämään sinulle mielekkäitä mainoksia ja sisältöä.\n \nVoit $0 tai $1.";
+"RequiredFieldsScreenString.subtext.link0" = "muuttaa yksityisyysasetuksia milloin hyvänsä";
+"RequiredFieldsScreenString.subtext.link1" = "lukea lisää Schisbstedistä, tiedoista ja sinusta";
 "RequiredFieldsScreenString.proceed" = "Jatka";
 
 "RequiredField.givenName.title" = "Etunimi";

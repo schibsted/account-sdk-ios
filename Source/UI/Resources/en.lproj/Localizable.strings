@@ -26,7 +26,7 @@
 "PasswordScreenString.forgotPassword" = "Forgot password?";
 "PasswordScreenString.persistentLogin" = "Remember me on this device";
 "PasswordScreenString.whatsThis" = "What's this?";
-"PasswordScreenString.ageLimit" = "You need to be at leasy 16 years old to create a Schibsted account"
+"PasswordScreenString.ageLimit" = "You need to be at leasy 16 years old to create a Schibsted account";
 
 "VerifyScreenString.title" = "We sent you a code";
 "VerifyScreenString.subtext" = "Enter the verification code we sent to:";
@@ -60,7 +60,9 @@
 "CheckInboxScreenStrings.title" = "Check your inbox";
 
 "RequiredFieldsScreenString.title" = "Finalise";
-"RequiredFieldsScreenString.subtext" = "We use this information for things like improving our services and giving you relevant ads and content.\n\nYou can adjust your privacy choices at any time or learn more about Schibsted, data and you.";
+"RequiredFieldsScreenString.subtext" = "We use this information for things like improving our services and giving you relevant ads and content.\n\nYou can $0 or $1.";
+"RequiredFieldsScreenString.subtext.link0" = "adjust your privacy choices at any time";
+"RequiredFieldsScreenString.subtext.link1" = "learn more about Schibsted, data and you";
 "RequiredFieldsScreenString.proceed" = "Continue";
 
 "RequiredField.givenName.title" = "First name";
