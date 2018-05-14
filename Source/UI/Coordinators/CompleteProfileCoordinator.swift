@@ -246,14 +246,20 @@ extension CompleteProfileCoordinator {
         let navigationSettings = NavigationSettings(
             cancel: configuration.isCancelable ? { completion(.cancel) } : nil
         )
-        let viewModel = RequiredFieldsViewModel(requiredFields: requiredFields, localizationBundle: self.configuration.localizationBundle)
+        let viewModel = RequiredFieldsViewModel(
+            requiredFields: requiredFields,
+            localizationBundle: self.configuration.localizationBundle,
+            locale: self.identityManager.clientConfiguration.locale
+        )
         let viewController = RequiredFieldsViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-        viewController.didRequestAction = { action in
+        viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .update(fields):
                 completion(.updatedRequiredFields(fields))
             case .cancel:
                 completion(.cancel)
+            case let .open(url):
+                self?.present(url: url)
             }
         }
         self.navigationController.pushViewController(viewController, animated: true)

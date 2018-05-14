@@ -417,7 +417,8 @@ extension IdentityUI {
             kind: kind,
             merchantName: merchantName,
             localizedTeaserText: localizedTeaserText,
-            localizationBundle: self.configuration.localizationBundle
+            localizationBundle: self.configuration.localizationBundle,
+            locale: self.identityManager.clientConfiguration.locale
         )
         let viewController = IdentifierViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
         viewController.didRequestAction = { [weak self] action in

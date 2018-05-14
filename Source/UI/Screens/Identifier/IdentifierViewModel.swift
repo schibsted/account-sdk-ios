@@ -11,20 +11,29 @@ class IdentifierViewModel {
     let localizationBundle: Bundle
     let kind: Client.Kind
     let merchantName: String
+    let locale: Locale
 
     var helpURL: URL {
-        guard let url = URL(string: "https://www.schibstedpayment.com/hc/sv/#faq") else {
+        guard let url = URL(string: "https://info.privacy.schibsted.com/" + locale.gdprLanguageCode + "/S010") else {
             preconditionFailure("Failed to make help me URL")
         }
         return url
     }
 
-    init(loginMethod: LoginMethod, kind: Client.Kind?, merchantName: String, localizedTeaserText: String?, localizationBundle: Bundle) {
+    init(
+        loginMethod: LoginMethod,
+        kind: Client.Kind?,
+        merchantName: String,
+        localizedTeaserText: String?,
+        localizationBundle: Bundle,
+        locale: Locale
+    ) {
         self.loginMethod = loginMethod
         self.kind = kind ?? .internal
         self.merchantName = merchantName
         self.localizedTeaserText = localizedTeaserText
         self.localizationBundle = localizationBundle
+        self.locale = locale
     }
 }
 

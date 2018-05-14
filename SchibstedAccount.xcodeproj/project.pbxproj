@@ -285,6 +285,7 @@
 		E1DBA10720A592970005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10520A592970005B3B9 /* Localizable.strings */; };
 		E1DBA10A20A592B70005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10820A592B70005B3B9 /* Localizable.strings */; };
 		E1DBA10D20A592DD0005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10B20A592DD0005B3B9 /* Localizable.strings */; };
+		E1DBA11720A5B9710005B3B9 /* Local+GDPRLanguageCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DBA11620A5B9710005B3B9 /* Local+GDPRLanguageCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -747,6 +748,7 @@
 		E1DBA10620A592970005B3B9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA10920A592B70005B3B9 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA10C20A592DD0005B3B9 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Localizable.strings; sourceTree = "<group>"; };
+		E1DBA11620A5B9710005B3B9 /* Local+GDPRLanguageCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Local+GDPRLanguageCode.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1287,6 +1289,7 @@
 				B01D705998E8674DA47E166A /* Utils.swift */,
 				B01D736C14B5570C960CD3B8 /* UIToolBar+keyboard.swift */,
 				B01D77568CBBD45582ACCA13 /* CountryDialingCodeHelper.swift */,
+				E1DBA11620A5B9710005B3B9 /* Local+GDPRLanguageCode.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1952,6 +1955,7 @@
 				B01D70D1F402BFAADCF32448 /* CountryDialingCodeHelper.swift in Sources */,
 				B01D7C14CD83A42717986437 /* Heading.swift in Sources */,
 				B01D7299449EF35C2BA75884 /* Checkbox.swift in Sources */,
+				E1DBA11720A5B9710005B3B9 /* Local+GDPRLanguageCode.swift in Sources */,
 				B01D7F8188A43DFE4CADF41E /* TextView.swift in Sources */,
 				E18394E3208DF43300B05EC9 /* InfoViewModel.swift in Sources */,
 				B01D7F5499041E306775A378 /* InfoLabel.swift in Sources */,

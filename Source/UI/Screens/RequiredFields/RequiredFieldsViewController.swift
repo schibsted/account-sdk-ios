@@ -14,6 +14,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     enum Action {
         case update(fields: [SupportedRequiredField: String])
         case cancel
+        case open(url: URL)
     }
 
     var didRequestAction: ((Action) -> Void)?
@@ -21,7 +22,8 @@ class RequiredFieldsViewController: IdentityUIViewController {
     @IBOutlet var subtext: TextView! {
         didSet {
             self.subtext.isEditable = false
-            self.subtext.attributedText = NSAttributedString(string: self.viewModel.subtext)
+            self.subtext.delegate = self
+            self.subtext.attributedText = self.viewModel.subtext
         }
     }
 
@@ -229,6 +231,13 @@ class RequiredFieldsViewController: IdentityUIViewController {
     override func endLoading() {
         super.endLoading()
         self.continueButton.isAnimating = false
+    }
+}
+
+extension RequiredFieldsViewController: UITextViewDelegate {
+    func textView(_: UITextView, shouldInteractWith url: URL, in _: NSRange) -> Bool {
+        self.didRequestAction?(.open(url: url))
+        return false
     }
 }
 

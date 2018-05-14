@@ -98,7 +98,9 @@ public struct ClientConfiguration {
 
     let providerComponent: String?
     let clientSecret: String
-    let locale: Locale
+
+    /// The locale that is being used
+    public let locale: Locale
 
     /**
      Which environment (if any) is this configuration using
