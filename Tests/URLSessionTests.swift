@@ -174,7 +174,7 @@ class URLSessionTests: QuickSpec {
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
-                var wantedStub = NetworkStub(path: .path(url.absoluteString))
+                var wantedStub = NetworkStub(path: .url(url))
                 wantedStub.returnData([
                     (data: .fromFile("empty"), statusCode: 401),
                     (data: successData.data(using: .utf8) ?? Data(), statusCode: 200),
