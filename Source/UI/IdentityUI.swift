@@ -504,9 +504,7 @@ extension IdentityUI {
         }
 
         let input = AuthenticationCoordinator.Input(identifier: identifier, loginFlowVariant: loginFlowVariant, scopes: scopes)
-        self.child = ChildFlowCoordinator(coordinator, input: input) { [weak self] output in
-            self?.child = nil
-
+        self.spawnChild(coordinator, input: input) { [weak self] output in
             switch output {
             case let .success(user):
                 completion(.success(user))

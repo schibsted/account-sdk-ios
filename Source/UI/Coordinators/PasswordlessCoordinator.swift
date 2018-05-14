@@ -106,9 +106,7 @@ extension PasswordlessCoordinator {
         )
 
         let updateProfileInteractor = UpdateProfileInteractor(currentUser: currentUser, loginFlowVariant: loginFlowVariant, tracker: self.configuration.tracker)
-        self.child = ChildFlowCoordinator(ensureProfileDataCoordinator, input: updateProfileInteractor) { [weak self] output in
-            self?.child = nil
-
+        self.spawnChild(ensureProfileDataCoordinator, input: updateProfileInteractor) { output in
             switch output {
             case let .success(currentUser):
                 completion(.success(currentUser))

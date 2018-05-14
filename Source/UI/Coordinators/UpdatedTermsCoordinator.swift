@@ -40,9 +40,7 @@ extension UpdatedTermsCoordinator {
         let showTermsCoordinator = ShowTermsCoordinator(navigationController: self.navigationController, configuration: self.configuration)
         let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: .signin)
 
-        self.child = ChildFlowCoordinator(showTermsCoordinator, input: input) { [weak self] output in
-            self?.child = nil
-
+        self.spawnChild(showTermsCoordinator, input: input) { [weak self] output in
             switch output {
             case .success:
                 userTermsInteractor.acceptTerms { [weak self] result in

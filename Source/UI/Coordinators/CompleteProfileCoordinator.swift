@@ -183,9 +183,7 @@ extension CompleteProfileCoordinator {
         let showTermsCoordinator = ShowTermsCoordinator(navigationController: self.navigationController, configuration: self.configuration)
         let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: loginFlowVariant)
 
-        self.child = ChildFlowCoordinator(showTermsCoordinator, input: input) { [weak self] output in
-            self?.child = nil
-
+        self.spawnChild(showTermsCoordinator, input: input) { output in
             switch output {
             case .success:
                 completion(.wereJustAccepted)

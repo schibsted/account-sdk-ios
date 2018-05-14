@@ -10,7 +10,7 @@ protocol FlowCoordinator: class {
     associatedtype Output
     associatedtype Input
 
-    var child: ChildFlowCoordinator? { get }
+    var child: ChildFlowCoordinator? { get set }
 
     var navigationController: UINavigationController { get }
     var configuration: IdentityUIConfiguration { get }
@@ -29,6 +29,15 @@ class ChildFlowCoordinator: RouteHandler {
 
     func handle(route: IdentityUI.Route) -> RouteHandlerResult {
         return (self.value as? RouteHandler)?.handle(route: route) ?? .cannotHandle
+    }
+}
+
+extension FlowCoordinator {
+    func spawnChild<F: FlowCoordinator>(_ coordinator: F, input: F.Input, completion: @escaping (F.Output) -> Void) {
+        self.child = ChildFlowCoordinator(coordinator, input: input) { [weak self] output in
+            self?.child = nil
+            completion(output)
+        }
     }
 }
 
