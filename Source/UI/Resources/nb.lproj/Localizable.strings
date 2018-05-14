@@ -26,6 +26,7 @@
 "PasswordScreenString.forgotPassword" = "Glemt passord?";
 "PasswordScreenString.persistentLogin" = "Husk meg på denne enheten";
 "PasswordScreenString.whatsThis" = "Hva er dette?";
+"PasswordScreenString.ageLimit" = "Du må være minst 16 år for å opprette en Schibsted-konto";
 
 "VerifyScreenString.title" = "Vi har sendt deg en kode";
 "VerifyScreenString.subtext" = "Tast inn bekreftelseskoden vi sendte til: ";
@@ -59,7 +60,9 @@
 "CheckInboxScreenStrings.title" = "Sjekk innboksen din";
 
 "RequiredFieldsScreenString.title" = "Fullfør";
-"RequiredFieldsScreenString.subtext" = "Vi bruker denne informasjonen til for eksempel å forbedre tjenesten vår og gi deg relevant reklame og innhold.\n \nDu kan justere personvernvalgene dine når som helst, eller finne ut mer om Schibsted, data og deg.";
+"RequiredFieldsScreenString.subtext" = "Vi bruker denne informasjonen til for eksempel å forbedre tjenesten vår og gi deg relevant reklame og innhold.\n \nDu kan $0, eller $1.";
+"RequiredFieldsScreenString.subtext.link0" = "justere personvernvalgene dine når som helst";
+"RequiredFieldsScreenString.subtext.link1" = "finne ut mer om Schibsted, data og deg";
 "RequiredFieldsScreenString.proceed" = "Fortsett";
 
 "RequiredField.givenName.title" = "Fornavn";

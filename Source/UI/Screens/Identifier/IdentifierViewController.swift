@@ -155,8 +155,6 @@ class IdentifierViewController: IdentityUIViewController {
             self.countryCode.text = countryCodeText
             self.phoneNumber.text = numberText
         }
-
-        self.whastThisButton.isHidden = true
     }
 
     @IBAction func didClickContinue(_: Any) {
