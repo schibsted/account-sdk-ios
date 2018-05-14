@@ -71,11 +71,12 @@ extension FlowCoordinator {
         self.presentAsPopup(viewController)
     }
 
-    func presentInfo(title: String, text: String) {
+    func presentInfo(title: String, text: String, titleImage: UIImage? = nil) {
         let viewController = InfoViewController(
             configuration: self.configuration,
             title: title,
-            text: text
+            text: text,
+            titleImage: titleImage
         )
         self.presentAsPopup(viewController)
     }

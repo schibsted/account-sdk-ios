@@ -63,7 +63,7 @@ extension PasswordlessCoordinator {
             case .cancel:
                 completion(.cancel)
             case let .info(title, text):
-                self?.presentInfo(title: title, text: text)
+                self?.presentInfo(title: title, text: text, titleImage: .schibstedRememberMeInfo)
             }
         }
         self.navigationController.pushViewController(viewController, animated: true)

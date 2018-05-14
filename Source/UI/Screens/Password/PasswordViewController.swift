@@ -17,7 +17,7 @@ class PasswordViewController: IdentityUIViewController {
 
     @IBOutlet var whatsThisButton: UIButton! {
         didSet {
-            self.whatsThisButton.titleLabel?.text = self.viewModel.whatsThis
+            self.whatsThisButton.setTitle(self.viewModel.whatsThis, for: .normal)
         }
     }
     @IBAction func didClickWhatLink(_: Any) {
@@ -64,6 +64,12 @@ class PasswordViewController: IdentityUIViewController {
         self.didRequestAction?(.forgotPassword)
     }
 
+    @IBOutlet var ageLabel: InfoLabel! {
+        didSet {
+            self.ageLabel.text = self.viewModel.ageLimit
+            self.ageLabel.isHidden = true
+        }
+    }
     @IBOutlet var infoLabel: InfoLabel! {
         didSet {
             self.infoLabel.text = self.viewModel.info
@@ -89,6 +95,12 @@ class PasswordViewController: IdentityUIViewController {
 
         prefereblyActionSheet.addAction(cancelAction)
         prefereblyActionSheet.addAction(changeAction)
+
+        if let popoverController = prefereblyActionSheet.popoverPresentationController {
+            popoverController.sourceView = changeIdentifierButton
+            popoverController.sourceRect = CGRect(x: self.changeIdentifierButton.bounds.minX, y: self.changeIdentifierButton.bounds.maxY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = [.right]
+        }
 
         self.present(prefereblyActionSheet, animated: true, completion: nil)
     }
@@ -142,6 +154,7 @@ class PasswordViewController: IdentityUIViewController {
             self.infoLabel.isHidden = false
             self.infoLabelHeight.constant = 200 // (less than or equal of some big value).
             self.forgotPasswordButton.isHidden = true
+            self.ageLabel.isHidden = false
         case .signin:
             self.infoLabel.isHidden = true
             self.infoLabelHeight.constant = 0

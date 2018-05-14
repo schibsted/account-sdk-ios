@@ -73,7 +73,7 @@ extension PasswordCoordinator {
             case .cancel:
                 completion(.cancel)
             case let .info(title: title, text: text):
-                self?.presentInfo(title: title, text: text)
+                self?.presentInfo(title: title, text: text, titleImage: .schibstedRememberMeInfo)
             }
         }
 
