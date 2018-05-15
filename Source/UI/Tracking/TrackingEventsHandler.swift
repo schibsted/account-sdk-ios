@@ -90,10 +90,6 @@ public enum TrackingEvent {
             case resend
             /// Request to change identifier
             case changeIdentifier
-            /// Request for help
-            case help
-            /// Request to see the summary of terms and conditions update
-            case agreementsSummary
             /// Request to see platform terms and conditions
             case agreementsSPiD
             /// Request to see client terms and conditions

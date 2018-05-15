@@ -37,7 +37,6 @@ class IdentifierViewController: IdentityUIViewController {
         }
     }
     @IBAction func didClickWhatsThis(_: Any) {
-        self.configuration.tracker?.engagement(.click(.help, self.trackerViewID))
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
     }
 

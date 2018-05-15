@@ -70,8 +70,6 @@ class TermsViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickLearnMore(_: Any) {
-        self.configuration.tracker?.engagement(.click(.agreementsSummary, trackerViewID))
-
         guard let summary = self.viewModel.terms.summary else {
             return
         }
