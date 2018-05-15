@@ -236,6 +236,12 @@ class RequiredFieldsViewController: IdentityUIViewController {
 
 extension RequiredFieldsViewController: UITextViewDelegate {
     func textView(_: UITextView, shouldInteractWith url: URL, in _: NSRange) -> Bool {
+        if self.viewModel.controlYouPrivacyURL == url {
+            self.configuration.tracker?.engagement(.click(.adjustPrivacyChoices, self.trackerViewID, additionalFields: []))
+        } else if self.viewModel.dataAndYouURL == url {
+            self.configuration.tracker?.engagement(.click(.learnMoreAboutSchibsted, self.trackerViewID, additionalFields: []))
+        }
+        
         self.didRequestAction?(.open(url: url))
         return false
     }
