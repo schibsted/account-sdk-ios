@@ -44,6 +44,9 @@
                 <a href="../Classes/IdentityUI.html">IdentityUI</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IdentityUI/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IdentityUI/Route.html">– Route</a>
               </li>
               <li class="nav-group-task">
@@ -104,6 +107,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TrackingEventsHandlerDelegate.html">TrackingEventsHandlerDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
@@ -290,10 +296,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Other Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Client/Kind.html">– Kind</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Other Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
@@ -334,14 +354,15 @@ can be accessed through <code><a href="../Classes/IdentityManager.html#/s:16Schi
 
 <ol>
 <li>Passwordless login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code>)</li>
-<li>Password login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
+<li>Password login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
 <li>Signup APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
 <li>APIs to access client specific information</li>
 </ol>
 
 <p>The general approach is to first create an IdentityManager with a <code><a href="../Structs/ClientConfiguration.html">ClientConfiguration</a></code>. After that you may check if there already
 is a user that was previously persisted. This can be checked via <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>&lsquo;s <code><a href="../Classes/User.html#/s:16SchibstedAccount4UserC5stateAA0C5StateOv">User.state</a></code> which will tell you if the internal
-user is in a logged in or logged out state.</p>
+user is in a logged in or logged out state. In order to comply with privacy regulations, you also need to make sure that the user accepts any update to terms
+and conditions that may have been issued since the user&rsquo;s last visit: see <code><a href="../Classes/User.html">User</a></code>&rsquo;s documentation for more details on how to do that.</p>
 
 <p>The objective of the identity manager is to create a user object. There should be no need to keep an identity manager lying around once
 you have a reference to the internal user object.</p>
@@ -364,6 +385,10 @@ recreate the user for a later session.</p>
 
 <p>Currently the keychain user is a singleton. So the last user that is <q>validated</q> will be persisted. And the last user that is persisted
 will be the one that is loaded by a new instance of the <code>IdentityManager</code>.</p>
+<h3 id='scopes' class='heading'>Scopes</h3>
+
+<p>Some of the functions take a scope parameter. This is related to OAuth scopes. If you want to add the ability to specify custom scopes or you
+want access to some already available predefined scopes, then you&rsquo;ll have to send a support request to <a href="mailto:support@spid.no">support@spid.no</a></p>
 <h3 id='strong-support-strong' class='heading'><strong>Support</strong></h3>
 
 <p>The visual login via the <code><a href="../Classes/IdentityUI.html">IdentityUI</a></code> is the recommended approach to creating a <code><a href="../Classes/User.html">User</a></code>. This <code>IdentityManager</code> should just be
@@ -822,9 +847,9 @@ that was previously used (during a single session) and succeed if any succeed.</
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/login(username:password:persistUser:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">login(username:password:persistUser:completion:)</a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/login(username:password:scopes:persistUser:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">login(username:password:scopes:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -839,7 +864,7 @@ that was previously used (during a single session) and succeed if any succeed.</
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">login</span><span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">persistUser</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">login</span><span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt"><a href="../Enums/Identifier.html">Identifier</a></span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">scopes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span> <span class="nv">persistUser</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount15NoValueCallbacka">NoValueCallback</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -868,6 +893,18 @@ that was previously used (during a single session) and succeed if any succeed.</
                               <td>
                                 <div>
                                   <p>the password for the identifier</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>scopes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>array of scopes you want the token to contain</p>
                                 </div>
                               </td>
                             </tr>
@@ -1290,6 +1327,55 @@ The client terms are what are associated with your client ID and can be set in
                               <td>
                                 <div>
                                   <p>a callback that&rsquo;s called on completion and might receive an error.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC11fetchClientyyAA6ResultOyAA0F0VAA0F5ErrorOGc10completion_tF"></a>
+                    <a name="//apple_ref/swift/Method/fetchClient(completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC11fetchClientyyAA6ResultOyAA0F0VAA0F5ErrorOGc10completion_tF">fetchClient(completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Retrieve information from self serivice about your app</p>
+
+<p>Some information from spid that is associated with your client ID and can be set in
+<a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchClient</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a callback that receives the <code><a href="../Structs/Client.html">Client</a></code> model.</p>
                                 </div>
                               </td>
                             </tr>

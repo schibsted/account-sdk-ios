@@ -43,6 +43,9 @@
                 <a href="Classes/IdentityUI.html">IdentityUI</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/IdentityUI/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/IdentityUI/Route.html">– Route</a>
               </li>
               <li class="nav-group-task">
@@ -103,6 +106,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/TrackingEventsHandlerDelegate.html">TrackingEventsHandlerDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/TrackingEvent.html">TrackingEvent</a>
@@ -289,10 +295,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Other Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Client/Kind.html">– Kind</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Other Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
               </li>
               <li class="nav-group-task">
                 <a href="Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
@@ -418,14 +438,15 @@ can be accessed through <code><a href="Classes/IdentityManager.html#/s:16Schibst
 
 <ol>
 <li>Passwordless login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code>)</li>
-<li>Password login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
+<li>Password login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
 <li>Signup APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
 <li>APIs to access client specific information</li>
 </ol>
 
 <p>The general approach is to first create an IdentityManager with a <code><a href="Structs/ClientConfiguration.html">ClientConfiguration</a></code>. After that you may check if there already
 is a user that was previously persisted. This can be checked via <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>&lsquo;s <code><a href="Classes/User.html#/s:16SchibstedAccount4UserC5stateAA0C5StateOv">User.state</a></code> which will tell you if the internal
-user is in a logged in or logged out state.</p>
+user is in a logged in or logged out state. In order to comply with privacy regulations, you also need to make sure that the user accepts any update to terms
+and conditions that may have been issued since the user&rsquo;s last visit: see <code><a href="Classes/User.html">User</a></code>&rsquo;s documentation for more details on how to do that.</p>
 
 <p>The objective of the identity manager is to create a user object. There should be no need to keep an identity manager lying around once
 you have a reference to the internal user object.</p>
@@ -448,6 +469,10 @@ recreate the user for a later session.</p>
 
 <p>Currently the keychain user is a singleton. So the last user that is <q>validated</q> will be persisted. And the last user that is persisted
 will be the one that is loaded by a new instance of the <code>IdentityManager</code>.</p>
+<h3 id='scopes' class='heading'>Scopes</h3>
+
+<p>Some of the functions take a scope parameter. This is related to OAuth scopes. If you want to add the ability to specify custom scopes or you
+want access to some already available predefined scopes, then you&rsquo;ll have to send a support request to <a href="mailto:support@spid.no">support@spid.no</a></p>
 <h3 id='strong-support-strong' class='heading'><strong>Support</strong></h3>
 
 <p>The visual login via the <code><a href="Classes/IdentityUI.html">IdentityUI</a></code> is the recommended approach to creating a <code><a href="Classes/User.html">User</a></code>. This <code>IdentityManager</code> should just be
@@ -538,6 +563,19 @@ identity manager is initialized, it&rsquo;s internal user object is either in a 
 
 <p>Based on the state of <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>, you may either proceed to get one or store it and
 use it for whatever else.</p>
+
+<p>In order to comply with privacy regulations, you need to make sure that the user accepts any update
+to terms and conditions that may have been issued since the last visit. For this reason, at the
+startup of your app, right after having obtained the <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code> and verified the
+login status, if the user is logged-in you should call <code>user.agreements.status(:)</code> and, in case of
+<code>false</code> result (meaning the user has yet to accepted the latest terms), obtain the latest terms by
+calling <code>IdentityManager.fetchTerms(:) and finally present a screen where the user can review and accept
+the updated terms. The recommended way of presenting the screen is by using the provided UI flows, thus
+by calling</code>IdentityUI.presentTerms(for:from:)`.</p>
+
+<p>If you are using the headless approach instead, you should then present your own UI and manually
+call <code>user.agreements.accept(:)</code>, if the user accepted the new terms, or <code>logout()</code>, if the user
+rejected them.</p>
 
                         <a href="Classes/User.html" class="slightly-smaller">See more</a>
                       </div>

@@ -44,6 +44,9 @@
                 <a href="../../Classes/IdentityUI.html">IdentityUI</a>
               </li>
               <li class="nav-group-task">
+                <a href="../../Classes/IdentityUI/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../../Classes/IdentityUI/Route.html">– Route</a>
               </li>
               <li class="nav-group-task">
@@ -104,6 +107,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/TrackingEventsHandlerDelegate.html">TrackingEventsHandlerDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Enums/TrackingEvent.html">TrackingEvent</a>
@@ -290,10 +296,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../../Other Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Structs/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/Client/Kind.html">– Kind</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../../Other Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
@@ -351,6 +371,15 @@ has accepted all the agreements fetchable via <code>IdentityManager.fetchAgreeme
                       <div class="abstract">
                         <p>Check if the latest terms &amp; conditions agreements were accepted by the current user.</p>
 
+<p>Since new terms and conditions may be issued at any time, you should call this method at the app&rsquo;s startup to check that the logged in user (if any)
+you have obtained from an instance of <code><a href="../../Classes/IdentityManager.html">IdentityManager</a></code> has accepted the latest terms. If the result provided from the completion callback is <code>false</code>,
+you should then obtain the latest terms by calling <code>IdentityManager.fetchTerms(:)</code> and present a screen where the user can review and accept the
+updated terms.</p>
+
+<p>The recommended way of presenting the terms acceptance screen is by using the provided UI flows, thus by calling<code>IdentityUI.presentTerms(for:from:)</code>.
+If you are using the headless approach instead, you should then present your own UI and manually call <code>accept(:)</code>, if the user accepted the new terms,
+or <code><a href="../../Classes/User.html#/s:16SchibstedAccount4UserC6logoutyyF">User.logout()</a></code>, if the user rejected them.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -396,6 +425,10 @@ has accepted all the agreements fetchable via <code>IdentityManager.fetchAgreeme
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Accept the latest terms &amp; conditions agreements on behalf of the current user.</p>
+
+<p>If you use the recommended way of presenting the screen to accept the terms, i.e. if you the UI flows provided by <code><a href="../../Classes/IdentityUI.html">IdentityUI</a></code>, then you should <em>not</em>
+call this method manually, as it will be automatically called for you when the user accepts the new terms. You should only use this method if you are
+following the headless approach and implementing your own UI.</p>
 
                       </div>
                       <div class="declaration">

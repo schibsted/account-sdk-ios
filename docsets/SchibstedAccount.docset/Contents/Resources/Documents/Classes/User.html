@@ -44,6 +44,9 @@
                 <a href="../Classes/IdentityUI.html">IdentityUI</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IdentityUI/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IdentityUI/Route.html">– Route</a>
               </li>
               <li class="nav-group-task">
@@ -104,6 +107,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TrackingEventsHandlerDelegate.html">TrackingEventsHandlerDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
@@ -290,10 +296,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Other Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Client/Kind.html">– Kind</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Other Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
@@ -346,6 +366,19 @@ identity manager is initialized, it&rsquo;s internal user object is either in a 
 
 <p>Based on the state of <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>, you may either proceed to get one or store it and
 use it for whatever else.</p>
+
+<p>In order to comply with privacy regulations, you need to make sure that the user accepts any update
+to terms and conditions that may have been issued since the last visit. For this reason, at the
+startup of your app, right after having obtained the <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code> and verified the
+login status, if the user is logged-in you should call <code>user.agreements.status(:)</code> and, in case of
+<code>false</code> result (meaning the user has yet to accepted the latest terms), obtain the latest terms by
+calling <code>IdentityManager.fetchTerms(:) and finally present a screen where the user can review and accept
+the updated terms. The recommended way of presenting the screen is by using the provided UI flows, thus
+by calling</code>IdentityUI.presentTerms(for:from:)`.</p>
+
+<p>If you are using the headless approach instead, you should then present your own UI and manually
+call <code>user.agreements.accept(:)</code>, if the user accepted the new terms, or <code>logout()</code>, if the user
+rejected them.</p>
 
           </section>
           <section class="section task-group-section">

@@ -43,6 +43,9 @@
                 <a href="Classes/IdentityUI.html">IdentityUI</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/IdentityUI/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/IdentityUI/Route.html">– Route</a>
               </li>
               <li class="nav-group-task">
@@ -103,6 +106,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/TrackingEventsHandlerDelegate.html">TrackingEventsHandlerDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/TrackingEvent.html">TrackingEvent</a>
@@ -289,10 +295,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Other Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Client/Kind.html">– Kind</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Other Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
               </li>
               <li class="nav-group-task">
                 <a href="Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
@@ -487,6 +507,38 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">TermsResultCallback</span> <span class="o">=</span> <span class="p">(</span><span class="kt"><a href="Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="Structs/Terms.html">Terms</a></span><span class="p">,</span> <span class="kt"><a href="Enums/ClientError.html">ClientError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount20ClientResultCallbacka"></a>
+                    <a name="//apple_ref/swift/Alias/ClientResultCallback" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Callback that returns information about the your client</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code>IdentityManager.fetchClient</code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">ClientResultCallback</span> <span class="o">=</span> <span class="p">(</span><span class="kt"><a href="Enums/Result.html">Result</a></span><span class="o">&lt;</span><span class="kt"><a href="Structs/Client.html">Client</a></span><span class="p">,</span> <span class="kt"><a href="Enums/ClientError.html">ClientError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
 
                         </div>
                       </div>

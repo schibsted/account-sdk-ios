@@ -44,6 +44,9 @@
                 <a href="../Classes/IdentityUI.html">IdentityUI</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IdentityUI/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IdentityUI/Route.html">– Route</a>
               </li>
               <li class="nav-group-task">
@@ -104,6 +107,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TrackingEventsHandlerDelegate.html">TrackingEventsHandlerDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
@@ -290,10 +296,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Other Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Client/Kind.html">– Kind</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Other Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
@@ -462,6 +482,33 @@ handy for local testing.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">clientID</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount19ClientConfigurationV6locale10Foundation6LocaleVv"></a>
+                    <a name="//apple_ref/swift/Property/locale" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount19ClientConfigurationV6locale10Foundation6LocaleVv">locale</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The locale that is being used</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">locale</span><span class="p">:</span> <span class="kt">Locale</span></code></pre>
 
                         </div>
                       </div>
@@ -745,6 +792,25 @@ under the <q>Redirect</q> tab for your client. It <strong>must</strong> be equal
                       <div class="abstract">
                         <p>Base URL for redirects that will be created by the SDK for various API calls.</p>
 
+<p>The way this is constructed depends on your <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSv">appURLScheme</a></code>. The SDK currently supports two formats that SPiD uses:</p>
+
+<ol>
+<li>format0 - this is in the format of <q>spid-<client-id></q> - SDK treats this as default.</li>
+<li>format1 - this is in the format of <q><reverse-dns-of-your-service-domain>.<client-id></q></li>
+</ol>
+
+<p>SPiD has a number of default routes set up for mobile clients (referred to as roots in the SDK - see <code>redirectURLRoot</code>). The way these are added
+to a redirect depends on the format of your app scheme.</p>
+
+<p>With format0 SPiD adds the root s a URL host component. I.e. scheme://root. This is usually <q>login</q> and the SDK defaults to that, but it
+can be others (see your self service and they will be listed there). For format1, the root is a URL path component. I.e. scheme://host/path-component.
+And the host (or more accurately <q>authority</q>) URL component is omitted, which means the format is: scheme:/root</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <p>SeeAlso <code>redirectURLRoot</code></p>
+
+</div>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -753,6 +819,37 @@ under the <q>Redirect</q> tab for your client. It <strong>must</strong> be equal
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">redirectBaseURL</span><span class="p">(</span><span class="n">withPathComponent</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">additionalQueryItems</span><span class="p">:</span> <span class="p">[</span><span class="kt">URLQueryItem</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URL</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withPathComponent</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>if specified, a <q>path</q> url query item will be added to the URL with the value of this argument</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>additionalQueryItems</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>if you want any additional query items added to the URL</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -815,6 +912,36 @@ the <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19Cl
                       <div>
                         <h4>Return Value</h4>
                         <p>A tuple of path and queryComponents if the URL was a valid redirectURL</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">ClientConfiguration</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">ClientConfiguration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>

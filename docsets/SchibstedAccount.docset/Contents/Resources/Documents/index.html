@@ -43,6 +43,9 @@
                 <a href="Classes/IdentityUI.html">IdentityUI</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/IdentityUI/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/IdentityUI/Route.html">– Route</a>
               </li>
               <li class="nav-group-task">
@@ -103,6 +106,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/TrackingEventsHandlerDelegate.html">TrackingEventsHandlerDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/TrackingEvent.html">TrackingEvent</a>
@@ -289,10 +295,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Other Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Client/Kind.html">– Kind</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Other Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
               </li>
               <li class="nav-group-task">
                 <a href="Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
@@ -335,8 +355,8 @@
 <p><a href="https://travis-ci.org/schibsted/account-sdk-ios"><img src="https://travis-ci.org/schibsted/account-sdk-ios.svg?branch=master" alt="Build Status"></a> <a href="https://github.com/schibsted/account-sdk-ios/blob/master/LICENSE"><img src="https://img.shields.io/github/license/schibsted/account-sdk-ios.svg" alt="license"></a> <a href="https://codecov.io/gh/schibsted/account-sdk-ios"><img src="https://codecov.io/gh/schibsted/account-sdk-ios/branch/master/graph/badge.svg" alt="codecov"></a></p>
 
 <ul>
-<li><a href="https://schibsted.github.io/account-sdk-ios/">Documentation</a></li>
-<li><a href="https://github.com/schibsted/account-sdk-ios/blob/master/CONTRIBUTING.md">Contributing</a></li>
+<li><a href="https://schibsted.github.io/account-sdk-ios/">Documentation</a>: Here&rsquo;s the documentation to the <em>latest tagged release</em> (which can be different than the version that&rsquo;s in master).</li>
+<li><a href="https://github.com/schibsted/account-sdk-ios/blob/master/CONTRIBUTING.md">Contributing</a>: For details on getting up and running if you are thinking of contributing</li>
 </ul>
 <h2 id='setup' class='heading'>Setup</h2>
 <h3 id='a-href-https-guides-cocoapods-org-using-using-cocoapods-html-cocoapods-a' class='heading'><a href="https://guides.cocoapods.org/using/using-cocoapods.html">CocoaPods</a></h3>
@@ -361,21 +381,23 @@ To fulfill this, you can either implement it yourself or use one which is alread
 </ul>
 <h3 id='a-href-https-github-com-carthage-carthage-carthage-a' class='heading'><a href="https://github.com/Carthage/Carthage">Carthage</a></h3>
 
-<p><strong>WIP</strong>:</p>
-
-<p>Add this to <code>Cartfile</code></p>
-<pre class="highlight ruby"><code><span class="n">git</span> <span class="s2">"git@github.schibsted.io:spt-identity/identity-sdk-ios.git"</span>
+<p>Add this to your <code>Cartfile</code></p>
+<pre class="highlight ruby"><code><span class="n">git</span> <span class="s2">"git@github.com:schibsted/account-sdk-ios.git"</span>
 </code></pre>
 
-<p>Or, if you also want to include support for tracking events in the identity UI with the <a href="https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios">new pulse SDK</a>, add this instead</p>
-<pre class="highlight ruby"><code><span class="n">git</span> <span class="s2">"git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking.git"</span>
+<p>Then run:</p>
+<pre class="highlight shell"><code><span class="gp">$ </span>carthage bootstrap --platform ios
 </code></pre>
 
-<p>in either case, run:</p>
+<p>or</p>
 <pre class="highlight shell"><code><span class="gp">$ </span>carthage update --platform ios
 </code></pre>
 
-<p><code>carthage update</code> will build the frameworks you need to link in your project, so make sure you follow <a href="https://github.com/Carthage/Carthage#getting-started">these steps</a> to include all of them in your project and you should be up and running. If there is something missing -&gt; <a href="mailto:support@spid.no">email us</a>.</p>
+<p><strong>Internal</strong>: And, if you also want to include support for tracking events in the identity UI with the <a href="https://github.schibsted.io/spt-dataanalytics/pulse-tracker-ios">new pulse SDK</a>, add this</p>
+<pre class="highlight ruby"><code><span class="n">git</span> <span class="s2">"git@github.schibsted.io:spt-identity/identity-sdk-ios-tracking"</span>
+</code></pre>
+
+<p>Carthage will build the frameworks you need to link in your project, so make sure you follow <a href="https://github.com/Carthage/Carthage#getting-started">these steps</a> to include all of them in your project and you should be up and running. If there is something missing -&gt; <a href="mailto:support@spid.no">email us</a>.</p>
 <h3 id='strong-get-some-client-credentials-strong' class='heading'><strong>Get some client credentials</strong></h3>
 
 <p>The SDK works by giving you access to Schibsted users. And what kind of access is allowed is determined by a set

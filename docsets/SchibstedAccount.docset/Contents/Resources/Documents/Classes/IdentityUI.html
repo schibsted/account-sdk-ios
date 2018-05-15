@@ -44,6 +44,9 @@
                 <a href="../Classes/IdentityUI.html">IdentityUI</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IdentityUI/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IdentityUI/Route.html">– Route</a>
               </li>
               <li class="nav-group-task">
@@ -104,6 +107,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TrackingEventsHandlerDelegate.html">TrackingEventsHandlerDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
@@ -290,10 +296,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Other Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Client/Kind.html">– Kind</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Other Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
@@ -337,6 +357,34 @@ that is generally used to continue a flow from the deep link.</p>
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC5ErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/Error" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC5ErrorO">Error</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Errors thrown when setting up <code><a href="../Classes/IdentityUI.html">IdentityUI</a></code>.</p>
+
+                        <a href="../Classes/IdentityUI/Error.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Error</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -418,6 +466,45 @@ that is generally used to continue a flow from the deep link.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC12presentTermsyAA0F0V_AA4UserC3forSo16UIViewControllerC4fromAA0C15UIConfigurationV13configurationtKFZ"></a>
+                    <a name="//apple_ref/swift/Method/presentTerms(_:for:from:configuration:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC12presentTermsyAA0F0V_AA4UserC3forSo16UIViewControllerC4fromAA0C15UIConfigurationV13configurationtKFZ">presentTerms(_:for:from:configuration:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Present a screen where the user can review and accept updated terms and conditions.</p>
+
+<p>In order to comply with privacy regulations, you need to make sure that the user accepts any update to terms and conditions that may have been issued since
+the last visit. For this reason, at the startup of your app, right after having obtained the <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code> and verified the login status,
+if the user is logged-in you should call <code>user.agreements.status(:)</code> and, in case of <code>false</code> result (meaning the user has yet to accepted the latest
+terms), obtain the latest terms by calling <code>IdentityManager.fetchTerms(:)</code> and finally call this method to present the updated terms. If the user fails to
+accept the terms, a logout will automatically be forced.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p><code><a href="../Classes/IdentityUI/Error.html#/s:16SchibstedAccount10IdentityUIC5ErrorO30mismatchingClientConfigurationA2EmF">IdentityUI.Error.mismatchingClientConfiguration</a></code> if the client configuration owned by the given <code><a href="../Classes/User.html">User</a></code> instance is not the same as the one owned
+by the given UI configuration.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">presentTerms</span><span class="p">(</span><span class="n">_</span> <span class="nv">terms</span><span class="p">:</span> <span class="kt"><a href="../Structs/Terms.html">Terms</a></span><span class="p">,</span> <span class="k">for</span> <span class="nv">user</span><span class="p">:</span> <span class="kt"><a href="../Classes/User.html">User</a></span><span class="p">,</span> <span class="n">from</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a></span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:16SchibstedAccount10IdentityUICAcA0C15UIConfigurationV13configuration_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(configuration:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:16SchibstedAccount10IdentityUICAcA0C15UIConfigurationV13configuration_tcfc">init(configuration:)</a>
@@ -472,9 +559,9 @@ that is generally used to continue a flow from the deep link.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount10IdentityUIC07presentC7ProcessySo16UIViewControllerC4from_AA11LoginMethodO05loginK0SSSg19localizedTeaserTexttF"></a>
-                    <a name="//apple_ref/swift/Method/presentIdentityProcess(from:loginMethod:localizedTeaserText:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC07presentC7ProcessySo16UIViewControllerC4from_AA11LoginMethodO05loginK0SSSg19localizedTeaserTexttF">presentIdentityProcess(from:loginMethod:localizedTeaserText:)</a>
+                    <a name="/s:16SchibstedAccount10IdentityUIC07presentC7ProcessySo16UIViewControllerC4from_AA11LoginMethodO05loginK0SSSg19localizedTeaserTextSaySSG6scopestF"></a>
+                    <a name="//apple_ref/swift/Method/presentIdentityProcess(from:loginMethod:localizedTeaserText:scopes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC07presentC7ProcessySo16UIViewControllerC4from_AA11LoginMethodO05loginK0SSSg19localizedTeaserTextSaySSG6scopestF">presentIdentityProcess(from:loginMethod:localizedTeaserText:scopes:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -498,10 +585,67 @@ the case of an existing identity process (if any) for you.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">presentIdentityProcess</span><span class="p">(</span>
     <span class="n">from</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span>
     <span class="nv">loginMethod</span><span class="p">:</span> <span class="kt"><a href="../Enums/LoginMethod.html">LoginMethod</a></span><span class="p">,</span>
-    <span class="nv">localizedTeaserText</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="nv">localizedTeaserText</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">scopes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>viewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>which view controller to present the login UI from</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>loginMethod</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>which login method to use</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>localizedTeaserText</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>an optional text that will be displayed above the identifier text field in the login screen (may be used to provide the
+user with some context about the login). Text longer than three lines will be truncated with ellipsis. Note that you should supply a localized text.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>scopes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>which scopes you want your logged in user to have accesst to. See <code><a href="../Classes/IdentityManager.html">IdentityManager</a></code> for more details</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -571,6 +715,37 @@ the case of an existing identity process (if any) for you.</p>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount10IdentityUIC35trackingEventsHandlerDidReceivedJWEySSF"></a>
+                    <a name="//apple_ref/swift/Method/trackingEventsHandlerDidReceivedJWE(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount10IdentityUIC35trackingEventsHandlerDidReceivedJWEySSF">trackingEventsHandlerDidReceivedJWE(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Used by the tracking implementation to set internal tokens</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">trackingEventsHandlerDidReceivedJWE</span><span class="p">(</span><span class="n">_</span> <span class="nv">jwe</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>

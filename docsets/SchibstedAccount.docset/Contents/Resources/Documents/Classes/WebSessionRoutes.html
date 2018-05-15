@@ -44,6 +44,9 @@
                 <a href="../Classes/IdentityUI.html">IdentityUI</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IdentityUI/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IdentityUI/Route.html">– Route</a>
               </li>
               <li class="nav-group-task">
@@ -104,6 +107,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TrackingEventsHandlerDelegate.html">TrackingEventsHandlerDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
@@ -290,10 +296,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Other Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Client/Kind.html">– Kind</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Other Typealiases.html">Other Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount18BoolResultCallbacka">BoolResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount20ClientResultCallbacka">ClientResultCallback</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount30IdentifierStatusResultCallbacka">IdentifierStatusResultCallback</a>
@@ -422,9 +442,9 @@ Navigation such a web view will logout the web user inside.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount16WebSessionRoutesC17forgotPasswordURL10Foundation0H0VSSSg16withRedirectPath_tF"></a>
-                    <a name="//apple_ref/swift/Method/forgotPasswordURL(withRedirectPath:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount16WebSessionRoutesC17forgotPasswordURL10Foundation0H0VSSSg16withRedirectPath_tF">forgotPasswordURL(withRedirectPath:)</a>
+                    <a name="/s:16SchibstedAccount16WebSessionRoutesC17forgotPasswordURL10Foundation0H0VSSSg16withRedirectPath_SayAE12URLQueryItemVGSg18redirectQueryItemstF"></a>
+                    <a name="//apple_ref/swift/Method/forgotPasswordURL(withRedirectPath:redirectQueryItems:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount16WebSessionRoutesC17forgotPasswordURL10Foundation0H0VSSSg16withRedirectPath_SayAE12URLQueryItemVGSg18redirectQueryItemstF">forgotPasswordURL(withRedirectPath:redirectQueryItems:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -432,16 +452,47 @@ Navigation such a web view will logout the web user inside.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Allows to customize redirectPath</p>
+                        <p>Same as <code><a href="../Classes/WebSessionRoutes.html#/s:16SchibstedAccount16WebSessionRoutesC17forgotPasswordURL10Foundation0H0Vv">forgotPasswordURL</a></code> but customizable</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">forgotPasswordURL</span><span class="p">(</span><span class="n">withRedirectPath</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URL</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">forgotPasswordURL</span><span class="p">(</span><span class="n">withRedirectPath</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">redirectQueryItems</span><span class="p">:</span> <span class="p">[</span><span class="kt">URLQueryItem</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URL</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withRedirectPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the redirect path that will be injected in the URL</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>redirectQueryItems</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>any query items you want the redirect url to contain</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -478,9 +529,9 @@ Navigation such a web view will logout the web user inside.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount16WebSessionRoutesC17accountSummaryURL10Foundation0H0VSSSg16withRedirectPath_tF"></a>
-                    <a name="//apple_ref/swift/Method/accountSummaryURL(withRedirectPath:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount16WebSessionRoutesC17accountSummaryURL10Foundation0H0VSSSg16withRedirectPath_tF">accountSummaryURL(withRedirectPath:)</a>
+                    <a name="/s:16SchibstedAccount16WebSessionRoutesC17accountSummaryURL10Foundation0H0VSSSg16withRedirectPath_SayAE12URLQueryItemVGSg18redirectQueryItemstF"></a>
+                    <a name="//apple_ref/swift/Method/accountSummaryURL(withRedirectPath:redirectQueryItems:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount16WebSessionRoutesC17accountSummaryURL10Foundation0H0VSSSg16withRedirectPath_SayAE12URLQueryItemVGSg18redirectQueryItemstF">accountSummaryURL(withRedirectPath:redirectQueryItems:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -488,16 +539,47 @@ Navigation such a web view will logout the web user inside.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Allows to customize redirectPath</p>
+                        <p>Same as <code><a href="../Classes/WebSessionRoutes.html#/s:16SchibstedAccount16WebSessionRoutesC17accountSummaryURL10Foundation0H0Vv">accountSummaryURL</a></code> but customizable</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">accountSummaryURL</span><span class="p">(</span><span class="n">withRedirectPath</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URL</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">accountSummaryURL</span><span class="p">(</span><span class="n">withRedirectPath</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">redirectQueryItems</span><span class="p">:</span> <span class="p">[</span><span class="kt">URLQueryItem</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URL</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withRedirectPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the redirect path that will be injected in the URL</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>redirectQueryItems</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>any query items you want the redirect url to contain</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
