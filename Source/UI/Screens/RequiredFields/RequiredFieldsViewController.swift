@@ -157,7 +157,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID))
+        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID, additionalFields: []))
 
         guard let valuesToUpdate = self.valuesToUpdate() else {
             return

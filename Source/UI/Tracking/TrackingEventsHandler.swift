@@ -71,11 +71,17 @@ public enum TrackingEvent {
         /// Error popup screen was shown
         case error
     }
-
+    
+    /// Supplementary fields that may be added to some event types
+    public enum AdditionalField {
+        /// Whether the user selected to keep the login status persistent
+        case keepLoggedIn(Bool)
+    }
+    
     /// Engagement events are the result of user interaction
     public enum Engagement {
         /// A click event in a screen
-        case click(EngagementType, TrackingEvent.View)
+        case click(EngagementType, TrackingEvent.View, additionalFields: [AdditionalField])
         /// A networking event as a result of a user action
         case network(NetworkType)
         /// Different type of click events
@@ -91,15 +97,23 @@ public enum TrackingEvent {
             /// Request to change identifier
             case changeIdentifier
             /// Request to see platform terms and conditions
-            case agreementsSPiD
+            case agreementsSchibstedAccount
             /// Request to see client terms and conditions
             case agreementsClient
             /// Request to see platform privacy policy
-            case privacySPiD
+            case privacySchibstedAccount
             /// Request to see client privacy policy
             case privacyClient
             /// Request to go to forgot password flow
             case forgotPassword
+            /// Request to see info about Schibsted Account
+            case whatsSchibstedAccount
+            /// Request to see info about "Remember me on this device" feature
+            case rememberMeInfo
+            /// Request to see info about adjusting privacy choices
+            case adjustPrivacyChoices
+            /// Request to see info about Schibsted
+            case learnMoreAboutSchibsted
         }
         /// The network events that can result from user interaction
         public enum NetworkType {

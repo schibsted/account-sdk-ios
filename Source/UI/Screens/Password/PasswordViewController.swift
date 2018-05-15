@@ -60,7 +60,7 @@ class PasswordViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickForgotPassword(_: Any) {
-        self.configuration.tracker?.engagement(.click(.forgotPassword, self.trackerViewID))
+        self.configuration.tracker?.engagement(.click(.forgotPassword, self.trackerViewID, additionalFields: []))
         self.didRequestAction?(.forgotPassword)
     }
 
@@ -89,7 +89,7 @@ class PasswordViewController: IdentityUIViewController {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.configuration.tracker?.engagement(.click(.changeIdentifier, strongSelf.trackerViewID))
+            strongSelf.configuration.tracker?.engagement(.click(.changeIdentifier, strongSelf.trackerViewID, additionalFields: []))
             self?.didRequestAction?(.changeIdentifier)
         }
 
@@ -163,10 +163,13 @@ class PasswordViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
+        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)]))
+        
         guard let password = self.password.text, ((self.viewModel.loginFlowVariant == .signin && password.count >= 1) || password.count >= 8) else {
             self.showInlineError(.invalidUserCredentials(message: nil))
             return
         }
+        
         self.didRequestAction?(.enter(password: password, shouldPersistUser: self.shouldPersistUserCheck.isChecked))
     }
 

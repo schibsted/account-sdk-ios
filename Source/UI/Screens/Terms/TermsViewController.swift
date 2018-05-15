@@ -92,7 +92,7 @@ class TermsViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(.click(.accept, self.trackerViewID))
+        self.configuration.tracker?.engagement(.click(.accept, self.trackerViewID, additionalFields: []))
 
         let termOneAccepted = self.termOneCheck.isChecked
         let termTwoAccepted = self.termTwoCheck.isChecked
@@ -140,13 +140,13 @@ extension TermsViewController: UITextViewDelegate {
         let terms = self.viewModel.terms
 
         if terms.clientPrivacyURL == url {
-            self.configuration.tracker?.engagement(.click(.privacyClient, self.trackerViewID))
+            self.configuration.tracker?.engagement(.click(.privacyClient, self.trackerViewID, additionalFields: []))
         } else if terms.platformPrivacyURL == url {
-            self.configuration.tracker?.engagement(.click(.privacySPiD, self.trackerViewID))
+            self.configuration.tracker?.engagement(.click(.privacySchibstedAccount, self.trackerViewID, additionalFields: []))
         } else if terms.clientTermsURL == url {
-            self.configuration.tracker?.engagement(.click(.agreementsClient, self.trackerViewID))
+            self.configuration.tracker?.engagement(.click(.agreementsClient, self.trackerViewID, additionalFields: []))
         } else if terms.platformTermsURL == url {
-            self.configuration.tracker?.engagement(.click(.agreementsSPiD, self.trackerViewID))
+            self.configuration.tracker?.engagement(.click(.agreementsSchibstedAccount, self.trackerViewID, additionalFields: []))
         }
 
         self.didRequestAction?(.open(url: url))
