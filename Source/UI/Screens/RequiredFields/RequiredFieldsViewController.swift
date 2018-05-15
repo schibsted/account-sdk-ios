@@ -241,7 +241,7 @@ extension RequiredFieldsViewController: UITextViewDelegate {
         } else if self.viewModel.dataAndYouURL == url {
             self.configuration.tracker?.engagement(.click(.learnMoreAboutSchibsted, self.trackerViewID, additionalFields: []))
         }
-        
+
         self.didRequestAction?(.open(url: url))
         return false
     }

@@ -95,13 +95,13 @@ extension RequiredFieldsViewModel {
 
         return attributedString
     }
-    
+
     var controlYouPrivacyURL: URL? {
-        return URL(string: "https://info.privacy.schibsted.com/" + locale.gdprLanguageCode + "/S007")
+        return URL(string: "https://info.privacy.schibsted.com/" + self.locale.gdprLanguageCode + "/S007")
     }
-    
+
     var dataAndYouURL: URL? {
-        return URL(string: "https://info.privacy.schibsted.com/" + locale.gdprLanguageCode + "/S012")
+        return URL(string: "https://info.privacy.schibsted.com/" + self.locale.gdprLanguageCode + "/S012")
     }
 
     func string(for error: SupportedRequiredField.ValidationError) -> String {

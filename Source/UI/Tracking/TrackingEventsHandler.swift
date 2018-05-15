@@ -71,13 +71,13 @@ public enum TrackingEvent {
         /// Error popup screen was shown
         case error
     }
-    
+
     /// Supplementary fields that may be added to some event types
     public enum AdditionalField {
         /// Whether the user selected to keep the login status persistent
         case keepLoggedIn(Bool)
     }
-    
+
     /// Engagement events are the result of user interaction
     public enum Engagement {
         /// A click event in a screen
