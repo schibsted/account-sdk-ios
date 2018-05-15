@@ -21,6 +21,7 @@ class PasswordViewController: IdentityUIViewController {
         }
     }
     @IBAction func didClickWhatLink(_: Any) {
+        self.configuration.tracker?.engagement(.click(.rememberMeInfo, self.trackerViewID, additionalFields: []))
         self.didRequestAction?(.info(
             title: self.viewModel.persistentLogin,
             text: self.viewModel.rememberMe
