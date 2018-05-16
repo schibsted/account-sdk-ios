@@ -145,7 +145,7 @@ public class IdentityUI {
     // 2. When handling a universal link, the currently presented process (if any) can be retrieved.
     private weak static var presentedIdentityUI: IdentityUI?
 
-    private weak static var updatedTermsCoordinator: UpdatedTermsCoordinator?
+    private static var updatedTermsCoordinator: UpdatedTermsCoordinator?
 
     /**
      Present a screen where the user can review and accept updated terms and conditions.
@@ -192,6 +192,14 @@ public class IdentityUI {
         }
         configuration.presentationHook?(navigationController)
         viewController.present(navigationController, animated: true, completion: nil)
+    }
+
+    /**
+     If for some reason you need to dismiss the presented terms screen before it finishes internally, then you should call this
+     so that we can clean up stuff
+    */
+    public static func dismissTerms() {
+        self.updatedTermsCoordinator = nil
     }
 
     /**
