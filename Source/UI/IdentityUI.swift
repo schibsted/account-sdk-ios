@@ -145,7 +145,7 @@ public class IdentityUI {
     // 2. When handling a universal link, the currently presented process (if any) can be retrieved.
     private weak static var presentedIdentityUI: IdentityUI?
 
-    private weak static var updatedTermsCoordinator: UpdatedTermsCoordinator?
+    private static var updatedTermsCoordinator: UpdatedTermsCoordinator?
 
     /**
      Present a screen where the user can review and accept updated terms and conditions.
@@ -182,7 +182,9 @@ public class IdentityUI {
             preconditionFailure("Attempt to present updated terms while another Identity UI flow is already presented.")
         }
 
-        let navigationController = UINavigationController()
+        let navigationController = DismissableNavigationController {
+            self.updatedTermsCoordinator = nil
+        }
         let input = UpdatedTermsCoordinator.Input(currentUser: user, terms: terms)
 
         self.updatedTermsCoordinator = UpdatedTermsCoordinator(navigationController: navigationController, configuration: configuration)
@@ -649,4 +651,25 @@ extension IdentityUI {
     static let bundle = {
         Bundle(for: IdentityUI.self)
     }()
+}
+
+private final class DismissableNavigationController: UINavigationController {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if isBeingDismissed {
+            self.didDismiss()
+        }
+    }
+
+    private let didDismiss: () -> Void
+
+    init(didDismiss: @escaping () -> Void) {
+        self.didDismiss = didDismiss
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
