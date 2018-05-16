@@ -16,10 +16,11 @@ class LogoStackView: UIStackView, Themeable {
         schImageView.contentMode = .scaleAspectFit
         schImageView.widthAnchor.constraint(equalToConstant: 69).isActive = true
         schImageView.heightAnchor.constraint(equalToConstant: 11).isActive = true
+        schImageView.translatesAutoresizingMaskIntoConstraints = false
 
-        let filler = UIView(frame: self.frame)
+        let filler = UIView(frame: .zero)
         filler.translatesAutoresizingMaskIntoConstraints = false
-        filler.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
+        filler.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         if let titleLogo = theme.titleLogo {
             let customLogoImageView = UIImageView(image: titleLogo)
@@ -27,6 +28,7 @@ class LogoStackView: UIStackView, Themeable {
             customLogoImageView.contentMode = .scaleAspectFit
             customLogoImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
             customLogoImageView.widthAnchor.constraint(equalToConstant: ceil(20 * scale)).isActive = true
+            customLogoImageView.translatesAutoresizingMaskIntoConstraints = false
 
             self.addArrangedSubview(customLogoImageView)
             self.addArrangedSubview(filler)
