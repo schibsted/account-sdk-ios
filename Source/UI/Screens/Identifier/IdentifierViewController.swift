@@ -32,7 +32,7 @@ class IdentifierViewController: IdentityUIViewController {
         }
     }
     @IBAction func didClickWhatsThis(_: Any) {
-        self.configuration.tracker?.engagement(.click(.help, self.trackerViewID))
+        self.configuration.tracker?.engagement(.click(.whatsSchibstedAccount, self.trackerViewID, additionalFields: []))
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
     }
 
@@ -153,7 +153,7 @@ class IdentifierViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID))
+        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID, additionalFields: []))
 
         let identifier: Identifier
 

@@ -74,10 +74,10 @@ extension RequiredFieldsViewModel {
         let link0 = "RequiredFieldsScreenString.subtext.link0".localized(from: self.localizationBundle)
         let link1 = "RequiredFieldsScreenString.subtext.link1".localized(from: self.localizationBundle)
 
-        guard let controlYouPrivacyURL = URL(string: "https://info.privacy.schibsted.com/" + locale.gdprLanguageCode + "/S007") else {
+        guard let controlYouPrivacyURL = self.controlYouPrivacyURL else {
             return NSAttributedString(string: text)
         }
-        guard let dataAndYouURL = URL(string: "https://info.privacy.schibsted.com/" + locale.gdprLanguageCode + "/S012") else {
+        guard let dataAndYouURL = self.dataAndYouURL else {
             return NSAttributedString(string: text)
         }
 
@@ -94,6 +94,14 @@ extension RequiredFieldsViewModel {
         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: r2)
 
         return attributedString
+    }
+
+    var controlYouPrivacyURL: URL? {
+        return URL(string: "https://info.privacy.schibsted.com/" + self.locale.gdprLanguageCode + "/S007")
+    }
+
+    var dataAndYouURL: URL? {
+        return URL(string: "https://info.privacy.schibsted.com/" + self.locale.gdprLanguageCode + "/S012")
     }
 
     func string(for error: SupportedRequiredField.ValidationError) -> String {

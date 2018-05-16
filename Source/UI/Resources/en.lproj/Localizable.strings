@@ -9,9 +9,9 @@
 "IdentifierScreenString.inputTitle.phone" = "Enter your phone number";
 "IdentifierScreenString.inputTitle.email" = "Enter your email address";
 "IdentifierScreenString.inputTitle.password" = "Enter your email address";
-"IdentifierScreenString.infoText.internal" = "$0 is part of Schibsted.";
+"IdentifierScreenString.infoText.internal" = "$0 is part of the Schibsted family.";
 "IdentifierScreenString.infoText.external" = "$0 collaborates with Schibsted.";
-"IdentifierScreenString.infoText.rest" = "You'll need a Schibsted account to continue. You can use this account accross all Schibsted sites.";
+"IdentifierScreenString.infoText.rest" = "You'll need a Schibsted account to continue. You can use this account across all Schibsted sites.";
 "IdentifierScreenString.whatsThis" = "What is a Schibsted account?";
 "IdentifierScreenString.proceed" = "Continue";
 
@@ -26,7 +26,7 @@
 "PasswordScreenString.forgotPassword" = "Forgot password?";
 "PasswordScreenString.persistentLogin" = "Remember me on this device";
 "PasswordScreenString.whatsThis" = "What's this?";
-"PasswordScreenString.ageLimit" = "You need to be at leasy 16 years old to create a Schibsted account";
+"PasswordScreenString.ageLimit" = "You need to be at least 16 years old to create a Schibsted account";
 
 "VerifyScreenString.title" = "We sent you a code";
 "VerifyScreenString.subtext" = "Enter the verification code we sent to:";
