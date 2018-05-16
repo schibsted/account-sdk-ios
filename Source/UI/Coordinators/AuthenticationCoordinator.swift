@@ -11,7 +11,7 @@ class AuthenticationCoordinator: FlowCoordinator {
     }
 
     enum Output {
-        case success(User)
+        case success(user: User, persistUser: Bool)
         case cancel
         case back
         case changeIdentifier

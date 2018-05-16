@@ -79,12 +79,12 @@ extension PasswordlessCoordinator {
         completion: @escaping (Output) -> Void
     ) {
         self.presentedViewController?.startLoading()
-        self.oneTimeCodeInteractor.validate(oneTimeCode: code, for: identifier, persistUser: persistUser) { [weak self] result in
+        self.oneTimeCodeInteractor.validate(oneTimeCode: code, for: identifier) { [weak self] result in
             self?.presentedViewController?.endLoading()
             switch result {
             case let .success(currentUser):
                 self?.configuration.tracker?.loginID = currentUser.legacyID
-                self?.spawnCompleteProfileCoordinator(for: currentUser, on: loginFlowVariant, completion: completion)
+                self?.spawnCompleteProfileCoordinator(for: currentUser, on: loginFlowVariant, persistUser: persistUser, completion: completion)
             case let .failure(error):
                 if self?.presentedViewController?.showInlineError(error) == true {
                     return
@@ -97,6 +97,7 @@ extension PasswordlessCoordinator {
     private func spawnCompleteProfileCoordinator(
         for currentUser: User,
         on loginFlowVariant: LoginMethod.FlowVariant,
+        persistUser: Bool,
         completion: @escaping (Output) -> Void
     ) {
         let ensureProfileDataCoordinator = CompleteProfileCoordinator(
@@ -109,7 +110,7 @@ extension PasswordlessCoordinator {
         self.spawnChild(ensureProfileDataCoordinator, input: updateProfileInteractor) { output in
             switch output {
             case let .success(currentUser):
-                completion(.success(currentUser))
+                completion(.success(user: currentUser, persistUser: persistUser))
             case .cancel:
                 completion(.cancel)
             case .back, .reset:
