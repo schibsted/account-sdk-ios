@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Auth Class Reference</title>
+    <title>AdditionalField Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/Auth" class="dashAnchor"></a>
-    <a title="Auth Class Reference"></a>
+    <a name="//apple_ref/swift/Enum/AdditionalField" class="dashAnchor"></a>
+    <a title="AdditionalField Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../../index.html">SchibstedAccount Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../../index.html">SchibstedAccount Reference</a>
         <img id="carat" src="../../img/carat.png" />
-        Auth Class Reference
+        AdditionalField Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -343,14 +343,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Auth</h1>
+            <h1>AdditionalField</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Auth</span><span class="p">:</span> <span class="kt"><a href="../../Protocols/UserAuthAPI.html">UserAuthAPI</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">AdditionalField</span></code></pre>
 
                 </div>
               </div>
-            <p>Contains APIs that allow you get access to tokens and control some oauth related settings for a user</p>
+            <p>Supplementary fields that may be added to some event types</p>
 
           </section>
           <section class="section task-group-section">
@@ -359,9 +359,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC4AuthC17refreshRetryCountSiSgv"></a>
-                    <a name="//apple_ref/swift/Property/refreshRetryCount" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC4AuthC17refreshRetryCountSiSgv">refreshRetryCount</a>
+                    <a name="/s:16SchibstedAccount13TrackingEventO15AdditionalFieldO12keepLoggedInAESbcAEmF"></a>
+                    <a name="//apple_ref/swift/Element/keepLoggedIn" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO15AdditionalFieldO12keepLoggedInAESbcAEmF">keepLoggedIn</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -369,169 +369,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>When you send out a request associated with this user and it returns with a 401, the <code><a href="../../Classes/User.html">User</a></code> is refreshed and
-the the request is refired with a new set of auth tokens. In the case that your request still comes back with a 401,
-even though the tokens were just refreshed and should be valid, an infinite loop can ensue. This variable controls
-how many times it should retry a request that previously came back with a 401. If the count is exceeded
-then you get back whatever the response and data was from the actual request, and the error will be
-<code><a href="../../Enums/ClientError.html#/s:16SchibstedAccount11ClientErrorO24RefreshRetryExceededCodeSivZ">ClientError.RefreshRetryExceededCode</a></code> with the NSUnderlyingErrorKey set to actual request error (if there was one)</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    note default = 1
-
-</div>
+                        <p>Whether the user selected to keep the login status persistent</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">refreshRetryCount</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">keepLoggedIn</span><span class="p">(</span><span class="kt">Bool</span><span class="p">)</span></code></pre>
 
                         </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount4UserC4AuthC11oneTimeCodeAA10TaskHandle_pSS8clientID_yAA6ResultOySSAA11ClientErrorOGc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/oneTimeCode(clientID:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC4AuthC11oneTimeCodeAA10TaskHandle_pSS8clientID_yAA6ResultOySSAA11ClientErrorOGc10completiontF">oneTimeCode(clientID:completion:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Get a one-time API authentication code for the current user.</p>
-
-<p>This code can be sent to a different API, or a different SDK (for example a JS SDK),
-and then exchanged for a new access token, which has the same powers the current access token.
-You must be in the logged in state to be able to call this method.
-See also a diagram for exchange type <q>code</q> on <a href="http://techdocs.spid.no/endpoints/POST/oauth/exchange/">http://techdocs.spid.no/endpoints/POST/oauth/exchange/</a></p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">oneTimeCode</span><span class="p">(</span><span class="nv">clientID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../../Other Typealiases.html#/s:16SchibstedAccount20StringResultCallbacka">StringResultCallback</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../../Protocols/TaskHandle.html">TaskHandle</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>clientID</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>which client to get the code on behalf of</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>completion</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>a callback that receives the code or an error.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount4UserC4AuthC13webSessionURLAA10TaskHandle_pSS8clientID_10Foundation0G0V08redirectG0yAA6ResultOyAkA11ClientErrorOGc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/webSessionURL(clientID:redirectURL:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC4AuthC13webSessionURLAA10TaskHandle_pSS8clientID_10Foundation0G0V08redirectG0yAA6ResultOyAkA11ClientErrorOGc10completiontF">webSessionURL(clientID:redirectURL:completion:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Get an URL with embedded one-time code for creating a web session for the current user.</p>
-
-<p>Suppose that you have a mobile native login UI,
-but want to have a web view, where the user is logged in as if he has logged in via a web login form.
-The URL returned by this method should be used to navigate the web view,
-which will then redirect to your destination given <q>redirectURL</q>.
-After that happens you&rsquo;ll have a session cookie for the current user set up in the web view.
-That makes it possible to navigate to personalised or protected web pages in the logged in state.</p>
-
-<p>You must be in the logged in state to be able to call this method.
-See also a diagram for exchange type <q>session</q> on <a href="http://techdocs.spid.no/endpoints/POST/oauth/exchange/">http://techdocs.spid.no/endpoints/POST/oauth/exchange/</a></p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webSessionURL</span><span class="p">(</span><span class="nv">clientID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">redirectURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../../Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../../Protocols/TaskHandle.html">TaskHandle</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>clientID</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>which client to get the code on behalf of</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>redirectURL</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>where to redirect a web view at the cookie is set.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>completion</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>a callback that receives the code or an error.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>
