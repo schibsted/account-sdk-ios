@@ -119,6 +119,9 @@ class IdentityUIViewController: UIViewController {
             barButtonItem.tintColor = self.theme.colors.iconTint
             self.navigationItem.rightBarButtonItem = barButtonItem
         }
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -136,6 +139,10 @@ class IdentityUIViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+    }
+
+    @objc private func dismissKeyboard() {
+        self.view.endEditing(false)
     }
 
     @objc private func keyboardDidShow(notification: NSNotification) {
