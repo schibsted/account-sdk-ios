@@ -132,7 +132,11 @@ public class IdentityUI {
     ///
     public let identityManager: IdentityManager
 
-    let navigationController = UINavigationController()
+    lazy var navigationController: UINavigationController = {
+        DismissableNavigationController { [weak self] in
+            self?.complete(with: .cancel)
+        }
+    }()
 
     var child: ChildFlowCoordinator?
 
@@ -291,6 +295,11 @@ public class IdentityUI {
     }
 
     private func complete(with output: Output) {
+        guard IdentityUI.presentedIdentityUI != nil else {
+            // IdentityUI has been already dismissed.
+            return
+        }
+
         let uiResult: IdentityUIResult?
         switch output {
         case let .success(user):
