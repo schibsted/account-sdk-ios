@@ -18,8 +18,8 @@ class OneTimeCodeInteractor {
         self.identityManager.resendCode(to: identifier, completion: completion)
     }
 
-    func validate(oneTimeCode: String, for identifier: Identifier, persistUser: Bool, completion: @escaping (Result<User, ClientError>) -> Void) {
-        self.identityManager.validate(oneTimeCode: oneTimeCode, for: identifier, persistUser: persistUser) { [weak self] result in
+    func validate(oneTimeCode: String, for identifier: Identifier, completion: @escaping (Result<User, ClientError>) -> Void) {
+        self.identityManager.validate(oneTimeCode: oneTimeCode, for: identifier, persistUser: false) { [weak self] result in
             guard let strongSelf = self else { return }
             switch result {
             case .success:

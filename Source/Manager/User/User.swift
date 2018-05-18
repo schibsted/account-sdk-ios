@@ -156,7 +156,7 @@ public class User: UserProtocol {
             return
         }
 
-        self.updateStoredTokens(nil, previousTokens: oldTokens)
+        try? UserTokensStorage().clear(oldTokens)
         self.delegate?.user(self, didChangeStateTo: .loggedOut)
 
         self.api.logout(oauthToken: oldTokens.accessToken) { [weak self] result in
@@ -225,15 +225,22 @@ public class User: UserProtocol {
 
         log(from: self, "new tokens \(newTokens)")
 
-        if let makePersistent = makePersistent {
-            self.isPersistent = makePersistent
-        }
+        self.isPersistent = makePersistent ?? self.isPersistent
+
+        let isNewLoggedInUser = newTokens.anyUserID != nil && newTokens.anyUserID != tokens.old?.anyUserID
 
         if self.isPersistent {
-            self.updateStoredTokens(tokens.new, previousTokens: tokens.old)
+            // Store new tokens if we are supposed to be persistent.
+            // Only clear previous tokens if the user is NOT a new one (since they have not logged out)
+            if let newTokens = tokens.new {
+                try? UserTokensStorage().store(newTokens)
+            }
+            if !isNewLoggedInUser, let oldTokens = tokens.old {
+                try UserTokensStorage().clear(oldTokens)
+            }
         }
 
-        if let newAnyUserID = newTokens.anyUserID, newAnyUserID != tokens.old?.anyUserID {
+        if isNewLoggedInUser {
             self.delegate?.user(self, didChangeStateTo: .loggedIn)
         }
     }
@@ -251,14 +258,13 @@ public class User: UserProtocol {
         self.isPersistent = true
     }
 
-    func updateStoredTokens(_ tokens: TokenData?, previousTokens: TokenData?) {
-        // Always clear old tokens
-        if let previousUserTokens = previousTokens {
-            try? UserTokensStorage().clear(previousUserTokens)
-        }
-
-        if self.isPersistent, let tokens = tokens {
-            try? UserTokensStorage().store(tokens)
+    func persistCurrentTokens() {
+        guard !self.isPersistent, let tokens = self.tokens else { return }
+        do {
+            try UserTokensStorage().store(tokens)
+            self.isPersistent = true
+        } catch {
+            log(self, "failed to persist tokens: \(error)")
         }
     }
 
