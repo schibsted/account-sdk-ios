@@ -14,11 +14,6 @@ enum IdentifierViewControllerAction {
 class IdentifierViewController: IdentityUIViewController {
     var didRequestAction: ((IdentifierViewControllerAction) -> Void)?
 
-    @IBOutlet var lockImage: UIImageView! {
-        didSet {
-            self.lockImage.tintColor = self.theme.colors.iconTint
-        }
-    }
     @IBOutlet var whastThisButton: UIButton! {
         didSet {
             self.whastThisButton.setTitle(self.viewModel.whatsThis, for: .normal)
