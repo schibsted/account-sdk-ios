@@ -122,7 +122,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cIa-P1-gNm" userLabel="PrivacyStackView">
                                                     <rect key="frame" x="16" y="153" width="343" height="219.5"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="left" axis="vertical" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9Qw-VW-lWj">
+                                                        <stackView opaque="NO" contentMode="left" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9Qw-VW-lWj">
                                                             <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Info text" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZp-Li-kvw">
