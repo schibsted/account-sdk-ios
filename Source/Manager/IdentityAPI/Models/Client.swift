@@ -38,7 +38,7 @@ public struct Client: JSONParsable {
     public let merchantID: String?
 
     /// Your merchant name
-    public let merchandName: String?
+    public let merchantName: String?
 
     ///
     public enum Kind: String {
@@ -77,7 +77,7 @@ public struct Client: JSONParsable {
         }
 
         let merchantData = (try? data.jsonObject(for: "merchant")) ?? [:]
-        self.merchandName = try? merchantData.string(for: "name")
+        self.merchantName = try? merchantData.string(for: "name")
         if let kindValue = try? merchantData.string(for: "type") {
             self.kind = Kind(rawValue: kindValue)
         } else {
