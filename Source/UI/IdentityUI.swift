@@ -183,7 +183,9 @@ public class IdentityUI {
                 return
             }
 
-            preconditionFailure("Attempt to present updated terms while another Identity UI flow is already presented.")
+            let msg = "Attempt to present updated terms while another Identity UI flow is already presented."
+            assertionFailure(msg)
+            log(self, msg)
         }
 
         let navigationController = DismissableNavigationController {
@@ -372,7 +374,10 @@ extension IdentityUI: FlowCoordinator {
             // A login flow is already in progress. It should not be allowed to have multiple login flows at the same time, but if we ended up here because
             // of a route, we need to give the currently presented login flow a chance to handle it.
             guard case let .byRoute(route, _) = input else {
-                preconditionFailure("Attempt to present a new Identity UI instance while another one is already presented.")
+                let msg = "Attempt to present a new Identity UI instance while another one is already presented."
+                assertionFailure(msg)
+                log(self, msg)
+                return
             }
 
             // Let the currently presented flow handle the route.
