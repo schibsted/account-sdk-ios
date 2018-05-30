@@ -36,6 +36,8 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             User.globalStore.removeAll()
         }
         configuration.afterEach {
+            Logger.shared.waitTillAllLogsTransported()
+
             Utils.cleanupKeychain()
             PasswordlessTokenStore.clear()
 
