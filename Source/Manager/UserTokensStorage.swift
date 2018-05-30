@@ -26,7 +26,7 @@ struct UserTokensStorage {
                 try self.store(tokens)
                 SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
             } catch {
-                forceLog(from: self, "failed to migrate \(tokens)")
+                log(from: self, "failed to migrate \(tokens)", force: true)
             }
         }
 
@@ -48,7 +48,7 @@ struct UserTokensStorage {
             let message = "Keychain error: make sure you have an entitlements file with shared keychain access"
             fatalError(message)
         } catch {
-            forceLog(from: self, "error saving keychain for user: \(error)")
+            log(from: self, "error saving keychain for user: \(error)", force: true)
         }
     }
 
@@ -63,7 +63,7 @@ struct UserTokensStorage {
             }
             log(from: self, "cleared \(tokens)")
         } catch {
-            forceLog(from: self, "error removing keychain for user: \(error)")
+            log(from: self, "error removing keychain for user: \(error)", force: true)
         }
     }
 }
