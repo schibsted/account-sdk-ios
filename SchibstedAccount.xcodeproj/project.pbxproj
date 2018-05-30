@@ -122,7 +122,7 @@
 		B01D755661F50572CB83D40D /* valid-refresh.json in Resources */ = {isa = PBXBuildFile; fileRef = B01D75C99BDB3E9650A668ED /* valid-refresh.json */; };
 		B01D755AFF33BDA98549894A /* VerifyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B01D705A46866AAA1E777671 /* VerifyViewController.xib */; };
 		B01D755CF4309E16F1F3EBC3 /* ResendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D77108888FC3BA9C761E2 /* ResendViewController.swift */; };
-		B01D7570F99A4F7792994425 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7CF6EB426DD67F08B510 /* Logging.swift */; };
+		B01D7570F99A4F7792994425 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7CF6EB426DD67F08B510 /* Log.swift */; };
 		B01D757A7C0AAF62CFC23AB0 /* WebSessionRoutesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D72B63089439E8CCA3433 /* WebSessionRoutesTests.swift */; };
 		B01D75958BDFEEBCD4F6CCD0 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D755B4D5DC96A09053B7E /* StringExtensions.swift */; };
 		B01D75BBB854876120082EEC /* UserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7473BB4E189261DBC4A8 /* UserDelegate.swift */; };
@@ -277,6 +277,8 @@
 		B01D7FE467756DB12531438F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D738D65712CD22B987537 /* Storage.swift */; };
 		B01D7FF32DE3A0D668785961 /* ClientError+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D75141A07D790A4BB2511 /* ClientError+localized.swift */; };
 		E143801B20909E2E00F037FA /* ClientInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E143801A20909E2E00F037FA /* ClientInfoInteractor.swift */; };
+		E15AC27620BEBEFC00963D7D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15AC26120BEBEFC00963D7D /* Logger.swift */; };
+		E15AC27720BEBEFC00963D7D /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15AC26220BEBEFC00963D7D /* LogLevel.swift */; };
 		E1656760209C787100F2C091 /* SchibstedAccount.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C24188205BF1BE00154866 /* SchibstedAccount.framework */; };
 		E1656761209C787100F2C091 /* SchibstedAccount.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 43C24188205BF1BE00154866 /* SchibstedAccount.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E18394C8208DD31800B05EC9 /* product-no-access.json in Resources */ = {isa = PBXBuildFile; fileRef = E18394B5208DD31700B05EC9 /* product-no-access.json */; };
@@ -713,7 +715,7 @@
 		B01D7CE26491D8056CA9FFD7 /* DefaultSettingsProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSettingsProxy.swift; sourceTree = "<group>"; };
 		B01D7CE73DC91934E9679121 /* login-valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "login-valid.json"; sourceTree = "<group>"; };
 		B01D7CEBB0CD6676FDD376B5 /* ResendViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResendViewController.xib; sourceTree = "<group>"; };
-		B01D7CF6EB426DD67F08B510 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		B01D7CF6EB426DD67F08B510 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		B01D7D0051FA3E12837D9259 /* Data+jsonObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+jsonObject.swift"; sourceTree = "<group>"; };
 		B01D7D041DED7E707ECF6EB1 /* token-exchange-valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "token-exchange-valid.json"; sourceTree = "<group>"; };
 		B01D7D1DD0A50C7DA2E4AF4F /* PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
@@ -753,6 +755,8 @@
 		B01D7FAC65185FEEDB2C7E5B /* UpdateUserProfileTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserProfileTask.swift; sourceTree = "<group>"; };
 		B01D7FD3E6A4D7737E916326 /* TestingUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingUser.swift; sourceTree = "<group>"; };
 		E143801A20909E2E00F037FA /* ClientInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientInfoInteractor.swift; sourceTree = "<group>"; };
+		E15AC26120BEBEFC00963D7D /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		E15AC26220BEBEFC00963D7D /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
 		E18394B5208DD31700B05EC9 /* product-no-access.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "product-no-access.json"; sourceTree = "<group>"; };
 		E18394CD208DF43300B05EC9 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		E18394CE208DF43300B05EC9 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
@@ -1078,11 +1082,11 @@
 		B01D73B9677CB90B6585D5A2 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				E15AC25F20BEBEFC00963D7D /* Logger */,
 				B01D72E6D6345B8F00FB9315 /* JSON */,
 				B01D7A4D01691F2FE12FEB5D /* Utils */,
 				B01D732D05C1EC946447CEC9 /* Settings */,
 				B01D7AF8EC46893E319F2791 /* Networking */,
-				B01D7CF6EB426DD67F08B510 /* Logging.swift */,
 				B01D71CD20F4E2EA8D4219E2 /* Version.swift */,
 				B01D76A9921FF9FC02222F43 /* AtomicInt.swift */,
 				B01D7306347D3F52524909F2 /* EventEmitter.swift */,
@@ -1498,6 +1502,16 @@
 			path = sv.lproj;
 			sourceTree = "<group>";
 		};
+		E15AC25F20BEBEFC00963D7D /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				B01D7CF6EB426DD67F08B510 /* Log.swift */,
+				E15AC26120BEBEFC00963D7D /* Logger.swift */,
+				E15AC26220BEBEFC00963D7D /* LogLevel.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 		E18394CC208DF43300B05EC9 /* Info */ = {
 			isa = PBXGroup;
 			children = (
@@ -1895,7 +1909,7 @@
 				B01D72B724576E0F9A57630C /* NetworkingHeaders.swift in Sources */,
 				B01D74E25D8009E89398B8CF /* DefaultNetworkingProxy.swift in Sources */,
 				B01D7161901B48A6DDE53C56 /* StubbedNetworkingProxy.swift in Sources */,
-				B01D7570F99A4F7792994425 /* Logging.swift in Sources */,
+				B01D7570F99A4F7792994425 /* Log.swift in Sources */,
 				B01D771DB78C07049D119DE9 /* Version.swift in Sources */,
 				B01D789EB9085FF710E8E17E /* AtomicInt.swift in Sources */,
 				B01D755585F701BC649483A5 /* EventEmitter.swift in Sources */,
@@ -1987,6 +2001,7 @@
 				B01D754068C149DBCB6214EB /* Utils.swift in Sources */,
 				B01D71A4863C5BEA5CA371F5 /* UIToolBar+keyboard.swift in Sources */,
 				B01D70D1F402BFAADCF32448 /* CountryDialingCodeHelper.swift in Sources */,
+				E15AC27720BEBEFC00963D7D /* LogLevel.swift in Sources */,
 				B01D7C14CD83A42717986437 /* Heading.swift in Sources */,
 				B01D7299449EF35C2BA75884 /* Checkbox.swift in Sources */,
 				E1DBA11720A5B9710005B3B9 /* Local+GDPRLanguageCode.swift in Sources */,
@@ -2042,6 +2057,7 @@
 				B01D79CE4B5E5D9020574601 /* IdentityUITheme.swift in Sources */,
 				B01D781BE1E74E3AF1C4E356 /* IdentityUIDelegate.swift in Sources */,
 				B01D7FF32DE3A0D668785961 /* ClientError+localized.swift in Sources */,
+				E15AC27620BEBEFC00963D7D /* Logger.swift in Sources */,
 				B01D7EB95182FF644F14AADA /* IdentityUIConfiguration.swift in Sources */,
 				B01D7670499A2164474DE4C8 /* IdentityUIViewController.swift in Sources */,
 			);

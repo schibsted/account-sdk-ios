@@ -270,7 +270,7 @@ public class User: UserProtocol {
             try UserTokensStorage().store(tokens)
             self.isPersistent = true
         } catch {
-            log(self, "failed to persist tokens: \(error)")
+            log(from: self, "failed to persist tokens: \(error)")
         }
     }
 
@@ -281,7 +281,7 @@ public class User: UserProtocol {
         }
 
         guard let refreshToken = tokens.refreshToken else {
-            forceLog(from: self, "no refresh token")
+            log(from: self, "no refresh token", force: true)
             completion(.failure(.userRefreshFailed(GenericError.Unexpected("no refresh token for user \(self)"))))
             return
         }
