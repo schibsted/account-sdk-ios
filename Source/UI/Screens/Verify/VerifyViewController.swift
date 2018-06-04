@@ -17,6 +17,8 @@ class VerifyViewController: IdentityUIViewController {
     @IBOutlet var whatsThisButton: UIButton! {
         didSet {
             self.whatsThisButton.setTitle(self.viewModel.whatsThis, for: .normal)
+            self.whatsThisButton.titleLabel?.font = self.theme.fonts.info
+            self.whatsThisButton.contentEdgeInsets.top = 1
         }
     }
     @IBAction func didClickWhatLink(_: Any) {
