@@ -143,6 +143,7 @@ class AutoRefreshURLProtocol: URLProtocol {
                 }
                 strongSelf.client?.urlProtocolDidFinishLoading(strongSelf)
             } catch {
+                log(level: .debug, from: self, "got error \(error) with NSError.code = \((error as NSError).code)")
                 strongSelf.client?.urlProtocol(strongSelf, didFailWithError: error)
                 strongSelf.client?.urlProtocolDidFinishLoading(strongSelf)
             }

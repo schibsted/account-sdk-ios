@@ -40,7 +40,7 @@ struct UserTokensStorage {
 
         do {
             try keychain.saveInKeychain()
-            log(from: self, "stored \(tokens)")
+            log(level: .debug, from: self, "stored \(tokens)")
         } catch where (error as NSError).code == (-34018) {
             // Seems to be a private inaccessible constant :( https://osstatus.com/search/results?platform=all&framework=all&search=-34018
             //
@@ -48,7 +48,7 @@ struct UserTokensStorage {
             let message = "Keychain error: make sure you have an entitlements file with shared keychain access"
             fatalError(message)
         } catch {
-            log(from: self, "error saving keychain for user: \(error)", force: true)
+            log(level: .error, from: self, "error saving keychain for user: \(error)", force: true)
         }
     }
 
@@ -61,9 +61,9 @@ struct UserTokensStorage {
             if SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kSPiDAccessToken) != nil {
                 SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
             }
-            log(from: self, "cleared \(tokens)")
+            log(level: .debug, from: self, "cleared \(tokens)")
         } catch {
-            log(from: self, "error removing keychain for user: \(error)", force: true)
+            log(level: .error, from: self, "error removing keychain for user: \(error)", force: true)
         }
     }
 }
