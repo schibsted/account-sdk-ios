@@ -34,7 +34,7 @@ extension Networking {
             let allButPlus = CharacterSet(charactersIn: "+").inverted
 
             guard let formattedFormData = formDataComponents.percentEncodedQuery?.addingPercentEncoding(withAllowedCharacters: allButPlus) else {
-                throw GenericError.WTF("Failed to encode \(formData)")
+                throw GenericError.Unexpected("Failed to encode \(formData)")
             }
 
             guard let data = formattedFormData.data(using: String.Encoding.utf8) else {
