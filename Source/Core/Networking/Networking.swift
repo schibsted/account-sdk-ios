@@ -71,7 +71,7 @@ struct Networking {
             request.setValue(value, for: key)
         }
 
-        log(request.cURLRepresentation, tag: "CURL")
+        log(level: .debug, "\n  \(request.cURLRepresentation)", tag: "CURL")
         return self.dataTask(for: self.proxy.session, request: request, completion: completion)
     }
 }
