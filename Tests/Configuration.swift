@@ -57,6 +57,8 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             StubbedNetworkingProxy.removeStubs()
 
             Settings.clearAll()
+
+            Logger.shared.waitTillAllLogsTransported()
         }
     }
 }
