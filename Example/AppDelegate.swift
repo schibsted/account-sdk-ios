@@ -16,8 +16,8 @@ struct ConfigurationLoader {
             let envData = EnvData(
                 clientID: json["clientID"] ?? "",
                 clientSecret: json["clientSecret"] ?? "",
-                clientScheme: json["clientScheme"] ?? "",
-                webClientID: json["webClientID"] ?? ""
+                clientScheme: json["clientScheme"],
+                webClientID: json["webClientID"]
             )
             self.data[env] = envData
         }
@@ -40,8 +40,8 @@ struct ConfigurationLoader {
     struct EnvData {
         var clientID: String = ""
         var clientSecret: String = ""
-        var clientScheme: String = ""
-        var webClientID: String = ""
+        var clientScheme: String?
+        var webClientID: String?
     }
 
     subscript(env: ClientConfiguration.Environment) -> EnvData {
