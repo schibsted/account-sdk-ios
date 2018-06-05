@@ -69,7 +69,7 @@ class StatusViewController: UIViewController {
             from: self,
             loginMethod: .password,
             localizedTeaserText: "I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser",
-            scopes: ["random_scope"]
+            scopes: ClientConfiguration.current.scopes
         )
     }
 
