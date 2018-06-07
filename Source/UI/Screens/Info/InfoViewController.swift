@@ -45,6 +45,7 @@ class InfoViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.stackBackground.layer.cornerRadius = self.theme.geometry.cornerRadius
+        self.stackBackground.clipsToBounds = true
         if let image = self.titleImage {
             self.infoImage.image = image
         } else {
