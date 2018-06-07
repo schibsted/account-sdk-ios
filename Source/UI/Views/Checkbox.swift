@@ -13,11 +13,14 @@ class Checkbox: UIButton, Themeable {
 
     func applyTheme(theme: IdentityUITheme) {
         self.theme = theme
+        self.heightAnchor.constraint(equalToConstant: 26).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 26).isActive = true
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.setImage(theme.icons.checkedBox, for: .selected)
         self.setImage(theme.icons.uncheckedBox, for: .normal)
         self.setTitle(nil, for: UIControlState.normal)
         self.tintColor = self.stateColor
-        self.translatesAutoresizingMaskIntoConstraints = true
+        self.imageView?.contentMode = .scaleAspectFit
         self.addTarget(self, action: #selector(self.tap), for: .touchUpInside)
     }
 
