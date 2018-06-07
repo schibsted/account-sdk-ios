@@ -9,15 +9,16 @@ import UIKit
 struct ConfigurationLoader {
     var data: [ClientConfiguration.Environment: EnvData] = [:]
 
-    private typealias JSONData = [String: [String: [String: String]]]
+    private typealias JSONData = [String: [String: [String: Any]]]
 
     private mutating func fill(data: JSONData, env: ClientConfiguration.Environment) {
         if let json = data["environment"]?[env.rawValue] {
             let envData = EnvData(
-                clientID: json["clientID"] ?? "",
-                clientSecret: json["clientSecret"] ?? "",
-                clientScheme: json["clientScheme"] ?? "",
-                webClientID: json["webClientID"] ?? ""
+                clientID: json["clientID"] as? String ?? "",
+                clientSecret: json["clientSecret"] as? String ?? "",
+                clientScheme: json["clientScheme"] as? String,
+                webClientID: json["webClientID"] as? String,
+                scopes: json["scopes"] as? [String]
             )
             self.data[env] = envData
         }
@@ -40,8 +41,9 @@ struct ConfigurationLoader {
     struct EnvData {
         var clientID: String = ""
         var clientSecret: String = ""
-        var clientScheme: String = ""
-        var webClientID: String = ""
+        var clientScheme: String?
+        var webClientID: String?
+        var scopes: [String]?
     }
 
     subscript(env: ClientConfiguration.Environment) -> EnvData {
@@ -85,6 +87,10 @@ extension SchibstedAccount.ClientConfiguration {
             return URL(string: "https://dev.sdk-example.com/session-exchange-safepage")
         }
         return nil
+    }
+
+    var scopes: [String] {
+        return ClientConfiguration.config[self.environment!].scopes ?? []
     }
 }
 
