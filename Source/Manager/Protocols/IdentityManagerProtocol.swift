@@ -21,9 +21,9 @@ public protocol IdentityManagerProtocol: class {
     ///
     func resendCode(to identifier: Identifier, completion: @escaping NoValueCallback)
     ///
-    func validate(oneTimeCode: String, persistUser: Bool, completion: @escaping NoValueCallback)
+    func validate(oneTimeCode: String, scopes: [String], persistUser: Bool, completion: @escaping NoValueCallback)
     ///
-    func validate(oneTimeCode: String, for _: Identifier, persistUser: Bool, completion: @escaping NoValueCallback)
+    func validate(oneTimeCode: String, for _: Identifier, scopes: [String], persistUser: Bool, completion: @escaping NoValueCallback)
 
     ///
     func login(username: Identifier, password: String, scopes: [String], persistUser: Bool, completion: @escaping NoValueCallback)
