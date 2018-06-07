@@ -28,6 +28,7 @@ class UserProfileSessionTests: QuickSpec {
                     expect(profile.familyName) == "Freeman"
                     expect(profile.primaryEmailAddress?.originalString) == "blubberfubber@guffer.huffer"
                     expect(profile.birthday?.description) == "1999-12-12"
+                    expect(profile.email?.originalString) == "monkey@d.luffy"
                 }
             }
         }
