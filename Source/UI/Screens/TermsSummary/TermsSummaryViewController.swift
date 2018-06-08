@@ -70,6 +70,5 @@ class TermsSummaryViewController: IdentityUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.contentView.layer.cornerRadius = self.theme.geometry.cornerRadius
     }
 }

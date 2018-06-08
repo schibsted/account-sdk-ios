@@ -93,6 +93,7 @@ class ErrorViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.sheetBackgroundView.layer.cornerRadius = self.theme.geometry.cornerRadius
+        self.sheetBackgroundView.clipsToBounds = true
 
         guard let originViewController = self.originViewController else {
             return

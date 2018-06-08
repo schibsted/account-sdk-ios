@@ -30,7 +30,7 @@ class TextField: UITextField, Themeable {
         self.theme = theme
         self.font = theme.fonts.normal
         self.layer.borderWidth = 1
-        self.layer.cornerRadius = theme.geometry.cornerRadius
+        self.layer.cornerRadius = theme.geometry.inputViewCornerRadius
         self.textColor = theme.colors.normalText
         // cursor color
         self.tintColor = theme.colors.textInputCursor
