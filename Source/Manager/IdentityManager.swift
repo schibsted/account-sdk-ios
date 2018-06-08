@@ -5,6 +5,12 @@
 
 import Foundation
 
+private extension Array where Element: Hashable {
+    func duplicatesRemoved() -> [Element] {
+        return Array(Set(self))
+    }
+}
+
 /**
  This delegate informs you of changes within the `IdentityManager`.
  */
@@ -262,7 +268,7 @@ public class IdentityManager: IdentityManagerProtocol {
             connection: identifier.connection,
             code: oneTimeCode,
             passwordlessToken: passwordlessToken,
-            scope: scopes + IdentityManager.defaultScopes
+            scope: (scopes + IdentityManager.defaultScopes).duplicatesRemoved()
         ) { [weak self] result in
             self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }
@@ -368,7 +374,7 @@ public class IdentityManager: IdentityManagerProtocol {
             refreshToken: nil,
             username: username.normalizedString,
             password: password,
-            scope: scopes + IdentityManager.defaultScopes
+            scope: (scopes + IdentityManager.defaultScopes).duplicatesRemoved()
         ) { [weak self] result in
             self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }
