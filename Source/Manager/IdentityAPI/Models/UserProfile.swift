@@ -19,8 +19,10 @@ public struct UserProfile: JSONParsable {
     public var displayName: String?
     ///
     public var birthday: Birthdate?
-    ///
+    /// This is the email address that is marked as primary (there may or may not be one)
     public var primaryEmailAddress: EmailAddress?
+    /// The email address associated with this user. For passwordless login this is generated for example.
+    public var email: EmailAddress?
 
     ///
     public init(givenName: String? = nil, familyName: String? = nil, displayName: String? = nil, birthday: Birthdate? = nil) {
@@ -40,6 +42,9 @@ public struct UserProfile: JSONParsable {
         if let string = try? data.string(for: "birthday") {
             self.birthday = Birthdate(string: string)
         }
+        if let email = try? data.string(for: "email") {
+            self.email = EmailAddress(email)
+        }
         if let emailJson = try? data.jsonArray(of: JSONObject.self, for: "emails") {
             for blob in emailJson {
                 if (try? blob.string(for: "primary")) == "true", let email = try? blob.string(for: "value") {
@@ -58,7 +63,8 @@ extension UserProfile: CustomStringConvertible {
         desc = desc.appendingFormat("  familyName: %@\n", self.familyName ?? "null")
         desc = desc.appendingFormat("  displayName: %@\n", self.displayName ?? "null")
         desc = desc.appendingFormat("  birthday: %@\n", self.birthday?.description ?? "null")
-        desc = desc.appendingFormat("  email: %@\n", self.primaryEmailAddress?.originalString ?? "null")
+        desc = desc.appendingFormat("  email: %@\n", self.email?.originalString ?? "null")
+        desc = desc.appendingFormat("  primary email: %@\n", self.primaryEmailAddress?.originalString ?? "null")
         return desc
     }
 }
