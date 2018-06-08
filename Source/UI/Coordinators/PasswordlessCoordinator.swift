@@ -19,7 +19,7 @@ class PasswordlessCoordinator: AuthenticationCoordinator {
                 completion(.error(error))
                 return
             }
-            self?.showVerifyView(for: input.identifier, on: input.loginFlowVariant, completion: completion)
+            self?.showVerifyView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
         }
     }
 
@@ -44,6 +44,7 @@ extension PasswordlessCoordinator {
     private func showVerifyView(
         for identifier: Identifier,
         on loginFlowVariant: LoginMethod.FlowVariant,
+        scopes: [String],
         completion: @escaping (Output) -> Void
     ) {
         let navigationSettings = NavigationSettings(
@@ -55,7 +56,7 @@ extension PasswordlessCoordinator {
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(code, shouldPersistUser):
-                self?.submit(code: code, for: identifier, on: loginFlowVariant, persistUser: shouldPersistUser, completion: completion)
+                self?.submit(code: code, for: identifier, on: loginFlowVariant, scopes: scopes, persistUser: shouldPersistUser, completion: completion)
             case .resendCode:
                 self?.resendCode(for: identifier, completion: completion)
             case .changeIdentifier:
@@ -75,11 +76,12 @@ extension PasswordlessCoordinator {
         code: String,
         for identifier: Identifier,
         on loginFlowVariant: LoginMethod.FlowVariant,
+        scopes: [String],
         persistUser: Bool,
         completion: @escaping (Output) -> Void
     ) {
         self.presentedViewController?.startLoading()
-        self.oneTimeCodeInteractor.validate(oneTimeCode: code, for: identifier) { [weak self] result in
+        self.oneTimeCodeInteractor.validate(oneTimeCode: code, for: identifier, scopes: scopes) { [weak self] result in
             self?.presentedViewController?.endLoading()
             switch result {
             case let .success(currentUser):
