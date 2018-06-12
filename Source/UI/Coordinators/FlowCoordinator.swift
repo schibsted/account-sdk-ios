@@ -95,6 +95,9 @@ extension FlowCoordinator {
     func present(url: URL) {
         let viewController = SafariViewController(url: url)
         viewController.modalTransitionStyle = .coverVertical
+        if #available(iOS 10.0, *) {
+            viewController.preferredControlTintColor = self.configuration.theme.colors.iconTint
+        }
         self.navigationController.present(viewController, animated: true, completion: nil)
     }
 
