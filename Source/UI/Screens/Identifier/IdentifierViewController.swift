@@ -28,7 +28,7 @@ class IdentifierViewController: IdentityUIViewController {
     }
     @IBOutlet var contentView: UIView! {
         didSet {
-            self.contentView.layer.cornerRadius = 12
+            self.contentView.layer.cornerRadius = self.theme.geometry.contentGroupingCornerRadius
         }
     }
     @IBAction func didClickWhatsThis(_: Any) {

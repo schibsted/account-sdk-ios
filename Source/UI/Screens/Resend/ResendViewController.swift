@@ -56,6 +56,7 @@ class ResendViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.stackBackground.layer.cornerRadius = self.theme.geometry.cornerRadius
+        self.stackBackground.clipsToBounds = true
     }
 
     @IBAction func didClickContinue(_: Any) {

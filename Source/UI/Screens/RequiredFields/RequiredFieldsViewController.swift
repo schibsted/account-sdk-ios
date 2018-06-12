@@ -66,7 +66,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
 
                 let subStack = UIStackView(arrangedSubviews: [title, input, error])
                 subStack.axis = .vertical
-                subStack.spacing = self.theme.geometry.cornerRadius
+                subStack.spacing = self.theme.geometry.titleViewSpacing
 
                 self.requiredFieldsStackView.addArrangedSubview(subStack)
             }

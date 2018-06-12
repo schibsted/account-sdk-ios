@@ -15,12 +15,19 @@ public struct IdentityUITheme {
     /// The logo that's displayed on the identifier screen
     public var titleLogo: UIImage?
 
-    ///
+    /// Controls spacings and curvatures of views
     public struct Geometry {
-        /// Default curved corner radius of controls
-        public var cornerRadius: CGFloat = 4
-        /// Default spacing between views that form a grouping
+        /// Spacing between views that form a grouping
         public var groupedViewSpacing: CGFloat = 8
+        /// Spacing for in between titles and their associated input fields
+        public var titleViewSpacing: CGFloat = 4
+
+        /// Corner radius of buttons and popups
+        public var cornerRadius: CGFloat = 4
+        /// Corner radius of input fields
+        public var inputViewCornerRadius: CGFloat = 4
+        /// Corner radius for views encapsulating other views
+        public var contentGroupingCornerRadius: CGFloat = 12
     }
 
     ///
