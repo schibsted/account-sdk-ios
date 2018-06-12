@@ -77,9 +77,9 @@ public struct StyleColors {
             "primary": "#1D72DB",
             "primaryActive": "#175BAF",
             "primaryDisabled": "#8EB8ED",
-            "secondary": "#289588",
-            "secondaryActive": "#25776C",
-            "secondaryDisabled": "#96C9C3",
+            "secondary": "#ffffff",
+            "secondaryActive": "#F8F8F8",
+            "secondaryDisabled": "#EAEAEA",
 
             "black": "#111111",
             "veryDarkGray": "#333333",
