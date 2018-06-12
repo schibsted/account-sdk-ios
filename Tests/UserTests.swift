@@ -233,35 +233,43 @@ class UserTests: QuickSpec {
                 let user = User(state: .loggedOut)
                 try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", makePersistent: false)
                 expect(user.tokens).toNot(beNil())
+                expect(user.isPersistent) == false
 
                 let otherUser = User(state: .loggedOut)
                 try? otherUser.loadStoredTokens()
                 expect(otherUser.tokens).to(beNil())
+                expect(otherUser.isPersistent) == false
             }
 
             it("Should find stored tokens if they are persistent") {
                 let user = User(state: .loggedOut)
                 try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", makePersistent: true)
                 expect(user.tokens).toNot(beNil())
+                expect(user.isPersistent) == true
 
                 let otherUser = User(state: .loggedOut)
                 try? otherUser.loadStoredTokens()
                 expect(otherUser.tokens).toNot(beNil())
                 expect(user.tokens) == otherUser.tokens
+                expect(otherUser.isPersistent) == true
             }
 
             it("Should update persistence status") {
                 let user = User(state: .loggedOut)
                 try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", makePersistent: true)
                 expect(user.tokens).toNot(beNil())
+                expect(user.isPersistent) == true
                 user.logout()
+                expect(user.isPersistent) == true
                 expect(user.tokens).to(beNil())
                 try? user.set(accessToken: "hehe", refreshToken: "hehe", idToken: "hehe", makePersistent: false)
                 expect(user.tokens).toNot(beNil())
+                expect(user.isPersistent) == false
 
                 let otherUser = User(state: .loggedOut)
                 try? otherUser.loadStoredTokens()
                 expect(otherUser.tokens).to(beNil())
+                expect(otherUser.isPersistent) == false
             }
         }
 

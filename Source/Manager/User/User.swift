@@ -70,7 +70,15 @@ public class User: UserProtocol {
 
     private let dispatchQueue = DispatchQueue(label: "com.schibsted.identity.User", attributes: [])
     private var _tokens: TokenData?
-    private var isPersistent = false
+    private var _isPersistent = false
+
+    /**
+     Tells you if the user is persistent or not. A persistent user is one where the tokens are
+     stored in the keycchain.
+     */
+    public var isPersistent: Bool {
+        return self._isPersistent
+    }
 
     var tokens: TokenData? {
         return self.dispatchQueue.sync {
@@ -225,11 +233,11 @@ public class User: UserProtocol {
 
         log(from: self, "new tokens \(newTokens)")
 
-        self.isPersistent = makePersistent ?? self.isPersistent
+        self._isPersistent = makePersistent ?? self._isPersistent
 
         let isNewLoggedInUser = newTokens.anyUserID != nil && newTokens.anyUserID != tokens.old?.anyUserID
 
-        if self.isPersistent {
+        if self._isPersistent {
             // Store new tokens if we are supposed to be persistent.
             // Only clear previous tokens if the user is NOT a new one (since they have not logged out)
             if let newTokens = tokens.new {
@@ -255,14 +263,14 @@ public class User: UserProtocol {
         )
 
         // Since credentials were already saved, we assume login is persistent.
-        self.isPersistent = true
+        self._isPersistent = true
     }
 
     func persistCurrentTokens() {
-        guard !self.isPersistent, let tokens = self.tokens else { return }
+        guard !self._isPersistent, let tokens = self.tokens else { return }
         do {
             try UserTokensStorage().store(tokens)
-            self.isPersistent = true
+            self._isPersistent = true
         } catch {
             log(self, "failed to persist tokens: \(error)")
         }
