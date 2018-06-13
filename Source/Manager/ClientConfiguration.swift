@@ -68,20 +68,35 @@ public struct ClientConfiguration {
         /// payment.schibsted.no
         case norway
 
-        fileprivate func loadConfiguration() -> (serverURL: URL, trackingProvider: String?) {
+        fileprivate static func loadConfigurationData() -> [String: [String: String]] {
             guard let configFile = Bundle(for: IdentityManager.self).path(forResource: "Configuration", ofType: "plist") else {
                 preconditionFailure("Configuration.plist file not found in bundle")
             }
             guard let config = NSDictionary(contentsOfFile: configFile) as? [String: [String: String]] else {
                 preconditionFailure("Could not load Configuration.plist as Dictionary")
             }
+            return config
+        }
 
+        fileprivate func loadConfiguration() -> (serverURL: URL, trackingProvider: String?) {
+            let config = Environment.loadConfigurationData()
             let env = String(describing: self)
             guard let serverURL = URL(string: config[env]?["url"] ?? "about:blank") else {
                 preconditionFailure("Could not load url from configuration environment: \(env)")
             }
             let trackingProviderComponent = config[env]?["provider"]
             return (serverURL, trackingProviderComponent)
+        }
+
+        fileprivate static func dataForServerURL(_ serverURL: URL) -> (environment: Environment, trackingProvider: String?)? {
+            let config = Environment.loadConfigurationData()
+            for pair in config {
+                guard let string = pair.value["url"], let url = URL(string: string) else { continue }
+                if url == serverURL, let env = Environment(rawValue: pair.key) {
+                    return (env, pair.value["provider"])
+                }
+            }
+            return nil
         }
     }
 
@@ -118,10 +133,11 @@ public struct ClientConfiguration {
      - parameter locale: Locale you want to use for requests - defaults to system
      */
     public init(serverURL: URL, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil) {
+        let data = Environment.dataForServerURL(serverURL)
         self.init(
-            environment: nil,
+            environment: data?.environment,
             serverURL: serverURL,
-            providerComponent: nil,
+            providerComponent: data?.trackingProvider,
             clientID: clientID,
             clientSecret: clientSecret,
             appURLScheme: appURLScheme,

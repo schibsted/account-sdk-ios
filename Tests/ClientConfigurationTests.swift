@@ -25,5 +25,22 @@ class ClientConfigurationTests: QuickSpec {
             expect(configuration.appURLScheme) == scheme
             expect(configuration.redirectBaseURL(withPathComponent: nil).absoluteString) == configuration.appURLScheme + ":/" + configuration.redirectURLRoot
         }
+
+        it("should be able to set environment from server url") {
+            func allCases() -> [ClientConfiguration.Environment] {
+                let env = ClientConfiguration.Environment.development
+                switch env {
+                    case .development, .norway, .preproduction, .production:
+                        return [.development, .norway, .preproduction, .production]
+                }
+            }
+            for env in allCases() {
+                let configFromEnv = ClientConfiguration(environment: env, clientID: "clientID", clientSecret: "clientSecret", appURLScheme: nil)
+                let conFigFromServerURL = ClientConfiguration(serverURL: configFromEnv.serverURL, clientID: "clientID", clientSecret: "clientSecret", appURLScheme: nil)
+                expect(configFromEnv.environment) == env
+                expect(conFigFromServerURL.environment) == env
+                expect(conFigFromServerURL.environment) == configFromEnv.environment
+            }
+        }
     }
 }
