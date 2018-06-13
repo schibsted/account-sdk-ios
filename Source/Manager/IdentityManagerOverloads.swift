@@ -30,13 +30,13 @@ public extension IdentityManagerProtocol {
     }
 
     /// - SeeAlso: `IdentityManager.validate(oneTimeCode:for:completion:)`
-    func validate(oneTimeCode: String, for email: EmailAddress, persistUser: Bool, completion: @escaping NoValueCallback) {
-        return self.validate(oneTimeCode: oneTimeCode, for: Identifier(email), persistUser: persistUser, completion: completion)
+    func validate(oneTimeCode: String, for email: EmailAddress, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
+        return self.validate(oneTimeCode: oneTimeCode, for: Identifier(email), scopes: scopes, persistUser: persistUser, completion: completion)
     }
 
     /// - SeeAlso: `IdentityManager.validate(oneTimeCode:for:completion:)`
-    func validate(oneTimeCode: String, for phone: PhoneNumber, persistUser: Bool, completion: @escaping NoValueCallback) {
-        return self.validate(oneTimeCode: oneTimeCode, for: Identifier(phone), persistUser: persistUser, completion: completion)
+    func validate(oneTimeCode: String, for phone: PhoneNumber, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
+        return self.validate(oneTimeCode: oneTimeCode, for: Identifier(phone), scopes: scopes, persistUser: persistUser, completion: completion)
     }
 
     /// - SeeAlso: `IdentityManager.login(...)`

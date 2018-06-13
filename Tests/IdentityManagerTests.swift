@@ -427,7 +427,7 @@ class IdentityManagerTests: QuickSpec {
                 PasswordlessTokenStore.setData(token: self.passwordlessToken, identifier: self.testNumber, for: .sms)
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.validate(oneTimeCode: self.testAuthCode, for: self.testNumber, persistUser: false, completion: { _ in })
+                identityManager.validate(oneTimeCode: self.testAuthCode, for: self.testNumber, scopes: ["random"], persistUser: false, completion: { _ in })
 
                 expect(Networking.testingProxy.calledOnce).to(beTrue())
                 let callData = Networking.testingProxy.calls[0]
@@ -435,7 +435,8 @@ class IdentityManagerTests: QuickSpec {
                 expect(callData.passedFormData?["identifier"]) == self.testNumber.normalizedString
                 expect(callData.passedFormData?["code"]).to(equal(self.testAuthCode))
                 expect(callData.passedFormData?["passwordless_token"]).to(equal(self.passwordlessToken.description))
-                expect(callData.passedFormData?["scope"]).to(equal("openid"))
+                expect(callData.passedFormData?["scope"]?.components(separatedBy: " ")).to(contain("random"))
+                expect(callData.passedFormData?["scope"]?.components(separatedBy: " ")).to(contain("openid"))
             }
 
             it("Should handle network errors") {
@@ -724,13 +725,14 @@ class IdentityManagerTests: QuickSpec {
 
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, scopes: ["random"], persistUser: false, completion: { _ in })
 
                 expect(Networking.testingProxy.calledOnce).to(beTrue())
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["username"]) == self.testEmail.normalizedString
                 expect(callData.passedFormData?["password"]).to(equal(self.testPassword))
-                expect(callData.passedFormData?["scope"]).to(equal("openid"))
+                expect(callData.passedFormData?["scope"]?.components(separatedBy: " ")).to(contain("random"))
+                expect(callData.passedFormData?["scope"]?.components(separatedBy: " ")).to(contain("openid"))
             }
 
             it("Should change state to be logged in") {

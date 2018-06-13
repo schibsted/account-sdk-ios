@@ -39,15 +39,15 @@ class TestingIdentityManager: IdentityManagerProtocol {
         }
     }
 
-    func validate(oneTimeCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
+    func validate(oneTimeCode: String, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
         Utils.waitUntilDone(completion) { [unowned self] in
-            self.identityManager.validate(oneTimeCode: oneTimeCode, persistUser: persistUser, completion: $0)
+            self.identityManager.validate(oneTimeCode: oneTimeCode, scopes: scopes, persistUser: persistUser, completion: $0)
         }
     }
 
-    func validate(oneTimeCode: String, for identifier: Identifier, persistUser: Bool, completion: @escaping NoValueCallback) {
+    func validate(oneTimeCode: String, for identifier: Identifier, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
         Utils.waitUntilDone(completion) { [unowned self] in
-            self.identityManager.validate(oneTimeCode: oneTimeCode, for: identifier, persistUser: persistUser, completion: $0)
+            self.identityManager.validate(oneTimeCode: oneTimeCode, for: identifier, scopes: scopes, persistUser: persistUser, completion: $0)
         }
     }
 

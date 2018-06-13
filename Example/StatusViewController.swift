@@ -61,7 +61,7 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didClickPasswordlessPhoneLogin(_: Any) {
-        UIApplication.identityUI.presentIdentityProcess(from: self, loginMethod: .phone)
+        UIApplication.identityUI.presentIdentityProcess(from: self, loginMethod: .phone, scopes: ClientConfiguration.current.scopes)
     }
 
     @IBAction func didClickPasswordLogin(_: Any) {

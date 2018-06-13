@@ -5,6 +5,12 @@
 
 import Foundation
 
+private extension Array where Element: Hashable {
+    func duplicatesRemoved() -> [Element] {
+        return Array(Set(self))
+    }
+}
+
 /**
  This delegate informs you of changes within the `IdentityManager`.
  */
@@ -69,6 +75,8 @@ public protocol IdentityManagerDelegate: class {
 
  */
 public class IdentityManager: IdentityManagerProtocol {
+    private static let defaultScopes = ["openid"]
+
     /**
      The delegate that will receive events related to the manager's state.
      */
@@ -232,10 +240,11 @@ public class IdentityManager: IdentityManagerProtocol {
 
      - parameter oneTimeCode: the code sent to identifier
      - parameter identifier: the user's identifier. Should match the one used in `sendCode(...)`
+     - parameter scopes: array of scopes you want the token to contain
      - parameter persistUser: whether the login status should be persistent on app's relaunches
      - parameter completion: the callback that is called after the one time code is checked
      */
-    public func validate(oneTimeCode: String, for identifier: Identifier, persistUser: Bool, completion: @escaping NoValueCallback) {
+    public func validate(oneTimeCode: String, for identifier: Identifier, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
         log(from: self, "code: \(oneTimeCode), identifier: \(identifier)")
         let passwordlessToken: PasswordlessToken
         do {
@@ -259,7 +268,7 @@ public class IdentityManager: IdentityManagerProtocol {
             connection: identifier.connection,
             code: oneTimeCode,
             passwordlessToken: passwordlessToken,
-            scope: ["openid"]
+            scope: (scopes + IdentityManager.defaultScopes).duplicatesRemoved()
         ) { [weak self] result in
             self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }
@@ -273,10 +282,11 @@ public class IdentityManager: IdentityManagerProtocol {
      that was previously used (during a single session) and succeed if any succeed.
 
      - parameter oneTimeCode: The auth code that was sent to the user
+     - parameter scopes: array of scopes you want the token to contain
      - parameter persistUser: whether the login status should be persistent on app's relaunches
      - parameter completion: the callback that is called after the auth code is checked
      */
-    public func validate(oneTimeCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
+    public func validate(oneTimeCode: String, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
         enum ValidateCallbackStatus {
             case success
             case failure
@@ -328,14 +338,14 @@ public class IdentityManager: IdentityManagerProtocol {
         }
 
         if let email = maybeEmail {
-            self.validate(oneTimeCode: oneTimeCode, for: email, persistUser: persistUser, completion: createCallback(
+            self.validate(oneTimeCode: oneTimeCode, for: email, scopes: scopes, persistUser: persistUser, completion: createCallback(
                 thisCallbackStatusIndex: validateEmailCallbackStatusIndex,
                 otherCallbackStatusIndex: validatePhoneCallbackStatusIndex
             ))
         }
 
         if let phone = maybePhone {
-            self.validate(oneTimeCode: oneTimeCode, for: phone, persistUser: persistUser, completion: createCallback(
+            self.validate(oneTimeCode: oneTimeCode, for: phone, scopes: scopes, persistUser: persistUser, completion: createCallback(
                 thisCallbackStatusIndex: validatePhoneCallbackStatusIndex,
                 otherCallbackStatusIndex: validateEmailCallbackStatusIndex
             ))
@@ -364,7 +374,7 @@ public class IdentityManager: IdentityManagerProtocol {
             refreshToken: nil,
             username: username.normalizedString,
             password: password,
-            scope: scopes + ["openid"]
+            scope: (scopes + IdentityManager.defaultScopes).duplicatesRemoved()
         ) { [weak self] result in
             self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }
@@ -486,6 +496,7 @@ public class IdentityManager: IdentityManagerProtocol {
 
      - parameter authCode: an authorization code (currently it's just available through deeplinks)
      - parameter completion: the callback that is called after validation
+     - parameter scopes: array of scopes you want the token to contain
      - parameter persistUser: whether the login status should be persistent on app's relaunches
 
      - SeeAlso: `AppLaunchData`
