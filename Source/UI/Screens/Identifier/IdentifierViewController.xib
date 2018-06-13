@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,6 +23,7 @@
                 <outlet property="numberStackView" destination="E1A-Rx-9fe" id="zXk-Dr-VGo"/>
                 <outlet property="phoneNumber" destination="ZeN-LP-RPp" id="sS1-uF-s3O"/>
                 <outlet property="scrollView" destination="SyO-au-Era" id="luv-KM-eqL"/>
+                <outlet property="skipButton" destination="vgv-mx-Qwz" id="3QF-C1-jkl"/>
                 <outlet property="teaser" destination="lKU-ue-rCx" id="C3h-X1-1A2"/>
                 <outlet property="teaserView" destination="JpK-Kl-xqq" id="EBc-AN-Vuj"/>
                 <outlet property="view" destination="ETQ-ha-3W8" id="Mjd-3i-TWy"/>
@@ -179,30 +180,42 @@
                         <constraint firstAttribute="bottom" secondItem="uXc-nc-9kX" secondAttribute="bottom" id="EUB-ax-XaE"/>
                     </constraints>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kaw-tF-5AU" userLabel="ContinueButton" customClass="PrimaryButton" customModule="SchibstedAccount" customModuleProvider="target">
-                    <rect key="frame" x="16" y="606" width="343" height="45"/>
-                    <color key="backgroundColor" red="0.23529411759999999" green="0.4823529412" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="45" id="cwk-45-Wr4"/>
-                    </constraints>
-                    <state key="normal" title="Continue">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="didClickContinue:" destination="-1" eventType="touchUpInside" id="2BA-JA-BIn"/>
-                    </connections>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="O8h-Mw-dIo">
+                    <rect key="frame" x="16" y="567" width="343" height="84"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kaw-tF-5AU" userLabel="ContinueButton" customClass="PrimaryButton" customModule="SchibstedAccount" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="34"/>
+                            <color key="backgroundColor" red="0.23529411759999999" green="0.4823529412" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Continue">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="didClickContinue:" destination="-1" eventType="touchUpInside" id="2BA-JA-BIn"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgv-mx-Qwz" userLabel="SkipButton" customClass="SecondaryButton" customModule="SchibstedAccount" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="50" width="343" height="34"/>
+                            <color key="backgroundColor" red="0.23529411759999999" green="0.4823529412" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Continue">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="didClickSubmitButton:" destination="-1" eventType="touchUpInside" id="Qwz-dV-Ao5"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="uXc-nc-9kX" firstAttribute="width" secondItem="XBd-Pu-wB3" secondAttribute="width" id="55A-nQ-rSU"/>
-                <constraint firstItem="XBd-Pu-wB3" firstAttribute="trailing" secondItem="kaw-tF-5AU" secondAttribute="trailing" constant="16" id="6sx-PI-n5A"/>
                 <constraint firstItem="SyO-au-Era" firstAttribute="top" secondItem="ETQ-ha-3W8" secondAttribute="top" id="GT1-SI-UoU"/>
+                <constraint firstItem="XBd-Pu-wB3" firstAttribute="trailing" secondItem="O8h-Mw-dIo" secondAttribute="trailing" constant="16" id="Nbo-v3-umy"/>
                 <constraint firstItem="SyO-au-Era" firstAttribute="trailing" secondItem="XBd-Pu-wB3" secondAttribute="trailing" id="QuV-o8-bKM"/>
                 <constraint firstItem="SyO-au-Era" firstAttribute="bottom" secondItem="XBd-Pu-wB3" secondAttribute="bottom" id="d5q-hE-tte"/>
+                <constraint firstItem="O8h-Mw-dIo" firstAttribute="leading" secondItem="XBd-Pu-wB3" secondAttribute="leading" constant="16" id="gbc-cX-VgC"/>
                 <constraint firstItem="SyO-au-Era" firstAttribute="leading" secondItem="XBd-Pu-wB3" secondAttribute="leading" id="j5z-Ay-fFw"/>
-                <constraint firstItem="kaw-tF-5AU" firstAttribute="leading" secondItem="XBd-Pu-wB3" secondAttribute="leading" constant="16" id="oYC-1x-cSe"/>
-                <constraint firstItem="XBd-Pu-wB3" firstAttribute="bottom" secondItem="kaw-tF-5AU" secondAttribute="bottom" constant="16" id="uDV-YJ-390"/>
+                <constraint firstItem="XBd-Pu-wB3" firstAttribute="bottom" secondItem="O8h-Mw-dIo" secondAttribute="bottom" constant="16" id="qnL-vZ-3wZ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="XBd-Pu-wB3"/>
             <point key="canvasLocation" x="47" y="64.5"/>

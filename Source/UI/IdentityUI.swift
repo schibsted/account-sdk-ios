@@ -292,6 +292,8 @@ public class IdentityUI {
         case .cancel:
             self.configuration.tracker?.loginID = nil
             uiResult = .canceled
+        case .skip:
+            uiResult = .skipped
         case .onlyDismiss:
             uiResult = nil
         case let .failure(error):
@@ -339,6 +341,7 @@ extension IdentityUI: FlowCoordinator {
         case cancel
         case onlyDismiss
         case failure(ClientError)
+        case skip
     }
 
     func start(input: Input, completion: @escaping (Output) -> Void) {
@@ -471,6 +474,20 @@ extension IdentityUI {
             case .back:
                 // First screen, `back` cancels the flow.
                 completion(.cancel)
+            case .skip:
+                guard let topViewController = self?.navigationController.topViewController, let delegate = self?.delegate else {
+                    completion(.skip)
+                    return
+                }
+
+                delegate.skipRequested(topViewController: topViewController) { disposition in
+                    switch disposition {
+                    case .continue:
+                        completion(.skip)
+                    case .ignore:
+                        break
+                    }
+                }
             }
         }
 

@@ -14,6 +14,7 @@
 "IdentifierScreenString.infoText.rest" = "Du trenger en Schibsted-konto for å fortsette. Du kan bruke denne kontoen på alle Schibsted-sider.";
 "IdentifierScreenString.whatsThis" = "Hva er en Schibsted-konto?";
 "IdentifierScreenString.proceed" = "Fortsett";
+"IdentifierScreenString.skip" = "Hopp over";
 
 "PasswordScreenString.title.signin" = "Velkommen tilbake";
 "PasswordScreenString.title.signup" = "Opprett bruker";

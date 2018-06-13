@@ -27,6 +27,8 @@ extension StatusViewController: IdentityUIDelegate {
         case let .completed(user):
             self.session = URLSession(user: user, configuration: URLSessionConfiguration.default)
             print("User logged in - \(user)")
+        case .skipped:
+            print("User skipped login")
         case let .failed(error):
             print("Failed to login with UI - \(error)")
         }
@@ -41,6 +43,17 @@ extension StatusViewController: IdentityUIDelegate {
         } else {
             return .continue
         }
+    }
+
+    func skipRequested(topViewController: UIViewController, done: @escaping (SkipLoginDisposition) -> Void) {
+        let alert = UIAlertController(title: "Are you sure?", message: "Skipping the flow will place a curse on your socks", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes, skip it", style: .default) { _ in
+            done(.continue)
+        })
+        alert.addAction(UIAlertAction(title: "No don't!!", style: .cancel) { _ in
+            done(.ignore)
+        })
+        topViewController.present(alert, animated: true, completion: nil)
     }
 }
 
