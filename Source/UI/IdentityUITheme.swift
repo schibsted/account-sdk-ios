@@ -59,7 +59,7 @@ public struct IdentityUITheme {
         ///
         public var secondaryButtonDisabled = UIColor.schibstedSecondaryDisabled
         ///
-        public var secondaryButtonText = UIColor.schibstedWhite
+        public var secondaryButtonText = UIColor.schibstedPrimary
         ///
         public var errorBorder = UIColor.schibstedError
         ///

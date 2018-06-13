@@ -29,10 +29,9 @@ class ResendViewController: IdentityUIViewController {
             self.number.text = self.viewModel.identifier.normalizedString
         }
     }
-    @IBOutlet var edit: UIButton! {
+    @IBOutlet var edit: SecondaryButton! {
         didSet {
-            let string = NSAttributedString(string: self.viewModel.editText, attributes: self.theme.textAttributes.textButton)
-            self.edit.setAttributedTitle(string, for: .normal)
+            self.edit.setTitle(self.viewModel.editText, for: .normal)
         }
     }
     @IBOutlet var ok: PrimaryButton! {
