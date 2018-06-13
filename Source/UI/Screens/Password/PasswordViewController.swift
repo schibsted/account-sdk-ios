@@ -42,9 +42,8 @@ class PasswordViewController: IdentityUIViewController {
             self.shouldPersistUserText.text = self.viewModel.persistentLogin
         }
     }
-    @IBOutlet var forgotPasswordButton: UIButton! {
+    @IBOutlet var forgotPasswordButton: SecondaryButton! {
         didSet {
-            self.forgotPasswordButton.titleLabel?.font = self.theme.fonts.normal
             self.forgotPasswordButton.setTitle(self.viewModel.forgotPassword, for: .normal)
             self.forgotPasswordButton.isHidden = true
         }

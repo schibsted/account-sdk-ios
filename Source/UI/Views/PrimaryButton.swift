@@ -41,6 +41,8 @@ class PrimaryButton: UIButton, Themeable {
         )
         self.layer.cornerRadius = theme.geometry.cornerRadius
         self.layer.masksToBounds = true
+
+        self.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 
     func applyTheme(theme: IdentityUITheme) {
