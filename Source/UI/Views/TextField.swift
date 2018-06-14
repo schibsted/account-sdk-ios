@@ -41,7 +41,7 @@ class TextField: UITextField, Themeable {
             right: 16
         )
 
-        if self.clearButtonMode == .whileEditing {
+        if self.clearButtonMode == .whileEditing, let clearImage = theme.icons.clearTextInput {
             //
             // Just setting the rightViewMode to .whileEditing seems to not work. The view shows up as soon
             // as the textfield becomes first responder. So we handle the state ourself
@@ -50,10 +50,10 @@ class TextField: UITextField, Themeable {
 
             self.clearButtonRightSpacing = theme.geometry.groupedViewSpacing
 
-            let w = theme.icons.clearTextInput.size.width
-            let h = theme.icons.clearTextInput.size.height
+            let w = clearImage.size.width
+            let h = clearImage.size.height
             self.clearButton = UIButton(frame: CGRect(x: 0, y: 0, width: w + self.clearButtonRightSpacing, height: h))
-            self.clearButton?.setImage(theme.icons.clearTextInput, for: .normal)
+            self.clearButton?.setImage(clearImage, for: .normal)
             self.clearButton?.isHidden = true
             self.clearButton?.addTarget(self, action: #selector(self.clearButtonDidTouchUpInside(_:)), for: .touchUpInside)
 
