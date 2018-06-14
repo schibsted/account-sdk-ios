@@ -104,7 +104,16 @@ extension IdentityUITheme {
 }
 
 extension IdentityUIConfiguration {
-    static let current = IdentityUIConfiguration(clientConfiguration: .current, theme: .custom, isCancelable: true)
+    static let current = IdentityUIConfiguration(
+        clientConfiguration: .current,
+        theme: .custom,
+        isCancelable: true,
+        presentationHook: { (vc: UIViewController) -> Void in
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                vc.modalPresentationStyle = .formSheet
+            }
+        }
+    )
 }
 
 extension UIApplication {
