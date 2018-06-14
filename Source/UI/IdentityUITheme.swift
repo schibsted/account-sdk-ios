@@ -76,17 +76,17 @@ public struct IdentityUITheme {
 
     ///
     public struct Icons {
-        ///
+        /// Left chevron icon used to navigating input fields
         public var chevronLeft = UIImage.schibstedChevronLeft
-        ///
-        public var clearTextInput = UIImage.schibstedClearInput
-        ///
+        /// Text field clear text icon. Set to nil for default iOS icon
+        public var clearTextInput: UIImage? = .schibstedClearInput
+        /// Top right X button to exit the login flow
         public var cancelNavigation = UIImage.schibstedCross
-        ///
+        /// Top left back button to go to previous screen
         public var navigateBack = UIImage.schibstedBackArrow
-        ///
+        /// Checkbox checked image
         public var checkedBox = UIImage.schibstedCheckedBox
-        ///
+        /// Checkbox unchecked image
         public var uncheckedBox = UIImage.schibstedUncheckedBox
     }
 
