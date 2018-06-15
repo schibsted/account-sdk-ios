@@ -514,20 +514,28 @@ public class IdentityManager: IdentityManagerProtocol {
         }
     }
 
-    private func finishLogin(result: Result<TokenData, ClientError>, persistUser: Bool, completion: NoValueCallback?) {
-        log(from: self, result)
+    private func finishLogin(result loginResult: Result<TokenData, ClientError>, persistUser: Bool, completion: NoValueCallback?) {
+        log(from: self, loginResult)
         do {
-            let tokens = try result.materialize()
-            try self.currentUser.set(
+            let tokens = try loginResult.materialize()
+            self.currentUser.set(
                 accessToken: tokens.accessToken,
                 refreshToken: tokens.refreshToken,
                 idToken: tokens.idToken,
                 userID: tokens.userID,
                 makePersistent: persistUser
-            )
-            PasswordlessTokenStore.clear()
-            self.dispatchIfSelf {
-                completion?(.success(()))
+            ) { [weak self] setResult in
+                switch setResult {
+                case .success:
+                    PasswordlessTokenStore.clear()
+                    self?.dispatchIfSelf {
+                        completion?(.success(()))
+                    }
+                case let .failure(error):
+                    self?.dispatchIfSelf {
+                        completion?(.failure(ClientError(error)))
+                    }
+                }
             }
         } catch {
             self.dispatchIfSelf {

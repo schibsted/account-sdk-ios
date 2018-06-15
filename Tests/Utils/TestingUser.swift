@@ -147,6 +147,25 @@ class TestingUser: UserProtocol {
             self.wrapped.refresh(completion: $0)
         }
     }
+
+    func set(
+        accessToken: String? = nil,
+        refreshToken: String? = nil,
+        idToken: IDToken? = nil,
+        userID: String? = nil,
+        makePersistent: Bool? = nil
+    ) throws {
+        var result: Result<NoValue, User.Failure> = .success(())
+        waitUntil { done in
+            self.wrapped.set(accessToken: accessToken, refreshToken: refreshToken, idToken: idToken, userID: userID, makePersistent: makePersistent) { setResult in
+                result = setResult
+                done()
+            }
+        }
+        if case let .failure(error) = result {
+            throw error
+        }
+    }
 }
 
 extension URLSession {
