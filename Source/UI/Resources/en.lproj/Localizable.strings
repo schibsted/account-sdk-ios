@@ -14,6 +14,7 @@
 "IdentifierScreenString.infoText.rest" = "You'll need a Schibsted account to continue. You can use this account across all Schibsted sites.";
 "IdentifierScreenString.whatsThis" = "What is a Schibsted account?";
 "IdentifierScreenString.proceed" = "Continue";
+"IdentifierScreenString.skip" = "Skip";
 
 "PasswordScreenString.title.signin" = "Welcome back";
 "PasswordScreenString.title.signup" = "Create account";

@@ -14,6 +14,7 @@
 "IdentifierScreenString.infoText.rest" = "Jatkaaksesi tarvitset Schibsted-tilin. Voit käyttää samaa tiliä kaikilla Schibsted-sivustoilla.";
 "IdentifierScreenString.whatsThis" = "Mikä Schibsted-tili on?";
 "IdentifierScreenString.proceed" = "Jatka";
+"IdentifierScreenString.skip" = "hypätä yli";
 
 "PasswordScreenString.title.signin" = "Tervetuloa takaisin";
 "PasswordScreenString.title.signup" = "Luo tili";

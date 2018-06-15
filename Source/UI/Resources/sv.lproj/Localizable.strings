@@ -14,6 +14,7 @@
 "IdentifierScreenString.infoText.rest" = "Du behöver ett Schibsted-konto för att fortsätta. Du kan använda samma konto på alla Schibsteds webbplatser.";
 "IdentifierScreenString.whatsThis" = "Vad är ett Schibsted-konto?";
 "IdentifierScreenString.proceed" = "Fortsätt";
+"IdentifierScreenString.skip" = "Hoppa över";
 
 "PasswordScreenString.title.signin" = "Välkommen tillbaka";
 "PasswordScreenString.title.signup" = "Skapa konto";

@@ -9,6 +9,7 @@ enum IdentifierViewControllerAction {
     case enter(identifier: Identifier)
     case showHelp(url: URL)
     case back
+    case skip
 }
 
 class IdentifierViewController: IdentityUIViewController {
@@ -97,6 +98,15 @@ class IdentifierViewController: IdentityUIViewController {
             self.inputError.isHidden = true
         }
     }
+    @IBOutlet var skipButton: SecondaryButton! {
+        didSet {
+            self.skipButton.setTitle(self.viewModel.skip, for: .normal)
+        }
+    }
+
+    @IBAction func didClickSubmitButton(_: Any) {
+        self.didRequestAction?(.skip)
+    }
 
     let viewModel: IdentifierViewModel
 
@@ -150,6 +160,8 @@ class IdentifierViewController: IdentityUIViewController {
             self.countryCode.text = countryCodeText
             self.phoneNumber.text = numberText
         }
+
+        self.skipButton.isHidden = !self.configuration.isSkippable
     }
 
     @IBAction func didClickContinue(_: Any) {

@@ -108,6 +108,7 @@ extension IdentityUIConfiguration {
         clientConfiguration: .current,
         theme: .custom,
         isCancelable: true,
+        isSkippable: true,
         presentationHook: { (vc: UIViewController) -> Void in
             if UIDevice.current.userInterfaceIdiom == .pad {
                 vc.modalPresentationStyle = .formSheet

@@ -68,6 +68,10 @@ extension IdentifierViewModel {
         return "IdentifierScreenString.proceed".localized(from: self.localizationBundle)
     }
 
+    var skip: String {
+        return "IdentifierScreenString.skip".localized(from: self.localizationBundle)
+    }
+
     var inputTitle: String {
         switch self.loginMethod.methodType {
         case .email:
