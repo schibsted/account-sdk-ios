@@ -50,6 +50,25 @@ extension StatusViewController: IdentityUIDelegate {
         })
         topViewController.present(alert, animated: true, completion: nil)
     }
+
+    func willSucceed(with user: User, on topViewController: UIViewController?, done: @escaping (LoginWillSucceedDisposition) -> Void) {
+        print("Gonna succeed with user - \(user)")
+        let alert = UIAlertController(title: "About to login", message: "Should I continue, restart flow, or fail with some message?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Continue", style: .default) { _ in
+            done(.continue)
+        })
+        alert.addAction(UIAlertAction(title: "Restart", style: .destructive) { _ in
+            done(.restart)
+        })
+        alert.addAction(UIAlertAction(title: "Fail", style: .cancel) { _ in
+            done(.failed(title: "Some message", message: "This login attempt has failed"))
+        })
+        if let topViewController = topViewController {
+            topViewController.present(alert, animated: true, completion: nil)
+        } else {
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 class StatusViewController: UIViewController {
