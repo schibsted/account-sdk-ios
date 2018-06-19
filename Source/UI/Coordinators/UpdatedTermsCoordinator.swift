@@ -46,7 +46,6 @@ extension UpdatedTermsCoordinator {
                 userTermsInteractor.acceptTerms { [weak self] result in
                     switch result {
                     case .success:
-                        self?.configuration.tracker?.engagement(.network(.agreementAccepted))
                         completion(.success)
                     case let .failure(error):
                         self?.present(error: error)
