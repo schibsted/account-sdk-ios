@@ -33,7 +33,6 @@ class UpdateProfileInteractor: CompleteProfileInteractor {
         self.currentUser?.agreements.accept { [weak self] result in
             switch result {
             case .success:
-                self?.tracker?.engagement(.network(.agreementAccepted))
                 self?.updateRequiredFields(requiredFieldsToUpdate, completion: completion)
             case let .failure(error):
                 completion(.failure(error))
@@ -58,10 +57,9 @@ class UpdateProfileInteractor: CompleteProfileInteractor {
                     newProfile.set(field: field, value: value)
                 }
 
-                self?.currentUser?.profile.update(newProfile) { [weak self] result in
+                self?.currentUser?.profile.update(newProfile) { result in
                     switch result {
                     case .success:
-                        self?.tracker?.engagement(.network(.requiredFieldProvided))
                         completion(.success(currentUser))
                     case let .failure(error):
                         completion(.failure(error))

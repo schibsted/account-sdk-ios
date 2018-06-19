@@ -85,8 +85,6 @@ class CompleteProfileCoordinator: FlowCoordinator {
                 self?.presentedViewController?.endLoading()
                 switch result {
                 case let .success(user):
-                    self?.configuration.tracker?.engagement(.network(.agreementAccepted))
-                    self?.configuration.tracker?.engagement(.network(.requiredFieldProvided))
                     completion(.success(user))
                 case let .failure(error):
                     if self?.handle(error: error) != true { completion(.error(error)) }
