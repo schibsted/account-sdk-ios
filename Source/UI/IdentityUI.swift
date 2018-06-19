@@ -287,7 +287,6 @@ public class IdentityUI {
         let uiResult: IdentityUIResult?
         switch output {
         case let .success(user):
-            self.configuration.tracker?.engagement(.network(.done))
             uiResult = .completed(user)
         case .cancel:
             self.configuration.tracker?.loginID = nil
@@ -588,7 +587,6 @@ extension IdentityUI {
                 switch result {
                 case let .success(user):
                     self?.configuration.tracker?.loginID = self?.identityManager.currentUser.legacyID
-                    self?.configuration.tracker?.engagement(.network(.accountVerified))
                     // User has validated the identifier and the code matches, nothing else to do.
                     self?.complete(with: .success(user))
                 case let .failure(error):

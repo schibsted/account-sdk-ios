@@ -31,7 +31,6 @@ class PasswordlessCoordinator: AuthenticationCoordinator {
 
             switch result {
             case .success:
-                self?.configuration.tracker?.engagement(.network(.verificationCodeSent))
                 completion(true, nil)
             case let .failure(error):
                 completion(false, error)
@@ -134,7 +133,6 @@ extension PasswordlessCoordinator {
 
             switch result {
             case .success:
-                self?.configuration.tracker?.engagement(.network(.verificationCodeSent))
                 self?.showResendView(with: identifier, completion: completion)
             case let .failure(error):
                 self?.present(error: error)
