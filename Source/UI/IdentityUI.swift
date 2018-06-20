@@ -293,8 +293,6 @@ public class IdentityUI {
             uiResult = .canceled
         case .skip:
             uiResult = .skipped
-        case .onlyDismiss:
-            uiResult = nil
         case let .failure(error):
             uiResult = .failed(error)
         }
@@ -338,7 +336,6 @@ extension IdentityUI: FlowCoordinator {
     enum Output {
         case success(User)
         case cancel
-        case onlyDismiss
         case failure(ClientError)
         case skip
     }
@@ -462,7 +459,7 @@ extension IdentityUI {
                         )
                     case let .abort(shouldDismiss):
                         if shouldDismiss {
-                            self?.complete(with: .onlyDismiss)
+                            self?.complete(with: .cancel)
                         }
                     case let .showError(title, description):
                         self?.presentError(title: title, description: description)
