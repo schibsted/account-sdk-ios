@@ -198,6 +198,8 @@ class PasswordViewController: IdentityUIViewController {
             return false
         }
 
+        self.configuration.tracker?.error(.validation(error), in: self.trackerScreenID)
+
         self.inputError.text = message
         self.inputError.isHidden = false
         self.password.layer.borderColor = self.theme.colors.errorBorder.cgColor
