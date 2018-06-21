@@ -121,7 +121,12 @@ class IdentifierViewController: IdentityUIViewController {
             trackerScreenID = .passwordlessIdentificationForm
         }
 
-        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: trackerScreenID, trackerAdditionalFields: [.teaser(viewModel.localizedTeaserText != nil)])
+        super.init(
+            configuration: configuration,
+            navigationSettings: navigationSettings,
+            trackerScreenID: trackerScreenID,
+            trackerViewAdditionalFields: [.teaser(viewModel.localizedTeaserText != nil)]
+        )
     }
 
     required init?(coder _: NSCoder) {
