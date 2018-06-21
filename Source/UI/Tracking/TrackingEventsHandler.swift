@@ -41,11 +41,22 @@ public protocol TrackingEventsHandler: class {
     var merchantID: String? { get set }
 
     /// A screen was viewed
-    func view(_ screen: TrackingEvent.Screen)
-    /// An element in the UI was interacted with on some scree
-    func engagement(_ engagement: TrackingEvent.Engagement, in screen: TrackingEvent.Screen)
+    func view(_ screen: TrackingEvent.Screen, additionalFields: [TrackingEvent.AdditionalField])
+    /// An element in the UI was interacted with on some screen
+    func engagement(_ engagement: TrackingEvent.Engagement, in screen: TrackingEvent.Screen, additionalFields: [TrackingEvent.AdditionalField])
     /// An error occured on some screen
-    func error(_ type: TrackingEvent.ErrorType, in screen: TrackingEvent.Screen)
+    func error(_ errorType: TrackingEvent.ErrorType, in screen: TrackingEvent.Screen)
+}
+
+extension TrackingEventsHandler {
+    /// An element in the UI was interacted with on some screen
+    func view(_ screen: TrackingEvent.Screen) {
+        self.view(screen, additionalFields: [])
+    }
+    /// An error occured on some screen
+    func engagement(_ engagement: TrackingEvent.Engagement, in screen: TrackingEvent.Screen) {
+        self.engagement(engagement, in: screen, additionalFields: [])
+    }
 }
 
 ///
@@ -53,9 +64,9 @@ public enum TrackingEvent {
     /// Represent the different screens that a user can be viewing
     public enum Screen {
         /// Screen to enter identifier for password login method was viewed
-        case passwordIdentificationForm(additionalFields: [AdditionalField])
+        case passwordIdentificationForm
         /// Screen to enter identifier for passwordless login method was viewed
-        case passwordlessIdentificationForm(additionalFields: [AdditionalField])
+        case passwordlessIdentificationForm
         /// Screen to enter password was viewed
         case passwordInput
         /// Screen to verify passworldess identifier was viewed

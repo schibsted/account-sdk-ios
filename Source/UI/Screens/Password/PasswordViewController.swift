@@ -88,9 +88,6 @@ class PasswordViewController: IdentityUIViewController {
 
         let cancelAction = UIAlertAction(title: self.viewModel.cancel, style: .cancel, handler: nil)
         let changeAction = UIAlertAction(title: self.viewModel.change, style: .default) { [weak self] _ in
-            guard let strongSelf = self else {
-                return
-            }
             self?.didRequestAction?(.changeIdentifier)
         }
 

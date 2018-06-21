@@ -49,10 +49,11 @@ class IdentityUIViewController: UIViewController {
 
     private var leftAlignNavigationTitle = false
 
-    init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, trackerScreenID: TrackingEvent.Screen) {
+    init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, trackerScreenID: TrackingEvent.Screen, trackerAdditionalFields: [TrackingEvent.AdditionalField] = []) {
         self.configuration = configuration
-        self.trackerScreenID = trackerScreenID
         self.navigationSettings = navigationSettings
+        self.trackerScreenID = trackerScreenID
+        self.trackerAdditionalFields = trackerAdditionalFields
         let typeSelf = type(of: self)
         super.init(nibName: typeSelf.nibName, bundle: Bundle(for: typeSelf))
     }
@@ -66,6 +67,7 @@ class IdentityUIViewController: UIViewController {
     }
 
     let trackerScreenID: TrackingEvent.Screen
+    let trackerAdditionalFields: [TrackingEvent.AdditionalField]
 
     private func applyThemeToView(_ view: UIView) {
         (view as? Themeable)?.applyTheme(theme: self.theme)
@@ -126,7 +128,7 @@ class IdentityUIViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.configuration.tracker?.view(self.trackerScreenID)
+        self.configuration.tracker?.view(self.trackerScreenID, additionalFields: self.trackerAdditionalFields)
 
         NotificationCenter.default.addObserver(
             self,

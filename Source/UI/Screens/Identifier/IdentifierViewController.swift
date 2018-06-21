@@ -113,16 +113,15 @@ class IdentifierViewController: IdentityUIViewController {
     init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, viewModel: IdentifierViewModel) {
         self.viewModel = viewModel
 
-        let additionalFields: [TrackingEvent.AdditionalField] = [.teaser(viewModel.localizedTeaserText != nil)]
         let trackerScreenID: TrackingEvent.Screen
         switch viewModel.loginMethod.authenticationType {
         case .password:
-            trackerScreenID = .passwordIdentificationForm(additionalFields: additionalFields)
+            trackerScreenID = .passwordIdentificationForm
         case .passwordless:
-            trackerScreenID = .passwordlessIdentificationForm(additionalFields: additionalFields)
+            trackerScreenID = .passwordlessIdentificationForm
         }
 
-        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: trackerScreenID)
+        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: trackerScreenID, trackerAdditionalFields: [.teaser(viewModel.localizedTeaserText != nil)])
     }
 
     required init?(coder _: NSCoder) {
