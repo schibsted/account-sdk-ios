@@ -43,7 +43,7 @@ public protocol TrackingEventsHandler: class {
     /// A screen was viewed
     func interaction(_ interaction: TrackingEvent.Interaction, with screen: TrackingEvent.Screen, additionalFields: [TrackingEvent.AdditionalField])
     /// An element in the UI was interacted with on some screen
-    func engagement(_ engagement: TrackingEvent.Engagement, in screen: TrackingEvent.Screen, additionalFields: [TrackingEvent.AdditionalField])
+    func engagement(_ engagement: TrackingEvent.Engagement, in screen: TrackingEvent.Screen)
     /// An error occured on some screen
     func error(_ errorType: TrackingEvent.ErrorType, in screen: TrackingEvent.Screen)
 }
@@ -52,10 +52,6 @@ extension TrackingEventsHandler {
     /// An element in the UI was interacted with on some screen
     func interaction(_ interaction: TrackingEvent.Interaction, with screen: TrackingEvent.Screen) {
         self.interaction(interaction, with: screen, additionalFields: [])
-    }
-    /// An error occured on some screen
-    func engagement(_ engagement: TrackingEvent.Engagement, in screen: TrackingEvent.Screen) {
-        self.engagement(engagement, in: screen, additionalFields: [])
     }
 }
 
