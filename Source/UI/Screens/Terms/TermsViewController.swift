@@ -8,7 +8,6 @@ import UIKit
 class TermsViewController: IdentityUIViewController {
     enum Action {
         case acceptTerms
-        case learnMore(summary: String)
         case open(url: URL)
         case back
         case cancel
@@ -58,29 +57,11 @@ class TermsViewController: IdentityUIViewController {
         }
     }
 
-    @IBOutlet var learnMoreButton: UIButton! {
-        didSet {
-            self.learnMoreButton.setTitle(self.viewModel.learnMore, for: .normal)
-            if self.viewModel.displayUpdateSummary {
-                self.learnMoreButton.isHidden = false
-            } else {
-                self.learnMoreButton.isHidden = true
-            }
-        }
-    }
-
-    @IBAction func didClickLearnMore(_: Any) {
-        guard let summary = self.viewModel.terms.summary else {
-            return
-        }
-        self.didRequestAction?(.learnMore(summary: summary))
-    }
-
     let viewModel: TermsViewModel
 
     init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, viewModel: TermsViewModel) {
         self.viewModel = viewModel
-        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerViewID: .terms)
+        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: .terms)
     }
 
     required init?(coder _: NSCoder) {
@@ -92,8 +73,6 @@ class TermsViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(.click(.accept, self.trackerViewID, additionalFields: []))
-
         let termOneAccepted = self.termOneCheck.isChecked
         let termTwoAccepted = self.termTwoCheck.isChecked
 
@@ -140,13 +119,13 @@ extension TermsViewController: UITextViewDelegate {
         let terms = self.viewModel.terms
 
         if terms.clientPrivacyURL == url {
-            self.configuration.tracker?.engagement(.click(.privacyClient, self.trackerViewID, additionalFields: []))
+            self.configuration.tracker?.engagement(.click(on: .privacyClient), in: self.trackerScreenID)
         } else if terms.platformPrivacyURL == url {
-            self.configuration.tracker?.engagement(.click(.privacySchibstedAccount, self.trackerViewID, additionalFields: []))
+            self.configuration.tracker?.engagement(.click(on: .privacySchibstedAccount), in: self.trackerScreenID)
         } else if terms.clientTermsURL == url {
-            self.configuration.tracker?.engagement(.click(.agreementsClient, self.trackerViewID, additionalFields: []))
+            self.configuration.tracker?.engagement(.click(on: .agreementsClient), in: self.trackerScreenID)
         } else if terms.platformTermsURL == url {
-            self.configuration.tracker?.engagement(.click(.agreementsSchibstedAccount, self.trackerViewID, additionalFields: []))
+            self.configuration.tracker?.engagement(.click(on: .agreementsSchibstedAccount), in: self.trackerScreenID)
         }
 
         self.didRequestAction?(.open(url: url))
@@ -172,6 +151,6 @@ extension TermsViewController {
             self.termTwoError.isHidden = true
         }
 
-        self.configuration.tracker?.error(.validation(.agreements), in: self.trackerViewID)
+        self.configuration.tracker?.error(.validation(.agreements), in: self.trackerScreenID)
     }
 }

@@ -45,7 +45,7 @@ class ResendViewController: IdentityUIViewController {
 
     init(configuration: IdentityUIConfiguration, viewModel: ResendViewModel) {
         self.viewModel = viewModel
-        super.init(configuration: configuration, navigationSettings: NavigationSettings(), trackerViewID: .passwordlessResend)
+        super.init(configuration: configuration, navigationSettings: NavigationSettings(), trackerScreenID: .popup(.resend))
     }
 
     required init?(coder _: NSCoder) {

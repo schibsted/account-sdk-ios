@@ -54,10 +54,6 @@ class TermsViewModel {
         self.localizationBundle = localizationBundle
     }
 
-    var displayUpdateSummary: Bool {
-        return self.terms.summary != nil && self.loginFlowVariant != .signup
-    }
-
     var termsLink: NSAttributedString {
         guard let platformTermsURL = self.terms.platformTermsURL else {
             return NSAttributedString(string: "<platform terms missing>")

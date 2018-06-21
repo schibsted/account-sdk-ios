@@ -3,16 +3,10 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-protocol TrackingDelegate: class {
-    var presentedViewControllerTrackingID: TrackingEvent.View? { get }
-}
-
 class UpdateProfileInteractor: CompleteProfileInteractor {
     let currentUser: User?
     let tracker: TrackingEventsHandler?
     let loginFlowVariant: LoginMethod.FlowVariant
-
-    weak var trackingDelegate: TrackingDelegate?
 
     init(currentUser: User, loginFlowVariant: LoginMethod.FlowVariant, tracker: TrackingEventsHandler?) {
         self.currentUser = currentUser

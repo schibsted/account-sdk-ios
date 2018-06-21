@@ -33,23 +33,32 @@ public protocol TrackingEventsHandler: class {
     var clientConfiguration: ClientConfiguration? { get set }
     /// Will be set by IdentityUI on UI initialization
     var loginMethod: LoginMethod? { get set }
-    /// Does the user want to login or create an account
+    /// Does the user want to login or create an account, set by IdentityUI
     var loginFlowVariant: LoginMethod.FlowVariant? { get set }
-    /// Users loginID if available
+    /// Users loginID if available, set by IdentityUI
     var loginID: String? { get set }
+    /// The merchant ID for the host app
+    var merchantID: String? { get set }
 
-    /// Track view event
-    func view(_ view: TrackingEvent.View)
-    /// Track engagement event
-    func engagement(_ engagement: TrackingEvent.Engagement)
-    /// Track error event
-    func error(_ type: TrackingEvent.ErrorType, in view: TrackingEvent.View)
+    /// A screen was viewed
+    func interaction(_ interaction: TrackingEvent.Interaction, with screen: TrackingEvent.Screen, additionalFields: [TrackingEvent.AdditionalField])
+    /// An element in the UI was interacted with on some screen
+    func engagement(_ engagement: TrackingEvent.Engagement, in screen: TrackingEvent.Screen)
+    /// An error occured on some screen
+    func error(_ errorType: TrackingEvent.ErrorType, in screen: TrackingEvent.Screen)
+}
+
+extension TrackingEventsHandler {
+    /// An element in the UI was interacted with on some screen
+    func interaction(_ interaction: TrackingEvent.Interaction, with screen: TrackingEvent.Screen) {
+        self.interaction(interaction, with: screen, additionalFields: [])
+    }
 }
 
 ///
 public enum TrackingEvent {
-    /// View events are typically broadcast on viewDidLoad or before a view is presented.
-    public enum View {
+    /// Represent the different screens in the UI flows
+    public enum Screen {
         /// Screen to enter identifier for password login method was viewed
         case passwordIdentificationForm
         /// Screen to enter identifier for passwordless login method was viewed
@@ -58,76 +67,66 @@ public enum TrackingEvent {
         case passwordInput
         /// Screen to verify passworldess identifier was viewed
         case passwordlessInput
-        /// Screen to resend password was viewed
-        case passwordlessResend
         /// Terms and conditions screen was viewed
         case terms
-        /// Terms and conditions summary was viewed
-        case termsSummary
         /// Information screen to check email for verification link is shown
         case accountVerification
         /// Screen to enter required fields is shown
         case requiredFieldsForm
-        /// Error popup screen was shown
-        case error
+        /// A popup screen
+        case popup(Popup)
+
+        /// The various popup screens
+        public enum Popup {
+            /// The informational popup screen
+            case info
+            /// The error popup screen
+            case error
+            /// The resend code popup screen
+            case resend
+        }
     }
 
-    /// Supplementary fields that may be added to some event types
-    public enum AdditionalField {
-        /// Whether the user selected to keep the login status persistent
-        case keepLoggedIn(Bool)
+    /// Represents an interaction event on a screen
+    public enum Interaction {
+        /// A screen was viewed
+        case view
+        /// A screen was submitted
+        case submit
+        /// A screen was closed
+        case close
+    }
+
+    /// Represent the different elements on forms that can be interacted with
+    public enum UIElement {
+        /// Request to change identifier
+        case changeIdentifier
+        /// Request to see platform terms and conditions
+        case agreementsSchibstedAccount
+        /// Request to see client terms and conditions
+        case agreementsClient
+        /// Request to see platform privacy policy
+        case privacySchibstedAccount
+        /// Request to see client privacy policy
+        case privacyClient
+        /// Resent identifier click
+        case resend
+        /// Request to go to forgot password flow
+        case forgotPassword
+        /// Request to see info about Schibsted Account
+        case whatsSchibstedAccount
+        /// Request to see info about "Remember me on this device" feature
+        case rememberMeInfo
+        /// Request to see info about adjusting privacy choices
+        case adjustPrivacyChoices
+        /// Request to see info about Schibsted
+        case learnMoreAboutSchibsted
     }
 
     /// Engagement events are the result of user interaction
     public enum Engagement {
-        /// A click event in a screen
-        case click(EngagementType, TrackingEvent.View, additionalFields: [AdditionalField])
-        /// A networking event as a result of a user action
-        case network(NetworkType)
-        /// Different type of click events
-        public enum EngagementType {
-            /// Typically when a form is submitted
-            case submit
-            /// When terms and conditions are accepted
-            case accept
-            /// Close event
-            case close
-            /// Resent identifier click
-            case resend
-            /// Request to change identifier
-            case changeIdentifier
-            /// Request to see platform terms and conditions
-            case agreementsSchibstedAccount
-            /// Request to see client terms and conditions
-            case agreementsClient
-            /// Request to see platform privacy policy
-            case privacySchibstedAccount
-            /// Request to see client privacy policy
-            case privacyClient
-            /// Request to go to forgot password flow
-            case forgotPassword
-            /// Request to see info about Schibsted Account
-            case whatsSchibstedAccount
-            /// Request to see info about "Remember me on this device" feature
-            case rememberMeInfo
-            /// Request to see info about adjusting privacy choices
-            case adjustPrivacyChoices
-            /// Request to see info about Schibsted
-            case learnMoreAboutSchibsted
-        }
-        /// The network events that can result from user interaction
-        public enum NetworkType {
-            /// Identity flow completed
-            case done
-            /// Verification code send
-            case verificationCodeSent
-            /// Agreements accepted
-            case agreementAccepted
-            /// Required fields registered
-            case requiredFieldProvided
-            /// Account verified due to deep link
-            case accountVerified
-        }
+        /// Represents a click engagement event on an element in the forms
+        case click(on: UIElement)
     }
 
     /// Different error events
@@ -138,5 +137,13 @@ public enum TrackingEvent {
         case network(ClientError)
         /// Unknown error
         case generic(Error)
+    }
+
+    /// Supplementary fields that may be added to some event types as the need arises
+    public enum AdditionalField {
+        /// Whether the user selected to keep the login status persistent
+        case keepLoggedIn(Bool)
+        /// if there's a teaser or not
+        case teaser(Bool)
     }
 }

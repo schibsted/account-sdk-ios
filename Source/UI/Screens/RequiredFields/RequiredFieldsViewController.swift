@@ -91,7 +91,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, viewModel: RequiredFieldsViewModel) {
         self.viewModel = viewModel
         self.values = [String?](repeating: nil, count: self.viewModel.supportedRequiredFields.count)
-        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerViewID: .requiredFieldsForm)
+        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: .requiredFieldsForm)
     }
 
     required init?(coder _: NSCoder) {
@@ -157,7 +157,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID, additionalFields: []))
+        self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID)
 
         guard let valuesToUpdate = self.valuesToUpdate() else {
             return
@@ -237,9 +237,9 @@ class RequiredFieldsViewController: IdentityUIViewController {
 extension RequiredFieldsViewController: UITextViewDelegate {
     func textView(_: UITextView, shouldInteractWith url: URL, in _: NSRange) -> Bool {
         if self.viewModel.controlYouPrivacyURL == url {
-            self.configuration.tracker?.engagement(.click(.adjustPrivacyChoices, self.trackerViewID, additionalFields: []))
+            self.configuration.tracker?.engagement(.click(on: .adjustPrivacyChoices), in: self.trackerScreenID)
         } else if self.viewModel.dataAndYouURL == url {
-            self.configuration.tracker?.engagement(.click(.learnMoreAboutSchibsted, self.trackerViewID, additionalFields: []))
+            self.configuration.tracker?.engagement(.click(on: .learnMoreAboutSchibsted), in: self.trackerScreenID)
         }
 
         self.didRequestAction?(.open(url: url))
@@ -308,6 +308,6 @@ extension RequiredFieldsViewController {
 
         let errorMessages = ascendingIndices.map { self.viewModel.requiredFieldID(at: $0.index) }
 
-        self.configuration.tracker?.error(.validation(.requiredField(errorMessages)), in: self.trackerViewID)
+        self.configuration.tracker?.error(.validation(.requiredField(errorMessages)), in: self.trackerScreenID)
     }
 }

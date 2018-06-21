@@ -22,7 +22,7 @@ class VerifyViewController: IdentityUIViewController {
         }
     }
     @IBAction func didClickWhatLink(_: Any) {
-        self.configuration.tracker?.engagement(.click(.rememberMeInfo, self.trackerViewID, additionalFields: []))
+        self.configuration.tracker?.engagement(.click(on: .rememberMeInfo), in: self.trackerScreenID)
         self.didRequestAction?(.info(
             title: self.viewModel.persistentLogin,
             text: self.viewModel.rememberMe
@@ -116,7 +116,7 @@ class VerifyViewController: IdentityUIViewController {
 
     init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, viewModel: VerifyViewModel) {
         self.viewModel = viewModel
-        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerViewID: .passwordlessInput)
+        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: .passwordlessInput)
     }
 
     required init?(coder _: NSCoder) {
@@ -133,13 +133,12 @@ class VerifyViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickResend(_: Any) {
-        self.configuration.tracker?.engagement(.click(.resend, self.trackerViewID, additionalFields: []))
+        self.configuration.tracker?.engagement(.click(on: .resend), in: self.trackerScreenID)
         self.didRequestAction?(.resendCode)
     }
 
     @IBAction func didClickVerify(_: Any) {
-        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)]))
-
+        self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])
         guard self.enteredCode.count == VerifyViewModel.numberOfCodeDigits else {
             self.showInlineError(.invalidCode)
             return
@@ -194,7 +193,7 @@ class VerifyViewController: IdentityUIViewController {
         }
         self.errorText.text = message
         self.errorText.isHidden = false
-        self.configuration.tracker?.error(.validation(error), in: self.trackerViewID)
+        self.configuration.tracker?.error(.validation(error), in: self.trackerScreenID)
 
         return true
     }

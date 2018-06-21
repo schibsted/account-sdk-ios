@@ -35,7 +35,7 @@ class InfoViewController: IdentityUIViewController {
         self.heading = title
         self.text = text
         self.titleImage = titleImage
-        super.init(configuration: configuration, navigationSettings: NavigationSettings(), trackerViewID: .passwordlessResend)
+        super.init(configuration: configuration, navigationSettings: NavigationSettings(), trackerScreenID: .popup(.info))
     }
 
     required init?(coder _: NSCoder) {

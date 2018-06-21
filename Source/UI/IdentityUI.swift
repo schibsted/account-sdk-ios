@@ -389,6 +389,7 @@ extension IdentityUI {
                 guard let strongSelf = self else { return }
                 switch result {
                 case let .success(client):
+                    self?.configuration.tracker?.merchantID = client.merchantID
                     strongSelf.show(input: input, client: client, completion: completion)
                 case let .failure(error):
                     completion(.failure(error))
@@ -546,6 +547,9 @@ extension IdentityUI {
             case .back:
                 self?.navigationController.popViewController(animated: true)
             case .changeIdentifier:
+                if let identityVC = self?.navigationController.topViewController as? IdentityUIViewController {
+                    self?.configuration.tracker?.engagement(.click(on: .changeIdentifier), in: identityVC.trackerScreenID)
+                }
                 self?.navigationController.popToRootViewController(animated: true)
             case let .reset(error):
                 self?.navigationController.popToRootViewController(animated: true)

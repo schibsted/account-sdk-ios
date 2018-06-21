@@ -60,8 +60,6 @@ extension ShowTermsCoordinator {
             switch action {
             case .acceptTerms:
                 completion(.success)
-            case let .learnMore(summary):
-                self?.showTermsSummaryView(summary)
             case let .open(url):
                 self?.present(url: url)
             case .back:
@@ -76,11 +74,5 @@ extension ShowTermsCoordinator {
         } else {
             self.navigationController.pushViewController(viewController, animated: true)
         }
-    }
-
-    private func showTermsSummaryView(_ summary: String) {
-        let viewModel = TermsSummaryViewModel(summary: summary, localizationBundle: self.configuration.localizationBundle)
-        let viewController = TermsSummaryViewController(configuration: self.configuration, viewModel: viewModel)
-        self.presentAsPopup(viewController)
     }
 }

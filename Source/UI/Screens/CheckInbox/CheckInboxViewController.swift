@@ -36,7 +36,7 @@ class CheckInboxViewController: IdentityUIViewController {
 
     init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, viewModel: CheckInboxViewModel) {
         self.viewModel = viewModel
-        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerViewID: .accountVerification)
+        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: .accountVerification)
     }
 
     required init?(coder _: NSCoder) {
