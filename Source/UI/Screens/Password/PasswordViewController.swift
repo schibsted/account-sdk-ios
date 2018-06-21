@@ -91,7 +91,6 @@ class PasswordViewController: IdentityUIViewController {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.configuration.tracker?.engagement(.click(on: .changeIdentifier), in: strongSelf.trackerScreenID)
             self?.didRequestAction?(.changeIdentifier)
         }
 

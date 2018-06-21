@@ -547,6 +547,9 @@ extension IdentityUI {
             case .back:
                 self?.navigationController.popViewController(animated: true)
             case .changeIdentifier:
+                if let identityVC = self?.navigationController.topViewController as? IdentityUIViewController {
+                    self?.configuration.tracker?.engagement(.click(on: .changeIdentifier), in: identityVC.trackerScreenID)
+                }
                 self?.navigationController.popToRootViewController(animated: true)
             case let .reset(error):
                 self?.navigationController.popToRootViewController(animated: true)
