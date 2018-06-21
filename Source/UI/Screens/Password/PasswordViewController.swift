@@ -23,7 +23,7 @@ class PasswordViewController: IdentityUIViewController {
         }
     }
     @IBAction func didClickWhatLink(_: Any) {
-        self.configuration.tracker?.engagement(.click(.rememberMeInfo, self.trackerViewID, additionalFields: []))
+        self.configuration.tracker?.engagement(.click(on: .learnMoreAboutSchibsted), in: self.trackerScreenID)
         self.didRequestAction?(.info(
             title: self.viewModel.persistentLogin,
             text: self.viewModel.rememberMe
@@ -62,7 +62,7 @@ class PasswordViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickForgotPassword(_: Any) {
-        self.configuration.tracker?.engagement(.click(.forgotPassword, self.trackerViewID, additionalFields: []))
+        self.configuration.tracker?.engagement(.click(on: .forgotPassword), in: self.trackerScreenID)
         self.didRequestAction?(.forgotPassword)
     }
 
@@ -91,7 +91,7 @@ class PasswordViewController: IdentityUIViewController {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.configuration.tracker?.engagement(.click(.changeIdentifier, strongSelf.trackerViewID, additionalFields: []))
+            strongSelf.configuration.tracker?.engagement(.click(on: .changeIdentifier), in: strongSelf.trackerScreenID)
             self?.didRequestAction?(.changeIdentifier)
         }
 
@@ -136,7 +136,7 @@ class PasswordViewController: IdentityUIViewController {
 
     init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, viewModel: PasswordViewModel) {
         self.viewModel = viewModel
-        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerViewID: .passwordInput)
+        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: .passwordInput)
     }
 
     required init?(coder _: NSCoder) {
@@ -165,7 +165,10 @@ class PasswordViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)]))
+        self.configuration.tracker?.engagement(
+            .click(on: .submit(with: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])),
+            in: self.trackerScreenID
+        )
 
         guard let password = self.password.text, ((self.viewModel.loginFlowVariant == .signin && password.count >= 1) || password.count >= 8) else {
             self.showInlineError(.invalidUserCredentials(message: nil))

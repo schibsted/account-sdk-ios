@@ -26,7 +26,7 @@ private class MyViewController: IdentityUIViewController {
         self.implicitlyUnrappedOptional = MyThemeable()
         self.nilImplicitlyUnrappedOptional = nil
         self.nonOptional = MyThemeable()
-        super.init(configuration: .testing, navigationSettings: NavigationSettings(), trackerViewID: .accountVerification)
+        super.init(configuration: .testing, navigationSettings: NavigationSettings(), trackerScreenID: .accountVerification)
     }
 
     override func loadView() {

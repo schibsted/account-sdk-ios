@@ -33,7 +33,7 @@ class IdentifierViewController: IdentityUIViewController {
         }
     }
     @IBAction func didClickWhatsThis(_: Any) {
-        self.configuration.tracker?.engagement(.click(.whatsSchibstedAccount, self.trackerViewID, additionalFields: []))
+        self.configuration.tracker?.engagement(.click(on: .whatsSchibstedAccount), in: self.trackerScreenID)
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
     }
 
@@ -114,15 +114,15 @@ class IdentifierViewController: IdentityUIViewController {
         self.viewModel = viewModel
 
         let additionalFields: [TrackingEvent.AdditionalField] = [.teaser(viewModel.localizedTeaserText != nil)]
-        let trackerViewID: TrackingEvent.View
+        let trackerScreenID: TrackingEvent.Screen
         switch viewModel.loginMethod.authenticationType {
         case .password:
-            trackerViewID = .passwordIdentificationForm(additionalFields: additionalFields)
+            trackerScreenID = .passwordIdentificationForm(additionalFields: additionalFields)
         case .passwordless:
-            trackerViewID = .passwordlessIdentificationForm(additionalFields: additionalFields)
+            trackerScreenID = .passwordlessIdentificationForm(additionalFields: additionalFields)
         }
 
-        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerViewID: trackerViewID)
+        super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: trackerScreenID)
     }
 
     required init?(coder _: NSCoder) {
@@ -166,7 +166,7 @@ class IdentifierViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(.click(.submit, self.trackerViewID, additionalFields: []))
+        self.configuration.tracker?.engagement(.click(on: .submit(with: [])), in: self.trackerScreenID)
 
         let identifier: Identifier
 
@@ -226,7 +226,7 @@ class IdentifierViewController: IdentityUIViewController {
             return false
         }
 
-        self.configuration.tracker?.error(.validation(error), in: self.trackerViewID)
+        self.configuration.tracker?.error(.validation(error), in: self.trackerScreenID)
         self.inputError.text = message
         self.inputError.isHidden = false
         switch self.viewModel.loginMethod.identifierType {
