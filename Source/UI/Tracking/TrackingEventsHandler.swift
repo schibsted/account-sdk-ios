@@ -33,10 +33,12 @@ public protocol TrackingEventsHandler: class {
     var clientConfiguration: ClientConfiguration? { get set }
     /// Will be set by IdentityUI on UI initialization
     var loginMethod: LoginMethod? { get set }
-    /// Does the user want to login or create an account
+    /// Does the user want to login or create an account, set by IdentityUI
     var loginFlowVariant: LoginMethod.FlowVariant? { get set }
-    /// Users loginID if available
+    /// Users loginID if available, set by IdentityUI
     var loginID: String? { get set }
+    /// The merchant ID for the host app
+    var merchantID: String? { get set }
 
     /// Track view event
     func view(_ view: TrackingEvent.View)
@@ -51,9 +53,9 @@ public enum TrackingEvent {
     /// View events are typically broadcast on viewDidLoad or before a view is presented.
     public enum View {
         /// Screen to enter identifier for password login method was viewed
-        case passwordIdentificationForm
+        case passwordIdentificationForm(additionalFields: [AdditionalField])
         /// Screen to enter identifier for passwordless login method was viewed
-        case passwordlessIdentificationForm
+        case passwordlessIdentificationForm(additionalFields: [AdditionalField])
         /// Screen to enter password was viewed
         case passwordInput
         /// Screen to verify passworldess identifier was viewed
@@ -76,14 +78,14 @@ public enum TrackingEvent {
     public enum AdditionalField {
         /// Whether the user selected to keep the login status persistent
         case keepLoggedIn(Bool)
+        /// if there's a teaser or not
+        case teaser(Bool)
     }
 
     /// Engagement events are the result of user interaction
     public enum Engagement {
         /// A click event in a screen
         case click(EngagementType, TrackingEvent.View, additionalFields: [AdditionalField])
-        /// A networking event as a result of a user action
-        case network(NetworkType)
         /// Different type of click events
         public enum EngagementType {
             /// Typically when a form is submitted
@@ -114,19 +116,6 @@ public enum TrackingEvent {
             case adjustPrivacyChoices
             /// Request to see info about Schibsted
             case learnMoreAboutSchibsted
-        }
-        /// The network events that can result from user interaction
-        public enum NetworkType {
-            /// Identity flow completed
-            case done
-            /// Verification code send
-            case verificationCodeSent
-            /// Agreements accepted
-            case agreementAccepted
-            /// Required fields registered
-            case requiredFieldProvided
-            /// Account verified due to deep link
-            case accountVerified
         }
     }
 

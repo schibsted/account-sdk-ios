@@ -389,6 +389,7 @@ extension IdentityUI {
                 guard let strongSelf = self else { return }
                 switch result {
                 case let .success(client):
+                    self?.configuration.tracker?.merchantID = client.merchantID
                     strongSelf.show(input: input, client: client, completion: completion)
                 case let .failure(error):
                     completion(.failure(error))
