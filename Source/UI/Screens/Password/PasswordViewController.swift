@@ -161,11 +161,7 @@ class PasswordViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(
-            .click(on: .submit(with: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])),
-            in: self.trackerScreenID
-        )
-
+        self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])
         guard let password = self.password.text, ((self.viewModel.loginFlowVariant == .signin && password.count >= 1) || password.count >= 8) else {
             self.showInlineError(.invalidUserCredentials(message: nil))
             return

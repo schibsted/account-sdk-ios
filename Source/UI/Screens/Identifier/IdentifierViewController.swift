@@ -165,7 +165,7 @@ class IdentifierViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.configuration.tracker?.engagement(.click(on: .submit(with: [])), in: self.trackerScreenID)
+        self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID)
 
         let identifier: Identifier
 

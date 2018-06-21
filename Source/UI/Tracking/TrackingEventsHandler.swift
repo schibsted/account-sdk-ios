@@ -41,7 +41,7 @@ public protocol TrackingEventsHandler: class {
     var merchantID: String? { get set }
 
     /// A screen was viewed
-    func view(_ screen: TrackingEvent.Screen, additionalFields: [TrackingEvent.AdditionalField])
+    func interaction(_ interaction: TrackingEvent.Interaction, with screen: TrackingEvent.Screen, additionalFields: [TrackingEvent.AdditionalField])
     /// An element in the UI was interacted with on some screen
     func engagement(_ engagement: TrackingEvent.Engagement, in screen: TrackingEvent.Screen, additionalFields: [TrackingEvent.AdditionalField])
     /// An error occured on some screen
@@ -50,8 +50,8 @@ public protocol TrackingEventsHandler: class {
 
 extension TrackingEventsHandler {
     /// An element in the UI was interacted with on some screen
-    func view(_ screen: TrackingEvent.Screen) {
-        self.view(screen, additionalFields: [])
+    func interaction(_ interaction: TrackingEvent.Interaction, with screen: TrackingEvent.Screen) {
+        self.interaction(interaction, with: screen, additionalFields: [])
     }
     /// An error occured on some screen
     func engagement(_ engagement: TrackingEvent.Engagement, in screen: TrackingEvent.Screen) {
@@ -61,7 +61,7 @@ extension TrackingEventsHandler {
 
 ///
 public enum TrackingEvent {
-    /// Represent the different screens that a user can be viewing
+    /// Represent the different screens in the UI flows
     public enum Screen {
         /// Screen to enter identifier for password login method was viewed
         case passwordIdentificationForm
@@ -91,10 +91,18 @@ public enum TrackingEvent {
         }
     }
 
+    /// Represents an interaction event on a screen
+    public enum Interaction {
+        /// A screen was viewed
+        case view
+        /// A screen was submitted
+        case submit
+        /// A screen was closed
+        case close
+    }
+
     /// Represent the different elements on forms that can be interacted with
     public enum UIElement {
-        /// A submit button was clicked and it might have some additional info
-        case submit(with: [AdditionalField])
         /// Request to change identifier
         case changeIdentifier
         /// Request to see platform terms and conditions

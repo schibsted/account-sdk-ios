@@ -128,7 +128,7 @@ class IdentityUIViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.configuration.tracker?.view(self.trackerScreenID, additionalFields: self.trackerAdditionalFields)
+        self.configuration.tracker?.interaction(.view, with: self.trackerScreenID, additionalFields: self.trackerAdditionalFields)
 
         NotificationCenter.default.addObserver(
             self,

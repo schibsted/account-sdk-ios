@@ -138,11 +138,7 @@ class VerifyViewController: IdentityUIViewController {
     }
 
     @IBAction func didClickVerify(_: Any) {
-        self.configuration.tracker?.engagement(
-            .click(on: .submit(with: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])),
-            in: self.trackerScreenID
-        )
-
+        self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])
         guard self.enteredCode.count == VerifyViewModel.numberOfCodeDigits else {
             self.showInlineError(.invalidCode)
             return
