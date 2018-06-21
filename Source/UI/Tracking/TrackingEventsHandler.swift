@@ -60,16 +60,24 @@ public enum TrackingEvent {
         case passwordInput
         /// Screen to verify passworldess identifier was viewed
         case passwordlessInput
-        /// Screen to resend password was viewed
-        case passwordlessResend
         /// Terms and conditions screen was viewed
         case terms
         /// Information screen to check email for verification link is shown
         case accountVerification
         /// Screen to enter required fields is shown
         case requiredFieldsForm
-        /// Error popup screen was shown
-        case error
+        /// A popup screen
+        case popup(Popup)
+
+        /// The various popup screens
+        public enum Popup {
+            /// The informational popup screen
+            case info
+            /// The error popup screen
+            case error
+            /// The resend code popup screen
+            case resend
+        }
     }
 
     /// Represent the different elements on forms that can be interacted with

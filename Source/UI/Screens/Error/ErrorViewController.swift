@@ -79,7 +79,7 @@ class ErrorViewController: IdentityUIViewController {
         self.dataSource = dataSource
         self.strings = strings
         self.originViewController = originViewController
-        super.init(configuration: configuration, navigationSettings: NavigationSettings(), trackerScreenID: .error)
+        super.init(configuration: configuration, navigationSettings: NavigationSettings(), trackerScreenID: .popup(.error))
     }
 
     required init?(coder _: NSCoder) {
