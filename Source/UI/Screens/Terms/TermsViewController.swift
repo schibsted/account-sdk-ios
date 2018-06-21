@@ -8,7 +8,6 @@ import UIKit
 class TermsViewController: IdentityUIViewController {
     enum Action {
         case acceptTerms
-        case learnMore(summary: String)
         case open(url: URL)
         case back
         case cancel
@@ -56,24 +55,6 @@ class TermsViewController: IdentityUIViewController {
         didSet {
             self.acceptButton.setTitle(self.viewModel.proceed, for: .normal)
         }
-    }
-
-    @IBOutlet var learnMoreButton: UIButton! {
-        didSet {
-            self.learnMoreButton.setTitle(self.viewModel.learnMore, for: .normal)
-            if self.viewModel.displayUpdateSummary {
-                self.learnMoreButton.isHidden = false
-            } else {
-                self.learnMoreButton.isHidden = true
-            }
-        }
-    }
-
-    @IBAction func didClickLearnMore(_: Any) {
-        guard let summary = self.viewModel.terms.summary else {
-            return
-        }
-        self.didRequestAction?(.learnMore(summary: summary))
     }
 
     let viewModel: TermsViewModel

@@ -64,8 +64,6 @@ public enum TrackingEvent {
         case passwordlessResend
         /// Terms and conditions screen was viewed
         case terms
-        /// Terms and conditions summary was viewed
-        case termsSummary
         /// Information screen to check email for verification link is shown
         case accountVerification
         /// Screen to enter required fields is shown
