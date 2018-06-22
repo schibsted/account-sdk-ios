@@ -115,16 +115,22 @@
                 <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/TrackingEvent/View.html">– View</a>
+                <a href="../Enums/TrackingEvent/Screen.html">– Screen</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
+                <a href="../Enums/TrackingEvent/Interaction.html">– Interaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/UIElement.html">– UIElement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent/Engagement.html">– Engagement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
               </li>
             </ul>
           </li>
@@ -277,6 +283,9 @@
               <li class="nav-group-task">
                 <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -358,9 +367,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO"></a>
-                    <a name="//apple_ref/swift/Enum/View" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO">View</a>
+                    <a name="/s:16SchibstedAccount13TrackingEventO6ScreenO"></a>
+                    <a name="//apple_ref/swift/Enum/Screen" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO6ScreenO">Screen</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -368,15 +377,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>View events are typically broadcast on viewDidLoad or before a view is presented.</p>
+                        <p>Represent the different screens in the UI flows</p>
 
-                        <a href="../Enums/TrackingEvent/View.html" class="slightly-smaller">See more</a>
+                        <a href="../Enums/TrackingEvent/Screen.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">View</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Screen</span></code></pre>
 
                         </div>
                       </div>
@@ -386,9 +395,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO15AdditionalFieldO"></a>
-                    <a name="//apple_ref/swift/Enum/AdditionalField" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO15AdditionalFieldO">AdditionalField</a>
+                    <a name="/s:16SchibstedAccount13TrackingEventO11InteractionO"></a>
+                    <a name="//apple_ref/swift/Enum/Interaction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO11InteractionO">Interaction</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -396,15 +405,43 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Supplementary fields that may be added to some event types</p>
+                        <p>Represents an interaction event on a screen</p>
 
-                        <a href="../Enums/TrackingEvent/AdditionalField.html" class="slightly-smaller">See more</a>
+                        <a href="../Enums/TrackingEvent/Interaction.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">AdditionalField</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Interaction</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount13TrackingEventO9UIElementO"></a>
+                    <a name="//apple_ref/swift/Enum/UIElement" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO9UIElementO">UIElement</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represent the different elements on forms that can be interacted with</p>
+
+                        <a href="../Enums/TrackingEvent/UIElement.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">UIElement</span></code></pre>
 
                         </div>
                       </div>
@@ -461,6 +498,34 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ErrorType</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount13TrackingEventO15AdditionalFieldO"></a>
+                    <a name="//apple_ref/swift/Enum/AdditionalField" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO15AdditionalFieldO">AdditionalField</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Supplementary fields that may be added to some event types as the need arises</p>
+
+                        <a href="../Enums/TrackingEvent/AdditionalField.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">AdditionalField</span></code></pre>
 
                         </div>
                       </div>

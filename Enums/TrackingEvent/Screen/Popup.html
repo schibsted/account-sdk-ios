@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>NetworkType Enumeration Reference</title>
+    <title>Popup Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../../../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../../../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/NetworkType" class="dashAnchor"></a>
-    <a title="NetworkType Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/Popup" class="dashAnchor"></a>
+    <a title="Popup Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../../../index.html">SchibstedAccount Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../../../index.html">SchibstedAccount Reference</a>
         <img id="carat" src="../../../img/carat.png" />
-        NetworkType Enumeration Reference
+        Popup Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -115,16 +115,22 @@
                 <a href="../../../Enums/TrackingEvent.html">TrackingEvent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../../../Enums/TrackingEvent/View.html">– View</a>
+                <a href="../../../Enums/TrackingEvent/Screen.html">– Screen</a>
               </li>
               <li class="nav-group-task">
-                <a href="../../../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
+                <a href="../../../Enums/TrackingEvent/Interaction.html">– Interaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/TrackingEvent/UIElement.html">– UIElement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../../Enums/TrackingEvent/Engagement.html">– Engagement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
               </li>
             </ul>
           </li>
@@ -277,6 +283,9 @@
               <li class="nav-group-task">
                 <a href="../../../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -343,14 +352,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>NetworkType</h1>
+            <h1>Popup</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">NetworkType</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Popup</span></code></pre>
 
                 </div>
               </div>
-            <p>The network events that can result from user interaction</p>
+            <p>The various popup screens</p>
 
           </section>
           <section class="section task-group-section">
@@ -359,9 +368,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO4doneA2GmF"></a>
-                    <a name="//apple_ref/swift/Element/done" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO4doneA2GmF">done</a>
+                    <a name="/s:16SchibstedAccount13TrackingEventO6ScreenO5PopupO4infoA2GmF"></a>
+                    <a name="//apple_ref/swift/Element/info" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO6ScreenO5PopupO4infoA2GmF">info</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -369,14 +378,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Identity flow completed</p>
+                        <p>The informational popup screen</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">done</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">info</span></code></pre>
 
                         </div>
                       </div>
@@ -390,9 +399,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO20verificationCodeSentA2GmF"></a>
-                    <a name="//apple_ref/swift/Element/verificationCodeSent" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO20verificationCodeSentA2GmF">verificationCodeSent</a>
+                    <a name="/s:16SchibstedAccount13TrackingEventO6ScreenO5PopupO5errorA2GmF"></a>
+                    <a name="//apple_ref/swift/Element/error" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO6ScreenO5PopupO5errorA2GmF">error</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -400,14 +409,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Verification code send</p>
+                        <p>The error popup screen</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">verificationCodeSent</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">error</span></code></pre>
 
                         </div>
                       </div>
@@ -421,9 +430,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO17agreementAcceptedA2GmF"></a>
-                    <a name="//apple_ref/swift/Element/agreementAccepted" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO17agreementAcceptedA2GmF">agreementAccepted</a>
+                    <a name="/s:16SchibstedAccount13TrackingEventO6ScreenO5PopupO6resendA2GmF"></a>
+                    <a name="//apple_ref/swift/Element/resend" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO6ScreenO5PopupO6resendA2GmF">resend</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -431,76 +440,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Agreements accepted</p>
+                        <p>The resend code popup screen</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">agreementAccepted</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO21requiredFieldProvidedA2GmF"></a>
-                    <a name="//apple_ref/swift/Element/requiredFieldProvided" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO21requiredFieldProvidedA2GmF">requiredFieldProvided</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Required fields registered</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">requiredFieldProvided</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO15accountVerifiedA2GmF"></a>
-                    <a name="//apple_ref/swift/Element/accountVerified" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO10EngagementO11NetworkTypeO15accountVerifiedA2GmF">accountVerified</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Account verified due to deep link</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">accountVerified</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">resend</span></code></pre>
 
                         </div>
                       </div>

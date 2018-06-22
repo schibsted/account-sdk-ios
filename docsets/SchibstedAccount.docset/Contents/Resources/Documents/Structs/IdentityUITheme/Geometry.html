@@ -115,16 +115,22 @@
                 <a href="../../Enums/TrackingEvent.html">TrackingEvent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../../Enums/TrackingEvent/View.html">– View</a>
+                <a href="../../Enums/TrackingEvent/Screen.html">– Screen</a>
               </li>
               <li class="nav-group-task">
-                <a href="../../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
+                <a href="../../Enums/TrackingEvent/Interaction.html">– Interaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/TrackingEvent/UIElement.html">– UIElement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Enums/TrackingEvent/Engagement.html">– Engagement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
               </li>
             </ul>
           </li>
@@ -277,6 +283,9 @@
               <li class="nav-group-task">
                 <a href="../../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -350,11 +359,66 @@
 
                 </div>
               </div>
-            
+            <p>Controls spacings and curvatures of views</p>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityUIThemeV8GeometryV18groupedViewSpacing12CoreGraphics7CGFloatVv"></a>
+                    <a name="//apple_ref/swift/Property/groupedViewSpacing" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityUIThemeV8GeometryV18groupedViewSpacing12CoreGraphics7CGFloatVv">groupedViewSpacing</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Spacing between views that form a grouping</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">groupedViewSpacing</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">8</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityUIThemeV8GeometryV16titleViewSpacing12CoreGraphics7CGFloatVv"></a>
+                    <a name="//apple_ref/swift/Property/titleViewSpacing" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityUIThemeV8GeometryV16titleViewSpacing12CoreGraphics7CGFloatVv">titleViewSpacing</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Spacing for in between titles and their associated input fields</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">titleViewSpacing</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">4</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -368,7 +432,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Default curved corner radius of controls</p>
+                        <p>Corner radius of buttons and popups</p>
 
                       </div>
                       <div class="declaration">
@@ -385,9 +449,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityUIThemeV8GeometryV18groupedViewSpacing12CoreGraphics7CGFloatVv"></a>
-                    <a name="//apple_ref/swift/Property/groupedViewSpacing" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityUIThemeV8GeometryV18groupedViewSpacing12CoreGraphics7CGFloatVv">groupedViewSpacing</a>
+                    <a name="/s:16SchibstedAccount15IdentityUIThemeV8GeometryV21inputViewCornerRadius12CoreGraphics7CGFloatVv"></a>
+                    <a name="//apple_ref/swift/Property/inputViewCornerRadius" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityUIThemeV8GeometryV21inputViewCornerRadius12CoreGraphics7CGFloatVv">inputViewCornerRadius</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -395,14 +459,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Default spacing between views that form a grouping</p>
+                        <p>Corner radius of input fields</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">groupedViewSpacing</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">8</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">inputViewCornerRadius</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">4</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount15IdentityUIThemeV8GeometryV27contentGroupingCornerRadius12CoreGraphics7CGFloatVv"></a>
+                    <a name="//apple_ref/swift/Property/contentGroupingCornerRadius" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityUIThemeV8GeometryV27contentGroupingCornerRadius12CoreGraphics7CGFloatVv">contentGroupingCornerRadius</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Corner radius for views encapsulating other views</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">contentGroupingCornerRadius</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">12</span></code></pre>
 
                         </div>
                       </div>

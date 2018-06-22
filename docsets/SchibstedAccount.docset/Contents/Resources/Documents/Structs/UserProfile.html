@@ -115,16 +115,22 @@
                 <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/TrackingEvent/View.html">– View</a>
+                <a href="../Enums/TrackingEvent/Screen.html">– Screen</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
+                <a href="../Enums/TrackingEvent/Interaction.html">– Interaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/UIElement.html">– UIElement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent/Engagement.html">– Engagement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
               </li>
             </ul>
           </li>
@@ -276,6 +282,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
               </li>
             </ul>
           </li>
@@ -475,13 +484,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>This is the email address that is marked as primary (there may or may not be one)</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">primaryEmailAddress</span><span class="p">:</span> <span class="kt"><a href="../Structs/EmailAddress.html">EmailAddress</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11UserProfileV5emailAA12EmailAddressVSgv"></a>
+                    <a name="//apple_ref/swift/Property/email" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11UserProfileV5emailAA12EmailAddressVSgv">email</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The email address associated with this user. For passwordless login this is generated for example.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">email</span><span class="p">:</span> <span class="kt"><a href="../Structs/EmailAddress.html">EmailAddress</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>

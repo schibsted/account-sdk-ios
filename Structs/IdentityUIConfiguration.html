@@ -115,16 +115,22 @@
                 <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/TrackingEvent/View.html">– View</a>
+                <a href="../Enums/TrackingEvent/Screen.html">– Screen</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
+                <a href="../Enums/TrackingEvent/Interaction.html">– Interaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/UIElement.html">– UIElement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent/Engagement.html">– Engagement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
               </li>
             </ul>
           </li>
@@ -277,6 +283,9 @@
               <li class="nav-group-task">
                 <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -369,7 +378,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>The client configuration that determines your backend configuration</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -447,7 +457,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>The tracking event implementation that will be called at various spots in the login process</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -473,7 +484,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>This determines whether you want to allow the user to dismiss the login flow</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -499,13 +511,42 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>This will be given the navigationController we use internally before we start presentation incase you want to customize
+certain aspects</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">presentationHook</span><span class="p">:</span> <span class="p">((</span><span class="kt">UIViewController</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount23IdentityUIConfigurationV11isSkippableSbv"></a>
+                    <a name="//apple_ref/swift/Property/isSkippable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount23IdentityUIConfigurationV11isSkippableSbv">isSkippable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This determines if you want a <q>skip</q> button to be shown which will dismiss the flow and tell you what has happened</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">isSkippable</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -543,9 +584,9 @@ so you can set this to override it</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount23IdentityUIConfigurationVAcA19ClientConfigurationV06clientF0_AA0C7UIThemeV5themeSb12isCancelableySo16UIViewControllerCcSg16presentationHookAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationT0SSSg7appNametcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(clientConfiguration:theme:isCancelable:presentationHook:tracker:localizationBundle:appName:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount23IdentityUIConfigurationVAcA19ClientConfigurationV06clientF0_AA0C7UIThemeV5themeSb12isCancelableySo16UIViewControllerCcSg16presentationHookAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationT0SSSg7appNametcfc">init(clientConfiguration:theme:isCancelable:presentationHook:tracker:localizationBundle:appName:)</a>
+                    <a name="/s:16SchibstedAccount23IdentityUIConfigurationVAcA19ClientConfigurationV06clientF0_AA0C7UIThemeV5themeSb12isCancelableSb0J9SkippableySo16UIViewControllerCcSg16presentationHookAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationU0SSSg7appNametcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(clientConfiguration:theme:isCancelable:isSkippable:presentationHook:tracker:localizationBundle:appName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount23IdentityUIConfigurationVAcA19ClientConfigurationV06clientF0_AA0C7UIThemeV5themeSb12isCancelableSb0J9SkippableySo16UIViewControllerCcSg16presentationHookAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationU0SSSg7appNametcfc">init(clientConfiguration:theme:isCancelable:isSkippable:presentationHook:tracker:localizationBundle:appName:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -563,6 +604,7 @@ so you can set this to override it</p>
     <span class="nv">clientConfiguration</span><span class="p">:</span> <span class="kt"><a href="../Structs/ClientConfiguration.html">ClientConfiguration</a></span><span class="p">,</span>
     <span class="nv">theme</span><span class="p">:</span> <span class="kt"><a href="../Structs/IdentityUITheme.html">IdentityUITheme</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
     <span class="nv">isCancelable</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nv">isSkippable</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
     <span class="nv">presentationHook</span><span class="p">:</span> <span class="p">((</span><span class="kt">UIViewController</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">tracker</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">localizationBundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
@@ -608,6 +650,18 @@ so you can set this to override it</p>
                               <td>
                                 <div>
                                   <p>If this is false then the user cannot cancel the UI flow unless you complete it</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isSkippable</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If this is true then the first screen shows a skip button that produces the appropriate event</p>
                                 </div>
                               </td>
                             </tr>
@@ -668,9 +722,9 @@ so you can set this to override it</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount23IdentityUIConfigurationV9replacingAcA0C7UIThemeVSg5theme_SbSg12isCancelableySo16UIViewControllerCcSg16presentationHookAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationR0SSSg7appNametF"></a>
-                    <a name="//apple_ref/swift/Method/replacing(theme:isCancelable:presentationHook:tracker:localizationBundle:appName:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount23IdentityUIConfigurationV9replacingAcA0C7UIThemeVSg5theme_SbSg12isCancelableySo16UIViewControllerCcSg16presentationHookAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationR0SSSg7appNametF">replacing(theme:isCancelable:presentationHook:tracker:localizationBundle:appName:)</a>
+                    <a name="/s:16SchibstedAccount23IdentityUIConfigurationV9replacingAcA0C7UIThemeVSg5theme_SbSg12isCancelableAI0H9SkippableySo16UIViewControllerCcSg16presentationHookAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationS0SSSg7appNametF"></a>
+                    <a name="//apple_ref/swift/Method/replacing(theme:isCancelable:isSkippable:presentationHook:tracker:localizationBundle:appName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount23IdentityUIConfigurationV9replacingAcA0C7UIThemeVSg5theme_SbSg12isCancelableAI0H9SkippableySo16UIViewControllerCcSg16presentationHookAA21TrackingEventsHandler_pSg7trackerSo6BundleCSg012localizationS0SSSg7appNametF">replacing(theme:isCancelable:isSkippable:presentationHook:tracker:localizationBundle:appName:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -688,6 +742,7 @@ so you can set this to override it</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">replacing</span><span class="p">(</span>
     <span class="nv">theme</span><span class="p">:</span> <span class="kt"><a href="../Structs/IdentityUITheme.html">IdentityUITheme</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">isCancelable</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">isSkippable</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">presentationHook</span><span class="p">:</span> <span class="p">((</span><span class="kt">UIViewController</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">tracker</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TrackingEventsHandler.html">TrackingEventsHandler</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">localizationBundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
@@ -721,6 +776,18 @@ so you can set this to override it</p>
                               <td>
                                 <div>
                                   <p>If this is false then the user cannot cancel the UI flow unless you complete it</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isSkippable</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If this is true then the first screen shows a skip button that produces the appropriate event</p>
                                 </div>
                               </td>
                             </tr>

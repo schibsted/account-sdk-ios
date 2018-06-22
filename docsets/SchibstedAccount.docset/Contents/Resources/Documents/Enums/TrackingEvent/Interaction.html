@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>View Enumeration Reference</title>
+    <title>Interaction Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/View" class="dashAnchor"></a>
-    <a title="View Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/Interaction" class="dashAnchor"></a>
+    <a title="Interaction Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../../index.html">SchibstedAccount Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../../index.html">SchibstedAccount Reference</a>
         <img id="carat" src="../../img/carat.png" />
-        View Enumeration Reference
+        Interaction Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -115,16 +115,22 @@
                 <a href="../../Enums/TrackingEvent.html">TrackingEvent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../../Enums/TrackingEvent/View.html">– View</a>
+                <a href="../../Enums/TrackingEvent/Screen.html">– Screen</a>
               </li>
               <li class="nav-group-task">
-                <a href="../../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
+                <a href="../../Enums/TrackingEvent/Interaction.html">– Interaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/TrackingEvent/UIElement.html">– UIElement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Enums/TrackingEvent/Engagement.html">– Engagement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
               </li>
             </ul>
           </li>
@@ -277,6 +283,9 @@
               <li class="nav-group-task">
                 <a href="../../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -343,14 +352,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>View</h1>
+            <h1>Interaction</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">View</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Interaction</span></code></pre>
 
                 </div>
               </div>
-            <p>View events are typically broadcast on viewDidLoad or before a view is presented.</p>
+            <p>Represents an interaction event on a screen</p>
 
           </section>
           <section class="section task-group-section">
@@ -359,9 +368,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO26passwordIdentificationFormA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/passwordIdentificationForm" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO26passwordIdentificationFormA2EmF">passwordIdentificationForm</a>
+                    <a name="/s:16SchibstedAccount13TrackingEventO11InteractionO4viewA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/view" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO11InteractionO4viewA2EmF">view</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -369,14 +378,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Screen to enter identifier for password login method was viewed</p>
+                        <p>A screen was viewed</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">passwordIdentificationForm</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">view</span></code></pre>
 
                         </div>
                       </div>
@@ -390,9 +399,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO30passwordlessIdentificationFormA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/passwordlessIdentificationForm" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO30passwordlessIdentificationFormA2EmF">passwordlessIdentificationForm</a>
+                    <a name="/s:16SchibstedAccount13TrackingEventO11InteractionO6submitA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/submit" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO11InteractionO6submitA2EmF">submit</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -400,14 +409,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Screen to enter identifier for passwordless login method was viewed</p>
+                        <p>A screen was submitted</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">passwordlessIdentificationForm</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">submit</span></code></pre>
 
                         </div>
                       </div>
@@ -421,9 +430,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO13passwordInputA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/passwordInput" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO13passwordInputA2EmF">passwordInput</a>
+                    <a name="/s:16SchibstedAccount13TrackingEventO11InteractionO5closeA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/close" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO11InteractionO5closeA2EmF">close</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -431,231 +440,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Screen to enter password was viewed</p>
+                        <p>A screen was closed</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">passwordInput</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO17passwordlessInputA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/passwordlessInput" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO17passwordlessInputA2EmF">passwordlessInput</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Screen to verify passworldess identifier was viewed</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">passwordlessInput</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO18passwordlessResendA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/passwordlessResend" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO18passwordlessResendA2EmF">passwordlessResend</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Screen to resend password was viewed</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">passwordlessResend</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO5termsA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/terms" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO5termsA2EmF">terms</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Terms and conditions screen was viewed</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">terms</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO12termsSummaryA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/termsSummary" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO12termsSummaryA2EmF">termsSummary</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Terms and conditions summary was viewed</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">termsSummary</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO19accountVerificationA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/accountVerification" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO19accountVerificationA2EmF">accountVerification</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Information screen to check email for verification link is shown</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">accountVerification</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO18requiredFieldsFormA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/requiredFieldsForm" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO18requiredFieldsFormA2EmF">requiredFieldsForm</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Screen to enter required fields is shown</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">requiredFieldsForm</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount13TrackingEventO4ViewO5errorA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/error" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount13TrackingEventO4ViewO5errorA2EmF">error</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Error popup screen was shown</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">error</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">close</span></code></pre>
 
                         </div>
                       </div>

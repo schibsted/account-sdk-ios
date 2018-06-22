@@ -115,16 +115,22 @@
                 <a href="../Enums/TrackingEvent.html">TrackingEvent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/TrackingEvent/View.html">– View</a>
+                <a href="../Enums/TrackingEvent/Screen.html">– Screen</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
+                <a href="../Enums/TrackingEvent/Interaction.html">– Interaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/UIElement.html">– UIElement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent/Engagement.html">– Engagement</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/TrackingEvent/ErrorType.html">– ErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TrackingEvent/AdditionalField.html">– AdditionalField</a>
               </li>
             </ul>
           </li>
@@ -277,6 +283,9 @@
               <li class="nav-group-task">
                 <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -416,6 +425,74 @@ this method.</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">willPresent</span><span class="p">(</span><span class="nv">flow</span><span class="p">:</span> <span class="kt"><a href="../Enums/LoginMethod.html">LoginMethod</a></span><span class="o">.</span><span class="kt">FlowVariant</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a></span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount18IdentityUIDelegateP13skipRequestedySo16UIViewControllerC07topViewH0_yAA20SkipLoginDispositionOc4donetF"></a>
+                    <a name="//apple_ref/swift/Method/skipRequested(topViewController:done:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount18IdentityUIDelegateP13skipRequestedySo16UIViewControllerC07topViewH0_yAA20SkipLoginDispositionOc4donetF">skipRequested(topViewController:done:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This will be called when he user presses the skip button on a skippable UI flow</p>
+
+<p>You must call the done callback and tell the UI to either continue or ignore the request
+to skip the login flow</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">skipRequested</span><span class="p">(</span><span class="nv">topViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="nv">done</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>topViewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the view controller that is currently the topViewController of the internal naviagtion controller</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>done</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>call this to tell the flow to continue</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
