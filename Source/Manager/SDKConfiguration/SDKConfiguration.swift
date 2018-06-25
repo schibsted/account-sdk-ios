@@ -31,5 +31,9 @@ public class SDKConfiguration {
             }
         }
     }
-    private var _agreementsCache = AgreementsCache()
+    private var _agreementsCache = AgreementsCache.default
+
+    func reset() {
+        self.agreementsCache = .default
+    }
 }

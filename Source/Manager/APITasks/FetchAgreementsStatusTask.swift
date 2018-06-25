@@ -20,6 +20,7 @@ class FetchAgreementsStatusTask: TaskProtocol {
 
         let agreementsCache = SDKConfiguration.shared.agreementsCache
         if let agreements = agreementsCache.load(forUserID: userID) {
+            log(from: self, "got agreements from cache")
             completion(.success(agreements.client && agreements.platform))
             return
         }
@@ -41,6 +42,7 @@ class FetchAgreementsStatusTask: TaskProtocol {
             switch result {
             case let .success(model):
                 agreementsCache.store(model, forUserID: userID)
+                log(from: self, "stored agreements to cache")
                 let isAccepted = model.client && model.platform
                 completion(.success(isAccepted))
             case let .failure(error):

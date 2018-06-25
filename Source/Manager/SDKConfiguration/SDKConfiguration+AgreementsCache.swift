@@ -25,12 +25,18 @@ private enum Keys {
 extension SDKConfiguration {
     /// How agreements are cached
     public struct AgreementsCache {
+        static let `default` = AgreementsCache(
+            isOn: true,
+            minDays: 1,
+            maxDays: 7
+        )
+
         /// Whether caching is enabled or not
-        public let isOn: Bool = true
+        public let isOn: Bool
         /// Minimum number of days agreements status should be cached
-        public let minDays: UInt32 = 1
+        public let minDays: UInt32
         /// Maximum number of days agreements status should be cached
-        public let maxDays: UInt32 = 7
+        public let maxDays: UInt32
 
         func load(forUserID userID: String) -> Agreements? {
             guard self.isOn, let data = Settings.value(forKey: Keys.agreementsData) as? JSONObject else {
@@ -44,7 +50,7 @@ extension SDKConfiguration {
                 guard let date = DateFormatter.local.date(from: try data.string(for: Keys.Data.date)) else {
                     return nil
                 }
-                guard date < Date() else {
+                guard date > Date() else {
                     return nil
                 }
                 return try Agreements(from: data.jsonObject(for: Keys.Data.agreements))

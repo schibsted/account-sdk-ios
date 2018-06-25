@@ -286,6 +286,7 @@
 		E1CEE52B20E12866003EC549 /* UserSettings+AgreementsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE52A20E12866003EC549 /* UserSettings+AgreementsCache.swift */; };
 		E1CEE53020E13559003EC549 /* SDKConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */; };
 		E1CEE53220E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */; };
+		E1CEE53420E13657003EC549 /* SDKConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE53320E13657003EC549 /* SDKConfigurationTests.swift */; };
 		E1DBA0F220A591FB0005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA0F020A591FB0005B3B9 /* Localizable.strings */; };
 		E1DBA10720A592970005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10520A592970005B3B9 /* Localizable.strings */; };
 		E1DBA10A20A592B70005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10820A592B70005B3B9 /* Localizable.strings */; };
@@ -748,6 +749,7 @@
 		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 		E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKConfiguration.swift; sourceTree = "<group>"; };
 		E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKConfiguration+AgreementsCache.swift"; sourceTree = "<group>"; };
+		E1CEE53320E13657003EC549 /* SDKConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKConfigurationTests.swift; sourceTree = "<group>"; };
 		E1DBA0F120A591FB0005B3B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA10620A592970005B3B9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA10920A592B70005B3B9 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = Localizable.strings; sourceTree = "<group>"; };
@@ -835,6 +837,7 @@
 				B01D7856A706C01F4F24ED96 /* Utils */,
 				43C24198205BF1BF00154866 /* Info.plist */,
 				B01D727F83E626229B431BA9 /* AppLaunchDataTests.swift */,
+				E1CEE53320E13657003EC549 /* SDKConfigurationTests.swift */,
 				B01D7006E33D394F44554548 /* AutoRefreshURLProtocolTests.swift */,
 				B01D765100CBFFEB5560E3C9 /* ClientConfigurationTests.swift */,
 				B01D77466A9A4EA4215A118E /* Configuration.swift */,
@@ -2025,6 +2028,7 @@
 			files = (
 				B01D74087706CF7BB6F3A4E8 /* AppLaunchDataTests.swift in Sources */,
 				B01D7C46B03D41800EC37E75 /* AutoRefreshURLProtocolTests.swift in Sources */,
+				E1CEE53420E13657003EC549 /* SDKConfigurationTests.swift in Sources */,
 				B01D75C8C6883948586B6F43 /* ClientConfigurationTests.swift in Sources */,
 				B01D797D48CC2F7019075B82 /* Configuration.swift in Sources */,
 				B01D75150925A5244C89E0A3 /* NetworkingTests.swift in Sources */,
