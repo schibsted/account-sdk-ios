@@ -18,6 +18,12 @@ class FetchAgreementsStatusTask: TaskProtocol {
             return
         }
 
+        let agreementsCache = UserSettings.shared.agreementsCache
+        if let agreements = agreementsCache.load(forUserID: userID) {
+            completion(.success(agreements.client && agreements.platform))
+            return
+        }
+
         user.api.fetchAgreementsAcceptanceStatus(
             oauthToken: tokens.accessToken,
             userID: userID
@@ -34,6 +40,7 @@ class FetchAgreementsStatusTask: TaskProtocol {
 
             switch result {
             case let .success(model):
+                agreementsCache.store(model, forUserID: userID)
                 let isAccepted = model.client && model.platform
                 completion(.success(isAccepted))
             case let .failure(error):
