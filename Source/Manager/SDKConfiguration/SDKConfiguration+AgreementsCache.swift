@@ -1,5 +1,9 @@
-import Foundation
+//
+// Copyright 2011 - 2018 Schibsted Products & Technology AS.
+// Licensed under the terms of the MIT license. See LICENSE in the project root.
+//
 
+import Foundation
 
 private extension DateFormatter {
     static let local: DateFormatter = {
@@ -18,7 +22,7 @@ private enum Keys {
     }
 }
 
-extension UserSettings {
+extension SDKConfiguration {
     /// How agreements are cached
     public struct AgreementsCache {
         /// Whether caching is enabled or not
@@ -63,7 +67,7 @@ extension UserSettings {
             let json: JSONObject = [
                 Keys.Data.userID: userID,
                 Keys.Data.date: DateFormatter.local.string(from: later),
-                Keys.Data.agreements: agreements.toJSON()
+                Keys.Data.agreements: agreements.toJSON(),
             ]
             Settings.setValue(json, forKey: Keys.agreementsData)
         }

@@ -284,6 +284,8 @@
 		E1CEE55E20E39EB0003EC549 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10B20A592DD0005B3B9 /* Localizable.strings */; };
 		E1CEE51720E1091F003EC549 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE51620E1091F003EC549 /* UserSettings.swift */; };
 		E1CEE52B20E12866003EC549 /* UserSettings+AgreementsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE52A20E12866003EC549 /* UserSettings+AgreementsCache.swift */; };
+		E1CEE53020E13559003EC549 /* SDKConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */; };
+		E1CEE53220E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */; };
 		E1DBA0F220A591FB0005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA0F020A591FB0005B3B9 /* Localizable.strings */; };
 		E1DBA10720A592970005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10520A592970005B3B9 /* Localizable.strings */; };
 		E1DBA10A20A592B70005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10820A592B70005B3B9 /* Localizable.strings */; };
@@ -744,8 +746,8 @@
 		E18394CF208DF43300B05EC9 /* InfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
 		E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "password-grant-invalid-scope.json"; sourceTree = "<group>"; };
 		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
-		E1CEE51620E1091F003EC549 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
-		E1CEE52A20E12866003EC549 /* UserSettings+AgreementsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserSettings+AgreementsCache.swift"; sourceTree = "<group>"; };
+		E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKConfiguration.swift; sourceTree = "<group>"; };
+		E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKConfiguration+AgreementsCache.swift"; sourceTree = "<group>"; };
 		E1DBA0F120A591FB0005B3B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA10620A592970005B3B9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA10920A592B70005B3B9 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = Localizable.strings; sourceTree = "<group>"; };
@@ -992,6 +994,7 @@
 		B01D72DD1F13CB0C849C4E01 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				E1CEE52E20E13559003EC549 /* SDKConfiguration */,
 				B01D73BEC0AE2BEC1A3D1350 /* User */,
 				B01D78F00E91F15E1F8587B0 /* APITasks */,
 				B01D7B8D819EFB37AD3F38D9 /* Protocols */,
@@ -1086,8 +1089,6 @@
 				B01D713B2E932B7E658B725F /* URLSession+User.swift */,
 				B01D751757C5D8BC1A53FC09 /* User+Agreements.swift */,
 				B01D7A25769E0D392EF02FA4 /* TokenData+anyUserID.swift */,
-				E1CEE51620E1091F003EC549 /* UserSettings.swift */,
-				E1CEE52A20E12866003EC549 /* UserSettings+AgreementsCache.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1485,6 +1486,15 @@
 			path = Info;
 			sourceTree = "<group>";
 		};
+		E1CEE52E20E13559003EC549 /* SDKConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */,
+				E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */,
+			);
+			path = SDKConfiguration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1861,7 +1871,6 @@
 				B01D72B724576E0F9A57630C /* NetworkingHeaders.swift in Sources */,
 				B01D74E25D8009E89398B8CF /* DefaultNetworkingProxy.swift in Sources */,
 				B01D7161901B48A6DDE53C56 /* StubbedNetworkingProxy.swift in Sources */,
-				E1CEE52B20E12866003EC549 /* UserSettings+AgreementsCache.swift in Sources */,
 				B01D7570F99A4F7792994425 /* Logging.swift in Sources */,
 				B01D771DB78C07049D119DE9 /* Version.swift in Sources */,
 				B01D789EB9085FF710E8E17E /* AtomicInt.swift in Sources */,
@@ -1901,6 +1910,7 @@
 				B01D7750F38D5AA5A950721D /* IdentifierProtocol.swift in Sources */,
 				B01D710C32A0B926D594EDE4 /* Terms.swift in Sources */,
 				0DE37BF4207B625700110614 /* UserTermsInteractor.swift in Sources */,
+				E1CEE53220E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift in Sources */,
 				B01D79AB5D409EBAE9D32E00 /* Client.swift in Sources */,
 				B01D7D5E08F7D6B83727421A /* IDToken.swift in Sources */,
 				B01D786E47A1C5F1E3782CBC /* Birthdate.swift in Sources */,
@@ -1930,6 +1940,7 @@
 				B01D7F976772A37C390270AB /* ClientError.swift in Sources */,
 				B01D7024FCB0F8ACAA9E3609 /* AppLaunchData.swift in Sources */,
 				B01D7DF3CFE410A6B5BE9FF8 /* String+Bearer.swift in Sources */,
+				E1CEE53020E13559003EC549 /* SDKConfiguration.swift in Sources */,
 				B01D71483EA4F94868FBFF81 /* SwiftKeychain.swift in Sources */,
 				B01D79CD89C00CC9B6B70D06 /* IdentityManager.swift in Sources */,
 				B01D7DA6C80BF09BB390B600 /* WebSessionRoutes.swift in Sources */,
@@ -1988,7 +1999,6 @@
 				B01D72E960E119520C7432C2 /* SignupInteractor.swift in Sources */,
 				B01D74D5F0410193F4773E6E /* FetchStatusInteractor.swift in Sources */,
 				B01D73C78249C0138756FFC9 /* OneTimeCodeInteractor.swift in Sources */,
-				E1CEE51720E1091F003EC549 /* UserSettings.swift in Sources */,
 				B01D702C4585A54590F4E1E6 /* UpdateProfileInteractor.swift in Sources */,
 				B01D73A95411398AAFFA5F8D /* RequiredFieldsInteractor.swift in Sources */,
 				B01D73D297FCD774644206D5 /* CompleteProfileInteractor.swift in Sources */,

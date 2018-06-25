@@ -34,7 +34,7 @@ class AcceptAgreementsTask: TaskProtocol {
 
             switch result {
             case .success:
-                UserSettings.shared.agreementsCache.store(Agreements(acceptanceStatus: true), forUserID: userID)
+                SDKConfiguration.shared.agreementsCache.store(Agreements(acceptanceStatus: true), forUserID: userID)
                 completion(.success(()))
             case let .failure(error):
                 completion(.failure(ClientError(error)))

@@ -18,7 +18,7 @@ class FetchAgreementsStatusTask: TaskProtocol {
             return
         }
 
-        let agreementsCache = UserSettings.shared.agreementsCache
+        let agreementsCache = SDKConfiguration.shared.agreementsCache
         if let agreements = agreementsCache.load(forUserID: userID) {
             completion(.success(agreements.client && agreements.platform))
             return
