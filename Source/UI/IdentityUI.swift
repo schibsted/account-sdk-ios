@@ -205,14 +205,20 @@ public class IdentityUI {
     /**
      Creates an IdentityUI object
      */
-    public convenience init(configuration: IdentityUIConfiguration) {
-        let manager = IdentityManager(clientConfiguration: configuration.clientConfiguration)
-        self.init(configuration: configuration, identityManager: manager)
+    public init(configuration: IdentityUIConfiguration) {
+        self.configuration = configuration
+        self.identityManager = IdentityManager(clientConfiguration: configuration.clientConfiguration)
+        self.fetchStatusInteractor = FetchStatusInteractor(identityManager: self.identityManager)
+        self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: self.identityManager)
+        self.clientInfoInteractor = ClientInfoInteractor(identityManager: self.identityManager)
+        self.configuration.tracker?.clientConfiguration = self.configuration.clientConfiguration
+        self.configuration.tracker?.delegate = self
     }
 
     /**
-     Creates an IdentityUI object with a provided identityManager
+     Creates an IdentityUI object with a provided identityManager. This is deprecated.
      */
+    @available(*, deprecated, message: "Passing in an identityManager to identityUI is not recommended as the IdentityUI does not control delegate calls to IdentityManager or it's internal User. This results in state overlap between the external IdentityManager and the IdentityUI") // swiftlint:disable:this line_length
     public init(configuration: IdentityUIConfiguration, identityManager: IdentityManager) {
         self.configuration = configuration
         self.identityManager = identityManager
