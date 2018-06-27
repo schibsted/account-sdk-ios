@@ -110,6 +110,10 @@ class PasswordViewController: IdentityUIViewController {
             self.password.delegate = self
             self.password.clearButtonMode = .whileEditing
             self.password.isSecureTextEntry = true
+
+            if #available(iOS 11.0, *) {
+                self.password.textContentType = .password
+            }
         }
     }
     @IBOutlet var inputTitle: NormalLabel! {
