@@ -150,7 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let identityManager: IdentityManager = IdentityManager(clientConfiguration: .current)
     let identityUI = IdentityUI(configuration: .current)
-    var currentUser = User(clientConfiguration: .current)
+    var currentUser = User.loadLast(withConfiguration: .current)
 
     var passwordFlowViewController: PasswordFlowViewController? {
         // swiftlint:disable:next force_cast
@@ -177,9 +177,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if urlSchemes?.contains(clientConfig.appURLScheme) == false {
             print("WARN: Register '\(clientConfig.appURLScheme)' as a custom URL scheme in the Info.plist")
         }
-
-        // Get current user that might've been loaded form the keychain
-        self.currentUser = self.identityManager.currentUser
 
         let doesLaunchOptionsContainRecognizedURL = AppLaunchData(launchOptions: options, clientConfiguration: .current) != nil
         if !doesLaunchOptionsContainRecognizedURL, self.currentUser.state == .loggedIn {
