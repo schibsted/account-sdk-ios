@@ -8,12 +8,17 @@ import UIKit
 
 extension StatusViewController: UserDelegate {
     func user(_ user: User, didChangeStateTo state: UserState) {
-        print("user \(user) changed state to \(state)")
+        print("UserDelegate: user \(user) changed state to \(state)")
         switch state {
         case .loggedIn:
-            // This can only happen with headless login because a visual login results in IdentityUIDelegate.didFinish
-            UIApplication.currentUser = UIApplication.identityManager.currentUser
-            UIApplication.currentUser.delegate = self
+            // This can only happen with headless login because a visual login results in IdentityUIDelegate.didFinish and uses it's own internal IdentityManager
+            //
+            // For a headless login we first catch the first time we log in with the IdentityManager and then we hijack it's internal currentUser and set our own
+            // delegate. So when we login again with the IdentityManager, we get to this point
+            DispatchQueue.main.async { [weak self] in
+                UIApplication.currentUser = UIApplication.identityManager.currentUser
+                UIApplication.currentUser.delegate = self
+            }
         case .loggedOut:
             break
         }
@@ -23,22 +28,28 @@ extension StatusViewController: UserDelegate {
     }
 }
 
+extension StatusViewController: IdentityManagerDelegate {
+    func userStateChanged(_ state: UserState) {
+        print("IdentityManagerDelegate: user \(UIApplication.identityManager.currentUser) changed state to \(state)")
+        // Hijack internal IdentityManager user and set our own delegate
+        UIApplication.currentUser = UIApplication.identityManager.currentUser
+        UIApplication.currentUser.delegate = self
+        self.updateFromCurrentUser()
+    }
+}
+
 extension StatusViewController: IdentityUIDelegate {
     func didFinish(result: IdentityUIResult) {
+        print("IdentityUIDelegate: result \(result)")
         switch result {
-        case .canceled:
-            print("The user canceled the login process")
         case let .completed(user):
             UIApplication.currentUser = user
             UIApplication.currentUser.delegate = self
             DispatchQueue.main.async { [weak self] in
                 self?.updateFromCurrentUser()
             }
-            print("User logged in - \(user)")
-        case .skipped:
-            print("User skipped login")
-        case let .failed(error):
-            print("Failed to login with UI - \(error)")
+        case .canceled, .skipped, .failed:
+            break
         }
     }
 
@@ -179,6 +190,7 @@ class StatusViewController: UIViewController {
 
         UIApplication.identityUI.delegate = self
         UIApplication.currentUser.delegate = self
+        UIApplication.identityManager.delegate = self
 
         self.updateFromCurrentUser()
     }
