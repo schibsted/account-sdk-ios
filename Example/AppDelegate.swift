@@ -140,9 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var offlineMode = false
 
     let identityManager: IdentityManager = IdentityManager(clientConfiguration: .current)
-    lazy var identityUI = {
-        IdentityUI(configuration: .current, identityManager: self.identityManager)
-    }()
+    let identityUI = IdentityUI(configuration: .current)
 
     var passwordFlowViewController: PasswordFlowViewController? {
         // swiftlint:disable:next force_cast
