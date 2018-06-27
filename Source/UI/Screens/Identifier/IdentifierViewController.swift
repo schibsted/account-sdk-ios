@@ -61,6 +61,10 @@ class IdentifierViewController: IdentityUIViewController {
             self.emailAddress.delegate = self
             self.emailAddress.isHidden = true
             self.emailAddress.clearButtonMode = .whileEditing
+
+            if #available(iOS 11.0, *) {
+                self.emailAddress.textContentType = .username
+            }
         }
     }
     @IBOutlet var phoneNumber: TextField! {
