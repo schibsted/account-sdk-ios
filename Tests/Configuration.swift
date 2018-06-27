@@ -16,11 +16,11 @@ extension Networking {
 
 class SchibstedAccountConfiguration: QuickConfiguration {
     override class func configure(_ configuration: Configuration) {
-        configuration.beforeSuite {
-            Logger.shared.removeTransports()
-        }
         configuration.beforeEach {
+            Logger.shared.removeTransports()
             expect(OwnedTaskHandle.counter.value).to(equal(0))
+
+            SDKConfiguration.shared.reset()
 
             Utils.cleanupKeychain()
             PasswordlessTokenStore.clear()
