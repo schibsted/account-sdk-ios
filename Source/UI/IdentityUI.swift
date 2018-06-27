@@ -130,7 +130,11 @@ public class IdentityUI {
     ///
     public let configuration: IdentityUIConfiguration
     ///
-    public let identityManager: IdentityManager
+    @available(*, deprecated, message: "This is going to be removed in the next version. Using it encourages bugs. It is advised to not mix headless and visual login") // swiftlint:disable:this line_length
+    public var identityManager: IdentityManager {
+        return self._identityManager
+    }
+    private let _identityManager: IdentityManager
 
     lazy var navigationController: UINavigationController = {
         DismissableNavigationController { [weak self] in
@@ -207,10 +211,10 @@ public class IdentityUI {
      */
     public init(configuration: IdentityUIConfiguration) {
         self.configuration = configuration
-        self.identityManager = IdentityManager(clientConfiguration: configuration.clientConfiguration)
-        self.fetchStatusInteractor = FetchStatusInteractor(identityManager: self.identityManager)
-        self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: self.identityManager)
-        self.clientInfoInteractor = ClientInfoInteractor(identityManager: self.identityManager)
+        self._identityManager = IdentityManager(clientConfiguration: configuration.clientConfiguration)
+        self.fetchStatusInteractor = FetchStatusInteractor(identityManager: self._identityManager)
+        self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: self._identityManager)
+        self.clientInfoInteractor = ClientInfoInteractor(identityManager: self._identityManager)
         self.configuration.tracker?.clientConfiguration = self.configuration.clientConfiguration
         self.configuration.tracker?.delegate = self
     }
@@ -221,7 +225,7 @@ public class IdentityUI {
     @available(*, deprecated, message: "Passing in an identityManager to identityUI is not recommended as the IdentityUI does not control delegate calls to IdentityManager or it's internal User. This results in state overlap between the external IdentityManager and the IdentityUI") // swiftlint:disable:this line_length
     public init(configuration: IdentityUIConfiguration, identityManager: IdentityManager) {
         self.configuration = configuration
-        self.identityManager = identityManager
+        self._identityManager = identityManager
         self.fetchStatusInteractor = FetchStatusInteractor(identityManager: identityManager)
         self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: identityManager)
         self.clientInfoInteractor = ClientInfoInteractor(identityManager: identityManager)
@@ -441,7 +445,7 @@ extension IdentityUI {
             merchantName: merchantName,
             localizedTeaserText: localizedTeaserText,
             localizationBundle: self.configuration.localizationBundle,
-            locale: self.identityManager.clientConfiguration.locale
+            locale: self._identityManager.clientConfiguration.locale
         )
         let viewController = IdentifierViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
         viewController.didRequestAction = { [weak self] action in
@@ -529,13 +533,13 @@ extension IdentityUI {
         case .password:
             coordinator = PasswordCoordinator(
                 navigationController: self.navigationController,
-                identityManager: self.identityManager,
+                identityManager: self._identityManager,
                 configuration: self.configuration
             )
         case .passwordless:
             coordinator = PasswordlessCoordinator(
                 navigationController: self.navigationController,
-                identityManager: self.identityManager,
+                identityManager: self._identityManager,
                 configuration: self.configuration
             )
         }
@@ -593,7 +597,7 @@ extension IdentityUI {
             self.authenticationCodeInteractor.validate(authCode: code, persistUser: shouldPersistUser) { [weak self] result in
                 switch result {
                 case let .success(user):
-                    self?.configuration.tracker?.loginID = self?.identityManager.currentUser.legacyID
+                    self?.configuration.tracker?.loginID = self?._identityManager.currentUser.legacyID
                     // User has validated the identifier and the code matches, nothing else to do.
                     self?.complete(with: .success(user))
                 case let .failure(error):
