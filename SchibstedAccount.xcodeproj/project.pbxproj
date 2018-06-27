@@ -278,6 +278,10 @@
 		E18394E4208DF43300B05EC9 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18394CF208DF43300B05EC9 /* InfoViewController.xib */; };
 		E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */ = {isa = PBXBuildFile; fileRef = E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */; };
 		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
+		E1CEE55B20E39EB0003EC549 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA0F020A591FB0005B3B9 /* Localizable.strings */; };
+		E1CEE55C20E39EB0003EC549 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10520A592970005B3B9 /* Localizable.strings */; };
+		E1CEE55D20E39EB0003EC549 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10820A592B70005B3B9 /* Localizable.strings */; };
+		E1CEE55E20E39EB0003EC549 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10B20A592DD0005B3B9 /* Localizable.strings */; };
 		E1DBA0F220A591FB0005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA0F020A591FB0005B3B9 /* Localizable.strings */; };
 		E1DBA10720A592970005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10520A592970005B3B9 /* Localizable.strings */; };
 		E1DBA10A20A592B70005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10820A592B70005B3B9 /* Localizable.strings */; };
@@ -1814,6 +1818,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1CEE55B20E39EB0003EC549 /* Localizable.strings in Resources */,
+				E1CEE55C20E39EB0003EC549 /* Localizable.strings in Resources */,
+				E1CEE55D20E39EB0003EC549 /* Localizable.strings in Resources */,
+				E1CEE55E20E39EB0003EC549 /* Localizable.strings in Resources */,
 				43E160572063C7A200D9BA3E /* LaunchScreen.storyboard in Resources */,
 				43E160542063C7A200D9BA3E /* Assets.xcassets in Resources */,
 				43E160522063C7A200D9BA3E /* Main.storyboard in Resources */,
