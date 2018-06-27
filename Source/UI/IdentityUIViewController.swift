@@ -52,8 +52,7 @@ class IdentityUIViewController: UIViewController {
     init(configuration: IdentityUIConfiguration,
          navigationSettings: NavigationSettings,
          trackerScreenID: TrackingEvent.Screen,
-         trackerViewAdditionalFields: [TrackingEvent.AdditionalField] = []
-    ) {
+         trackerViewAdditionalFields: [TrackingEvent.AdditionalField] = []) {
         self.configuration = configuration
         self.navigationSettings = navigationSettings
         self.trackerScreenID = trackerScreenID
