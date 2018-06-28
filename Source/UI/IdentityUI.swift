@@ -295,7 +295,7 @@ public class IdentityUI {
         }
 
         let uiResult: IdentityUIResult?
-        var shouldPersistUser = false
+        var shouldPersistUser: Bool?
         switch output {
         case let .success(user, persistUser):
             uiResult = .completed(user)
@@ -310,7 +310,7 @@ public class IdentityUI {
         }
 
         let finish = { [weak self] in
-            if case let .completed(user)? = uiResult, shouldPersistUser {
+            if case let .completed(user)? = uiResult, shouldPersistUser == true {
                 user.persistCurrentTokens()
             }
             if let result = uiResult {
@@ -383,7 +383,7 @@ extension IdentityUI: FlowCoordinator {
     }
 
     enum Output {
-        case success(user: User, persistUser: Bool)
+        case success(user: User, persistUser: Bool?)
         case cancel
         case failure(ClientError)
         case skip
@@ -630,7 +630,7 @@ extension IdentityUI {
             }
         case let .validateAuthCode(code, shouldPersistUser):
             // Let's check if the code validates.
-            self.authenticationCodeInteractor.validate(authCode: code, persistUser: shouldPersistUser) { [weak self] result in
+            self.authenticationCodeInteractor.validate(authCode: code) { [weak self] result in
                 switch result {
                 case let .success(user):
                     self?.configuration.tracker?.loginID = self?._identityManager.currentUser.legacyID
