@@ -70,7 +70,7 @@ public class User: UserProtocol {
 
     private let dispatchQueue = DispatchQueue(label: "com.schibsted.identity.User", attributes: [])
     private var _tokens: TokenData?
-    private var isPersistent = false
+    var isPersistent = false
 
     var tokens: TokenData? {
         return self.dispatchQueue.sync {

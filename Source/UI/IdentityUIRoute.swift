@@ -16,8 +16,8 @@ extension IdentityUI {
         /// `IdentityUI.Route.storePersistentMetadata(for:)`, so it's made available again as an associated value when constructing the route from a URL.
         case enterPassword(for: EmailAddress, scopes: [String])
 
-        /// Route to the next step after email validation occurred after signup.
-        case validateAuthCode(code: String, shouldPersistUser: Bool)
+        /// Route to validate an authcode
+        case validateAuthCode(code: String, shouldPersistUser: Bool?)
 
         var loginMethod: LoginMethod {
             switch self {
@@ -67,14 +67,13 @@ extension IdentityUI.Route {
                 return
             }
             self = .enterPassword(for: email, scopes: scopes)
-            return
         case let .codeAfterSignup(code, shouldPersistUser):
             self = .validateAuthCode(code: code, shouldPersistUser: shouldPersistUser)
-            return
         case let .codeAfterUnvalidatedLogin(code):
             // We have no way to retrieve the `shouldPersistUser` flag from the redirect URL in this case, so we just fall back to `false`.
             self = .validateAuthCode(code: code, shouldPersistUser: false)
-            return
+        case let .codeAfterAccountSummary(code):
+            self = .validateAuthCode(code: code, shouldPersistUser: nil)
         }
     }
 }
