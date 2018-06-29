@@ -10,7 +10,7 @@ matrix:
     - env:
         - COMMAND=FASTLANE_ALL
       script:
-        - scripts/travis_env_lint.sh
+        - scripts/brew_setup.sh
         - scripts/populate-dummy-secrets.sh
         - FASTLANE_SKIP_UPDATE_CHECK=true fastlane all
       after_success:
