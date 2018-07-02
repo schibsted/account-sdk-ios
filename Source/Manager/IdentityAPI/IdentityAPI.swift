@@ -325,7 +325,7 @@ class IdentityAPI {
             return nil
         }
 
-        log(from: self, "parsed spid error: \(spidError)")
+        log(level: .debug, from: self, "parsed spid error: \(spidError)")
 
         switch spidError {
         case .string("invalid_user_credentials", "OAuthException", 400):
@@ -395,7 +395,7 @@ class IdentityAPI {
 
         let nonNilFormData = formData.compactedValues()
 
-        log(from: self, url)
+        log(level: .verbose, from: self, url)
         return Networking.send(to: url, using: router.method, headers: headers, formData: nonNilFormData, completion: { data, response, error in
             do {
                 let data = try Networking.Utils.ensureResponse(data, response, error)(Array(200...299))

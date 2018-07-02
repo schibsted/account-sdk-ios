@@ -327,3 +327,15 @@ extension ClientConfiguration: Equatable {
             && lhs.redirectURLRoot == rhs.redirectURLRoot
     }
 }
+
+extension ClientConfiguration: CustomStringConvertible {
+    public var description: String {
+        let envString: String
+        if let env = self.environment {
+            envString = String(describing: env)
+        } else {
+            envString = self.serverURL.absoluteString
+        }
+        return "(clientID: \(self.clientID), env: \(envString), scheme: \(self.appURLScheme.shortened)"
+    }
+}
