@@ -6,9 +6,9 @@
 import Foundation
 
 extension String {
-    func gut() -> String {
-        let maxChars = 6
-        let charsOnEachSide = 2
+    var shortened: String {
+        let maxChars = 8
+        let charsOnEachSide = 3
         let inbetweenChar: Character = "."
 
         if self.count <= charsOnEachSide * 2 {

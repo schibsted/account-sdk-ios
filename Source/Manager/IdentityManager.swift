@@ -125,7 +125,7 @@ public class IdentityManager: IdentityManagerProtocol {
 
         try? self.currentUser.loadStoredTokens()
 
-        log(from: self, "user: \(self.currentUser)")
+        log(from: self, "config: \(clientConfiguration), user: \(self.currentUser)")
     }
 
     private func dispatchIfSelf(_ block: @escaping () -> Void) {
@@ -146,16 +146,15 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter completion: callback that is called after the code is sent
      */
     public func sendCode(to identifier: Identifier, completion: @escaping NoValueCallback) {
-        log(from: self, identifier)
-
+        log(from: self, "sending code to \(identifier)")
         let locale = self.clientConfiguration.locale
         let localeID = Locale.canonicalLanguageIdentifier(from: locale.identifier)
 
         let completion = { [weak self] (result: Result<PasswordlessToken, ClientError>) in
-            log(from: self, result)
 
             switch result {
             case let .success(token):
+                log(level: .verbose, from: self, "sent code to \(identifier)")
                 PasswordlessTokenStore.setData(
                     token: token,
                     identifier: identifier,
@@ -166,6 +165,7 @@ public class IdentityManager: IdentityManagerProtocol {
                     completion(.success(()))
                 }
             case let .failure(error):
+                log(level: .error, from: self, "failed to send code to \(identifier) - \(error)")
                 self?.dispatchIfSelf {
                     completion(.failure(error))
                 }
@@ -191,7 +191,7 @@ public class IdentityManager: IdentityManagerProtocol {
      - SeeAlso: `sendCode(...)`
      */
     public func resendCode(to identifier: Identifier, completion: @escaping NoValueCallback) {
-        log(from: self, identifier)
+        log(from: self, "resending code to \(identifier)")
         let passwordlessToken: PasswordlessToken
         do {
             let data = try PasswordlessTokenStore.getData(for: identifier.connection)
@@ -200,6 +200,7 @@ public class IdentityManager: IdentityManagerProtocol {
             }
             passwordlessToken = data.token
         } catch {
+            log(level: .error, from: self, "failed to resend code to \(identifier) - \(error)")
             return self.dispatchIfSelf {
                 completion(.failure(ClientError(error)))
             }
@@ -214,22 +215,19 @@ public class IdentityManager: IdentityManagerProtocol {
             passwordlessToken: passwordlessToken,
             locale: localeID
         ) { [weak self] result in
-            log(from: self, result)
-
-            switch result {
-            case let .success(token):
-                if token == passwordlessToken {
-                    self?.dispatchIfSelf {
-                        completion(.success(()))
-                    }
-                } else {
-                    self?.dispatchIfSelf {
-                        completion(.failure(.unexpected(GenericError.Unexpected("passwordless tokens mismatch"))))
-                    }
+            do {
+                let token = try result.materialize()
+                guard token == passwordlessToken else {
+                    throw GenericError.Unexpected("passwordless tokens mismatch")
                 }
-            case let .failure(error):
+                log(level: .verbose, from: self, "resent code to \(identifier)")
                 self?.dispatchIfSelf {
-                    completion(.failure(error))
+                    completion(.success(()))
+                }
+            } catch {
+                log(level: .error, from: self, "failed to resend code to \(identifier) - \(error)")
+                self?.dispatchIfSelf {
+                    completion(.failure(ClientError(error)))
                 }
             }
         }
@@ -245,7 +243,7 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter completion: the callback that is called after the one time code is checked
      */
     public func validate(oneTimeCode: String, for identifier: Identifier, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
-        log(from: self, "code: \(oneTimeCode), identifier: \(identifier)")
+        log(from: self, "validating code \(oneTimeCode) for \(identifier) with scopes: \(scopes), persist: \(persistUser)")
         let passwordlessToken: PasswordlessToken
         do {
             let data = try PasswordlessTokenStore.getData(for: identifier.connection)
@@ -254,12 +252,22 @@ public class IdentityManager: IdentityManagerProtocol {
             }
             passwordlessToken = data.token
         } catch {
+            log(level: .error, from: self, "failed to validate code \(oneTimeCode) for \(identifier)")
             return self.dispatchIfSelf {
                 completion(.failure(ClientError(error)))
             }
         }
 
-        log(from: self, "passwordlessToken \(String(describing: passwordlessToken).gut())")
+        log(level: .verbose, from: self, "got passwordlessToken \(String(describing: passwordlessToken).shortened)")
+
+        let wrappedCompletion: NoValueCallback = { [weak self] result in
+            if case let .failure(error) = result {
+                log(level: .error, from: self, "failed to validate code \(oneTimeCode) for \(identifier) - \(error)")
+            } else {
+                log(level: .verbose, from: self, "validated code \(oneTimeCode) for \(identifier)")
+            }
+            completion(result)
+        }
 
         self.api.validateCode(
             clientID: self.clientConfiguration.clientID,
@@ -270,7 +278,7 @@ public class IdentityManager: IdentityManagerProtocol {
             passwordlessToken: passwordlessToken,
             scope: (scopes + IdentityManager.defaultScopes).duplicatesRemoved()
         ) { [weak self] result in
-            self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
+            self?.finishLogin(result: result, persistUser: persistUser, completion: wrappedCompletion)
         }
     }
 
@@ -362,8 +370,19 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter completion: a callback that is called after the credential is checked.
      */
     public func login(username: Identifier, password: String, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
+        log(from: self, "\(username) logging in with scopes: \(scopes), persist: \(persistUser)")
+
+        let wrappedCompletion: NoValueCallback = { [weak self] result in
+            if case let .failure(error) = result {
+                log(level: .error, from: self, "failed to login \(username): \(error)")
+            } else {
+                log(level: .verbose, from: self, "logged in with \(username)")
+            }
+            completion(result)
+        }
+
         guard case .email = username else {
-            completion(.failure(ClientError.unexpectedIdentifier(actual: username, expected: "only EmailAddress supported")))
+            wrappedCompletion(.failure(ClientError.unexpectedIdentifier(actual: username, expected: "only EmailAddress supported")))
             return
         }
 
@@ -376,7 +395,7 @@ public class IdentityManager: IdentityManagerProtocol {
             password: password,
             scope: (scopes + IdentityManager.defaultScopes).duplicatesRemoved()
         ) { [weak self] result in
-            self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
+            self?.finishLogin(result: result, persistUser: persistUser, completion: wrappedCompletion)
         }
     }
 
@@ -434,7 +453,14 @@ public class IdentityManager: IdentityManagerProtocol {
         persistUser: Bool,
         completion: @escaping NoValueCallback
     ) {
+        log(from: self,
+            "signing up \(username),"
+                + "profile: \(profile != nil), "
+                + "acceptTerms: \(acceptTerms as Any), "
+                + "persist: \(persistUser), "
+                + "redirect: \(redirectPath ?? "nil")")
         guard case .email = username else {
+            log(level: .error, from: self, "failed to signup \(username) - only email supported")
             completion(.failure(ClientError.unexpectedIdentifier(actual: username, expected: "only EmailAddress supported")))
             return
         }
@@ -444,13 +470,12 @@ public class IdentityManager: IdentityManagerProtocol {
             clientID: self.clientConfiguration.clientID,
             clientSecret: self.clientConfiguration.clientSecret
         ) { [weak self] result in
-            log(from: self, "clientToken: \(result)")
-
             let clientTokenData: TokenData
             switch result {
             case let .success(data):
                 clientTokenData = data
             case let .failure(error):
+                log(level: .error, from: self, "failed to signup \(username) - \(error)")
                 self?.dispatchIfSelf {
                     completion(.failure(ClientError(error)))
                 }
@@ -471,16 +496,17 @@ public class IdentityManager: IdentityManagerProtocol {
                 profile: profile,
                 acceptTerms: acceptTerms
             ) { [weak self] result in
-                log(from: self, result)
 
                 Settings.setValue(redirectPath, forKey: ClientConfiguration.RedirectInfo.Signup.settingsKey)
 
                 switch result {
                 case .success:
+                    log(level: .verbose, from: self, "signed up \(username)")
                     self?.dispatchIfSelf {
                         completion(.success(()))
                     }
                 case let .failure(error):
+                    log(level: .error, from: self, "failed to signup \(username) - \(error)")
                     self?.dispatchIfSelf {
                         completion(.failure(error))
                     }
@@ -515,7 +541,7 @@ public class IdentityManager: IdentityManagerProtocol {
     }
 
     private func finishLogin(result: Result<TokenData, ClientError>, persistUser: Bool, completion: NoValueCallback?) {
-        log(from: self, result)
+        log(level: .verbose, from: self, result)
         do {
             let tokens = try result.materialize()
             try self.currentUser.set(
@@ -547,7 +573,8 @@ public class IdentityManager: IdentityManagerProtocol {
             clientID: self.clientConfiguration.clientID,
             clientSecret: self.clientConfiguration.clientSecret
         ) { [weak self] result in
-            log(from: self, "clientToken: \(result)")
+
+            log(level: .verbose, from: self, "fetched client token with result: \(result)")
 
             guard let strongSelf = self else { return }
 
@@ -572,14 +599,15 @@ public class IdentityManager: IdentityManagerProtocol {
                 identifierInBase64: identifierInBase64,
                 connection: identifier.connection
             ) { [weak self] result in
-                log(from: self, result)
 
                 switch result {
                 case let .success(model):
+                    log(from: self, "identifier: \(identifier), status: \(model)")
                     self?.dispatchIfSelf {
                         completion(.success(model))
                     }
                 case let .failure(error):
+                    log(level: .error, from: self, "identifier: \(identifier), error: \(error)")
                     self?.dispatchIfSelf {
                         completion(.failure(error))
                     }
@@ -627,11 +655,12 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter completion: a callback that's called on completion and might receive an error.
      */
     public func requiredFields(completion: @escaping RequiredFieldsResultCallback) {
+        log(from: self, "fetching client required fields")
+
         self.api.fetchClientAccessToken(
             clientID: self.clientConfiguration.clientID,
             clientSecret: self.clientConfiguration.clientSecret
         ) { [weak self] result in
-            log(from: self, "clientToken: \(result)")
 
             guard let strongSelf = self else { return }
 
@@ -640,6 +669,7 @@ public class IdentityManager: IdentityManagerProtocol {
             case let .success(data):
                 clientTokenData = data
             case let .failure(error):
+                log(level: .error, from: self, "failed to fetch required fields - \(error)")
                 self?.dispatchIfSelf {
                     completion(.failure(ClientError(error)))
                 }
@@ -650,14 +680,15 @@ public class IdentityManager: IdentityManagerProtocol {
                 oauthToken: clientTokenData.accessToken,
                 clientID: strongSelf.clientConfiguration.clientID
             ) { [weak self] result in
-                log(from: self, result)
 
                 switch result {
                 case let .success(model):
+                    log(level: .verbose, from: self, "got client - \(model)")
                     self?.dispatchIfSelf {
                         completion(.success(model.requiredFields))
                     }
                 case let .failure(error):
+                    log(level: .error, from: self, "failed to fetch required fields - \(error)")
                     self?.dispatchIfSelf {
                         completion(.failure(error))
                     }
@@ -679,7 +710,8 @@ public class IdentityManager: IdentityManagerProtocol {
             clientID: self.clientConfiguration.clientID,
             clientSecret: self.clientConfiguration.clientSecret
         ) { [weak self] result in
-            log(from: self, "clientToken: \(result)")
+
+            log(level: .verbose, from: self, "fetched client token with result: \(result)")
 
             let clientTokenData: TokenData
             switch result {
@@ -699,7 +731,7 @@ public class IdentityManager: IdentityManagerProtocol {
                 clientID: strongSelf.clientConfiguration.clientID
             ) { [weak self] result in
 
-                log(from: self, result)
+                log(from: self, "fetched client data with result: \(result)")
 
                 switch result {
                 case let .success(terms):
