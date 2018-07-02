@@ -70,7 +70,17 @@ public class User: UserProtocol {
 
     private let dispatchQueue = DispatchQueue(label: "com.schibsted.identity.User", attributes: [])
     private var _tokens: TokenData?
-    private var isPersistent = false
+    private var _isPersistent = false
+
+    /**
+     Tells you if the user is persistent or not. A persistent user is one where the tokens are
+     stored in the keycchain.
+     */
+    public var isPersistent: Bool {
+        return self.dispatchQueue.sync {
+            self._isPersistent
+        }
+    }
 
     var tokens: TokenData? {
         return self.dispatchQueue.sync {
@@ -169,8 +179,9 @@ public class User: UserProtocol {
         refreshToken newRefreshToken: String? = nil,
         idToken newIDToken: IDToken? = nil,
         userID newUserID: String? = nil,
-        makePersistent: Bool? = nil
-    ) throws {
+        makePersistent maybeMakePersisent: Bool? = nil,
+        completion: @escaping (Result<NoValue, Failure>) -> Void
+    ) {
         //
         // This sync block makes sure that the only way new tokens are set on this user object is if we have both an
         // access token and a refresh token, and either an idToken or a userID
@@ -178,12 +189,13 @@ public class User: UserProtocol {
         // If anything is missing as an argument, the function checks if they were set before and then just assumes
         // you're changing one or more tokens but don't need to change all of them
         //
-        let tokens = try self.dispatchQueue.sync { () -> (new: TokenData?, old: TokenData?) in
+        self.dispatchQueue.async {
             let maybeAccessToken = newAccessToken ?? self._tokens?.accessToken
             let maybeRefreshToken = newRefreshToken ?? self._tokens?.refreshToken
 
             guard let accessToken = maybeAccessToken, let refreshToken = maybeRefreshToken else {
-                throw Failure.missingToken(maybeAccessToken?.gut(), maybeRefreshToken?.gut())
+                completion(.failure(.missingToken(maybeAccessToken?.gut(), maybeRefreshToken?.gut())))
+                return
             }
 
             let maybeIDToken: IDToken?
@@ -198,7 +210,8 @@ public class User: UserProtocol {
             }
 
             guard maybeLegacyUserID != nil || maybeIDToken != nil else {
-                throw Failure.missingUserID
+                completion(.failure(.missingUserID))
+                return
             }
 
             let newTokens = TokenData(
@@ -209,62 +222,68 @@ public class User: UserProtocol {
             )
 
             guard self._tokens != newTokens else {
-                return (new: nil, old: self._tokens)
+                log(from: self, "no new tokens to set")
+                DispatchQueue.main.async {
+                    completion(.success(()))
+                }
+                return
             }
 
             let maybeOldTokens = self._tokens
             self._tokens = newTokens
-            return (new: newTokens, old: maybeOldTokens)
-        }
 
-        guard let newTokens = tokens.new else {
-            // noop if no new tokens set
-            log(from: self, "no new tokens to set")
-            return
-        }
+            self._isPersistent = maybeMakePersisent ?? self._isPersistent
 
-        log(from: self, "new tokens \(newTokens)")
+            let isNewLoggedInUser = newTokens.anyUserID != maybeOldTokens?.anyUserID
 
-        self.isPersistent = makePersistent ?? self.isPersistent
+            if isNewLoggedInUser {
+                DispatchQueue.main.async { [weak self] in
+                    completion(.success(()))
+                    guard let strongSelf = self else { return }
+                    strongSelf.delegate?.user(strongSelf, didChangeStateTo: .loggedIn)
+                }
+                return
+            }
 
-        let isNewLoggedInUser = newTokens.anyUserID != nil && newTokens.anyUserID != tokens.old?.anyUserID
-
-        if self.isPersistent {
-            // Store new tokens if we are supposed to be persistent.
-            // Only clear previous tokens if the user is NOT a new one (since they have not logged out)
-            if let newTokens = tokens.new {
+            if self._isPersistent {
                 try? UserTokensStorage().store(newTokens)
+                if !isNewLoggedInUser, let oldTokens = maybeOldTokens {
+                    try? UserTokensStorage().clear(oldTokens)
+                }
             }
-            if !isNewLoggedInUser, let oldTokens = tokens.old {
-                try UserTokensStorage().clear(oldTokens)
-            }
-        }
-
-        if isNewLoggedInUser {
-            self.delegate?.user(self, didChangeStateTo: .loggedIn)
         }
     }
 
     func loadStoredTokens() throws {
         let tokens = try UserTokensStorage().loadTokens()
-        try self.set(
+        var result: Result<NoValue, Failure> = .success(())
+        let group = DispatchGroup()
+        group.enter()
+        self.set(
             accessToken: tokens.accessToken,
             refreshToken: tokens.refreshToken,
             idToken: tokens.idToken,
-            userID: tokens.userID
-        )
-
-        // Since credentials were already saved, we assume login is persistent.
-        self.isPersistent = true
+            userID: tokens.userID,
+            makePersistent: true // Since credentials were already saved, we assume login is persistent.
+        ) { returnedResult in
+            result = returnedResult
+            group.leave()
+        }
+        group.wait()
+        if case let .failure(error) = result {
+            throw error
+        }
     }
 
     func persistCurrentTokens() {
-        guard !self.isPersistent, let tokens = self.tokens else { return }
-        do {
-            try UserTokensStorage().store(tokens)
-            self.isPersistent = true
-        } catch {
-            log(self, "failed to persist tokens: \(error)")
+        self.dispatchQueue.async {
+            guard !self._isPersistent, let tokens = self.tokens else { return }
+            do {
+                try UserTokensStorage().store(tokens)
+                self._isPersistent = true
+            } catch {
+                log(self, "failed to persist tokens: \(error)")
+            }
         }
     }
 
@@ -287,23 +306,25 @@ public class User: UserProtocol {
             clientSecret: self.clientConfiguration.clientSecret,
             grantType: .refreshToken,
             refreshToken: tokens.refreshToken
-        ) { [weak self] result in
+        ) { [weak self] requestResult in
 
-            log(from: self, "refresh result on token \(refreshToken.gut()): \(result)")
+            log(from: self, "refresh result on token \(refreshToken.gut()): \(requestResult)")
 
             guard let strongSelf = self else {
                 completion(.failure(.invalidUser))
                 return
             }
 
-            switch result {
+            switch requestResult {
             case let .success(model):
                 if let refreshToken = model.refreshToken {
-                    do {
-                        try strongSelf.set(accessToken: model.accessToken, refreshToken: refreshToken)
-                        completion(.success(()))
-                    } catch {
-                        completion(.failure(.unexpected(error)))
+                    strongSelf.set(accessToken: model.accessToken, refreshToken: refreshToken) { setResult in
+                        switch setResult {
+                        case .success():
+                            completion(.success(()))
+                        case let .failure(error):
+                            completion(.failure(.unexpected(error)))
+                        }
                     }
                 } else {
                     // TODO: hacky, not really a json error. More because of the way swagger spec is. This property
