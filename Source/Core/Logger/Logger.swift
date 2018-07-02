@@ -31,7 +31,7 @@ private extension DispatchTime {
  */
 public class Logger {
     /// Shared logger object
-    public static let shared = Logger()
+    public static let shared = Logger(label: "# SchAccount: ")
 
     private let startTime = DispatchTime.now()
     private let queue = DispatchQueue(label: "com.schibsted.identity.Logger", qos: .utility)

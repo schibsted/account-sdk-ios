@@ -14,9 +14,9 @@ extension JWTHelperError: CustomStringConvertible {
     var description: String {
         switch self {
         case let .invalidString(string):
-            return "Got invalid jwt string: \(string.gut())"
+            return "Got invalid jwt string: \(string.shortened)"
         case let .componentDecodingError(component):
-            return "Could not decode component: \(component.gut())"
+            return "Could not decode component: \(component.shortened)"
         }
     }
 }
