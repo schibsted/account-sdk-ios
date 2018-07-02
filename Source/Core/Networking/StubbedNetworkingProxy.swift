@@ -346,7 +346,7 @@ class StubbedNetworkingProxy: NetworkingProxy {
         // Check if there're exact matches on this URL. If there are, first check if we are allowed
         // to proceed with it (defaults to true) and then return a mock data task
         for stub in type(of: self).urls[url] ?? [] {
-            log(from: self, "using url stub: \(stub.path) for \(request)")
+            log(level: .debug, from: self, "using url stub: \(stub.path) for \(request)")
             if stub.proceed(with: request) {
                 // Incase we are an arrayOfData, we need to remove the first element since it is now "used up" but only if there are more than 1 elements
                 defer {
@@ -388,7 +388,7 @@ class StubbedNetworkingProxy: NetworkingProxy {
             }
         }
 
-        log(from: self, "requst \(request) not stubbed")
+        log(level: .debug, from: self, "requst \(request) not stubbed")
         // This URL is not stubbed
         return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: .unstubbed(path: .url(url)))
     }

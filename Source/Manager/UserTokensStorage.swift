@@ -26,11 +26,11 @@ struct UserTokensStorage {
                 try self.store(tokens)
                 SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
             } catch {
-                log(from: self, "failed to migrate \(tokens)", force: true)
+                log(level: .error, from: self, "failed to migrate \(tokens)", force: true)
             }
         }
 
-        log(from: self, "loaded \(tokens)")
+        log(level: .debug, from: self, "loaded \(tokens)")
         return tokens
     }
 

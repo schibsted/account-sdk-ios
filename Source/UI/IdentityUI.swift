@@ -255,6 +255,7 @@ public class IdentityUI {
         scopes: [String] = []
     ) {
         self.configuration.tracker?.loginMethod = loginMethod
+        log(from: self, "starting \(loginMethod) login flow, internal user: \(self._identityManager.currentUser), config: \(self.configuration)")
         self.start(
             input: .byLoginMethod(
                 loginMethod,
@@ -290,11 +291,12 @@ public class IdentityUI {
 
     private func complete(with output: Output) {
         guard IdentityUI.presentedIdentityUI != nil else {
+            log(level: .verbose, from: self, "UI flow already dismissed")
             // IdentityUI has been already dismissed.
             return
         }
 
-        let uiResult: IdentityUIResult?
+        let uiResult: IdentityUIResult
         switch output {
         case let .success(user):
             uiResult = .completed(user)
@@ -311,9 +313,8 @@ public class IdentityUI {
         IdentityUI.presentedIdentityUI = nil
 
         let finish = { [weak self] in
-            if let result = uiResult {
-                self?.delegate?.didFinish(result: result)
-            }
+            log(from: self, "finishing with result: \(uiResult)")
+            self?.delegate?.didFinish(result: uiResult)
         }
 
         if self.navigationController.presentingViewController != nil {
@@ -549,7 +550,10 @@ extension IdentityUI {
             switch output {
             case let .success(user, persistUser):
                 if persistUser {
+                    log(from: self, "persisting user \(user)")
                     user.persistCurrentTokens()
+                } else {
+                    log(from: self, "not persisting user \(user)")
                 }
                 completion(.success(user))
             case .cancel:

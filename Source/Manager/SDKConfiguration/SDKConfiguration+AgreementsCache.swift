@@ -55,7 +55,7 @@ extension SDKConfiguration {
                 }
                 return try Agreements(from: data.jsonObject(for: Keys.Data.agreements))
             } catch {
-                log("failed to find agreements in cache \(error)")
+                log(from: self, "failed to find agreements in cache \(error)")
                 return nil
             }
         }
