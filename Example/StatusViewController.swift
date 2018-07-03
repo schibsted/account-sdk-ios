@@ -11,11 +11,6 @@ extension StatusViewController: IdentityManagerDelegate {
     func userStateChanged(_: UserState) {
         print("Login state changed to: \(self.isUserLoggedIn)")
         self.updateFromCurrentUser()
-
-        // TODO: make a more sane separate test
-
-        let task: URLSessionDataTask? = self.session?.dataTask(with: URL(string: "http://localhost:8888")!) { _, _, _ in print("Done!") }
-        task?.resume()
     }
 }
 

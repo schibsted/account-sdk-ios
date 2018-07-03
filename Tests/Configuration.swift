@@ -36,6 +36,8 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             User.globalStore.removeAll()
         }
         configuration.afterEach {
+            Logger.shared.waitTillAllLogsTransported()
+
             Utils.cleanupKeychain()
             PasswordlessTokenStore.clear()
 
@@ -55,6 +57,8 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             StubbedNetworkingProxy.removeStubs()
 
             Settings.clearAll()
+
+            Logger.shared.waitTillAllLogsTransported()
         }
     }
 }

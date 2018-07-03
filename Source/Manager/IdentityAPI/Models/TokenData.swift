@@ -36,10 +36,10 @@ struct TokenData: JSONParsable, Equatable {
 extension TokenData: CustomStringConvertible {
     var description: String {
         return "<"
-            + "access:\(self.accessToken.gut()), "
-            + "refresh:\(self.refreshToken?.gut() ?? ""), "
-            + "id:\(String(describing: self.idToken).gut()), "
-            + "userID:\(self.userID?.gut() ?? "")"
+            + "access:\(self.accessToken.shortened), "
+            + "refresh:\(self.refreshToken?.shortened ?? ""), "
+            + "id:\(String(describing: self.idToken).shortened), "
+            + "userID:\(self.userID?.shortened ?? "")"
             + ">"
     }
 }
