@@ -13,7 +13,8 @@ platform :ios do
       output_directory: 'build/',
       device: 'iPhone 8',
       buildlog_path: 'build/logs',
-      code_coverage: true
+      code_coverage: true,
+      formatter: "fastlane/custom_formatter.rb"
     )
 
     slather(
