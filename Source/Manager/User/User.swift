@@ -127,13 +127,13 @@ public class User: UserProtocol {
         userProduct.user = self
         self.taskManager = TaskManager(for: self)
         User.globalStore[ObjectIdentifier(self).hashValue] = self
-        log(from: self, "added User \(ObjectIdentifier(self).hashValue) to global store")
+        log(level: .debug, from: self, "added User \(ObjectIdentifier(self).hashValue) to global store")
     }
 
     deinit {
         self.willDeinit.emitSync(())
         User.globalStore[ObjectIdentifier(self).hashValue] = nil
-        log(from: self, "removed User \(ObjectIdentifier(self).hashValue) from global store")
+        log(level: .debug, from: self, "removed User \(ObjectIdentifier(self).hashValue) from global store")
     }
 
     /**
@@ -160,7 +160,7 @@ public class User: UserProtocol {
         self.delegate?.user(self, didChangeStateTo: .loggedOut)
 
         self.api.logout(oauthToken: oldTokens.accessToken) { [weak self] result in
-            log(from: self, "logging out - server session result: \(result)")
+            log(level: .verbose, from: self, "logging out - server session result: \(result)")
         }
     }
 
@@ -183,7 +183,7 @@ public class User: UserProtocol {
             let maybeRefreshToken = newRefreshToken ?? self._tokens?.refreshToken
 
             guard let accessToken = maybeAccessToken, let refreshToken = maybeRefreshToken else {
-                throw Failure.missingToken(maybeAccessToken?.gut(), maybeRefreshToken?.gut())
+                throw Failure.missingToken(maybeAccessToken?.shortened, maybeRefreshToken?.shortened)
             }
 
             let maybeIDToken: IDToken?
@@ -219,11 +219,11 @@ public class User: UserProtocol {
 
         guard let newTokens = tokens.new else {
             // noop if no new tokens set
-            log(from: self, "no new tokens to set")
+            log(level: .debug, from: self, "no new tokens to set")
             return
         }
 
-        log(from: self, "new tokens \(newTokens)")
+        log(level: .debug, from: self, "new tokens \(newTokens)")
 
         self.isPersistent = makePersistent ?? self.isPersistent
 
@@ -264,7 +264,7 @@ public class User: UserProtocol {
             try UserTokensStorage().store(tokens)
             self.isPersistent = true
         } catch {
-            log(self, "failed to persist tokens: \(error)")
+            log(level: .error, from: self, "failed to persist tokens: \(error)", force: true)
         }
     }
 
@@ -275,12 +275,12 @@ public class User: UserProtocol {
         }
 
         guard let refreshToken = tokens.refreshToken else {
-            forceLog(from: self, "no refresh token")
+            log(level: .error, from: self, "no refresh token", force: true)
             completion(.failure(.userRefreshFailed(GenericError.Unexpected("no refresh token for user \(self)"))))
             return
         }
 
-        log(from: self, "refreshing with \(refreshToken.gut())")
+        log(level: .verbose, from: self, "refreshing with \(refreshToken.shortened)")
 
         self.api.requestAccessToken(
             clientID: self.clientConfiguration.clientID,
@@ -289,7 +289,7 @@ public class User: UserProtocol {
             refreshToken: tokens.refreshToken
         ) { [weak self] result in
 
-            log(from: self, "refresh result on token \(refreshToken.gut()): \(result)")
+            log(level: .verbose, from: self, "refresh result on token \(refreshToken.shortened): \(result)")
 
             guard let strongSelf = self else {
                 completion(.failure(.invalidUser))
@@ -321,7 +321,7 @@ public class User: UserProtocol {
 
 extension User: CustomStringConvertible {
     public var description: String {
-        return "<id:\(self.id?.gut() ?? "")>"
+        return "<id:\(self.id?.shortened ?? "")>"
     }
 }
 

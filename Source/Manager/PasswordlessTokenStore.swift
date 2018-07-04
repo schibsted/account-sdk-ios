@@ -50,7 +50,7 @@ struct PasswordlessTokenStore {
         let stringToStore = "\(token):" + identifier.serializedString
         let key = Key(connection)
         Settings.setValue(stringToStore, forKey: String(describing: key))
-        log("\(key) -> \(stringToStore)")
+        log(level: .debug, "\(key) -> \(stringToStore)")
     }
 
     static func getData(for connection: Connection) throws -> (identifier: Identifier, token: PasswordlessToken) {
