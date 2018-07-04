@@ -22,10 +22,7 @@ class AcceptAgreementsTask: TaskProtocol {
             oauthToken: tokens.accessToken,
             userID: userID
         ) { [weak self] result in
-
             guard let strongSelf = self else { return }
-
-            log(from: self, result)
 
             guard strongSelf.user != nil else {
                 completion(.failure(.invalidUser))
