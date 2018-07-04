@@ -144,7 +144,6 @@
 		B01D76A2D5E1AE66234F61E8 /* agreements-invalid-wrong-user.json in Resources */ = {isa = PBXBuildFile; fileRef = B01D7B776FECBBB8332EC006 /* agreements-invalid-wrong-user.json */; };
 		B01D76C2825A03B168B743C2 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D73D3F9346C902B47BB01 /* UserAgent.swift */; };
 		B01D76CB9A500C65AD87ED96 /* ViewContainingExpandedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D78BB0C41529A50668EBF /* ViewContainingExpandedSubviews.swift */; };
-		B01D76CE182C2299323B703C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B01D76FD5D2584DCF85A2040 /* .gitkeep */; };
 		B01D76CE68648BCEFF7798AE /* SynchronizedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D72A62F75B0F962BA6A61 /* SynchronizedDictionary.swift */; };
 		B01D76D69F3DB816DB7EE678 /* TestingConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7494C9E04F7DCDC358FF /* TestingConfigurations.swift */; };
 		B01D76D6DB4057908A0AF043 /* TermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D70EED22A39B01C848AE8 /* TermsViewModel.swift */; };
@@ -449,13 +448,6 @@
 			remoteGlobalIDString = 1F1A74281940169200FFFC47;
 			remoteInfo = "Nimble-iOS";
 		};
-		43E1605C2063C7AF00D9BA3E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 43C2417F205BF1BE00154866 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 43E160492063C7A200D9BA3E;
-			remoteInfo = Example;
-		};
 		E18F86D520739B8B0074BE41 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43C2417F205BF1BE00154866 /* Project object */;
@@ -619,7 +611,6 @@
 		B01D76D2F05639801DE64404 /* JSONParsable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParsable.swift; sourceTree = "<group>"; };
 		B01D76E8DD8EF78D9EA32B7D /* bad.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bad.json; sourceTree = "<group>"; };
 		B01D76EA637BE6B16C92BF0B /* UserTokensKeychainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTokensKeychainTests.swift; sourceTree = "<group>"; };
-		B01D76FD5D2584DCF85A2040 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = file.gitkeep; path = .gitkeep; sourceTree = "<group>"; };
 		B01D7707B772F625C6F6494C /* OwnedTaskHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnedTaskHandle.swift; sourceTree = "<group>"; };
 		B01D77108888FC3BA9C761E2 /* ResendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResendViewController.swift; sourceTree = "<group>"; };
 		B01D7735FB1C6B36657AFF73 /* TokenExchangeTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenExchangeTask.swift; sourceTree = "<group>"; };
@@ -836,7 +827,6 @@
 		43C2418A205BF1BE00154866 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				B01D7545F8D85A812B814024 /* Assets */,
 				B01D73B9677CB90B6585D5A2 /* Core */,
 				B01D72DD1F13CB0C849C4E01 /* Manager */,
 				B01D7EB35229FB86670A90F0 /* UI */,
@@ -1173,14 +1163,6 @@
 				B01D7E818251F6089AA8CB5F /* ErrorViewController.swift */,
 			);
 			path = Error;
-			sourceTree = "<group>";
-		};
-		B01D7545F8D85A812B814024 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				B01D76FD5D2584DCF85A2040 /* .gitkeep */,
-			);
-			path = Assets;
 			sourceTree = "<group>";
 		};
 		B01D7562616B8B40974C12A4 /* Views */ = {
@@ -1581,7 +1563,6 @@
 			dependencies = (
 				43E160292063B5EC00D9BA3E /* PBXTargetDependency */,
 				43E1602B2063B5EC00D9BA3E /* PBXTargetDependency */,
-				43E1605D2063C7AF00D9BA3E /* PBXTargetDependency */,
 				43C24194205BF1BF00154866 /* PBXTargetDependency */,
 			);
 			name = SchibstedAccountTests;
@@ -1801,7 +1782,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B01D76CE182C2299323B703C /* .gitkeep in Resources */,
 				B01D7B3DEA2F5691BAC762F2 /* Configuration.plist in Resources */,
 				B01D7A389197CB4A518204A7 /* ErrorViewController.xib in Resources */,
 				B01D7E4995ABB3BA0C7F16BD /* TermsViewController.xib in Resources */,
@@ -2142,11 +2122,6 @@
 			isa = PBXTargetDependency;
 			name = "Nimble-iOS";
 			targetProxy = 43E1602A2063B5EC00D9BA3E /* PBXContainerItemProxy */;
-		};
-		43E1605D2063C7AF00D9BA3E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 43E160492063C7A200D9BA3E /* Example */;
-			targetProxy = 43E1605C2063C7AF00D9BA3E /* PBXContainerItemProxy */;
 		};
 		E18F86D620739B8B0074BE41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
