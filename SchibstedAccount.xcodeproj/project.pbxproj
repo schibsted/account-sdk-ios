@@ -17,8 +17,6 @@
 		43C241B2205C015A00154866 /* SPiDAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C241AE205C015A00154866 /* SPiDAccessToken.m */; };
 		43C241B3205C015A00154866 /* SPiDAccessToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C241AF205C015A00154866 /* SPiDAccessToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		43E15FE62063B24000D9BA3E /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E15FE52063B24000D9BA3E /* LogoView.swift */; };
-		43E160262063B5E300D9BA3E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E15FF72063B5C000D9BA3E /* Nimble.framework */; };
-		43E160272063B5E300D9BA3E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E160172063B5D100D9BA3E /* Quick.framework */; };
 		43E1602D2063BE8C00D9BA3E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43E1602C2063BE8C00D9BA3E /* Images.xcassets */; };
 		43E1604D2063C7A200D9BA3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E1604C2063C7A200D9BA3E /* AppDelegate.swift */; };
 		43E160522063C7A200D9BA3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E160502063C7A200D9BA3E /* Main.storyboard */; };
@@ -139,7 +137,6 @@
 		B01D76A2D5E1AE66234F61E8 /* agreements-invalid-wrong-user.json in Resources */ = {isa = PBXBuildFile; fileRef = B01D7B776FECBBB8332EC006 /* agreements-invalid-wrong-user.json */; };
 		B01D76C2825A03B168B743C2 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D73D3F9346C902B47BB01 /* UserAgent.swift */; };
 		B01D76CB9A500C65AD87ED96 /* ViewContainingExpandedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D78BB0C41529A50668EBF /* ViewContainingExpandedSubviews.swift */; };
-		B01D76CE182C2299323B703C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B01D76FD5D2584DCF85A2040 /* .gitkeep */; };
 		B01D76CE68648BCEFF7798AE /* SynchronizedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D72A62F75B0F962BA6A61 /* SynchronizedDictionary.swift */; };
 		B01D76D69F3DB816DB7EE678 /* TestingConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7494C9E04F7DCDC358FF /* TestingConfigurations.swift */; };
 		B01D76D6DB4057908A0AF043 /* TermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D70EED22A39B01C848AE8 /* TermsViewModel.swift */; };
@@ -279,6 +276,8 @@
 		E18394E3208DF43300B05EC9 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18394CE208DF43300B05EC9 /* InfoViewModel.swift */; };
 		E18394E4208DF43300B05EC9 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18394CF208DF43300B05EC9 /* InfoViewController.xib */; };
 		E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */ = {isa = PBXBuildFile; fileRef = E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */; };
+		E192BA0020ECDD930066FB84 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E192B9EC20ECDD750066FB84 /* Nimble.framework */; };
+		E192BA0120ECDD9A0066FB84 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E160172063B5D100D9BA3E /* Quick.framework */; };
 		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
 		E1CEE53020E13559003EC549 /* SDKConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */; };
 		E1CEE53220E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */; };
@@ -442,13 +441,6 @@
 			remoteGlobalIDString = 1F1A74281940169200FFFC47;
 			remoteInfo = "Nimble-iOS";
 		};
-		43E1605C2063C7AF00D9BA3E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 43C2417F205BF1BE00154866 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 43E160492063C7A200D9BA3E;
-			remoteInfo = Example;
-		};
 		E18F86D520739B8B0074BE41 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43C2417F205BF1BE00154866 /* Project object */;
@@ -605,7 +597,6 @@
 		B01D76D2F05639801DE64404 /* JSONParsable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParsable.swift; sourceTree = "<group>"; };
 		B01D76E8DD8EF78D9EA32B7D /* bad.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bad.json; sourceTree = "<group>"; };
 		B01D76EA637BE6B16C92BF0B /* UserTokensKeychainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTokensKeychainTests.swift; sourceTree = "<group>"; };
-		B01D76FD5D2584DCF85A2040 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = file.gitkeep; path = .gitkeep; sourceTree = "<group>"; };
 		B01D7707B772F625C6F6494C /* OwnedTaskHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OwnedTaskHandle.swift; sourceTree = "<group>"; };
 		B01D77108888FC3BA9C761E2 /* ResendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResendViewController.swift; sourceTree = "<group>"; };
 		B01D7735FB1C6B36657AFF73 /* TokenExchangeTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenExchangeTask.swift; sourceTree = "<group>"; };
@@ -748,6 +739,7 @@
 		E18394CE208DF43300B05EC9 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
 		E18394CF208DF43300B05EC9 /* InfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
 		E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "password-grant-invalid-scope.json"; sourceTree = "<group>"; };
+		E192B9EC20ECDD750066FB84 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 		E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKConfiguration.swift; sourceTree = "<group>"; };
 		E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKConfiguration+AgreementsCache.swift"; sourceTree = "<group>"; };
@@ -771,8 +763,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43E160262063B5E300D9BA3E /* Nimble.framework in Frameworks */,
-				43E160272063B5E300D9BA3E /* Quick.framework in Frameworks */,
+				E192BA0120ECDD9A0066FB84 /* Quick.framework in Frameworks */,
+				E192BA0020ECDD930066FB84 /* Nimble.framework in Frameworks */,
 				43C24192205BF1BF00154866 /* SchibstedAccount.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -791,6 +783,7 @@
 		43B8CF77205F9A0C00FA3003 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E192B9EC20ECDD750066FB84 /* Nimble.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -820,7 +813,6 @@
 		43C2418A205BF1BE00154866 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				B01D7545F8D85A812B814024 /* Assets */,
 				B01D73B9677CB90B6585D5A2 /* Core */,
 				B01D72DD1F13CB0C849C4E01 /* Manager */,
 				B01D7EB35229FB86670A90F0 /* UI */,
@@ -1154,14 +1146,6 @@
 				B01D7E818251F6089AA8CB5F /* ErrorViewController.swift */,
 			);
 			path = Error;
-			sourceTree = "<group>";
-		};
-		B01D7545F8D85A812B814024 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				B01D76FD5D2584DCF85A2040 /* .gitkeep */,
-			);
-			path = Assets;
 			sourceTree = "<group>";
 		};
 		B01D7562616B8B40974C12A4 /* Views */ = {
@@ -1558,7 +1542,6 @@
 			dependencies = (
 				43E160292063B5EC00D9BA3E /* PBXTargetDependency */,
 				43E1602B2063B5EC00D9BA3E /* PBXTargetDependency */,
-				43E1605D2063C7AF00D9BA3E /* PBXTargetDependency */,
 				43C24194205BF1BF00154866 /* PBXTargetDependency */,
 			);
 			name = SchibstedAccountTests;
@@ -1778,7 +1761,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B01D76CE182C2299323B703C /* .gitkeep in Resources */,
 				B01D7B3DEA2F5691BAC762F2 /* Configuration.plist in Resources */,
 				B01D7A389197CB4A518204A7 /* ErrorViewController.xib in Resources */,
 				B01D7E4995ABB3BA0C7F16BD /* TermsViewController.xib in Resources */,
@@ -2113,11 +2095,6 @@
 			name = "Nimble-iOS";
 			targetProxy = 43E1602A2063B5EC00D9BA3E /* PBXContainerItemProxy */;
 		};
-		43E1605D2063C7AF00D9BA3E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 43E160492063C7A200D9BA3E /* Example */;
-			targetProxy = 43E1605C2063C7AF00D9BA3E /* PBXContainerItemProxy */;
-		};
 		E18F86D620739B8B0074BE41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 43C24187205BF1BE00154866 /* SchibstedAccount */;
@@ -2341,6 +2318,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.schibsted.SchibstedAccountTests;
@@ -2355,6 +2336,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.schibsted.SchibstedAccountTests;
