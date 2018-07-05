@@ -16,6 +16,7 @@ private extension NSMutableString {
     }
 }
 
+///
 class RequiredFieldsViewModel {
     let supportedRequiredFields: [SupportedRequiredField]
     let localizationBundle: Bundle
