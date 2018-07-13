@@ -20,7 +20,7 @@
 "PasswordScreenString.title.signup" = "Opprett bruker";
 "PasswordScreenString.inputTitle" = "Vennligst oppgi passordet ditt";
 "PasswordScreenString.proceed" = "Fortsett";
-"PasswordScreenString.invalidPassword" = "Passordet du oppga er feil. Prøv igjen senere.";
+"PasswordScreenString.invalidPassword" = "Passordet du oppga er feil. Vennligst prøv igjen.";
 "PasswordScreenString.change" = "Ikke deg?";
 "PasswordScreenString.cancel" = "Avbryt";
 "PasswordScreenString.info" = "Minst 8 tegn";
