@@ -16,7 +16,7 @@ public struct PhoneNumber: IdentifierProtocol {
     let phoneNumber: String
     let normalizedPhoneNumber: String
 
-    let numberOfDigitsInNormalizedCountryCode: Int
+    let numberOfDigitsInNormalizedCountryCode: Int?
 
     /// The string that is provided during initialization
     public var originalString: String {
@@ -28,12 +28,26 @@ public struct PhoneNumber: IdentifierProtocol {
         return self.normalizedPhoneNumber
     }
 
-    var normalizedValue: (countryCode: String, number: String) {
+    /// Represents the components of a full phone number, i.e. dialing code and number
+    public struct Components {
+        let countryCode: String
+        let number: String
+    }
+
+    /**
+     Create a PhoneNumber.Components object out of this PhoneNumber.
+
+     This will only work if you have used the initializer that allows seperation of code and parts
+     */
+    public func components() throws -> Components {
+        guard let numberOfDigits = numberOfDigitsInNormalizedCountryCode else {
+            throw ClientError.invalidPhoneNumber
+        }
         let startIndexOfNumberPart = self.normalizedPhoneNumber.index(
             self.normalizedPhoneNumber.startIndex,
-            offsetBy: self.numberOfDigitsInNormalizedCountryCode
+            offsetBy: numberOfDigits
         )
-        return (
+        return Components(
             countryCode: String(self.normalizedPhoneNumber[..<startIndexOfNumberPart]),
             number: String(self.normalizedPhoneNumber[startIndexOfNumberPart...])
         )
@@ -58,6 +72,23 @@ public struct PhoneNumber: IdentifierProtocol {
         self.phoneNumber = countryCode + number
         self.normalizedPhoneNumber = normalizedCountryCode + normalizedNumber
         self.numberOfDigitsInNormalizedCountryCode = normalizedCountryCode.count
+    }
+
+    /**
+     Initialize PhoneNumber identifier
+
+     Assumes the values passed in is a full phone number including the internal dialing code. The number is normalized by removing '00' in the
+     front (if present) and adding '+' as the first char.
+
+     - parameter fullNumber: a phone number including full country code
+     - returns: PhoneNumber or nil if parsing fails
+     */
+    public init?(fullNumber: String?) {
+        guard let fullNumber = fullNumber else { return nil }
+        guard let normalizedPhoneNumber = PhoneNumber.normalize(fullNumber, isCountryCode: true) else { return nil }
+        self.phoneNumber = fullNumber
+        self.normalizedPhoneNumber = normalizedPhoneNumber
+        self.numberOfDigitsInNormalizedCountryCode = nil
     }
 
     static func normalize(_ identifier: String, isCountryCode: Bool) -> String? {
