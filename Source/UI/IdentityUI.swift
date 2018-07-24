@@ -17,7 +17,7 @@ public enum LoginMethod {
     case phone
     /// uses phone number and a one time code to login; the specified phone number will appear pre-filled in the identity UI, yet the user will still be able to
     /// modify it before submitting.
-    case phoneWithPrefilledValue(PhoneNumber)
+    case phoneWithPrefilledValue(PhoneNumber.Components)
     /// asks for identifier and then a password to either login or signup if not already registered
     case password
     /// asks for identifier and then a password to either login or signup if not already registered; the specified email will appear pre-filled in the identity
