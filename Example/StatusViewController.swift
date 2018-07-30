@@ -6,11 +6,20 @@
 @testable import SchibstedAccount
 import UIKit
 
-extension StatusViewController: IdentityManagerDelegate {
-    // IdentityManagerDelegate
-    func userStateChanged(_: UserState) {
-        print("Login state changed to: \(self.isUserLoggedIn)")
-        self.updateFromCurrentUser()
+extension StatusViewController: UserDelegate {
+    func user(_ user: User, didChangeStateTo state: UserState) {
+        print("user \(user) changed state to \(state)")
+        switch state {
+        case .loggedIn:
+            // This can only happen with headless login because a visual login results in IdentityUIDelegate.didFinish
+            UIApplication.currentUser = UIApplication.identityManager.currentUser
+            UIApplication.currentUser.delegate = self
+        case .loggedOut:
+            break
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.updateFromCurrentUser()
+        }
     }
 }
 
@@ -20,7 +29,11 @@ extension StatusViewController: IdentityUIDelegate {
         case .canceled:
             print("The user canceled the login process")
         case let .completed(user):
-            self.session = URLSession(user: user, configuration: URLSessionConfiguration.default)
+            UIApplication.currentUser = user
+            UIApplication.currentUser.delegate = self
+            DispatchQueue.main.async { [weak self] in
+                self?.updateFromCurrentUser()
+            }
             print("User logged in - \(user)")
         case .skipped:
             print("User skipped login")
@@ -136,7 +149,7 @@ class StatusViewController: UIViewController {
 
     @IBAction func didClickScopes(_: Any) {
         var message: String = "n/a"
-        if let scopes = UIApplication.identityManager.currentUser.tokens?.accessToken {
+        if let scopes = UIApplication.currentUser.tokens?.accessToken {
             if let jwt = try? JWTHelper.toJSON(string: scopes) {
                 do {
                     message = try jwt.string(for: "scope").replacingOccurrences(of: " ", with: "\n")
@@ -151,7 +164,7 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didClickRefresh(_: Any) {
-        UIApplication.identityManager.currentUser.refresh { result in
+        UIApplication.currentUser.refresh { result in
             switch result {
             case .success:
                 print("refresh succeeded")
@@ -164,28 +177,28 @@ class StatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UIApplication.identityManager.delegate = self
         UIApplication.identityUI.delegate = self
+        UIApplication.currentUser.delegate = self
 
         self.updateFromCurrentUser()
     }
 
     var isUserLoggedIn: Bool {
-        return UIApplication.identityManager.currentUser.state == .loggedIn
+        return UIApplication.currentUser.state == .loggedIn
     }
 
     func updateFromCurrentUser() {
         self.userStateLabel.text = self.isUserLoggedIn ? "yes" : "no"
-        self.userIDLabel.text = String(describing: UIApplication.identityManager.currentUser)
-        self.session = URLSession(user: UIApplication.identityManager.currentUser, configuration: URLSessionConfiguration.default)
+        self.userIDLabel.text = String(describing: UIApplication.currentUser)
+        self.session = URLSession(user: UIApplication.currentUser, configuration: URLSessionConfiguration.default)
     }
 
     @IBAction func logOut(_: UIButton) {
-        UIApplication.identityManager.currentUser.logout()
+        UIApplication.currentUser.logout()
     }
 
     @IBAction func didTapReadProfileButton(_: UIButton) {
-        UIApplication.identityManager.currentUser.profile.fetch { result in
+        UIApplication.currentUser.profile.fetch { result in
             switch result {
             case let .success(profile):
                 print("profile.fetch: \(profile)")
