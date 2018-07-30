@@ -52,14 +52,6 @@ class SynchronizedDictionary<K: Hashable, V> {
         return maybeValue
     }
 
-    func getAndSet(key: K, newValue: @escaping (V?) -> V?) {
-        self.dispatchQueue.async(flags: .barrier) {
-            if let newValue = newValue(self.dictionary[key]) {
-                self.dictionary[key] = newValue
-            }
-        }
-    }
-
     var count: Int {
         var count = 0
         self.dispatchQueue.sync {

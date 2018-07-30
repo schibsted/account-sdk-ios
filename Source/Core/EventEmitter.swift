@@ -111,21 +111,21 @@ class EventEmitter<Parameters> {
     }
 
     func emitSync(_ parameters: Parameters) {
-        log(from: self, "\(self.descriptionText) on \(self.handles.count) handles")
+        log(level: .verbose, from: self, "\(self.descriptionText) on \(self.handles.count) handles")
         let handles = self.compactAndTakeHandles()
         self.normalizeHandlers(in: handles).forEach { handle, handler in
-            log(from: self, "\(self.descriptionText) -> \(handle.descriptionText)")
+            log(level: .debug, from: self, "\(self.descriptionText) -> \(handle.descriptionText)")
             handler(parameters)
         }
     }
 
     func emitAsync(_ parameters: Parameters) {
-        log(from: self, "\(self.descriptionText) on \(self.handles.count) handles")
+        log(level: .verbose, from: self, "\(self.descriptionText) on \(self.handles.count) handles")
         let handles = self.compactAndTakeHandles()
         let normalizedHandlers = self.normalizeHandlers(in: handles)
         self.dispatchQueue.async { [weak self] in
             normalizedHandlers.forEach { handle, handler in
-                log(from: self, "\(self?.descriptionText as Any) -> \(handle.descriptionText)")
+                log(level: .debug, from: self, "\(self?.descriptionText as Any) -> \(handle.descriptionText)")
                 handler(parameters)
             }
         }

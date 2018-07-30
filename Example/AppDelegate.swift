@@ -129,6 +129,7 @@ extension UIApplication {
 private struct InitializeLogger {
     init() {
         Logger.shared.addTransport({ print($0) })
+        Logger.shared.outputTags = true
     }
 }
 
@@ -235,6 +236,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case let .codeAfterSignup(code, shouldPersistUser):
             self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: shouldPersistUser)
         case let .codeAfterUnvalidatedLogin(code):
+            self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
+        case let .codeAfterAccountSummary(code):
             self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
         }
         return true
