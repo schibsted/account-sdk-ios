@@ -12,7 +12,7 @@ class TokenExchangeViewController: UIViewController {
     }
 
     @IBAction func requestCodeForAPIAuthorization(_: UIButton) {
-        UIApplication.identityManager.currentUser.auth.oneTimeCode(clientID: UIApplication.identityManager.clientConfiguration.clientID) { result in
+        UIApplication.currentUser.auth.oneTimeCode(clientID: UIApplication.identityManager.clientConfiguration.clientID) { result in
             switch result {
             case let .success(code):
                 print("requestCodeForAPIAuthorization code: \(code)")
@@ -32,7 +32,7 @@ class TokenExchangeViewController: UIViewController {
             return
         }
 
-        UIApplication.identityManager.currentUser.auth.webSessionURL(
+        UIApplication.currentUser.auth.webSessionURL(
             clientID: clientID,
             redirectURL: redirectURL
         ) { result in
@@ -45,7 +45,7 @@ class TokenExchangeViewController: UIViewController {
         // likely to set a path and/or query here
         //let redirectURL = URL(string: "/...", relativeTo: identityManager.configuration.redirectBaseURL)!
         let redirectURL = UIApplication.identityManager.clientConfiguration.redirectBaseURL(withPathComponent: nil)
-        UIApplication.identityManager.currentUser.auth.webSessionURL(
+        UIApplication.currentUser.auth.webSessionURL(
             clientID: UIApplication.identityManager.clientConfiguration.clientID,
             redirectURL: redirectURL
         ) { result in
