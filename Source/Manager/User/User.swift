@@ -162,7 +162,7 @@ public class User: UserProtocol {
             return
         }
 
-        try? UserTokensStorage().clear(oldTokens)
+        try? UserTokensStorage().clearAll()
         self.delegate?.user(self, didChangeStateTo: .loggedOut)
 
         self.api.logout(oauthToken: oldTokens.accessToken) { [weak self] result in
@@ -233,7 +233,9 @@ public class User: UserProtocol {
 
         self.isPersistent = makePersistent ?? self.isPersistent
 
-        let isNewLoggedInUser = newTokens.anyUserID != nil && newTokens.anyUserID != tokens.old?.anyUserID
+        // Clear all the tokens always, this avoid corner cases.
+        // E.g. user A logs in, user B logs in, then user A logs in again and the first user A's tokens were then not cleared or some other weird nonsense.
+        try? UserTokensStorage().clearAll()
 
         if self.isPersistent {
             // Store new tokens if we are supposed to be persistent.
@@ -241,11 +243,9 @@ public class User: UserProtocol {
             if let newTokens = tokens.new {
                 try? UserTokensStorage().store(newTokens)
             }
-            if !isNewLoggedInUser, let oldTokens = tokens.old {
-                try UserTokensStorage().clear(oldTokens)
-            }
         }
 
+        let isNewLoggedInUser = newTokens.anyUserID != nil && newTokens.anyUserID != tokens.old?.anyUserID
         if isNewLoggedInUser {
             self.delegate?.user(self, didChangeStateTo: .loggedIn)
         }
