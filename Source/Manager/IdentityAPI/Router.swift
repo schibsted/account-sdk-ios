@@ -15,6 +15,7 @@ enum Router {
     case exchangeToken
     case agreementsStatus(userID: String)
     case acceptAgreements(userID: String)
+    case assets(userID: String)
     case profile(userID: String)
     case updateProfile(userID: String)
     case terms
@@ -43,6 +44,8 @@ enum Router {
             return .GET
         case .acceptAgreements:
             return .POST
+        case .assets:
+            return .GET
         case .profile:
             return .GET
         case .updateProfile:
@@ -96,6 +99,8 @@ enum Router {
             return "/api/2/user/\(userID)/agreements"
         case let .acceptAgreements(userID):
             return "/api/2/user/\(userID)/agreements/accept"
+        case let .assets(userID):
+            return "/api/2/user/\(userID)/assets"
         case let .profile(userID):
             return "/api/2/user/\(userID)"
         case let .updateProfile(userID):
