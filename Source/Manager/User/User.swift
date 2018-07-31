@@ -57,6 +57,9 @@ public class User: UserProtocol {
     /// Provides access to product information for this user
     /// Note: This is a privileged API and access must be requested through support@spid.no for your specific client.
     public internal(set) var product: UserProductAPI
+    
+    /// Provides access to asset information for this user
+    public internal(set) var assets: UserAssetsAPI
 
     ///
     public weak var delegate: UserDelegate?
@@ -115,14 +118,17 @@ public class User: UserProtocol {
         self.api = IdentityAPI(basePath: clientConfiguration.serverURL)
         let userAuth = User.Auth()
         let userAgreements = User.Agreements()
+        let userAssets = User.Assets()
         let userProfile = User.Profile()
         let userProduct = User.Product()
         self.auth = userAuth
         self.agreements = userAgreements
+        self.assets = userAssets
         self.profile = userProfile
         self.product = userProduct
         userAuth.user = self
         userAgreements.user = self
+        userAssets.user = self
         userProfile.user = self
         userProduct.user = self
         self.taskManager = TaskManager(for: self)
