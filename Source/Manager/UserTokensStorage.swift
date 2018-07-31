@@ -66,4 +66,19 @@ struct UserTokensStorage {
             log(level: .error, from: self, "error removing keychain for user: \(error)", force: true)
         }
     }
+
+    func clearAll() throws {
+        let keychain = UserTokensKeychain()
+        keychain.removeAllTokens()
+
+        do {
+            try keychain.saveInKeychain()
+            if SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kSPiDAccessToken) != nil {
+                SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
+            }
+            log(level: .debug, from: self, "cleared ALL tokens")
+        } catch {
+            log(level: .error, from: self, "error removing keychain for user: \(error)", force: true)
+        }
+    }
 }

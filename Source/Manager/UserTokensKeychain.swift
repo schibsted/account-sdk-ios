@@ -47,9 +47,11 @@ class UserTokensKeychain: KeychainGenericPasswordType {
 
     func data() -> [TokenData] {
         guard let loggedInUsers = (try? self.fetchedData.jsonObject(for: Keys.loggedInUsers)) as? [String: JSONObject] else {
+            log(level: .debug, from: self, "no logged in users in \(self.fetchedData)")
             return []
         }
-        return loggedInUsers.map { accessToken, jsonTokens in
+        let data = loggedInUsers.map { (arg) -> TokenData in
+            let (accessToken, jsonTokens) = arg
             let refreshToken = try? jsonTokens.string(for: Keys.refreshToken)
             let idToken = try? jsonTokens.string(for: Keys.idToken)
             let userID = try? jsonTokens.string(for: Keys.userID)
@@ -60,6 +62,8 @@ class UserTokensKeychain: KeychainGenericPasswordType {
                 userID: userID
             )
         }
+        log(level: .debug, from: self, "logged in users data: \(data)")
+        return data
     }
 
     func addTokens(_ tokens: TokenData) {
@@ -79,6 +83,10 @@ class UserTokensKeychain: KeychainGenericPasswordType {
         }
         loggedInUsers[accessToken] = nil
         self.fetchedData[Keys.loggedInUsers] = loggedInUsers
+    }
+
+    func removeAllTokens() {
+        self.fetchedData[Keys.loggedInUsers] = nil
     }
 
     private func migrate() throws {
