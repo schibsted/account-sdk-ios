@@ -11,7 +11,6 @@ enum JSONError: Error {
     case notDictionary(Any)
     case notString(String)
     case notJSONObject(String)
-    case notInteger(String)
     case notNumber(String)
     case notBoolean(String)
     case notArrayOf(String, forKey: String)
@@ -30,8 +29,6 @@ extension JSONError: CustomStringConvertible {
             return "Key \(key) was not convertible to string"
         case let .notJSONObject(key):
             return "Key \(key) was not convertible to JSON object"
-        case let .notInteger(key):
-            return "Key \(key) was not convertible to integer"
         case let .notNumber(key):
             return "Key \(key) was not convertible to number"
         case let .notBoolean(key):
