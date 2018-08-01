@@ -28,11 +28,11 @@ public struct UserAsset: JSONParsable {
     }
     
     /// The ID of the merchant the client belongs to
-    public var merchantID: String?
+    public var merchantID: Int?
     /// User identifier
     public var uuid: String?
     /// User identifier
-    public var userID: String?
+    public var userID: Int?
     /// Asset identifier
     public var assetID: String?
     /// Asset access current status
@@ -43,9 +43,9 @@ public struct UserAsset: JSONParsable {
     public var created: Date?
     
     init(from json: JSONObject) throws {
-        self.merchantID = try? json.string(for: "merchantId")
+        self.merchantID = try? json.integer(for: "merchantId")
         self.uuid = try? json.string(for: "uuid")
-        self.userID = try? json.string(for: "userId")
+        self.userID = try? json.integer(for: "userId")
         self.assetID = try? json.string(for: "assetId")
         if let status = try? json.number(for: "status") {
             self.status = AccessStatus(rawValue: Int(status))
@@ -67,9 +67,9 @@ extension UserAsset: CustomStringConvertible {
     /// human-readable string representation (YAML)
     public var description: String {
         var desc = "UserAsset:\n"
-        desc = desc.appendingFormat("  merchantID: %@\n", self.merchantID ?? "null")
+        desc = desc.appendingFormat("  merchantID: %@\n", self.merchantID?.description ?? "null")
         desc = desc.appendingFormat("  uuid: %@\n", self.uuid ?? "null")
-        desc = desc.appendingFormat("  userID: %@\n", self.userID ?? "null")
+        desc = desc.appendingFormat("  userID: %@\n", self.userID?.description ?? "null")
         desc = desc.appendingFormat("  assetID: %@\n", self.assetID ?? "null")
         desc = desc.appendingFormat("  status: %@\n", self.status?.description ?? "null")
         desc = desc.appendingFormat("  updated: %@\n", self.updated?.description ?? "null")
