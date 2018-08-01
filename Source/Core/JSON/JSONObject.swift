@@ -41,7 +41,7 @@ extension JSONObjectProtocol where Key == String, Value == Any {
 
     func integer(for key: Key) throws -> Int {
         let value = try self.value(for: key)
-        guard let number = value as? Int else {
+        guard let rawValue = value as? String, let number = Int(rawValue) else {
             throw JSONError.notInteger(key)
         }
         return number
