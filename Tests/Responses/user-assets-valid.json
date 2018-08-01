@@ -1,0 +1,43 @@
+{
+    "api": 2,
+    "code": 200,
+    "data": [
+             {
+             "accessUntil": null,
+             "assetId": "Fotballpakka",
+             "created": "2018-07-30 10:27:18",
+             "merchantId": "12345",
+             "status": "1",
+             "updated": "2018-08-01 09:02:08",
+             "userId": "9876543",
+             "uuid": "12345678-9012-3456-7890-123456789012"
+             }
+             ],
+    "debug": {
+        "params": {
+            "options": [],
+            "where": {
+                "id": "12345678-9012-3456-7890-123456789012"
+            }
+        },
+        "route": {
+            "controller": "Api/2/Assets.user_assets",
+            "name": "Get assets user has access to, access by user",
+            "url": "/api/2/user/{id}/assets"
+        }
+    },
+    "error": null,
+    "meta": {
+        "count": 1,
+        "offset": 0
+    },
+    "name": "SPP Container",
+    "object": "Assets",
+    "request": {
+        "limit": 360000,
+        "remaining": 360000,
+        "reset": 3600
+    },
+    "type": "collection",
+    "version": "0.2"
+}

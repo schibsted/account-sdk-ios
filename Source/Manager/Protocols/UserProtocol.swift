@@ -16,6 +16,8 @@ public protocol UserProtocol: class {
     ///
     var profile: UserProfileAPI { get }
     ///
+    var assets: UserAssetsAPI { get }
+    ///
     var agreements: UserAgreementsAPI { get }
     ///
     var auth: UserAuthAPI { get }
