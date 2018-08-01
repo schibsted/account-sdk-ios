@@ -37,6 +37,8 @@
 		9E7F135A21106D0300BBEFED /* UserAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F135821106D0300BBEFED /* UserAsset.swift */; };
 		9E7F135C21106D2000BBEFED /* UserAssetsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F135B21106D2000BBEFED /* UserAssetsAPI.swift */; };
 		9E7F135E21106D3B00BBEFED /* User+Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F135D21106D3B00BBEFED /* User+Assets.swift */; };
+		9E7F13612111E7A100BBEFED /* UserAssetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F135F2111E79A00BBEFED /* UserAssetsTests.swift */; };
+		9E7F13632111E80100BBEFED /* user-assets-valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E7F13622111E80100BBEFED /* user-assets-valid.json */; };
 		B01D700933201D1FBCC62175 /* invalid-phone-number-error.json in Resources */ = {isa = PBXBuildFile; fileRef = B01D78049A0D5F106B3D0023 /* invalid-phone-number-error.json */; };
 		B01D701AB31648115F3D5625 /* IdentifierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B01D7A1F433AD8FFEB1A1F72 /* IdentifierViewController.xib */; };
 		B01D701F1CDD15108DAF370C /* UserProductAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7E0ED0EBD86CDF7FD724 /* UserProductAPI.swift */; };
@@ -511,6 +513,8 @@
 		9E7F135821106D0300BBEFED /* UserAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAsset.swift; sourceTree = "<group>"; };
 		9E7F135B21106D2000BBEFED /* UserAssetsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAssetsAPI.swift; sourceTree = "<group>"; };
 		9E7F135D21106D3B00BBEFED /* User+Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Assets.swift"; sourceTree = "<group>"; };
+		9E7F135F2111E79A00BBEFED /* UserAssetsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAssetsTests.swift; sourceTree = "<group>"; };
+		9E7F13622111E80100BBEFED /* user-assets-valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "user-assets-valid.json"; sourceTree = "<group>"; };
 		B01D7006E33D394F44554548 /* AutoRefreshURLProtocolTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoRefreshURLProtocolTests.swift; sourceTree = "<group>"; };
 		B01D703A96A67B178F276063 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		B01D705998E8674DA47E166A /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -857,6 +861,7 @@
 				B01D732D22F5E18CAA6C4FC1 /* URLSessionTests.swift */,
 				B01D7C4FBDEA766E06292645 /* UserAgentTests.swift */,
 				B01D76D0504D58090C2A3704 /* UserAgreementsTests.swift */,
+				9E7F135F2111E79A00BBEFED /* UserAssetsTests.swift */,
 				B01D7C03E012ED8D8703D6BA /* UserAuthTests.swift */,
 				B01D71F5971FBEC856E523FA /* UserProductTests.swift */,
 				B01D752D2A2B1487CFC64C8F /* UserProfileSessionTests.swift */,
@@ -970,6 +975,7 @@
 				B01D79FDBFB4837C4490D959 /* valid-authcode.json */,
 				B01D7A12229555E82E19C0A2 /* invalid-authcode.json */,
 				B01D7231698ECC0674966F7A /* too-many-requests.json */,
+				9E7F13622111E80100BBEFED /* user-assets-valid.json */,
 				B01D7C58935FD33DA5CB6041 /* user-product-valid.json */,
 				B01D72D5A43FE8BD035C981F /* user-profile-valid.json */,
 				B01D7EF9CFC3DBD49D1EBAB0 /* valid-passwordless.json */,
@@ -1824,6 +1830,7 @@
 				B01D7112975753D489F6A975 /* agreements-accept-valid.json in Resources */,
 				B01D7364BB6F56811D032E50 /* signup-validation-valid.json in Resources */,
 				B01D736F82E068A4B60744C3 /* id-status-valid-verified.json in Resources */,
+				9E7F13632111E80100BBEFED /* user-assets-valid.json in Resources */,
 				B01D799533A7C9368E86DF79 /* login-invalid-unverified.json in Resources */,
 				B01D7C0E648A475BED903D7F /* agreements-valid-accepted.json in Resources */,
 				B01D7616C70428AE6DA79CF0 /* client-access-token-valid.json in Resources */,
@@ -2063,6 +2070,7 @@
 				B01D7D3D551CF59645CC75E5 /* RequiredFieldValidationTests.swift in Sources */,
 				B01D70445C764C61D2AF8508 /* IdentityUIViewControllerTests.swift in Sources */,
 				B01D76270D894ADC19B65282 /* URLSessionTests.swift in Sources */,
+				9E7F13612111E7A100BBEFED /* UserAssetsTests.swift in Sources */,
 				B01D77943AF2B5FC4CC9E51B /* UserAgentTests.swift in Sources */,
 				B01D77600AE21497AEB7B83B /* UserAgreementsTests.swift in Sources */,
 				B01D734C3B73A0E296A202EC /* UserAuthTests.swift in Sources */,
