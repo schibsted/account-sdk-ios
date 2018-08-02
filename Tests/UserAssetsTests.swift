@@ -27,13 +27,10 @@ class UserAssetsTests: QuickSpec {
                     
                     guard let asset = userAssets.assets?.first else { return fail() }
                     
-                    expect(asset.merchantID).to(equal(12345))
-                    expect(asset.assetID).to(equal("Fotballpakka"))
-                    expect(asset.userID).to(equal(9876543))
-                    expect(asset.uuid).to(equal("12345678-9012-3456-7890-123456789012"))
+                    expect(asset.id).to(equal("Fotballpakka"))
                     expect(asset.status).to(equal(.active))
-                    expect(asset.updated).to(equal(DateFormatter.local.date(from: "2018-08-01 09:02:08")))
-                    expect(asset.created).to(equal(DateFormatter.local.date(from: "2018-07-30 10:27:18")))
+                    expect(asset.updatedAt).to(equal(DateFormatter.local.date(from: "2018-08-01 09:02:08")))
+                    expect(asset.createdAt).to(equal(DateFormatter.local.date(from: "2018-07-30 10:27:18")))
                 }
             }
         }
