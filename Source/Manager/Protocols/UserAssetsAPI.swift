@@ -7,5 +7,5 @@
 public protocol UserAssetsAPI {
     ///
     @discardableResult
-    func fetch(completion: @escaping (Result<UserAssets, ClientError>) -> Void) -> TaskHandle
+    func fetch(completion: @escaping UserAssetsResultCallback) -> TaskHandle
 }

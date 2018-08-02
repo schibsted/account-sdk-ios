@@ -77,7 +77,7 @@ class TestingUserAssets: UserAssetsAPI {
     init(_ assets: User.Assets) {
         self.wrapped = assets
     }
-    func fetch(completion: @escaping (Result<UserAssets, ClientError>) -> Void) -> TaskHandle {
+    func fetch(completion: @escaping UserAssetsResultCallback) -> TaskHandle {
         return Utils.waitUntilDone(completion) { [unowned self] in
             self.wrapped.fetch(completion: $0)
         }

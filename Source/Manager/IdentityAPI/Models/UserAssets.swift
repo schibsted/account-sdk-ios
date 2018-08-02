@@ -8,16 +8,13 @@
 
  SeeAlso: https://techdocs.spid.no/endpoints/GET/user/%7Bid%7D/assets/
  */
-public struct UserAssets: JSONParsable {
+struct UserAssets: JSONParsable {
     ///
-    public let assets: [UserAsset]?
+    let assets: [UserAsset]
 
     init(from json: JSONObject) throws {
-        if let assetArray = try? json.jsonArray(of: JSONObject.self, for: "data"), assetArray.count > 0 {
-            self.assets = assetArray.compactOrFlatMap { try? UserAsset(from: $0) }
-        } else {
-            self.assets = nil
-        }
+        let assetArray = try json.jsonArray(of: JSONObject.self, for: "data")
+        self.assets = assetArray.compactOrFlatMap { try? UserAsset(from: $0) }
     }
 }
 
@@ -25,7 +22,7 @@ extension UserAssets: CustomStringConvertible {
     /// human-readable string representation (YAML)
     public var description: String {
         var desc = "UserAssets:\n"
-        desc = desc.appendingFormat("  assets: %@\n", self.assets ?? "null")
+        desc = desc.appendingFormat("  assets: %@\n", self.assets)
         return desc
     }
 }

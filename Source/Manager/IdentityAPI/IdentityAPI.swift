@@ -58,7 +58,7 @@ class IdentityAPI {
 
     func fetchUserAssets(oauthToken: String,
                          userID: String,
-                         completion: @escaping ((Result<UserAssets, ClientError>) -> Void)) {
+                         completion: @escaping (Result<UserAssets, ClientError>) -> Void) {
         let task = request(router: .assets(userID: userID),
                            headers: [.authorization: oauthToken.bearer],
                            completion: completion)
