@@ -14,7 +14,7 @@ public struct UserAssets: JSONParsable {
 
     init(from json: JSONObject) throws {
         if let assetArray = try? json.jsonArray(of: JSONObject.self, for: "data"), assetArray.count > 0 {
-            self.assets = assetArray.compactMap { try? UserAsset(from: $0) }
+            self.assets = assetArray.compactOrFlatMap { try? UserAsset(from: $0) }
         } else {
             self.assets = nil
         }
