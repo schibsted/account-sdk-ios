@@ -15,7 +15,7 @@ public struct UserAsset: JSONParsable {
         case deleted = 0
         ///
         case active
-        
+
         ///
         public var description: String {
             switch self {
@@ -24,7 +24,7 @@ public struct UserAsset: JSONParsable {
             }
         }
     }
-    
+
     /// The ID of the merchant the client belongs to
     public var merchantID: Int?
     /// User identifier
@@ -39,28 +39,28 @@ public struct UserAsset: JSONParsable {
     public var updated: Date?
     /// The time the access was created
     public var created: Date?
-    
+
     init(from json: JSONObject) throws {
         if let value = try? json.string(for: "merchantId"), let merchantID = Int(value) {  // integer (as string)
             self.merchantID = merchantID
         }
-        
+
         self.uuid = try? json.string(for: "uuid")
         if let value = try? json.string(for: "userId"), let userID = Int(value) { // integer (as string)
             self.userID = userID
         }
-        
+
         self.assetID = try? json.string(for: "assetId")
         if let value = try? json.string(for: "status"), let status = Int(value) {
             self.status = AccessStatus(rawValue: Int(status))
         } else {
             self.status = nil
         }
-        
+
         if let updated = try? json.string(for: "updated") {
             self.updated = DateFormatter.local.date(from: updated)
         }
-        
+
         if let created = try? json.string(for: "created") {
             self.created = DateFormatter.local.date(from: created)
         }

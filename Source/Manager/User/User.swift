@@ -57,7 +57,7 @@ public class User: UserProtocol {
     /// Provides access to product information for this user
     /// Note: This is a privileged API and access must be requested through support@spid.no for your specific client.
     public internal(set) var product: UserProductAPI
-    
+
     /// Provides access to asset information for this user
     public internal(set) var assets: UserAssetsAPI
 
