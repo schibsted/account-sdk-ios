@@ -19,13 +19,13 @@ class UserAssetsTests: QuickSpec {
                 StubbedNetworkingProxy.addStub(stubSignup)
 
                 user.assets.fetch { result in
-                    guard case let .success(userAssets) = result else {
+                    guard case let .success(assets) = result else {
                         return fail()
                     }
                     
-                    expect(userAssets.assets).to(haveCount(1))
+                    expect(assets).to(haveCount(1))
                     
-                    guard let asset = userAssets.assets?.first else { return fail() }
+                    guard let asset = assets.first else { return fail() }
                     
                     expect(asset.id).to(equal("Fotballpakka"))
                     expect(asset.status).to(equal(.active))

@@ -10,7 +10,7 @@ class FetchUserAssetsTask: TaskProtocol {
         self.user = user
     }
 
-    func execute(completion: @escaping (Result<UserAssets, ClientError>) -> Void) {
+    func execute(completion: @escaping UserAssetsResultCallback) {
         guard let user = self.user, let tokens = user.tokens, let userID = tokens.anyUserID else {
             completion(.failure(.invalidUser))
             return
@@ -29,7 +29,12 @@ class FetchUserAssetsTask: TaskProtocol {
                 return
             }
 
-            completion(result)
+            switch result {
+            case let .success(model):
+                completion(.success(model.assets))
+            case let .failure(error):
+                completion(.failure(error))
+            }
         }
     }
 }

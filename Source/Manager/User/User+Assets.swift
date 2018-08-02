@@ -16,7 +16,7 @@ extension User {
          - parameter completion: a callback that receives the UserAssets or an error.
          */
         @discardableResult
-        public func fetch(completion: @escaping (Result<UserAssets, ClientError>) -> Void) -> TaskHandle {
+        public func fetch(completion: @escaping UserAssetsResultCallback) -> TaskHandle {
             guard let user = self.user as? User else {
                 completion(.failure(.invalidUser))
                 return NoopTaskHandle()
