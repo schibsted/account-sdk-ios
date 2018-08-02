@@ -63,6 +63,7 @@ custom_categories:
       - IdentifierStatus
       - RequiredField
       - UserProduct
+      - UserAsset
   - name: Protocols
     children:
       - IdentityManagerProtocol
@@ -71,3 +72,4 @@ custom_categories:
       - UserProfileAPI
       - UserAgreementsAPI
       - UserProductAPI
+      - UserAssetsAPI
