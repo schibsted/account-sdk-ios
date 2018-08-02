@@ -55,7 +55,7 @@ class IdentityAPI {
                            completion: completion)
         task?.resume()
     }
-    
+
     func fetchUserAssets(oauthToken: String,
                          userID: String,
                          completion: @escaping ((Result<UserAssets, ClientError>) -> Void)) {
