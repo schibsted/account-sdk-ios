@@ -41,7 +41,7 @@ public struct UserAsset: JSONParsable {
     public var created: Date?
 
     init(from json: JSONObject) throws {
-        if let value = try? json.string(for: "merchantId"), let merchantID = Int(value) {  // integer (as string)
+        if let value = try? json.string(for: "merchantId"), let merchantID = Int(value) { // integer (as string)
             self.merchantID = merchantID
         }
 
