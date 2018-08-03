@@ -72,6 +72,18 @@ class TestingUserProduct: UserProductAPI {
     }
 }
 
+class TestingUserAssets: UserAssetsAPI {
+    let wrapped: User.Assets
+    init(_ assets: User.Assets) {
+        self.wrapped = assets
+    }
+    func fetch(completion: @escaping UserAssetsResultCallback) -> TaskHandle {
+        return Utils.waitUntilDone(completion) { [unowned self] in
+            self.wrapped.fetch(completion: $0)
+        }
+    }
+}
+
 class TestingUserAgreements: UserAgreementsAPI {
     let wrapped: User.Agreements
     init(_ agreements: User.Agreements) {
@@ -111,6 +123,10 @@ class TestingUser: UserProtocol {
 
     var product: UserProductAPI {
         return TestingUserProduct(self.wrapped.product as! User.Product)
+    }
+
+    var assets: UserAssetsAPI {
+        return TestingUserAssets(self.wrapped.assets as! User.Assets)
     }
 
     var agreements: UserAgreementsAPI {

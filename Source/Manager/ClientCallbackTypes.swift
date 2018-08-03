@@ -32,3 +32,6 @@ public typealias ClientResultCallback = (Result<Client, ClientError>) -> Void
 /// -seeAlso `IdentityManager.requiredFields
 /// -seeAlso 'UserProfileAPI.requiredFields
 public typealias RequiredFieldsResultCallback = (Result<[RequiredField], ClientError>) -> Void
+
+/// Callback that returns the user's assets
+public typealias UserAssetsResultCallback = (Result<[UserAsset], ClientError>) -> Void
