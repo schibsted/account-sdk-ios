@@ -18,6 +18,8 @@ public enum RequiredField: String {
     case birthday
     ///
     case displayName = "display_name"
+    ///
+    case phoneNumber = "phone_number"
 }
 
 struct RequiredFields: JSONParsable {

@@ -180,6 +180,7 @@ class IdentityAPI {
             formData = formData.mergedByOverwriting(with: profile.formData(withMappings: [
                 .givenName: "given_name",
                 .familyName: "family_name",
+                .phoneNumber: "phone_number",
             ]))
         }
 

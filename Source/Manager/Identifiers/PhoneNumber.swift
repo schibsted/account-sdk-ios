@@ -5,12 +5,6 @@
 
 import Foundation
 
-private extension CharacterSet {
-    static func phoneNumberCharacterSet() -> CharacterSet {
-        return CharacterSet(charactersIn: "0123456789 +")
-    }
-}
-
 /// Represents a phone number string
 public struct PhoneNumber: IdentifierProtocol {
     let phoneNumber: String
@@ -64,8 +58,8 @@ public struct PhoneNumber: IdentifierProtocol {
      - returns: PhoneNumber or nil if parsing fails
      */
     public init?(countryCode: String, number: String) {
-        guard let normalizedCountryCode = PhoneNumber.normalize(countryCode, isCountryCode: true),
-            let normalizedNumber = PhoneNumber.normalize(number, isCountryCode: false)
+        guard let normalizedCountryCode = PhoneNumber.normalizeCountryCode(countryCode),
+            let normalizedNumber = PhoneNumber.normalizeNumberComponent(number)
         else {
             return nil
         }
@@ -85,35 +79,42 @@ public struct PhoneNumber: IdentifierProtocol {
      */
     public init?(fullNumber: String?) {
         guard let fullNumber = fullNumber else { return nil }
-        guard let normalizedPhoneNumber = PhoneNumber.normalize(fullNumber, isCountryCode: true) else { return nil }
+        guard let normalizedPhoneNumber = PhoneNumber.normalizeFullNumber(fullNumber) else { return nil }
         self.phoneNumber = fullNumber
         self.normalizedPhoneNumber = normalizedPhoneNumber
         self.numberOfDigitsInNormalizedCountryCode = nil
     }
 
-    static func normalize(_ identifier: String, isCountryCode: Bool) -> String? {
-        guard identifier.rangeOfCharacter(from: CharacterSet.phoneNumberCharacterSet().inverted) == nil else {
+    private static func normalizeFullNumber(_ value: String) -> String? {
+        var string = value.filter { $0 != " " }
+
+        if string.hasPrefix("+") {
+            string.remove(at: string.startIndex)
+        } else if string.hasPrefix("00") {
+            string.removeFirst(2)
+        } else {
             return nil
         }
 
-        let decimalDigitCharacters = identifier.filter {
-            String($0).rangeOfCharacter(from: CharacterSet.decimalDigits) != nil
-        }
-
-        guard decimalDigitCharacters.count > 0 else {
+        guard string.count > 0 && string.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil else {
             return nil
         }
+        return "+" + string
+    }
 
-        let normalizedPhoneNumber = String(decimalDigitCharacters)
-
-        guard isCountryCode else {
-            return normalizedPhoneNumber
+    private static func normalizeCountryCode(_ value: String) -> String? {
+        if !value.hasPrefix("+") && !value.hasPrefix("00") {
+            return self.normalizeFullNumber("+" + value)
+        } else {
+            return self.normalizeFullNumber(value)
         }
+    }
 
-        guard normalizedPhoneNumber.hasPrefix("00") else {
-            return "+" + normalizedPhoneNumber
+    private static func normalizeNumberComponent(_ value: String) -> String? {
+        let digits = value.filter { $0 != " " }
+        guard digits.count > 0 && digits.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil else {
+            return nil
         }
-
-        return "+" + normalizedPhoneNumber[normalizedPhoneNumber.index(normalizedPhoneNumber.startIndex, offsetBy: 2)...]
+        return digits
     }
 }

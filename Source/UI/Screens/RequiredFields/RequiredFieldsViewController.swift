@@ -46,12 +46,16 @@ class RequiredFieldsViewController: IdentityUIViewController {
                 // These views are arranged in a way that matches the indices in ViewIndex enum above.
                 // If you change order make sure to change those as well
                 //
+
+                let field = self.viewModel.supportedRequiredFields[index]
+
                 let title = NormalLabel()
-                title.text = self.viewModel.titleForField(at: index)
+                title.text = self.viewModel.titleForField(field)
 
                 let input = TextField()
-                input.placeholder = self.viewModel.placeholderForField(at: index)
-                input.enableCursorMotion = self.enableCursorMotionForField(at: index)
+                input.placeholder = self.viewModel.placeholderForField(field)
+                input.enableCursorMotion = field.allowsCursorMotion
+                input.keyboardType = field.keyboardType
                 input.clearButtonMode = .whileEditing
                 input.returnKeyType = .default
                 input.autocorrectionType = .no
@@ -133,13 +137,6 @@ class RequiredFieldsViewController: IdentityUIViewController {
 
         self.scrollView.contentInset.bottom = bottom
         self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
-    }
-
-    private func enableCursorMotionForField(at index: Int) -> Bool {
-        guard index < self.viewModel.supportedRequiredFields.count else {
-            return true
-        }
-        return self.viewModel.supportedRequiredFields[index].allowsCursorMotion
     }
 
     override func viewDidAppear(_: Bool) {
@@ -261,15 +258,40 @@ extension RequiredFieldsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let oldText = (textField.text ?? "") as NSString
         let newText = oldText.replacingCharacters(in: range, with: string)
-        textField.text = self.setValueForField(at: textField.tag, from: oldText as String, to: newText)
-        return false
+
+        guard let processedText = self.processValueForField(at: textField.tag, from: oldText as String, to: newText),
+            processedText.count != newText.count else {
+            return true
+        }
+
+        let beginning = textField.beginningOfDocument
+        let cursorOffset: Int?
+        if let start = textField.position(from: beginning, offset: range.location + range.length) {
+            cursorOffset = textField.offset(from: beginning, to: start)
+        } else {
+            cursorOffset = nil
+        }
+
+        textField.text = processedText
+
+        let newBeginning = textField.beginningOfDocument
+        if let cursorOffset = cursorOffset,
+            let newPosition = textField.position(from: newBeginning, offset: cursorOffset + (processedText.count - (oldText as String).count)) {
+            textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
+            return false
+        }
+
+        return true
     }
 
-    private func setValueForField(at index: Int, from oldValue: String, to newValue: String) -> String? {
+    private func processValueForField(at index: Int, from oldValue: String, to newValue: String) -> String? {
         guard index < self.viewModel.supportedRequiredFields.count else {
             return nil
         }
-        let formattedString = self.viewModel.supportedRequiredFields[index].format(oldValue: oldValue, with: newValue)
+        guard let formattedString = self.viewModel.supportedRequiredFields[index].format(oldValue: oldValue, with: newValue) else {
+            self.values[index] = newValue
+            return nil
+        }
         self.values[index] = formattedString
         return formattedString
     }

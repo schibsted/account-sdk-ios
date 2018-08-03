@@ -454,7 +454,7 @@ public class IdentityManager: IdentityManagerProtocol {
         completion: @escaping NoValueCallback
     ) {
         log(from: self,
-            "signing up \(username),"
+            "signing up \(username), "
                 + "profile: \(profile != nil), "
                 + "acceptTerms: \(acceptTerms as Any), "
                 + "persist: \(persistUser), "
