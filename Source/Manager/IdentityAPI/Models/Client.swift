@@ -9,6 +9,7 @@ enum ClientRequiredFieldsKey: String {
     case names
     case birthday
     case displayName
+    case phoneNumber
 }
 
 //
@@ -25,6 +26,8 @@ private extension RequiredField {
             return .names
         case .displayName:
             return .displayName
+        case .phoneNumber:
+            return .phoneNumber
         }
     }
 }
@@ -67,6 +70,8 @@ public struct Client: JSONParsable {
                 self.requiredFields.append(.birthday)
             case .displayName:
                 self.requiredFields.append(.displayName)
+            case .phoneNumber:
+                self.requiredFields.append(.phoneNumber)
             }
         }
 

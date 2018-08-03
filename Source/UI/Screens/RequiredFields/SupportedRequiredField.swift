@@ -12,6 +12,7 @@ enum SupportedRequiredField: String {
     case givenName
     case familyName
     case birthday
+    case phoneNumber
 
     static func from(_ requiredFields: [RequiredField]) -> [SupportedRequiredField] {
         return requiredFields.compactOrFlatMap { field in
@@ -19,7 +20,7 @@ enum SupportedRequiredField: String {
         }
     }
 
-    func format(oldValue: String, with newValue: String) -> String {
+    func format(oldValue: String, with newValue: String) -> String? {
         switch self {
         case .birthday:
             // If backspace when input displays a dash, then since we add a dash automagically
@@ -47,8 +48,8 @@ enum SupportedRequiredField: String {
 
             // YYYY-MM-DD
             return String(string.prefix(10))
-        case .familyName, .givenName:
-            return newValue
+        case .familyName, .givenName, .phoneNumber:
+            return nil
         }
     }
 
@@ -56,6 +57,7 @@ enum SupportedRequiredField: String {
         case missing
         case lessThanThree
         case dateInvalid
+        case numberInvalid
     }
 
     func validate(value: String) -> ValidationError? {
@@ -71,16 +73,31 @@ enum SupportedRequiredField: String {
             guard case .full? = Birthdate(string: value) else {
                 return .dateInvalid
             }
+        case .phoneNumber:
+            guard PhoneNumber(fullNumber: value) != nil else {
+                return .numberInvalid
+            }
         }
         return nil
     }
 
     var allowsCursorMotion: Bool {
         switch self {
-        case .familyName, .givenName:
+        case .familyName, .givenName, .phoneNumber:
             return true
         case .birthday:
             return false
+        }
+    }
+
+    var keyboardType: UIKeyboardType {
+        switch self {
+        case .familyName, .givenName:
+            return .default
+        case .phoneNumber:
+            return .phonePad
+        case .birthday:
+            return .numberPad
         }
     }
 }
@@ -94,6 +111,8 @@ private extension RequiredField {
             return .familyName
         case .birthday:
             return .birthday
+        case .phoneNumber:
+            return .phoneNumber
         case .displayName:
             return nil
         }
@@ -109,6 +128,8 @@ extension UserProfile {
             self.familyName = value
         case .birthday:
             self.birthday = Birthdate(string: value)
+        case .phoneNumber:
+            self.phoneNumber = PhoneNumber(fullNumber: value)
         }
     }
 }
