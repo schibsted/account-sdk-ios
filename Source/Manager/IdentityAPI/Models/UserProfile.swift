@@ -23,6 +23,8 @@ public struct UserProfile: JSONParsable {
     public var primaryEmailAddress: EmailAddress?
     /// The email address associated with this user. For passwordless login this is generated for example.
     public var email: EmailAddress?
+    /// The phone number associated with this user
+    public var phoneNumber: PhoneNumber?
 
     ///
     public init(givenName: String? = nil, familyName: String? = nil, displayName: String? = nil, birthday: Birthdate? = nil) {
@@ -52,6 +54,9 @@ public struct UserProfile: JSONParsable {
                 }
             }
         }
+        if let phoneNumber = try? data.string(for: "phoneNumber") {
+            self.phoneNumber = PhoneNumber(fullNumber: phoneNumber)
+        }
     }
 }
 
@@ -65,6 +70,7 @@ extension UserProfile: CustomStringConvertible {
         desc = desc.appendingFormat("  birthday: %@\n", self.birthday?.description ?? "null")
         desc = desc.appendingFormat("  email: %@\n", self.email?.originalString ?? "null")
         desc = desc.appendingFormat("  primary email: %@\n", self.primaryEmailAddress?.originalString ?? "null")
+        desc = desc.appendingFormat("  phone: %@\n", self.phoneNumber?.originalString ?? "null")
         return desc
     }
 }
@@ -73,11 +79,13 @@ extension UserProfile {
     enum FormDataMappings: String {
         case givenName
         case familyName
+        case phoneNumber
     }
     func formData(withMappings mappings: [FormDataMappings: String] = [:]) -> [String: String] {
         let nameJson = [
             mappings[.givenName] ?? FormDataMappings.givenName.rawValue: self.givenName,
             mappings[.familyName] ?? FormDataMappings.familyName.rawValue: self.familyName,
+            mappings[.phoneNumber] ?? FormDataMappings.phoneNumber.rawValue: self.phoneNumber?.normalizedPhoneNumber,
         ].compactedValues()
 
         var nameData: String?

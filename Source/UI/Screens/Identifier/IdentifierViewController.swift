@@ -163,11 +163,10 @@ class IdentifierViewController: IdentityUIViewController {
         case .phone:
             showPhoneNumber()
             self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.phoneNumber
-        case let .phoneWithPrefilledValue(prefilledPhone):
+        case let .phoneWithPrefilledValue(prefilledPhoneComponents):
             showPhoneNumber()
-            let (countryCodeText, numberText) = prefilledPhone.normalizedValue
-            self.countryCode.text = countryCodeText
-            self.phoneNumber.text = numberText
+            self.countryCode.text = prefilledPhoneComponents.countryCode
+            self.phoneNumber.text = prefilledPhoneComponents.number
         }
 
         self.skipButton.isHidden = !self.configuration.isSkippable

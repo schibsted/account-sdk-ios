@@ -12,7 +12,7 @@ class TermsAgreementsViewController: UIViewController {
     }
 
     @IBAction func fetchAgreementsAcceptanceStatus(_: UIButton) {
-        UIApplication.identityManager.currentUser.agreements.status { result in
+        UIApplication.currentUser.agreements.status { result in
             switch result {
             case let .success(isAccepted):
                 print("fetchAgreementsAcceptanceStatus: \(isAccepted)")
@@ -23,7 +23,7 @@ class TermsAgreementsViewController: UIViewController {
     }
 
     @IBAction func acceptAgreements(_: UIButton) {
-        UIApplication.identityManager.currentUser.agreements.accept { result in
+        UIApplication.currentUser.agreements.accept { result in
             print("acceptAgreements result: \(result)")
         }
     }

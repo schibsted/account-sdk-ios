@@ -111,3 +111,13 @@ public struct IdentityUIConfiguration {
         )
     }
 }
+
+extension IdentityUIConfiguration: CustomStringConvertible {
+    public var description: String {
+        return "(\n\tname: \(self.appName), "
+            + "\n\tcancelable: \(self.isCancelable), "
+            + "\n\tskippable: \(self.isSkippable), "
+            + "\n\ttracker: \(self.tracker != nil), "
+            + "\n\tclient: \(self.clientConfiguration)\n)"
+    }
+}

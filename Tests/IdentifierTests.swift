@@ -87,22 +87,22 @@ class IdentifierTests: QuickSpec {
             it("Should automatically add a + to phone numbers that don't have one") {
                 let phoneNumber = PhoneNumber(countryCode: self.testCountryCode, number: self.testNumberRaw)
                 expect(phoneNumber?.normalizedString) == self.testNormalizedNumber
-                expect(phoneNumber?.normalizedValue.countryCode) == self.testCountryCodeWithPlus
-                expect(phoneNumber?.normalizedValue.number) == self.testNumberRaw
+                expect(try? phoneNumber?.components().countryCode) == self.testCountryCodeWithPlus
+                expect(try? phoneNumber?.components().number) == self.testNumberRaw
             }
 
             it("Should leave number with + intact") {
                 let phoneNumber = PhoneNumber(countryCode: self.testCountryCodeWithPlus, number: self.testNumberRaw)
                 expect(phoneNumber?.normalizedString) == self.testNormalizedNumber
-                expect(phoneNumber?.normalizedValue.countryCode) == self.testCountryCodeWithPlus
-                expect(phoneNumber?.normalizedValue.number) == self.testNumberRaw
+                expect(try? phoneNumber?.components().countryCode) == self.testCountryCodeWithPlus
+                expect(try? phoneNumber?.components().number) == self.testNumberRaw
             }
 
             it("Should strip 00 and add a +") {
                 let phoneNumber = PhoneNumber(countryCode: self.testCountryCodeWith00, number: self.testNumberRaw)
                 expect(phoneNumber?.normalizedString) == self.testNormalizedNumber
-                expect(phoneNumber?.normalizedValue.countryCode) == self.testCountryCodeWithPlus
-                expect(phoneNumber?.normalizedValue.number) == self.testNumberRaw
+                expect(try? phoneNumber?.components().countryCode) == self.testCountryCodeWithPlus
+                expect(try? phoneNumber?.components().number) == self.testNumberRaw
             }
 
             it("Should be nil if number has non valid phone characters in it") {

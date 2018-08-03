@@ -16,6 +16,7 @@ private extension NSMutableString {
     }
 }
 
+///
 class RequiredFieldsViewModel {
     let supportedRequiredFields: [SupportedRequiredField]
     let localizationBundle: Bundle
@@ -33,15 +34,17 @@ extension RequiredFieldsViewModel {
         return "GlobalString.done".localized(from: self.localizationBundle)
     }
 
-    func titleForField(at index: Int) -> String {
+    func titleForField(_ field: SupportedRequiredField) -> String {
         let localizedKey: String
-        switch self.supportedRequiredFields[index] {
+        switch field {
         case .givenName:
             localizedKey = "RequiredField.givenName.title"
         case .familyName:
             localizedKey = "RequiredField.familyName.title"
         case .birthday:
             localizedKey = "RequiredField.birthday.title"
+        case .phoneNumber:
+            localizedKey = "RequiredField.phoneNumber.title"
         }
         return localizedKey.localized(from: self.localizationBundle)
     }
@@ -50,13 +53,15 @@ extension RequiredFieldsViewModel {
         return self.supportedRequiredFields[index].rawValue
     }
 
-    func placeholderForField(at index: Int) -> String? {
+    func placeholderForField(_ field: SupportedRequiredField) -> String? {
         let localizedKey: String?
-        switch self.supportedRequiredFields[index] {
+        switch field {
         case .birthday:
             localizedKey = "RequiredField.birthday.placeholder"
         case .givenName, .familyName:
             localizedKey = nil
+        case .phoneNumber:
+            return CountryDialingCodeHelper.currentDialingCode()
         }
         return localizedKey?.localized(from: self.localizationBundle)
     }
@@ -112,6 +117,8 @@ extension RequiredFieldsViewModel {
             return "RequiredField.error.lessThanThree".localized(from: self.localizationBundle)
         case .dateInvalid:
             return "RequiredField.error.birthdateInvalid".localized(from: self.localizationBundle)
+        case .numberInvalid:
+            return "RequiredField.error.numberInvalid".localized(from: self.localizationBundle)
         }
     }
 }

@@ -70,10 +70,12 @@
 "RequiredField.familyName.title" = "Last name";
 "RequiredField.birthday.title" = "Birthday";
 "RequiredField.birthday.placeholder" = "YYYY-MM-DD";
+"RequiredField.phoneNumber.title" = "Phone number";
 
 "RequiredField.error.missing" = "This field is required.";
 "RequiredField.error.lessThanThree" = "This field must be at least 3 characters.";
 "RequiredField.error.birthdateInvalid" = "This date is invalid.";
+"RequiredField.error.numberInvalid" = "This number is invalid.";
 
 "ErrorScreenString.heading" = "Something went wrong!";
 "ErrorScreenString.proceed" = "OK";

@@ -74,21 +74,24 @@ The most common use case is to get a hold of a `User` object. You can obtain a U
 See above for getting credentials. But once you have them you have to set up a `ClientConfiguration` object:
 
 ```swift
-let clientConfiguration = ClientConfiguration(
+extension SchibstedAccount.ClientConfiguration {
+    static let `default` = ClientConfiguration(
         environment: .preproduction,
-        clientID: "<you-client-code>",
+        clientID: "<your-client-code>",
         clientSecret: "<your-client-secret>",
         appURLScheme: nil
     )
 }
 ```
 
+Sll these fields must be retrieved from the selfservice portal. If you set `appURLScheme` to nil then the SDK assumes the defult scheme which is `spid-<your-client-code>`. Please double check that this is the same as the default scheme as listed in your Redirect URI tab in self service.
+
 ### **Check if you already have a user**
 
-To check if you already have a user logged in, you may use the IdentityManager:
+Get the last user that was logged in with the SDK
 
 ```swift
-let user = IdentityManager(clientConfiguration: clientConfiguration).currentUser
+let user = User.loadLast(clientConfiguration: .default);
 user.delegate = //...
 switch user.state {
 case .loggedIn:
@@ -98,15 +101,28 @@ case .loggedOut:
 }
 ```
 
+Even if there was no user persisted to the keychain, this function will return an initialized user object. Checking the `state` of the user tells you if the keychain data "looks" valid.
+
+**Note**: however that the data may have expired even though it is in the keychain, in which case the SDK will try and refresh it automatically for you if you make any requests using the provided extension on `URLSession`.
+
 ### **Visual login with IdentityUI**
 
-To start the login process you can fire up an `IdentityUI` object, configure it and it will create a `User` object for you if everything goes right. It is recommended to use the IdentityUI to create a User object because it makes sure that the correct login flows supported by the Schibsted Identity backend are adhered to (ie: required fields are filled in, and terms and conditions are accepted, etc).
+To start the login process you can fire up an `IdentityUI` object with an `IdentityUIConfiguration` (this is different than the `ClientConfiguration`) and it will create a `User` object for you if everything goes right. It is recommended to use the IdentityUI to create a User object because it makes sure that the correct login flows supported by the Schibsted Identity backend are adhered to (ie: required fields are filled in, and terms and conditions are accepted, etc).
 
 #### Logging in with the IdentityUI
 
 ```swift
 import UIKit
 import SchibstedAccount
+
+extension IdentityUIConfiguration {
+    // See docs for more options
+    static let `default` = IdentityUIConfiguration(
+        clientConfiguration: .default,
+        isCancelable: true,
+        isSkippable: true
+    )
+}
 
 class ViewController: UIViewController {
 
@@ -115,7 +131,7 @@ class ViewController: UIViewController {
 
     @IBAction func didTapLoginButton(_ sender: UIButton) {
         let identifierType: IdentifierType = (sender.tag == 0) ? .phone : .email
-        self.identityUI = IdentityUI(clientConfiguration: defaultClientConfiguration, identifierType: identifierType)
+        self.identityUI = IdentityUI(configuration: .default, identifierType: identifierType)
         self.identityUI?.delegate = //...
         self.identityUI?.presentIdentityProcess(from: self)
     }
@@ -126,6 +142,8 @@ class ViewController: UIViewController {
     }
 }
 ```
+
+To handle the login/signup/error/or any other supported events you can set the `IDentityUIDelegate`.
 
 #### IdentityUIDelegate and UserDelegate
 
@@ -139,6 +157,7 @@ extension ViewController: IdentityUIDelegate {
             self.user = user
             self.user.delegate = //...
             print("User with id \(String(describing: user.id)) is logged in")
+        // ... see docs for more cases
         }
     }
 }

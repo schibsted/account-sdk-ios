@@ -5,6 +5,7 @@
 
 import Foundation
 
+///
 class IdentifierViewModel {
     let loginMethod: LoginMethod
     let localizedTeaserText: String?

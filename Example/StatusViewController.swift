@@ -6,31 +6,50 @@
 @testable import SchibstedAccount
 import UIKit
 
+extension StatusViewController: UserDelegate {
+    func user(_ user: User, didChangeStateTo state: UserState) {
+        print("UserDelegate: user \(user) changed state to \(state)")
+        switch state {
+        case .loggedIn:
+            // This can only happen with headless login because a visual login results in IdentityUIDelegate.didFinish and uses it's own internal IdentityManager
+            //
+            // For a headless login we first catch the first time we log in with the IdentityManager and then we hijack it's internal currentUser and set our own
+            // delegate. So when we login again with the IdentityManager, we get to this point
+            DispatchQueue.main.async { [weak self] in
+                UIApplication.currentUser = UIApplication.identityManager.currentUser
+                UIApplication.currentUser.delegate = self
+            }
+        case .loggedOut:
+            break
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.updateFromCurrentUser()
+        }
+    }
+}
+
 extension StatusViewController: IdentityManagerDelegate {
-    // IdentityManagerDelegate
-    func userStateChanged(_: UserState) {
-        print("Login state changed to: \(self.isUserLoggedIn)")
+    func userStateChanged(_ state: UserState) {
+        print("IdentityManagerDelegate: user \(UIApplication.identityManager.currentUser) changed state to \(state)")
+        // Hijack internal IdentityManager user and set our own delegate
+        UIApplication.currentUser = UIApplication.identityManager.currentUser
+        UIApplication.currentUser.delegate = self
         self.updateFromCurrentUser()
-
-        // TODO: make a more sane separate test
-
-        let task: URLSessionDataTask? = self.session?.dataTask(with: URL(string: "http://localhost:8888")!) { _, _, _ in print("Done!") }
-        task?.resume()
     }
 }
 
 extension StatusViewController: IdentityUIDelegate {
     func didFinish(result: IdentityUIResult) {
+        print("IdentityUIDelegate: result \(result)")
         switch result {
-        case .canceled:
-            print("The user canceled the login process")
         case let .completed(user):
-            self.session = URLSession(user: user, configuration: URLSessionConfiguration.default)
-            print("User logged in - \(user)")
-        case .skipped:
-            print("User skipped login")
-        case let .failed(error):
-            print("Failed to login with UI - \(error)")
+            UIApplication.currentUser = user
+            UIApplication.currentUser.delegate = self
+            DispatchQueue.main.async { [weak self] in
+                self?.updateFromCurrentUser()
+            }
+        case .canceled, .skipped, .failed:
+            break
         }
     }
 
@@ -54,6 +73,25 @@ extension StatusViewController: IdentityUIDelegate {
             done(.ignore)
         })
         topViewController.present(alert, animated: true, completion: nil)
+    }
+
+    func willSucceed(with user: User, on topViewController: UIViewController?, done: @escaping (LoginWillSucceedDisposition) -> Void) {
+        print("Gonna succeed with user - \(user)")
+        let alert = UIAlertController(title: "About to login", message: "Should I continue, restart flow, or fail with some message?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Continue", style: .default) { _ in
+            done(.continue)
+        })
+        alert.addAction(UIAlertAction(title: "Restart", style: .destructive) { _ in
+            done(.restart)
+        })
+        alert.addAction(UIAlertAction(title: "Fail", style: .cancel) { _ in
+            done(.failed(title: "Some message", message: "This login attempt has failed"))
+        })
+        if let topViewController = topViewController {
+            topViewController.present(alert, animated: true, completion: nil)
+        } else {
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 
@@ -122,7 +160,7 @@ class StatusViewController: UIViewController {
 
     @IBAction func didClickScopes(_: Any) {
         var message: String = "n/a"
-        if let scopes = UIApplication.identityManager.currentUser.tokens?.accessToken {
+        if let scopes = UIApplication.currentUser.tokens?.accessToken {
             if let jwt = try? JWTHelper.toJSON(string: scopes) {
                 do {
                     message = try jwt.string(for: "scope").replacingOccurrences(of: " ", with: "\n")
@@ -137,7 +175,7 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didClickRefresh(_: Any) {
-        UIApplication.identityManager.currentUser.refresh { result in
+        UIApplication.currentUser.refresh { result in
             switch result {
             case .success:
                 print("refresh succeeded")
@@ -150,28 +188,29 @@ class StatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UIApplication.identityManager.delegate = self
         UIApplication.identityUI.delegate = self
+        UIApplication.currentUser.delegate = self
+        UIApplication.identityManager.delegate = self
 
         self.updateFromCurrentUser()
     }
 
     var isUserLoggedIn: Bool {
-        return UIApplication.identityManager.currentUser.state == .loggedIn
+        return UIApplication.currentUser.state == .loggedIn
     }
 
     func updateFromCurrentUser() {
         self.userStateLabel.text = self.isUserLoggedIn ? "yes" : "no"
-        self.userIDLabel.text = String(describing: UIApplication.identityManager.currentUser)
-        self.session = URLSession(user: UIApplication.identityManager.currentUser, configuration: URLSessionConfiguration.default)
+        self.userIDLabel.text = String(describing: UIApplication.currentUser)
+        self.session = URLSession(user: UIApplication.currentUser, configuration: URLSessionConfiguration.default)
     }
 
     @IBAction func logOut(_: UIButton) {
-        UIApplication.identityManager.currentUser.logout()
+        UIApplication.currentUser.logout()
     }
 
     @IBAction func didTapReadProfileButton(_: UIButton) {
-        UIApplication.identityManager.currentUser.profile.fetch { result in
+        UIApplication.currentUser.profile.fetch { result in
             switch result {
             case let .success(profile):
                 print("profile.fetch: \(profile)")

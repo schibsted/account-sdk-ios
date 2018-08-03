@@ -29,6 +29,7 @@ custom_categories:
   - name: Debugging
     children:
       - Logger
+      - LogLevel
   - name: Tracking
     children:
       - TrackingEventsHandler

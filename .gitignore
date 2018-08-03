@@ -31,6 +31,7 @@ Example/*/ClientConfiguration.json
 fastlane/*
 !fastlane/Fastfile
 !fastlane/README.md
+!fastlane/custom_formatter.rb
 
 # Jazzy docs
 docs

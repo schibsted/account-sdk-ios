@@ -68,13 +68,19 @@ class MockURLSessionDataTask: URLSessionDataTask {
         self._error = stub.error
         self._session = session
         self._request = request
+
+        super.init()
+
+        log(level: .verbose, from: self, "created mock for \(request)")
     }
     override func resume() {
+        log(level: .verbose, from: self, "resuming mock for \(self._request)")
         self.handleCacheControl()
         self.callback?(self._data, self._response, self._error)
         self.callback = nil // just in case someone decides to call resume again
     }
     override func cancel() {
+        log(level: .verbose, from: self, "cancelling mock for \(self._request)")
         let error = NSError(domain: "MockURLSessionDataTask", code: NSURLErrorCancelled, userInfo: nil)
         self.callback?(nil, nil, error)
         self._error = error as Error
@@ -128,7 +134,7 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
 }
 
 struct NetworkStub: Equatable, Comparable {
-    enum ResponseData: Equatable {
+    enum ResponseData: Equatable, CustomStringConvertible {
         // This will set the data in the response to be a JSONObject
         case jsonObject(JSONObject)
 
@@ -157,6 +163,22 @@ struct NetworkStub: Equatable, Comparable {
                 } else {
                     return false
                 }
+            }
+        }
+
+        var description: String {
+            switch self {
+            case let .jsonObject(a):
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: a)
+                    return String(data: data, encoding: .utf8) ?? "<error decoding json>"
+                } catch {
+                    return "<error decoding json> \(error)"
+                }
+            case let .string(a):
+                return "STRING: \(a)"
+            case let .arrayOfData(a):
+                return "ARRAY: \(a)"
             }
         }
     }
@@ -234,6 +256,16 @@ struct NetworkStub: Equatable, Comparable {
     }
 }
 
+extension NetworkStub: CustomStringConvertible {
+    var description: String {
+        return "  path: \(self.path)"
+            + "\n    - data: \(self.responseData as Any)"
+            + "\n    - headers: \(self.responseHeaders as Any)"
+            + "\n    - status code: \(self.statusCode as Any)"
+            + "\n    - error: \(self.error as Any)"
+    }
+}
+
 private extension String {
     func matches(_ regex: String) -> Bool {
         do {
@@ -248,44 +280,39 @@ private extension String {
 }
 
 class StubbedNetworkingProxy: NetworkingProxy {
+    private static let sharedLock = NSLock()
+
     var additionalHeaders: [String: String]?
 
     let session: URLSession = {
         DefaultNetworkingProxy().session
     }()
 
-    static func insert<K>(in dictionary: inout SynchronizedDictionary<K, [NetworkStub]>, key: K, stub: NetworkStub) {
-        dictionary.getAndSet(key: key) { stubs in
-            guard var stubs = stubs else {
-                return [stub]
-            }
-            guard !stubs.contains(stub) else {
-                return stubs
-            }
-            stubs.append(stub)
-            stubs.sort()
-            return stubs
+    static func insert<K>(in dictionary: inout [K: [NetworkStub]], key: K, stub: NetworkStub) {
+        guard var stubs = dictionary[key], !stubs.contains(stub) else {
+            dictionary[key] = [stub]
+            return
         }
+        stubs.append(stub)
+        stubs.sort()
+        dictionary[key] = stubs
     }
 
-    static func replace<K>(in dictionary: inout SynchronizedDictionary<K, [NetworkStub]>, key: K, stub: NetworkStub, with newStub: NetworkStub) {
-        dictionary.getAndSet(key: key) { stubs in
-            guard var stubs = stubs else {
-                return nil
-            }
-
-            guard let index = stubs.enumerated().filter({ $0.element == stub }).first?.offset else {
-                return stubs
-            }
-
-            stubs.remove(at: index)
-            stubs.append(newStub)
-            stubs.sort()
-            return stubs
-        }
+    static func replace<K>(in dictionary: inout [K: [NetworkStub]], key: K, stub: NetworkStub, with newStub: NetworkStub) {
+        guard var stubs = dictionary[key] else { return }
+        guard let index = stubs.enumerated().filter({ $0.element == stub }).first?.offset else { return }
+        stubs.remove(at: index)
+        stubs.append(newStub)
+        stubs.sort()
+        dictionary[key] = stubs
     }
 
     static func addStub(_ stub: NetworkStub) {
+        log(level: .verbose, "\n\(stub)")
+
+        StubbedNetworkingProxy.sharedLock.lock()
+        defer { StubbedNetworkingProxy.sharedLock.unlock() }
+
         switch stub.path {
         case let .url(url):
             self.insert(in: &self.urls, key: url, stub: stub)
@@ -301,8 +328,8 @@ class StubbedNetworkingProxy: NetworkingProxy {
         self.paths.removeAll(keepingCapacity: false)
     }
 
-    static var urls = SynchronizedDictionary<URL, [NetworkStub]>()
-    static var paths = SynchronizedDictionary<String, [NetworkStub]>()
+    static var urls: [URL: [NetworkStub]] = [:]
+    static var paths: [String: [NetworkStub]] = [:]
 
     func dataTask(
         for session: URLSession,
@@ -313,11 +340,15 @@ class StubbedNetworkingProxy: NetworkingProxy {
             return URLSessionDataTask()
         }
 
+        StubbedNetworkingProxy.sharedLock.lock()
+        defer { StubbedNetworkingProxy.sharedLock.unlock() }
+
         // Check if there're exact matches on this URL. If there are, first check if we are allowed
         // to proceed with it (defaults to true) and then return a mock data task
         for stub in type(of: self).urls[url] ?? [] {
+            log(level: .debug, from: self, "using url stub: \(stub.path) for \(request)")
             if stub.proceed(with: request) {
-                // Incase we are an arrayOfData, we need to remove the first elemenet since it is now "used up"
+                // Incase we are an arrayOfData, we need to remove the first element since it is now "used up" but only if there are more than 1 elements
                 defer {
                     if case var .arrayOfData(datas)? = stub.responseData {
                         if datas.count > 1 {
@@ -325,6 +356,7 @@ class StubbedNetworkingProxy: NetworkingProxy {
                             var newStub = stub
                             newStub.returnData(datas)
                             type(of: self).replace(in: &type(of: self).urls, key: url, stub: stub, with: newStub)
+                            log(level: .debug, from: self, "removed url stub: \(stub.path) for \(request)")
                         }
                     }
                 }
@@ -333,12 +365,13 @@ class StubbedNetworkingProxy: NetworkingProxy {
         }
 
         // If we do not have an exact URL match, check if any of the paths match (so contained in URL)
-        let dictionary = type(of: self).paths.take()
+        let dictionary = type(of: self).paths
         let sortedPaths = dictionary.keys.sorted { $0.count > $1.count }
         for path in sortedPaths where url.absoluteString.matches(path) {
             for stub in dictionary[path] ?? [] {
+                log(level: .debug, from: self, "using path stub: \(stub.path) for \(request)")
                 if stub.proceed(with: request) {
-                    // Incase we are an arrayOfData, we need to remove the first elemenet since it is now "used up"
+                    // Incase we are an arrayOfData, we need to remove the first element since it is now "used up" but only if there are more than 1 elements
                     defer {
                         if case var .arrayOfData(datas)? = stub.responseData {
                             if datas.count > 1 {
@@ -346,6 +379,7 @@ class StubbedNetworkingProxy: NetworkingProxy {
                                 var newStub = stub
                                 newStub.returnData(datas)
                                 type(of: self).replace(in: &type(of: self).paths, key: path, stub: stub, with: newStub)
+                                log(level: .debug, from: self, "removed path stub: \(stub.path) for \(request)")
                             }
                         }
                     }
@@ -354,6 +388,7 @@ class StubbedNetworkingProxy: NetworkingProxy {
             }
         }
 
+        log(level: .debug, from: self, "requst \(request) not stubbed")
         // This URL is not stubbed
         return MockURLSessionDataTask(session: session, request: request, callback: completion, stub: .unstubbed(path: .url(url)))
     }
