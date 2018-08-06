@@ -62,6 +62,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
                 input.inputAccessoryView = toolbar
                 // Mark this so that when it becomes active we can set the currentInputIndex on view model
                 input.tag = index
+                assert(input.tag >= 0)
                 input.delegate = self
 
                 let error = ErrorLabel()
@@ -84,11 +85,11 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     @IBOutlet var continueButtonLayoutGuide: NSLayoutConstraint!
-    var currentInputIndex: Int = 0
+    var currentInputIndex: UInt = 0
 
     private var values: [String?]
 
-    private let viewModel: RequiredFieldsViewModel
+    let viewModel: RequiredFieldsViewModel
 
     private var overrideScrollViewBottomContentInset: CGFloat?
 
@@ -107,15 +108,11 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     @objc func didTapNext() {
-        if self.currentInputIndex < (self.viewModel.supportedRequiredFields.count - 1) {
-            self.gotoInput(at: self.currentInputIndex + 1)
-        }
+        self.gotoInput(at: (self.currentInputIndex.addingReportingOverflow(1).partialValue) % UInt(self.viewModel.supportedRequiredFields.count))
     }
 
     @objc func didTapPrevious() {
-        if self.currentInputIndex > 0 {
-            self.gotoInput(at: self.currentInputIndex - 1)
-        }
+        self.gotoInput(at: (self.currentInputIndex.subtractingReportingOverflow(1).partialValue) % UInt(self.viewModel.supportedRequiredFields.count))
     }
 
     override func viewDidLayoutSubviews() {
@@ -191,7 +188,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     private func getActiveInput() -> UIView? {
-        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[self.currentInputIndex] as? UIStackView else {
+        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[Int(self.currentInputIndex)] as? UIStackView else {
             return nil
         }
         return subStack.arrangedSubviews[ViewIndex.input.rawValue]
@@ -246,7 +243,7 @@ extension RequiredFieldsViewController: UITextViewDelegate {
 
 extension RequiredFieldsViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        self.currentInputIndex = textField.tag
+        self.currentInputIndex = UInt(textField.tag)
         return true
     }
 
@@ -302,8 +299,8 @@ extension RequiredFieldsViewController {
         return self.viewModel.supportedRequiredFields.count
     }
 
-    func gotoInput(at index: Int) {
-        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[index] as? UIStackView else {
+    func gotoInput(at index: UInt) {
+        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[Int(index)] as? UIStackView else {
             return
         }
         subStack.arrangedSubviews[ViewIndex.input.rawValue].becomeFirstResponder()

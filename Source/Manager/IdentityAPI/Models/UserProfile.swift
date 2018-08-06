@@ -79,13 +79,11 @@ extension UserProfile {
     enum FormDataMappings: String {
         case givenName
         case familyName
-        case phoneNumber
     }
     func formData(withMappings mappings: [FormDataMappings: String] = [:]) -> [String: String] {
         let nameJson = [
             mappings[.givenName] ?? FormDataMappings.givenName.rawValue: self.givenName,
             mappings[.familyName] ?? FormDataMappings.familyName.rawValue: self.familyName,
-            mappings[.phoneNumber] ?? FormDataMappings.phoneNumber.rawValue: self.phoneNumber?.normalizedPhoneNumber,
         ].compactedValues()
 
         var nameData: String?
@@ -93,15 +91,14 @@ extension UserProfile {
             nameData = String(data: data, encoding: .utf8)
         }
 
-        var birthdayData: String?
-        if let birthday = self.birthday {
-            birthdayData = String(describing: birthday)
-        }
+        let birthdayData = self.birthday?.description ?? nil
+        let numberData = self.phoneNumber?.normalizedPhoneNumber ?? nil
 
         return [
             "name": nameData,
             "displayName": self.displayName,
             "birthday": birthdayData,
+            "phone_number": numberData,
         ].compactedValues()
     }
 }

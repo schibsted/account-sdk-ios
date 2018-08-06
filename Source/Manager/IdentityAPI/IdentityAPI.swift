@@ -180,7 +180,6 @@ class IdentityAPI {
             formData = formData.mergedByOverwriting(with: profile.formData(withMappings: [
                 .givenName: "given_name",
                 .familyName: "family_name",
-                .phoneNumber: "phone_number",
             ]))
         }
 
@@ -357,11 +356,7 @@ class IdentityAPI {
             return .noAccess
         case let .object("ApiException", .object(object), code):
             if let existsMessage = object["exists"] as? String, code == 302 {
-                if Router.signup.matches(path: path) {
-                    return .unverifiedEmail
-                } else {
-                    return .alreadyRegistered(message: existsMessage)
-                }
+                return .alreadyRegistered(message: existsMessage)
             }
             if let passwordMessage = object["password"] as? String {
                 return .invalidUserCredentials(message: passwordMessage)

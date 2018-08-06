@@ -267,7 +267,11 @@ extension CompleteProfileCoordinator {
 extension CompleteProfileCoordinator {
     private func handle(error: ClientError) -> Bool {
         if self.presentedViewController is TermsViewController || self.presentedViewController is RequiredFieldsViewController {
-            self.present(error: error)
+            if let vc = self.presentedViewController as? RequiredFieldsViewController, case .alreadyRegistered = error {
+                self.presentError(description: vc.viewModel.string(for: .numberInvalid))
+            } else {
+                self.present(error: error)
+            }
             return true
         }
         return false
