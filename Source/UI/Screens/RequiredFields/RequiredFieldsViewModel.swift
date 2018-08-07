@@ -43,8 +43,6 @@ extension RequiredFieldsViewModel {
             localizedKey = "RequiredField.familyName.title"
         case .birthday:
             localizedKey = "RequiredField.birthday.title"
-        case .phoneNumber:
-            localizedKey = "RequiredField.phoneNumber.title"
         }
         return localizedKey.localized(from: self.localizationBundle)
     }
@@ -60,8 +58,6 @@ extension RequiredFieldsViewModel {
             localizedKey = "RequiredField.birthday.placeholder"
         case .givenName, .familyName:
             localizedKey = nil
-        case .phoneNumber:
-            return CountryDialingCodeHelper.currentDialingCode()
         }
         return localizedKey?.localized(from: self.localizationBundle)
     }
