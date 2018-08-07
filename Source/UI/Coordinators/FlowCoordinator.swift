@@ -104,6 +104,7 @@ extension FlowCoordinator {
         viewController.modalPresentationStyle = .overFullScreen
         if #available(iOS 10.0, *) {
             viewController.preferredControlTintColor = self.configuration.theme.colors.iconTint
+            viewController.preferredBarTintColor = self.configuration.theme.colors.barTintColor
         }
         self.navigationController.present(viewController, animated: true, completion: nil)
     }
