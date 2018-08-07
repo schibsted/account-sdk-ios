@@ -81,7 +81,7 @@ extension FlowCoordinator {
         self.presentAsPopup(viewController)
     }
 
-    func presentError(title: String, description: String, completion: (() -> Void)? = nil) {
+    func presentError(title: String? = nil, description: String, completion: (() -> Void)? = nil) {
         let strings = ErrorScreenStrings(localizationBundle: self.configuration.localizationBundle)
         let viewController = ErrorViewController(
             configuration: self.configuration,

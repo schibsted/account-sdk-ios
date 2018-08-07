@@ -50,12 +50,12 @@ class ErrorViewController: IdentityUIViewController {
 
     convenience init(
         configuration: IdentityUIConfiguration,
-        customText: (title: String, description: String),
+        customText: (title: String?, description: String),
         from originViewController: IdentityUIViewController?,
         strings: ErrorScreenStrings
     ) {
         self.init(
-            dataSource: .customText(title: customText.title, description: customText.description),
+            dataSource: .customText(title: customText.title ?? strings.heading, description: customText.description),
             from: originViewController,
             configuration: configuration,
             strings: strings
