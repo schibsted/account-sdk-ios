@@ -35,6 +35,8 @@ public struct IdentityUITheme {
         ///
         public var iconTint = UIColor.schibstedDarkGray
         ///
+        public var barTintColor = UIColor.schibstedVeryLightGray
+        ///
         public var checkedBox = UIColor.schibstedPrimary
         ///
         public var uncheckedBox = UIColor.schibstedBlack
