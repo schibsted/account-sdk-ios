@@ -47,5 +47,24 @@ class UserProfileSessionTests: QuickSpec {
                 }
             }
         }
+
+        describe("Required fields") {
+            fit("should be there") {
+                let user = TestingUser(state: .loggedIn)
+                var stubSignup = NetworkStub(path: .path(Router.requiredFields(userID: user.id!).path))
+                stubSignup.returnData(json: .fromFile("user-required-fields-valid"))
+                stubSignup.returnResponse(status: 200)
+                StubbedNetworkingProxy.addStub(stubSignup)
+
+                var fields: [RequiredField] = []
+                user.profile.requiredFields { result in
+                    expect(result).to(beSuccess())
+                    if let val = try? result.materialize() {
+                        fields = val
+                    }
+                }
+                expect(fields) == [RequiredField.phoneNumber, RequiredField.displayName]
+            }
+        }
     }
 }

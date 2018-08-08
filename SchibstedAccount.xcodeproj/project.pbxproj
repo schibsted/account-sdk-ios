@@ -286,6 +286,7 @@
 		E192BA0020ECDD930066FB84 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E192B9EC20ECDD750066FB84 /* Nimble.framework */; };
 		E192BA0120ECDD9A0066FB84 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E160172063B5D100D9BA3E /* Quick.framework */; };
 		E1A476B82119949A007BB4BF /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A476B621199494007BB4BF /* JSONTests.swift */; };
+		E1A476BB211AE61B007BB4BF /* user-required-fields-valid.json in Resources */ = {isa = PBXBuildFile; fileRef = E1A476B9211AE3C5007BB4BF /* user-required-fields-valid.json */; };
 		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
 		E1CEE53020E13559003EC549 /* SDKConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */; };
 		E1CEE53220E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */; };
@@ -757,6 +758,7 @@
 		E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "password-grant-invalid-scope.json"; sourceTree = "<group>"; };
 		E192B9EC20ECDD750066FB84 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		E1A476B621199494007BB4BF /* JSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
+		E1A476B9211AE3C5007BB4BF /* user-required-fields-valid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "user-required-fields-valid.json"; sourceTree = "<group>"; };
 		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 		E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKConfiguration.swift; sourceTree = "<group>"; };
 		E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKConfiguration+AgreementsCache.swift"; sourceTree = "<group>"; };
@@ -1004,6 +1006,7 @@
 				B01D7B6FC8A3035B180798C9 /* invalid-authcode-no-access-token.json */,
 				B01D7C2B6DB4BFBBA1FEFECF /* invalid-refresh-no-refresh-token.json */,
 				B01D7476A17CB70C689B7141 /* valid-authcode-same-id-diff-code.json */,
+				E1A476B9211AE3C5007BB4BF /* user-required-fields-valid.json */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -1836,6 +1839,7 @@
 				B01D799533A7C9368E86DF79 /* login-invalid-unverified.json in Resources */,
 				B01D7C0E648A475BED903D7F /* agreements-valid-accepted.json in Resources */,
 				B01D7616C70428AE6DA79CF0 /* client-access-token-valid.json in Resources */,
+				E1A476BB211AE61B007BB4BF /* user-required-fields-valid.json in Resources */,
 				B01D7B9E1C40F4481F533DC9 /* id-status-valid-available.json in Resources */,
 				B01D7C2464B591F41590E8FA /* login-valid-with-id-token.json in Resources */,
 				B01D7C6078988EB72CDC66B0 /* signup-validation-invalid.json in Resources */,
