@@ -13,7 +13,7 @@ import Quick
 class JSONTests: QuickSpec {
 
     override func spec() {
-        it("Should convert to Data and conver back correctly") {
+        it("Should convert to Data and convert back correctly") {
             let json: JSONObject? = ["key": 0]
             let data = json?.data() ?? Data()
             expect { try data.jsonObject() }.to(equal(json))

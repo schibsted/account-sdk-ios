@@ -49,7 +49,7 @@ class UserProfileSessionTests: QuickSpec {
         }
 
         describe("Required fields") {
-            it("should be there") {
+            it("Should be there") {
                 let user = TestingUser(state: .loggedIn)
                 var stubSignup = NetworkStub(path: .path(Router.requiredFields(userID: user.id!).path))
                 stubSignup.returnData(json: .fromFile("user-required-fields-valid"))
