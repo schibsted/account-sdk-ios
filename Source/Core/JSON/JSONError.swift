@@ -8,7 +8,6 @@ import Foundation
 enum JSONError: Error {
     case noKey(String)
     case parse(Error)
-    case notDictionary(Any)
     case notString(String)
     case notJSONObject(String)
     case notNumber(String)
@@ -23,8 +22,6 @@ extension JSONError: CustomStringConvertible {
             return "Did not find key \(key)"
         case let .parse(error):
             return "JSON error: \(error)"
-        case let .notDictionary(object):
-            return "Expected json dictionary but got \(object)"
         case let .notString(key):
             return "Key \(key) was not convertible to string"
         case let .notJSONObject(key):

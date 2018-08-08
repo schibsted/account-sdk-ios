@@ -285,6 +285,7 @@
 		E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */ = {isa = PBXBuildFile; fileRef = E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */; };
 		E192BA0020ECDD930066FB84 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E192B9EC20ECDD750066FB84 /* Nimble.framework */; };
 		E192BA0120ECDD9A0066FB84 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E160172063B5D100D9BA3E /* Quick.framework */; };
+		E1A476B82119949A007BB4BF /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A476B621199494007BB4BF /* JSONTests.swift */; };
 		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
 		E1CEE53020E13559003EC549 /* SDKConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */; };
 		E1CEE53220E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */; };
@@ -755,6 +756,7 @@
 		E18394CF208DF43300B05EC9 /* InfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
 		E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "password-grant-invalid-scope.json"; sourceTree = "<group>"; };
 		E192B9EC20ECDD750066FB84 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		E1A476B621199494007BB4BF /* JSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
 		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 		E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKConfiguration.swift; sourceTree = "<group>"; };
 		E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKConfiguration+AgreementsCache.swift"; sourceTree = "<group>"; };
@@ -1467,6 +1469,7 @@
 				B01D7174821A0332E6D1486F /* NetworkingTests.swift */,
 				B01D75199E7463A4E06B3A0B /* EventEmitterTests.swift */,
 				B01D7DE36D0C37BB952CA10C /* VersionNumberTest.swift */,
+				E1A476B621199494007BB4BF /* JSONTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2063,6 +2066,7 @@
 				B01D73C1D30EF414922A4B69 /* VersionNumberTest.swift in Sources */,
 				B01D7DA7524B19807EE40432 /* IdentifierTests.swift in Sources */,
 				B01D7A39C8E6518C8AE2667D /* IdentityAPITests.swift in Sources */,
+				E1A476B82119949A007BB4BF /* JSONTests.swift in Sources */,
 				B01D7915A759E7A060660F1E /* IdentityManagerTests.swift in Sources */,
 				B01D7ACEE3B4E596259B1057 /* PasswordlessTokenStoreTests.swift in Sources */,
 				B01D7B1E593D6EA808EE71C3 /* TaskManagerTests.swift in Sources */,
