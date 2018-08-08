@@ -21,7 +21,7 @@ class JSONTests: QuickSpec {
 
         it("Should throw if invalid Data") {
             let data = "data".data(using: .utf8)!
-            expect { try data.jsonObject() }.to(throwError(errorType: JSONError.self))
+            expect { try data.jsonObject() }.to(throwError(JSONError.parse(kDummyError)))
         }
 
         describe("Types") {

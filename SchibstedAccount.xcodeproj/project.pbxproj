@@ -286,6 +286,7 @@
 		E192BA0120ECDD9A0066FB84 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E160172063B5D100D9BA3E /* Quick.framework */; };
 		E1A476B82119949A007BB4BF /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A476B621199494007BB4BF /* JSONTests.swift */; };
 		E1A476BB211AE61B007BB4BF /* user-required-fields-valid.json in Resources */ = {isa = PBXBuildFile; fileRef = E1A476B9211AE3C5007BB4BF /* user-required-fields-valid.json */; };
+		E1A476BD211AF23A007BB4BF /* JWTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A476BC211AF23A007BB4BF /* JWTTests.swift */; };
 		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
 		E1CEE53020E13559003EC549 /* SDKConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */; };
 		E1CEE53220E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */; };
@@ -757,6 +758,7 @@
 		E192B9EC20ECDD750066FB84 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		E1A476B621199494007BB4BF /* JSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
 		E1A476B9211AE3C5007BB4BF /* user-required-fields-valid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "user-required-fields-valid.json"; sourceTree = "<group>"; };
+		E1A476BC211AF23A007BB4BF /* JWTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTTests.swift; sourceTree = "<group>"; };
 		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 		E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKConfiguration.swift; sourceTree = "<group>"; };
 		E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKConfiguration+AgreementsCache.swift"; sourceTree = "<group>"; };
@@ -1467,6 +1469,7 @@
 			isa = PBXGroup;
 			children = (
 				B01D7174821A0332E6D1486F /* NetworkingTests.swift */,
+				E1A476BC211AF23A007BB4BF /* JWTTests.swift */,
 				B01D75199E7463A4E06B3A0B /* EventEmitterTests.swift */,
 				B01D7DE36D0C37BB952CA10C /* VersionNumberTest.swift */,
 				E1A476B621199494007BB4BF /* JSONTests.swift */,
@@ -2073,6 +2076,7 @@
 				B01D7F26D22379E1A1E269A8 /* ColorTests.swift in Sources */,
 				B01D7063C03605D8E3FEFA78 /* IconsTests.swift in Sources */,
 				B01D7C04D895FF4FA0237535 /* IdentityUIConfigurationTests.swift in Sources */,
+				E1A476BD211AF23A007BB4BF /* JWTTests.swift in Sources */,
 				B01D7D3D551CF59645CC75E5 /* RequiredFieldValidationTests.swift in Sources */,
 				B01D70445C764C61D2AF8508 /* IdentityUIViewControllerTests.swift in Sources */,
 				B01D76270D894ADC19B65282 /* URLSessionTests.swift in Sources */,
