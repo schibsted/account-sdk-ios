@@ -1020,8 +1020,6 @@
 				B01D7A3E0A72D35617428F2A /* IdentityAPI */,
 				B01D78ADBEB3CB231EEEDBD9 /* TaskManager */,
 				B01D7BEB43A901DC182B098C /* LegacySPiDAccessToken */,
-				B01D78CA427947338FB3A469 /* Result.swift */,
-				B01D720D8DF6FC61FFE38A28 /* JWTHelper.swift */,
 				B01D7A59910DF5E495401FE5 /* ClientError.swift */,
 				B01D7C4FE24FF626C6984CC9 /* AppLaunchData.swift */,
 				B01D7496B68492B80707C543 /* Configuration.plist */,
@@ -1086,6 +1084,7 @@
 				B01D7AF8EC46893E319F2791 /* Networking */,
 				B01D71CD20F4E2EA8D4219E2 /* Version.swift */,
 				B01D76A9921FF9FC02222F43 /* AtomicInt.swift */,
+				B01D720D8DF6FC61FFE38A28 /* JWTHelper.swift */,
 				B01D7306347D3F52524909F2 /* EventEmitter.swift */,
 				B01D7F5EAC295F7F54A0D0E0 /* GenericError.swift */,
 				B01D79513A0D4671620E2CD1 /* URLRequest+cURL.swift */,
@@ -1333,6 +1332,7 @@
 		B01D7AF8EC46893E319F2791 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				B01D78CA427947338FB3A469 /* Result.swift */,
 				B01D73D3F9346C902B47BB01 /* UserAgent.swift */,
 				B01D715CD10F329ED2CF6B19 /* Networking.swift */,
 				B01D7CDC4DE29A867D3384F3 /* NetworkingError.swift */,
