@@ -1,0 +1,34 @@
+{
+    "name": "SPP Container",
+    "version": "0.2",
+    "api": 2,
+    "object": "User",
+    "type": "element",
+    "code": 200,
+    "request": {
+        "reset": 3600,
+        "limit": 360000,
+        "remaining": 360000
+    },
+    "debug": {
+        "route": {
+            "name": "Has Access to User",
+            "url": "\/api\/2\/user\/{id}\/required_fields",
+            "controller": "Api\/2\/User.user_required_fields"
+        },
+        "params": {
+            "options": [],
+            "where": {
+                "id": "792b788f-64eb-5f92-bc65-8e7facae8be3"
+            }
+        }
+    },
+    "meta": null,
+    "error": null,
+    "data": {
+        "requiredFields": [
+            "phone_number",
+            "display_name"
+        ]
+    }
+}

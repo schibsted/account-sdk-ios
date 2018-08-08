@@ -266,7 +266,6 @@
 		B01D7F6D6CF2364162F4C316 /* signup-invalid-bad-password.json in Resources */ = {isa = PBXBuildFile; fileRef = B01D7B777D98577DF81C49E6 /* signup-invalid-bad-password.json */; };
 		B01D7F8188A43DFE4CADF41E /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7B53149E603974C36260 /* TextView.swift */; };
 		B01D7F83E22662B866338016 /* RequiredFieldsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D756393F5E1BB3EC3B7B8 /* RequiredFieldsViewModel.swift */; };
-		B01D7F932357AF608B43570E /* FetchTermsTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D71BCAE0B602F61BDED7F /* FetchTermsTask.swift */; };
 		B01D7F976772A37C390270AB /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7A59910DF5E495401FE5 /* ClientError.swift */; };
 		B01D7F9BE1BF5BBCB859D1ED /* PasswordlessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D709322199EE79962A3CD /* PasswordlessTokenStore.swift */; };
 		B01D7FCC3276E59472473201 /* IdentityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7602A656337DD7363FF4 /* IdentityAPI.swift */; };
@@ -533,7 +532,6 @@
 		B01D718F71E63BC5DD024025 /* RequiredFieldsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequiredFieldsViewController.swift; sourceTree = "<group>"; };
 		B01D7191D2F6E9EEBD287755 /* ClientConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfiguration.swift; sourceTree = "<group>"; };
 		B01D71A04467CF5430702789 /* signup-valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "signup-valid.json"; sourceTree = "<group>"; };
-		B01D71BCAE0B602F61BDED7F /* FetchTermsTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchTermsTask.swift; sourceTree = "<group>"; };
 		B01D71CD20F4E2EA8D4219E2 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		B01D71D4380E4131A77720D1 /* UIColor+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Style.swift"; sourceTree = "<group>"; };
 		B01D71E5C14B6FF51B5AD7D1 /* TermsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsInteractor.swift; sourceTree = "<group>"; };
@@ -1249,7 +1247,6 @@
 		B01D78F00E91F15E1F8587B0 /* APITasks */ = {
 			isa = PBXGroup;
 			children = (
-				B01D71BCAE0B602F61BDED7F /* FetchTermsTask.swift */,
 				9E7F134321106CD900BBEFED /* FetchUserAssetsTask.swift */,
 				B01D7735FB1C6B36657AFF73 /* TokenExchangeTask.swift */,
 				B01D7822E222645CA6C625FF /* FetchRequiredFields.swift */,
@@ -1919,7 +1916,6 @@
 				B01D76D8B52C446C8C842828 /* URLSession+User.swift in Sources */,
 				B01D7B7BE2BAD7D47776B7A6 /* User+Agreements.swift in Sources */,
 				B01D7D4BBB9590376EAA738C /* TokenData+anyUserID.swift in Sources */,
-				B01D7F932357AF608B43570E /* FetchTermsTask.swift in Sources */,
 				0D5A7FFE208DF0F800B5D21F /* ShowTermsCoordinator.swift in Sources */,
 				43E15FE62063B24000D9BA3E /* LogoView.swift in Sources */,
 				B01D786509649C0694D68D76 /* TokenExchangeTask.swift in Sources */,
