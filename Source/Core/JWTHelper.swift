@@ -21,12 +21,6 @@ extension JWTHelperError: CustomStringConvertible {
     }
 }
 
-extension JWTHelperError: ClientErrorConvertible {
-    var clientError: ClientError {
-        return .unexpected(self)
-    }
-}
-
 protocol JWTHelperProxy {
     func toJSON(string: String) throws -> JSONObject
 }

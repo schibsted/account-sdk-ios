@@ -266,7 +266,6 @@
 		B01D7F6D6CF2364162F4C316 /* signup-invalid-bad-password.json in Resources */ = {isa = PBXBuildFile; fileRef = B01D7B777D98577DF81C49E6 /* signup-invalid-bad-password.json */; };
 		B01D7F8188A43DFE4CADF41E /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7B53149E603974C36260 /* TextView.swift */; };
 		B01D7F83E22662B866338016 /* RequiredFieldsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D756393F5E1BB3EC3B7B8 /* RequiredFieldsViewModel.swift */; };
-		B01D7F932357AF608B43570E /* FetchTermsTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D71BCAE0B602F61BDED7F /* FetchTermsTask.swift */; };
 		B01D7F976772A37C390270AB /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7A59910DF5E495401FE5 /* ClientError.swift */; };
 		B01D7F9BE1BF5BBCB859D1ED /* PasswordlessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D709322199EE79962A3CD /* PasswordlessTokenStore.swift */; };
 		B01D7FCC3276E59472473201 /* IdentityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7602A656337DD7363FF4 /* IdentityAPI.swift */; };
@@ -285,6 +284,9 @@
 		E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */ = {isa = PBXBuildFile; fileRef = E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */; };
 		E192BA0020ECDD930066FB84 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E192B9EC20ECDD750066FB84 /* Nimble.framework */; };
 		E192BA0120ECDD9A0066FB84 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E160172063B5D100D9BA3E /* Quick.framework */; };
+		E1A476B82119949A007BB4BF /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A476B621199494007BB4BF /* JSONTests.swift */; };
+		E1A476BB211AE61B007BB4BF /* user-required-fields-valid.json in Resources */ = {isa = PBXBuildFile; fileRef = E1A476B9211AE3C5007BB4BF /* user-required-fields-valid.json */; };
+		E1A476BD211AF23A007BB4BF /* JWTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A476BC211AF23A007BB4BF /* JWTTests.swift */; };
 		E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDD5022065208100B23063 /* JSONObject+Data.swift */; };
 		E1CEE53020E13559003EC549 /* SDKConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */; };
 		E1CEE53220E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */; };
@@ -531,7 +533,6 @@
 		B01D718F71E63BC5DD024025 /* RequiredFieldsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequiredFieldsViewController.swift; sourceTree = "<group>"; };
 		B01D7191D2F6E9EEBD287755 /* ClientConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfiguration.swift; sourceTree = "<group>"; };
 		B01D71A04467CF5430702789 /* signup-valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "signup-valid.json"; sourceTree = "<group>"; };
-		B01D71BCAE0B602F61BDED7F /* FetchTermsTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchTermsTask.swift; sourceTree = "<group>"; };
 		B01D71CD20F4E2EA8D4219E2 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		B01D71D4380E4131A77720D1 /* UIColor+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Style.swift"; sourceTree = "<group>"; };
 		B01D71E5C14B6FF51B5AD7D1 /* TermsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsInteractor.swift; sourceTree = "<group>"; };
@@ -755,6 +756,9 @@
 		E18394CF208DF43300B05EC9 /* InfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
 		E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "password-grant-invalid-scope.json"; sourceTree = "<group>"; };
 		E192B9EC20ECDD750066FB84 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		E1A476B621199494007BB4BF /* JSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
+		E1A476B9211AE3C5007BB4BF /* user-required-fields-valid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "user-required-fields-valid.json"; sourceTree = "<group>"; };
+		E1A476BC211AF23A007BB4BF /* JWTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTTests.swift; sourceTree = "<group>"; };
 		E1CDD5022065208100B23063 /* JSONObject+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONObject+Data.swift"; sourceTree = "<group>"; };
 		E1CEE52F20E13559003EC549 /* SDKConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKConfiguration.swift; sourceTree = "<group>"; };
 		E1CEE53120E1356C003EC549 /* SDKConfiguration+AgreementsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKConfiguration+AgreementsCache.swift"; sourceTree = "<group>"; };
@@ -1002,6 +1006,7 @@
 				B01D7B6FC8A3035B180798C9 /* invalid-authcode-no-access-token.json */,
 				B01D7C2B6DB4BFBBA1FEFECF /* invalid-refresh-no-refresh-token.json */,
 				B01D7476A17CB70C689B7141 /* valid-authcode-same-id-diff-code.json */,
+				E1A476B9211AE3C5007BB4BF /* user-required-fields-valid.json */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -1017,8 +1022,6 @@
 				B01D7A3E0A72D35617428F2A /* IdentityAPI */,
 				B01D78ADBEB3CB231EEEDBD9 /* TaskManager */,
 				B01D7BEB43A901DC182B098C /* LegacySPiDAccessToken */,
-				B01D78CA427947338FB3A469 /* Result.swift */,
-				B01D720D8DF6FC61FFE38A28 /* JWTHelper.swift */,
 				B01D7A59910DF5E495401FE5 /* ClientError.swift */,
 				B01D7C4FE24FF626C6984CC9 /* AppLaunchData.swift */,
 				B01D7496B68492B80707C543 /* Configuration.plist */,
@@ -1083,6 +1086,7 @@
 				B01D7AF8EC46893E319F2791 /* Networking */,
 				B01D71CD20F4E2EA8D4219E2 /* Version.swift */,
 				B01D76A9921FF9FC02222F43 /* AtomicInt.swift */,
+				B01D720D8DF6FC61FFE38A28 /* JWTHelper.swift */,
 				B01D7306347D3F52524909F2 /* EventEmitter.swift */,
 				B01D7F5EAC295F7F54A0D0E0 /* GenericError.swift */,
 				B01D79513A0D4671620E2CD1 /* URLRequest+cURL.swift */,
@@ -1244,7 +1248,6 @@
 		B01D78F00E91F15E1F8587B0 /* APITasks */ = {
 			isa = PBXGroup;
 			children = (
-				B01D71BCAE0B602F61BDED7F /* FetchTermsTask.swift */,
 				9E7F134321106CD900BBEFED /* FetchUserAssetsTask.swift */,
 				B01D7735FB1C6B36657AFF73 /* TokenExchangeTask.swift */,
 				B01D7822E222645CA6C625FF /* FetchRequiredFields.swift */,
@@ -1331,6 +1334,7 @@
 		B01D7AF8EC46893E319F2791 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				B01D78CA427947338FB3A469 /* Result.swift */,
 				B01D73D3F9346C902B47BB01 /* UserAgent.swift */,
 				B01D715CD10F329ED2CF6B19 /* Networking.swift */,
 				B01D7CDC4DE29A867D3384F3 /* NetworkingError.swift */,
@@ -1465,8 +1469,10 @@
 			isa = PBXGroup;
 			children = (
 				B01D7174821A0332E6D1486F /* NetworkingTests.swift */,
+				E1A476BC211AF23A007BB4BF /* JWTTests.swift */,
 				B01D75199E7463A4E06B3A0B /* EventEmitterTests.swift */,
 				B01D7DE36D0C37BB952CA10C /* VersionNumberTest.swift */,
+				E1A476B621199494007BB4BF /* JSONTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1833,6 +1839,7 @@
 				B01D799533A7C9368E86DF79 /* login-invalid-unverified.json in Resources */,
 				B01D7C0E648A475BED903D7F /* agreements-valid-accepted.json in Resources */,
 				B01D7616C70428AE6DA79CF0 /* client-access-token-valid.json in Resources */,
+				E1A476BB211AE61B007BB4BF /* user-required-fields-valid.json in Resources */,
 				B01D7B9E1C40F4481F533DC9 /* id-status-valid-available.json in Resources */,
 				B01D7C2464B591F41590E8FA /* login-valid-with-id-token.json in Resources */,
 				B01D7C6078988EB72CDC66B0 /* signup-validation-invalid.json in Resources */,
@@ -1912,7 +1919,6 @@
 				B01D76D8B52C446C8C842828 /* URLSession+User.swift in Sources */,
 				B01D7B7BE2BAD7D47776B7A6 /* User+Agreements.swift in Sources */,
 				B01D7D4BBB9590376EAA738C /* TokenData+anyUserID.swift in Sources */,
-				B01D7F932357AF608B43570E /* FetchTermsTask.swift in Sources */,
 				0D5A7FFE208DF0F800B5D21F /* ShowTermsCoordinator.swift in Sources */,
 				43E15FE62063B24000D9BA3E /* LogoView.swift in Sources */,
 				B01D786509649C0694D68D76 /* TokenExchangeTask.swift in Sources */,
@@ -2063,12 +2069,14 @@
 				B01D73C1D30EF414922A4B69 /* VersionNumberTest.swift in Sources */,
 				B01D7DA7524B19807EE40432 /* IdentifierTests.swift in Sources */,
 				B01D7A39C8E6518C8AE2667D /* IdentityAPITests.swift in Sources */,
+				E1A476B82119949A007BB4BF /* JSONTests.swift in Sources */,
 				B01D7915A759E7A060660F1E /* IdentityManagerTests.swift in Sources */,
 				B01D7ACEE3B4E596259B1057 /* PasswordlessTokenStoreTests.swift in Sources */,
 				B01D7B1E593D6EA808EE71C3 /* TaskManagerTests.swift in Sources */,
 				B01D7F26D22379E1A1E269A8 /* ColorTests.swift in Sources */,
 				B01D7063C03605D8E3FEFA78 /* IconsTests.swift in Sources */,
 				B01D7C04D895FF4FA0237535 /* IdentityUIConfigurationTests.swift in Sources */,
+				E1A476BD211AF23A007BB4BF /* JWTTests.swift in Sources */,
 				B01D7D3D551CF59645CC75E5 /* RequiredFieldValidationTests.swift in Sources */,
 				B01D70445C764C61D2AF8508 /* IdentityUIViewControllerTests.swift in Sources */,
 				B01D76270D894ADC19B65282 /* URLSessionTests.swift in Sources */,

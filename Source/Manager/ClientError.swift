@@ -147,6 +147,12 @@ extension JSONError: ClientErrorConvertible {
     }
 }
 
+extension JWTHelperError: ClientErrorConvertible {
+    var clientError: ClientError {
+        return .unexpected(self)
+    }
+}
+
 extension NetworkingError: ClientErrorConvertible {
     var clientError: ClientError {
         switch self {

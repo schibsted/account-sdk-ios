@@ -36,6 +36,22 @@ extension Dictionary where Key == String, Value == Any {
     }
 }
 
+public func equal(_ expected: JSONObject?) -> Predicate<JSONObject?> {
+    return Predicate { actual throws -> PredicateResult in
+        let msg = ExpectationMessage.expectedActualValueTo("equal <\(expected as Any)>")
+        if let actual = (try? actual.evaluate()) ?? nil {
+            return PredicateResult(
+                bool: actual == expected,
+                message: msg
+            )
+        }
+        return PredicateResult(
+            status: .fail,
+            message: msg
+        )
+    }
+}
+
 func beSuccess<T, E: Error>() -> Predicate<Result<T, E>> {
     return Predicate({ (expression) -> PredicateResult in
         let msg = ExpectationMessage.expectedActualValueTo("be success(\(T.self))")
