@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct PasswordlessToken {
+struct PasswordlessToken: Equatable {
     let value: String
     init(_ value: String) {
         self.value = value
@@ -22,11 +22,5 @@ extension PasswordlessToken: JSONParsable {
 extension PasswordlessToken: CustomStringConvertible {
     var description: String {
         return self.value
-    }
-}
-
-extension PasswordlessToken: Equatable {
-    static func == (lhs: PasswordlessToken, rhs: PasswordlessToken) -> Bool {
-        return lhs.value == rhs.value
     }
 }

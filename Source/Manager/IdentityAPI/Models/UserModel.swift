@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct UserModel {
+struct UserModel: Equatable {
     let email: String
     init(email: String) {
         self.email = email
@@ -17,11 +17,5 @@ extension UserModel: JSONParsable {
         let data = try json.jsonObject(for: "data")
         let email = try data.string(for: "email")
         self.init(email: email)
-    }
-}
-
-extension UserModel: Equatable {
-    static func == (lhs: UserModel, rhs: UserModel) -> Bool {
-        return lhs.email == rhs.email
     }
 }

@@ -8,7 +8,7 @@ import Foundation
 /**
   Gives you the status of an identifier
   */
-public struct IdentifierStatus {
+public struct IdentifierStatus: Equatable {
     /// If identifier has been verified by user (eg validated auth code/one time code)
     public let verified: Bool
 
@@ -33,11 +33,5 @@ extension IdentifierStatus: JSONParsable {
             exists: (try? data.boolean(for: "exists")) ?? false,
             available: (try? data.boolean(for: "available")) ?? false
         )
-    }
-}
-
-extension IdentifierStatus: Equatable {
-    public static func == (lhs: IdentifierStatus, rhs: IdentifierStatus) -> Bool {
-        return lhs.available == rhs.available && lhs.exists == rhs.exists && lhs.verified == rhs.verified
     }
 }

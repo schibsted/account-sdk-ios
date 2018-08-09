@@ -53,7 +53,7 @@ class JWTTests: QuickSpec {
                 expect { try proxy.toJSON(string: "blah.bl{ah.blah") }.to(throwError(JWTHelperError.componentDecodingError("")))
             }
 
-            fit("Should fail on invalid json in second jwt component") {
+            it("Should fail on invalid json in second jwt component") {
                 let proxy = DefaultJWTHelperProxy()
                 expect { try proxy.toJSON(string: "blah.blah.blah") }.to(throwError(JSONError.parse(kDummyError)))
             }
