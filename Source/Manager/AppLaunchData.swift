@@ -21,22 +21,6 @@ public enum AppLaunchData: Equatable {
     case afterForgotPassword
     /// When deep link returns after an account summary session
     case codeAfterAccountSummary(String)
-
-    ///
-    public static func == (lhs: AppLaunchData, rhs: AppLaunchData) -> Bool {
-        switch (lhs, rhs) {
-        case let (.codeAfterSignup(a), .codeAfterSignup(b)):
-            return a == b
-        case let (.codeAfterUnvalidatedLogin(a), .codeAfterUnvalidatedLogin(b)):
-            return a == b
-        case (.afterForgotPassword, .afterForgotPassword):
-            return true
-        case let (.codeAfterAccountSummary(a), .codeAfterAccountSummary(b)):
-            return a == b
-        default:
-            return false
-        }
-    }
 }
 
 extension AppLaunchData {

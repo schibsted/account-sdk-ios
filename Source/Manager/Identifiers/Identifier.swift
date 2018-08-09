@@ -180,12 +180,18 @@ extension Identifier: CustomStringConvertible {
 }
 
 extension Identifier: Equatable {
-    /// Returns true if both normalized forms are equal
     public static func == (lhs: Identifier, rhs: Identifier) -> Bool {
-        switch (lhs, rhs) {
-        case let (.email(a), .email(b)) where a.normalizedString == b.normalizedString: return true
-        case let (.phone(a), .phone(b)) where a.normalizedString == b.normalizedString: return true
-        default: return false
+        switch lhs {
+        case let .email(a):
+            if case let .email(b) = rhs {
+                return a == b
+            }
+            return false
+        case let .phone(a):
+            if case let .phone(b) = rhs {
+                return a == b
+            }
+            return false
         }
     }
 }

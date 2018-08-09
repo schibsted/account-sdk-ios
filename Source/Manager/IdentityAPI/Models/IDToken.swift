@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct IDToken {
+struct IDToken: Equatable {
     let string: String
     let subjectID: String
     let legacyUserID: String?
@@ -34,11 +34,5 @@ extension IDToken {
 extension IDToken: CustomStringConvertible {
     var description: String {
         return self.string
-    }
-}
-
-extension IDToken: Equatable {
-    static func == (lhs: IDToken, rhs: IDToken) -> Bool {
-        return lhs.data == rhs.data
     }
 }

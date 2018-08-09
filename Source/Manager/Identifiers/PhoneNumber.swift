@@ -118,3 +118,9 @@ public struct PhoneNumber: IdentifierProtocol {
         return digits
     }
 }
+
+extension PhoneNumber: Equatable {
+    public static func == (lhs: PhoneNumber, rhs: PhoneNumber) -> Bool {
+        return lhs.normalizedString == rhs.normalizedString
+    }
+}
