@@ -81,10 +81,10 @@ public protocol IdentityUIDelegate: class {
      You must call the done callback and tell the UI to either continue or ignore the request
      to skip the login flow
 
-     - parameter topViewController: the view controller that is currently the topViewController of the internal naviagtion controller
+     - parameter presentingViewController: the view controller that is currently the presentingViewController of the internal naviagtion controller
      - parameter done: call this to tell the flow to continue
      */
-    func skipRequested(topViewController: UIViewController, done: @escaping (SkipLoginDisposition) -> Void)
+    func skipRequested(presentingViewController: UIViewController, done: @escaping (SkipLoginDisposition) -> Void)
 
     /**
      This will be called right before `didFinish` is called with a success result
@@ -96,10 +96,10 @@ public protocol IdentityUIDelegate: class {
      login flow did not need to fire up a flow (when validating a signing deep link when launching the app for e.g.)
 
      - parameter result: the `User` that will be given to `didFinish`
-     - parameter topViewController: The currently shown top view controller
+     - parameter presentingViewController: The currently shown presentingViewController
      - parameter done: call this to say you're done so the UI can continue
      */
-    func willSucceed(with user: User, on topViewController: UIViewController?, done: @escaping (LoginWillSucceedDisposition) -> Void)
+    func willSucceed(with user: User, on presentingViewController: UIViewController?, done: @escaping (LoginWillSucceedDisposition) -> Void)
 }
 
 public extension IdentityUIDelegate {
@@ -107,7 +107,7 @@ public extension IdentityUIDelegate {
         return .continue
     }
 
-    func skipRequested(topViewController _: UIViewController, done: @escaping (SkipLoginDisposition) -> Void) {
+    func skipRequested(presentingViewController _: UIViewController, done: @escaping (SkipLoginDisposition) -> Void) {
         done(.continue)
     }
 
