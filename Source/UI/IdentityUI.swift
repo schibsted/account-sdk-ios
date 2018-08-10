@@ -92,8 +92,8 @@ private extension UIViewController {
             x: leftSpacting,
             y: topSpacing,
             width: 50,
-            height: 50)
-        )
+            height: 50
+        ))
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.activityIndicatorViewStyle = .gray
         loadingIndicator.startAnimating()
