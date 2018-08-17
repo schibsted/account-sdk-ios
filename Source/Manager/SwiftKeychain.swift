@@ -175,7 +175,7 @@ struct Keychain: KeychainServiceType {
 extension KeychainItemType {
     func saveInKeychain(_ keychain: KeychainServiceType = Keychain()) throws {
         // Remove any old value before inserting
-        try? removeFromKeychain(keychain)
+        try? self.removeFromKeychain(keychain)
         try keychain.insertItemWithAttributes(self.attributesToSave)
     }
 
