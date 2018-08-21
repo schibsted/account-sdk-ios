@@ -43,7 +43,6 @@ func loadWithPreviousKeychainLayout() throws -> TokenData {
     var attributes = [String: Any]()
 
     attributes[String(kSecClass)] = kSecClassGenericPassword
-    attributes[String(kSecAttrAccessible)] = String(kSecAttrAccessibleWhenUnlocked)
     attributes[String(kSecAttrService)] = "swift.keychain.service"
     attributes[String(kSecAttrAccount)] = "SchibstedID"
     attributes[String(kSecReturnData)] = kCFBooleanTrue
