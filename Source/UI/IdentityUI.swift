@@ -359,7 +359,7 @@ public class IdentityUI {
         }
 
         if let delegate = self.delegate, case let .completed(user) = uiResult {
-            delegate.willSucceed(with: user, on: self.navigationController.topViewController) { disposition in
+            delegate.willSucceed(with: user, on: self.navigationController.presentingViewController) { disposition in
                 switch disposition {
                 case .continue:
                     dismissFlow()
@@ -531,12 +531,12 @@ extension IdentityUI {
                 // First screen, `back` cancels the flow.
                 completion(.cancel)
             case .skip:
-                guard let topViewController = self?.navigationController.topViewController, let delegate = self?.delegate else {
+                guard let presentingViewController = self?.navigationController.presentingViewController, let delegate = self?.delegate else {
                     completion(.skip)
                     return
                 }
 
-                delegate.skipRequested(topViewController: topViewController) { disposition in
+                delegate.skipRequested(presentingViewController: presentingViewController) { disposition in
                     switch disposition {
                     case .continue:
                         completion(.skip)
