@@ -18,7 +18,7 @@ class Checkbox: UIButton, Themeable {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.setImage(theme.icons.checkedBox, for: .selected)
         self.setImage(theme.icons.uncheckedBox, for: .normal)
-        self.setTitle(nil, for: UIControlState.normal)
+        self.setTitle(nil, for: UIControl.State.normal)
         self.tintColor = self.stateColor
         self.imageView?.contentMode = .scaleAspectFit
         self.addTarget(self, action: #selector(self.tap), for: .touchUpInside)

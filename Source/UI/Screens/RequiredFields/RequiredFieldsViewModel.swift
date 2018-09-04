@@ -89,10 +89,10 @@ extension RequiredFieldsViewModel {
 
         let attributedString = NSMutableAttributedString(string: mutableString as String)
         attributedString.addAttribute(.link, value: controlYouPrivacyURL.absoluteString, range: r1)
-        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: r1)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: r1)
 
         attributedString.addAttribute(.link, value: dataAndYouURL.absoluteString, range: r2)
-        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: r2)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: r2)
 
         return attributedString
     }

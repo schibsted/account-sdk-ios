@@ -155,7 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var passwordFlowViewController: PasswordFlowViewController? {
         // swiftlint:disable:next force_cast
         let tabVC = self.window?.rootViewController! as! UITabBarController
-        for case let vc as PasswordFlowViewController in tabVC.childViewControllers {
+        for case let vc as PasswordFlowViewController in tabVC.children {
             return vc
         }
         return nil
@@ -164,13 +164,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var statusViewController: StatusViewController? {
         // swiftlint:disable:next force_cast
         let tabVC = self.window?.rootViewController! as! UITabBarController
-        for case let vc as StatusViewController in tabVC.childViewControllers {
+        for case let vc as StatusViewController in tabVC.children {
             return vc
         }
         return nil
     }
 
-    func application(_: UIApplication, didFinishLaunchingWithOptions options: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_: UIApplication, didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let urlTypes = Bundle.main.infoDictionary!["CFBundleURLTypes"] as? [[String: Any]]
         let urlSchemes = urlTypes?[0]["CFBundleURLSchemes"] as? [String]
         let clientConfig = SchibstedAccount.ClientConfiguration.current
@@ -253,8 +253,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // called by OS to open a deep link (iOS 9+ compatible)
-    func application(_: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
-        let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String
+    func application(_: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        let sourceApplication = options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String
         return openDeepLink(url: url, fromSourceApplication: sourceApplication)
     }
 

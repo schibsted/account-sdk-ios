@@ -95,7 +95,7 @@ private extension UIViewController {
             height: 50
         ))
         loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.activityIndicatorViewStyle = .gray
+        loadingIndicator.style = .gray
         loadingIndicator.startAnimating()
 
         alert.view.addSubview(loadingIndicator)

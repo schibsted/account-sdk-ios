@@ -24,7 +24,7 @@ private extension String {
         }
         let attributedString = NSMutableAttributedString(string: mutableString as String)
         attributedString.addAttribute(.link, value: url.absoluteString, range: range)
-        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: range)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
         return attributedString
     }
 }
