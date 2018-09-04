@@ -57,6 +57,7 @@ enum SupportedRequiredField: String {
         case lessThanThree
         case dateInvalid
         case numberInvalid
+        case tooYoung
     }
 
     func validate(value: String) -> ValidationError? {
@@ -72,6 +73,23 @@ enum SupportedRequiredField: String {
             guard case .full? = Birthdate(string: value) else {
                 return .dateInvalid
             }
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            guard let givenDate = dateFormatter.date(from: value) else { return nil }
+            let today = Calendar.current.startOfDay(for: Date())
+            guard let pastDate = Calendar.current.date(byAdding: .year, value: -16, to: today) else { return nil }
+            let comparisonResult = givenDate.compare(pastDate)
+
+            var error: ValidationError?
+
+            switch comparisonResult {
+            case .orderedSame, .orderedAscending:
+                error = nil
+            case .orderedDescending:
+                error = .tooYoung
+            }
+            return error
         }
         return nil
     }
