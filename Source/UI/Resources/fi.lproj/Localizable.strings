@@ -21,6 +21,7 @@
 "PasswordScreenString.inputTitle" = "Kirjoita salasanasi";
 "PasswordScreenString.proceed" = "Jatka";
 "PasswordScreenString.invalidPassword" = "Syöttämäsi salasana on virheellinen. Yritä uudelleen.";
+"PasswordScreenString.passwordTooShort" = "Salasanassa tulee olla vähintään 8 merkkiä.";
 "PasswordScreenString.change" = "Et sinä?";
 "PasswordScreenString.cancel" = "Peruuta";
 "PasswordScreenString.info" = "Vähintään 8 merkkiä";

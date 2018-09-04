@@ -38,6 +38,10 @@ extension PasswordViewModel {
         return "PasswordScreenString.invalidPassword".localized(from: self.localizationBundle)
     }
 
+    var passwordTooShort: String {
+        return "PasswordScreenString.invalidPassword".localized(from: self.localizationBundle)
+    }
+
     var done: String {
         return "GlobalString.done".localized(from: self.localizationBundle)
     }

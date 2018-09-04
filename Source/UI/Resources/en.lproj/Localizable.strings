@@ -21,6 +21,7 @@
 "PasswordScreenString.inputTitle" = "Enter your password";
 "PasswordScreenString.proceed" = "Continue";
 "PasswordScreenString.invalidPassword" = "The password you entered is incorrect. Please try again.";
+"PasswordScreenString.passwordTooShort" = "Your password should have at least 8 characters.";
 "PasswordScreenString.change" = "Not you?";
 "PasswordScreenString.cancel" = "Cancel";
 "PasswordScreenString.info" = "Minimum 8 characters";

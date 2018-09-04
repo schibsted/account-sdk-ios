@@ -21,6 +21,7 @@
 "PasswordScreenString.inputTitle" = "Ange ditt lösenord";
 "PasswordScreenString.proceed" = "Fortsätt";
 "PasswordScreenString.invalidPassword" = "Lösenordet du angav är felaktigt. Försök igen.";
+"PasswordScreenString.passwordTooShort" = "Ditt lösenord måste ha minst 8 tecken.";
 "PasswordScreenString.change" = "Inte du?";
 "PasswordScreenString.cancel" = "Avbryt";
 "PasswordScreenString.info" = "Minst 8 tecken";

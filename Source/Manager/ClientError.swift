@@ -40,6 +40,9 @@ public enum ClientError: Error {
     /// Occurs when client credentials are invalid
     case invalidClientCredentials
 
+    /// Occurs when password is shorter than 8 characters
+    case passwordTooShort
+
     /// Occurs when you try to login with an unverified email
     case unverifiedEmail
 
@@ -119,6 +122,8 @@ extension ClientError: CustomStringConvertible {
             return "One or more specified scopes are invalid"
         case .noAccess:
             return "Access is not allowed"
+        case .passwordTooShort:
+            return "Your password should have at least 8 characters."
         }
     }
 }
