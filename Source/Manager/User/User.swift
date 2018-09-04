@@ -233,20 +233,24 @@ public class User: UserProtocol {
 
         self.isPersistent = makePersistent ?? self.isPersistent
 
-        // Clear all the tokens always, this avoid corner cases.
-        // E.g. user A logs in, user B logs in, then user A logs in again and the first user A's tokens were then not cleared or some other weird nonsense.
-        try? UserTokensStorage().clearAll()
+        // If we had old tokens then clear them out
+        if tokens.old != nil {
+            // Clear all the tokens always, this avoid corner cases.
+            // E.g. user A logs in, user B logs in, then user A logs in again and the first user A's
+            // tokens were then not cleared or some other weird nonsense.
+            //
+            // TODO: Revisit this logic if and when multi user keychain support is implemented
+            try? UserTokensStorage().clearAll()
+        }
 
         if self.isPersistent {
             // Store new tokens if we are supposed to be persistent.
             // Only clear previous tokens if the user is NOT a new one (since they have not logged out)
-            if let newTokens = tokens.new {
-                try? UserTokensStorage().store(newTokens)
-            }
+            try? UserTokensStorage().store(newTokens)
         }
 
-        let isNewLoggedInUser = newTokens.anyUserID != nil && newTokens.anyUserID != tokens.old?.anyUserID
-        if isNewLoggedInUser {
+        // Only call state change if we had a previous user and we have a new us
+        if newTokens.anyUserID != tokens.old?.anyUserID {
             self.delegate?.user(self, didChangeStateTo: .loggedIn)
         }
     }
