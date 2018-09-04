@@ -48,7 +48,7 @@ protocol KeychainItemType {
 
 extension KeychainItemType {
     var accessMode: String {
-        return String(kSecAttrAccessibleWhenUnlocked)
+        return String(kSecAttrAccessibleAfterFirstUnlock)
     }
 
     var accessGroup: String? {
@@ -62,6 +62,7 @@ extension KeychainItemType {
         let archivedData = NSKeyedArchiver.archivedData(withRootObject: dataToStore)
 
         itemAttributes[String(kSecValueData)] = archivedData
+        itemAttributes[String(kSecAttrAccessible)] = accessMode
 
         if let group = accessGroup {
             itemAttributes[String(kSecAttrAccessGroup)] = group
@@ -88,6 +89,14 @@ extension KeychainItemType {
 
         return itemAttributes
     }
+
+    internal var attributesForDelete: [String: Any] {
+        var itemAttributes = attributes
+        if let group = accessGroup {
+            itemAttributes[String(kSecAttrAccessGroup)] = group
+        }
+        return itemAttributes
+    }
 }
 
 // MARK: - KeychainGenericPasswordType
@@ -106,7 +115,6 @@ extension KeychainGenericPasswordType {
         var attributes = [String: Any]()
 
         attributes[String(kSecClass)] = kSecClassGenericPassword
-        attributes[String(kSecAttrAccessible)] = accessMode
         attributes[String(kSecAttrService)] = serviceName
         attributes[String(kSecAttrAccount)] = accountName
 
@@ -118,18 +126,19 @@ extension KeychainGenericPasswordType {
 
 struct Keychain: KeychainServiceType {
     internal func errorForStatusCode(_ statusCode: OSStatus) -> NSError {
-        return NSError(domain: "swift.keychain.error", code: Int(statusCode), userInfo: nil)
+        var userInfo: [String: Any]?
+        if #available(iOS 11.3, *) {
+            if let errorMessage = SecCopyErrorMessageString(statusCode, nil) {
+                userInfo = [NSLocalizedDescriptionKey: errorMessage]
+            }
+        }
+        return NSError(domain: "swift.keychain.error", code: Int(statusCode), userInfo: userInfo)
     }
 
     // Inserts or updates a keychain item with attributes
 
     public func insertItemWithAttributes(_ attributes: [String: Any]) throws {
-        var statusCode = SecItemAdd(attributes as CFDictionary, nil)
-
-        if statusCode == errSecDuplicateItem {
-            SecItemDelete(attributes as CFDictionary)
-            statusCode = SecItemAdd(attributes as CFDictionary, nil)
-        }
+        let statusCode = SecItemAdd(attributes as CFDictionary, nil)
 
         if statusCode != errSecSuccess {
             throw self.errorForStatusCode(statusCode)
@@ -165,11 +174,13 @@ struct Keychain: KeychainServiceType {
 
 extension KeychainItemType {
     func saveInKeychain(_ keychain: KeychainServiceType = Keychain()) throws {
+        // Remove any old value before inserting
+        try? self.removeFromKeychain(keychain)
         try keychain.insertItemWithAttributes(self.attributesToSave)
     }
 
     func removeFromKeychain(_ keychain: KeychainServiceType = Keychain()) throws {
-        try keychain.removeItemWithAttributes(attributes)
+        try keychain.removeItemWithAttributes(self.attributesForDelete)
     }
 
     mutating func fetchFromKeychain(_ keychain: KeychainServiceType = Keychain()) throws -> Self {
