@@ -14,7 +14,7 @@ extension Data {
             throw JSONError.parse(error)
         }
         guard let unwrappedJson = json as? JSONObject else {
-            throw JSONError.notDictionary(json)
+            throw JSONError.parse(GenericError.Unexpected("JSONSerialization.jsonObject as? JSONObject failed"))
         }
         return unwrappedJson
     }

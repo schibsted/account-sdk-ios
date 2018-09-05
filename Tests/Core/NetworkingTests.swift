@@ -12,6 +12,28 @@ class NetworkingTests: QuickSpec {
 
     override func spec() {
 
+        describe("send") {
+
+            it("Should use any additional headers") {
+                let headers = ["one": "two"]
+                Networking.additionalHeaders = headers
+                expect(Networking.additionalHeaders) == headers
+
+                let url = URL(string: "https://whatever")!
+                var stub = NetworkStub(path: .url(url))
+                stub.returnResponse(status: 200)
+
+                waitUntil { done in
+                    Networking.send(to: url, using: .GET) { _, _, _ in
+                        done()
+                    }.resume()
+                }
+
+                expect(Networking.testingProxy.calls.first?.sentHTTPHeaders?["one"]) == "two"
+            }
+
+        }
+
         describe("stubbed networking proxy") {
             it("should not cache if cache control set and caching off") {
                 let url = URL(string: "https://whatever")!

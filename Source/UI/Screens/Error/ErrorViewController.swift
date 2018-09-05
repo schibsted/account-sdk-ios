@@ -4,6 +4,12 @@
 //
 
 class ErrorViewController: IdentityUIViewController {
+    enum Action {
+        case dismiss
+    }
+
+    var didRequestAction: ((Action) -> Void)?
+
     @IBOutlet var headingLabel: Heading! {
         didSet {
             switch self.dataSource {
@@ -44,12 +50,12 @@ class ErrorViewController: IdentityUIViewController {
 
     convenience init(
         configuration: IdentityUIConfiguration,
-        customText: (title: String, description: String),
+        customText: (title: String?, description: String),
         from originViewController: IdentityUIViewController?,
         strings: ErrorScreenStrings
     ) {
         self.init(
-            dataSource: .customText(title: customText.title, description: customText.description),
+            dataSource: .customText(title: customText.title ?? strings.heading, description: customText.description),
             from: originViewController,
             configuration: configuration,
             strings: strings
@@ -87,7 +93,9 @@ class ErrorViewController: IdentityUIViewController {
     }
 
     @IBAction func didTapOKButton(_: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) { [weak self] in
+            self?.didRequestAction?(.dismiss)
+        }
     }
 
     override func viewDidLoad() {

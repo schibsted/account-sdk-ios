@@ -21,6 +21,7 @@
 "PasswordScreenString.inputTitle" = "Vennligst oppgi passordet ditt";
 "PasswordScreenString.proceed" = "Fortsett";
 "PasswordScreenString.invalidPassword" = "Passordet du oppga er feil. Vennligst prøv igjen.";
+"PasswordScreenString.passwordTooShort" = "Passordet ditt skal ha minst 8 tegn.";
 "PasswordScreenString.change" = "Ikke deg?";
 "PasswordScreenString.cancel" = "Avbryt";
 "PasswordScreenString.info" = "Minst 8 tegn";
@@ -70,10 +71,12 @@
 "RequiredField.familyName.title" = "Etternavn";
 "RequiredField.birthday.title" = "Fødselsdag";
 "RequiredField.birthday.placeholder" = "YYYY-MM-DD";
+"RequiredField.phoneNumber.title" = "Telefonnummer";
 
 "RequiredField.error.missing" = "Dette feltet må fylles ut.";
 "RequiredField.error.lessThanThree" = "Dette feltet må bestå av minst 3 tegn.";
 "RequiredField.error.birthdateInvalid" = "Denne datoen er ugyldig.";
+"RequiredField.error.numberInvalid" = "Dette telefonnummeret er ugyldig.";
 
 "ErrorScreenString.heading" = "Noe gikk galt!";
 "ErrorScreenString.proceed" = "OK";

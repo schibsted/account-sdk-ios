@@ -53,7 +53,7 @@ extension URLSession {
         configurationCopy.httpAdditionalHeaders = adjustedheaders
         configurationCopy.protocolClasses = [AutoRefreshURLProtocol.self]
         self.init(configuration: configurationCopy, delegate: delegate, delegateQueue: delegateQueue)
-        log(from: self, "user: \(user)")
+        log(level: .verbose, from: self, "user: \(user)")
     }
 
     /**

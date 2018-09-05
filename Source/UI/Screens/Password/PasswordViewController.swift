@@ -167,7 +167,7 @@ class PasswordViewController: IdentityUIViewController {
     @IBAction func didClickContinue(_: Any) {
         self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])
         guard let password = self.password.text, ((self.viewModel.loginFlowVariant == .signin && password.count >= 1) || password.count >= 8) else {
-            self.showInlineError(.invalidUserCredentials(message: nil))
+            self.showInlineError(.passwordTooShort)
             return
         }
 
@@ -198,6 +198,8 @@ class PasswordViewController: IdentityUIViewController {
         switch error {
         case .invalidUserCredentials:
             message = self.viewModel.invalidPassword
+        case .passwordTooShort:
+            message = self.viewModel.passwordTooShort
         default:
             return false
         }

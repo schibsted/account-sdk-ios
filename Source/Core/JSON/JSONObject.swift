@@ -63,3 +63,17 @@ extension JSONObjectProtocol where Key == String, Value == Any {
         return bool
     }
 }
+
+func == (lhs: JSONObject?, rhs: JSONObject?) -> Bool {
+    if let rhs = rhs {
+        if let lhs = lhs {
+            return (lhs as NSDictionary).isEqual(to: rhs)
+        } else {
+            return false
+        }
+    } else if lhs != nil {
+        return false
+    } else {
+        return true
+    }
+}

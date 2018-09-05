@@ -19,20 +19,8 @@ public enum AppLaunchData: Equatable {
     case codeAfterUnvalidatedLogin(String)
     /// When a deep link returns after a forgot password session
     case afterForgotPassword
-
-    ///
-    public static func == (lhs: AppLaunchData, rhs: AppLaunchData) -> Bool {
-        switch (lhs, rhs) {
-        case let (.codeAfterSignup(a), .codeAfterSignup(b)):
-            return a == b
-        case let (.codeAfterUnvalidatedLogin(a), .codeAfterUnvalidatedLogin(b)):
-            return a == b
-        case (.afterForgotPassword, .afterForgotPassword):
-            return true
-        default:
-            return false
-        }
-    }
+    /// When deep link returns after an account summary session
+    case codeAfterAccountSummary(String)
 }
 
 extension AppLaunchData {
@@ -70,25 +58,39 @@ extension AppLaunchData {
     public init?(payload: ClientConfiguration.RedirectPayload) {
         // Note: make sure to validate an variable input when possible
 
-        guard let path = payload.path else {
-            if let code = payload.queryComponents[QueryKey.code.rawValue]?.first {
-                // Only ascii alpha numerics allowed in authoriation code
-                guard !code.isEmpty && code.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil else {
-                    return nil
-                }
+        // See if there's an auth code here first, then we have one of the code related deep links
+        if let code = payload.queryComponents[QueryKey.code.rawValue]?.first {
+            guard !code.isEmpty && code.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil else {
+                return nil
+            }
+
+            // No path, means a deeplink from a login where the email address was not verified previously
+            guard let path = payload.path else {
                 self = .codeAfterUnvalidatedLogin(code)
                 return
             }
+
+            // Check if coming back from signup
+            if let value = Settings.value(forKey: ClientConfiguration.RedirectInfo.Signup.settingsKey) as? String, value == path {
+                let shouldPersistUser = payload.queryComponents[QueryKey.persistUser.rawValue]?.first == "true"
+                self = .codeAfterSignup(code, shouldPersistUser: shouldPersistUser)
+                return
+            }
+
+            // Check if coming back after account summary session
+            if let value = Settings.value(forKey: ClientConfiguration.RedirectInfo.AccountSummary.settingsKey) as? String, value == path {
+                self = .codeAfterAccountSummary(code)
+                return
+            }
+
+            // Unknwon path
             return nil
         }
 
-        if let value = Settings.value(forKey: ClientConfiguration.RedirectInfo.Signup.settingsKey) as? String, value == path {
-            guard let code = payload.queryComponents[QueryKey.code.rawValue]?.first else {
-                return nil
-            }
-            let shouldPersistUser = payload.queryComponents[QueryKey.persistUser.rawValue]?.first == "true"
-            self = .codeAfterSignup(code, shouldPersistUser: shouldPersistUser)
-            return
+        // Check for paths with no code
+
+        guard let path = payload.path else {
+            return nil
         }
 
         if let value = Settings.value(forKey: ClientConfiguration.RedirectInfo.ForgotPassword.settingsKey) as? String, value == path {

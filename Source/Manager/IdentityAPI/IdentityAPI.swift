@@ -56,6 +56,15 @@ class IdentityAPI {
         task?.resume()
     }
 
+    func fetchUserAssets(oauthToken: String,
+                         userID: String,
+                         completion: @escaping (Result<UserAssets, ClientError>) -> Void) {
+        let task = request(router: .assets(userID: userID),
+                           headers: [.authorization: oauthToken.bearer],
+                           completion: completion)
+        task?.resume()
+    }
+
     func fetchUserProfile(userID: String,
                           oauthToken: String,
                           completion: @escaping ((Result<UserProfile, ClientError>) -> Void)) {
@@ -316,7 +325,7 @@ class IdentityAPI {
             return nil
         }
 
-        log(from: self, "parsed spid error: \(spidError)")
+        log(level: .debug, from: self, "parsed spid error: \(spidError)")
 
         switch spidError {
         case .string("invalid_user_credentials", "OAuthException", 400):
@@ -347,11 +356,7 @@ class IdentityAPI {
             return .noAccess
         case let .object("ApiException", .object(object), code):
             if let existsMessage = object["exists"] as? String, code == 302 {
-                if Router.signup.matches(path: path) {
-                    return .unverifiedEmail
-                } else {
-                    return .alreadyRegistered(message: existsMessage)
-                }
+                return .alreadyRegistered(message: existsMessage)
             }
             if let passwordMessage = object["password"] as? String {
                 return .invalidUserCredentials(message: passwordMessage)
@@ -386,7 +391,7 @@ class IdentityAPI {
 
         let nonNilFormData = formData.compactedValues()
 
-        log(from: self, url)
+        log(level: .verbose, from: self, url)
         return Networking.send(to: url, using: router.method, headers: headers, formData: nonNilFormData, completion: { data, response, error in
             do {
                 let data = try Networking.Utils.ensureResponse(data, response, error)(Array(200...299))

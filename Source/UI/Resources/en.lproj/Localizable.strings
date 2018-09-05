@@ -21,6 +21,7 @@
 "PasswordScreenString.inputTitle" = "Enter your password";
 "PasswordScreenString.proceed" = "Continue";
 "PasswordScreenString.invalidPassword" = "The password you entered is incorrect. Please try again.";
+"PasswordScreenString.passwordTooShort" = "Your password should have at least 8 characters.";
 "PasswordScreenString.change" = "Not you?";
 "PasswordScreenString.cancel" = "Cancel";
 "PasswordScreenString.info" = "Minimum 8 characters";
@@ -70,10 +71,12 @@
 "RequiredField.familyName.title" = "Last name";
 "RequiredField.birthday.title" = "Birthday";
 "RequiredField.birthday.placeholder" = "YYYY-MM-DD";
+"RequiredField.phoneNumber.title" = "Phone number";
 
 "RequiredField.error.missing" = "This field is required.";
 "RequiredField.error.lessThanThree" = "This field must be at least 3 characters.";
 "RequiredField.error.birthdateInvalid" = "This date is invalid.";
+"RequiredField.error.numberInvalid" = "This number is invalid.";
 
 "ErrorScreenString.heading" = "Something went wrong!";
 "ErrorScreenString.proceed" = "OK";

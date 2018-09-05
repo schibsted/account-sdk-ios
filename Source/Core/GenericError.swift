@@ -23,18 +23,3 @@ extension GenericError.Unexpected: CustomStringConvertible {
         return "\(type(of: self))! \(string)"
     }
 }
-
-extension GenericError {
-    struct WTF: Error {
-        var string: String
-        init(_ string: String) {
-            self.string = string
-        }
-    }
-}
-
-extension GenericError.WTF: CustomStringConvertible {
-    var description: String {
-        return "\(type(of: self))! \(string)"
-    }
-}

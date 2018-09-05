@@ -6,6 +6,5 @@
 import Foundation
 
 struct EmptyResponse: JSONParsable {
-    init(from _: JSONObject) {
-    }
+    init(from _: JSONObject) {}
 }

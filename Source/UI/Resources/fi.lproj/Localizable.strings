@@ -21,6 +21,7 @@
 "PasswordScreenString.inputTitle" = "Kirjoita salasanasi";
 "PasswordScreenString.proceed" = "Jatka";
 "PasswordScreenString.invalidPassword" = "Syöttämäsi salasana on virheellinen. Yritä uudelleen.";
+"PasswordScreenString.passwordTooShort" = "Salasanassa tulee olla vähintään 8 merkkiä.";
 "PasswordScreenString.change" = "Et sinä?";
 "PasswordScreenString.cancel" = "Peruuta";
 "PasswordScreenString.info" = "Vähintään 8 merkkiä";
@@ -70,10 +71,12 @@
 "RequiredField.familyName.title" = "Sukunimi";
 "RequiredField.birthday.title" = "Syntymäpäivä";
 "RequiredField.birthday.placeholder" = "YYYY-MM-DD";
+"RequiredField.phoneNumber.title" = "Puhelinnumero";
 
 "RequiredField.error.missing" = "Tämä kenttä vaaditaan.";
 "RequiredField.error.lessThanThree" = "Tässä kentässä tulee olla vähintään 3 merkkiä.";
 "RequiredField.error.birthdateInvalid" = "Tämä päivämäärä on virheellinen.";
+"RequiredField.error.numberInvalid" = "Tämä puhelinnumero on virheellinen.";
 
 "ErrorScreenString.heading" = "Jokin meni pieleen!";
 "ErrorScreenString.proceed" = "OK";

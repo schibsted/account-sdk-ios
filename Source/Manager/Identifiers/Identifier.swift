@@ -64,8 +64,11 @@ public enum Identifier: IdentifierProtocol {
         case let .email(email):
             return "\(EmailAddress.self):\(email.normalizedString)"
         case let .phone(phoneNumber):
-            let (normalizedCountryCode, normalizedNumber) = phoneNumber.normalizedValue
-            return "\(PhoneNumber.self):\(normalizedCountryCode):\(normalizedNumber)"
+            if let components = try? phoneNumber.components() {
+                return "\(PhoneNumber.self):\(components.countryCode):\(components.number)"
+            } else {
+                return "\(PhoneNumber.self):\(phoneNumber.normalizedPhoneNumber)"
+            }
         }
     }
 
@@ -73,27 +76,28 @@ public enum Identifier: IdentifierProtocol {
 
     init?(serializedString: String) {
         let components = serializedString.components(separatedBy: ":")
-        let value = components.dropFirst().joined(separator: ":")
-        guard let typeString = components.first else {
-            return nil
-        }
-        switch typeString {
-        case "\(EmailAddress.self)":
-            if let email = EmailAddress(value) {
+        switch components.first {
+        case .some("\(EmailAddress.self)") where components.count == 2:
+            if let email = EmailAddress(components[1]) {
                 self = Identifier(email)
                 return
             }
-        case "\(PhoneNumber.self)":
-            let phoneComponents = value.split(separator: ":").map { String($0) }
-            guard phoneComponents.count == 2 && !phoneComponents[0].isEmpty && !phoneComponents[1].isEmpty else {
+        case .some("\(PhoneNumber.self)") where components.count <= 3:
+            switch components.count {
+            case 2 where !components[1].isEmpty:
+                if let phone = PhoneNumber(fullNumber: components.first) {
+                    self = Identifier(phone)
+                    return
+                }
+            case 3 where !components[1].isEmpty && !components[2].isEmpty:
+                let countryCode = components[1]
+                let number = components[2]
+                if let phone = PhoneNumber(countryCode: countryCode, number: number) {
+                    self = Identifier(phone)
+                    return
+                }
+            default:
                 return nil
-            }
-            let countryCode = phoneComponents[0]
-            let number = phoneComponents[1]
-
-            if let phone = PhoneNumber(countryCode: countryCode, number: number) {
-                self = Identifier(phone)
-                return
             }
         default:
             return nil
@@ -176,12 +180,18 @@ extension Identifier: CustomStringConvertible {
 }
 
 extension Identifier: Equatable {
-    /// Returns true if both normalized forms are equal
     public static func == (lhs: Identifier, rhs: Identifier) -> Bool {
-        switch (lhs, rhs) {
-        case let (.email(a), .email(b)) where a.normalizedString == b.normalizedString: return true
-        case let (.phone(a), .phone(b)) where a.normalizedString == b.normalizedString: return true
-        default: return false
+        switch lhs {
+        case let .email(a):
+            if case let .email(b) = rhs {
+                return a == b
+            }
+            return false
+        case let .phone(a):
+            if case let .phone(b) = rhs {
+                return a == b
+            }
+            return false
         }
     }
 }

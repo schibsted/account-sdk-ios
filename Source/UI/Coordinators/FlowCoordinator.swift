@@ -81,7 +81,7 @@ extension FlowCoordinator {
         self.presentAsPopup(viewController)
     }
 
-    func presentError(title: String, description: String) {
+    func presentError(title: String? = nil, description: String, completion: (() -> Void)? = nil) {
         let strings = ErrorScreenStrings(localizationBundle: self.configuration.localizationBundle)
         let viewController = ErrorViewController(
             configuration: self.configuration,
@@ -89,6 +89,12 @@ extension FlowCoordinator {
             from: self.presentedViewController,
             strings: strings
         )
+        viewController.didRequestAction = { action in
+            switch action {
+            case .dismiss:
+                completion?()
+            }
+        }
         self.presentAsPopup(viewController)
     }
 
@@ -98,6 +104,7 @@ extension FlowCoordinator {
         viewController.modalPresentationStyle = .overFullScreen
         if #available(iOS 10.0, *) {
             viewController.preferredControlTintColor = self.configuration.theme.colors.iconTint
+            viewController.preferredBarTintColor = self.configuration.theme.colors.barTintColor
         }
         self.navigationController.present(viewController, animated: true, completion: nil)
     }

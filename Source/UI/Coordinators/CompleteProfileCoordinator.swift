@@ -267,7 +267,28 @@ extension CompleteProfileCoordinator {
 extension CompleteProfileCoordinator {
     private func handle(error: ClientError) -> Bool {
         if self.presentedViewController is TermsViewController || self.presentedViewController is RequiredFieldsViewController {
-            self.present(error: error)
+            /*
+             So when you use a phone number in a required field, the error spid returns is
+
+             SPIDError: object: {
+               type: ApiException,
+               description:
+               object([
+                 "password": The password is wrong. Please check that you have typed a correct and valid password.,
+                 "exists": This email already exists! Please log in.
+               ]),
+               code: 302
+             }
+
+             So the error parse in IdentityAPI.swift prases that "exists" key in that error as alreadyRegistered - since, well, that's what it is. So
+             since we know within the context of the complete profile coordinator that we have a valid identifier in flight, this can only happen if
+             someone tried to use a phone number in a required field that has already been used as an identifier in spid.
+             */
+            if let vc = self.presentedViewController as? RequiredFieldsViewController, case .alreadyRegistered = error {
+                self.presentError(description: vc.viewModel.string(for: .numberInvalid))
+            } else {
+                self.present(error: error)
+            }
             return true
         }
         return false

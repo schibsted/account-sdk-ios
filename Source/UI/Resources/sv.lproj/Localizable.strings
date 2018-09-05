@@ -21,6 +21,7 @@
 "PasswordScreenString.inputTitle" = "Ange ditt lösenord";
 "PasswordScreenString.proceed" = "Fortsätt";
 "PasswordScreenString.invalidPassword" = "Lösenordet du angav är felaktigt. Försök igen.";
+"PasswordScreenString.passwordTooShort" = "Ditt lösenord måste ha minst 8 tecken.";
 "PasswordScreenString.change" = "Inte du?";
 "PasswordScreenString.cancel" = "Avbryt";
 "PasswordScreenString.info" = "Minst 8 tecken";
@@ -70,10 +71,12 @@
 "RequiredField.familyName.title" = "Efternamn";
 "RequiredField.birthday.title" = "Födelsedatum";
 "RequiredField.birthday.placeholder" = "YYYY-MM-DD";
+"RequiredField.phoneNumber.title" = "Telefonnummer";
 
 "RequiredField.error.missing" = "Det här fältet måste fyllas i.";
 "RequiredField.error.lessThanThree" = "Detta fält måste vara minst 3 tecken";
 "RequiredField.error.birthdateInvalid" = "Detta datum är ogiltigt";
+"RequiredField.error.numberInvalid" = "Detta telefonnummer är ogiltigt.";
 
 "ErrorScreenString.heading" = "Någonting gick fel!";
 "ErrorScreenString.proceed" = "OK";

@@ -26,11 +26,11 @@ struct UserTokensStorage {
                 try self.store(tokens)
                 SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
             } catch {
-                forceLog(from: self, "failed to migrate \(tokens)")
+                log(level: .error, from: self, "failed to migrate \(tokens)", force: true)
             }
         }
 
-        log(from: self, "loaded \(tokens)")
+        log(level: .debug, from: self, "loaded \(tokens)")
         return tokens
     }
 
@@ -40,7 +40,7 @@ struct UserTokensStorage {
 
         do {
             try keychain.saveInKeychain()
-            log(from: self, "stored \(tokens)")
+            log(level: .debug, from: self, "stored \(tokens)")
         } catch where (error as NSError).code == (-34018) {
             // Seems to be a private inaccessible constant :( https://osstatus.com/search/results?platform=all&framework=all&search=-34018
             //
@@ -48,7 +48,7 @@ struct UserTokensStorage {
             let message = "Keychain error: make sure you have an entitlements file with shared keychain access"
             fatalError(message)
         } catch {
-            forceLog(from: self, "error saving keychain for user: \(error)")
+            log(level: .error, from: self, "error saving keychain for user: \(error)", force: true)
         }
     }
 
@@ -61,9 +61,24 @@ struct UserTokensStorage {
             if SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kSPiDAccessToken) != nil {
                 SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
             }
-            log(from: self, "cleared \(tokens)")
+            log(level: .debug, from: self, "cleared \(tokens)")
         } catch {
-            forceLog(from: self, "error removing keychain for user: \(error)")
+            log(level: .error, from: self, "error removing keychain for user: \(error)", force: true)
+        }
+    }
+
+    func clearAll() throws {
+        let keychain = UserTokensKeychain()
+        keychain.removeAllTokens()
+
+        do {
+            try keychain.saveInKeychain()
+            if SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kSPiDAccessToken) != nil {
+                SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
+            }
+            log(level: .debug, from: self, "cleared ALL tokens")
+        } catch {
+            log(level: .error, from: self, "error removing keychain for user: \(error)", force: true)
         }
     }
 }

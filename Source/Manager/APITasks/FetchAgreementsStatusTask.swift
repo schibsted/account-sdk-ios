@@ -20,7 +20,7 @@ class FetchAgreementsStatusTask: TaskProtocol {
 
         let agreementsCache = SDKConfiguration.shared.agreementsCache
         if let agreements = agreementsCache.load(forUserID: userID) {
-            log(from: self, "got agreements from cache")
+            log(from: self, "found agreements status in cache - \(agreements)")
             completion(.success(agreements.client && agreements.platform))
             return
         }
@@ -29,23 +29,22 @@ class FetchAgreementsStatusTask: TaskProtocol {
             oauthToken: tokens.accessToken,
             userID: userID
         ) { [weak self] result in
-
-            log(from: self, result)
-
             guard let strongSelf = self else { return }
 
-            guard strongSelf.user != nil else {
-                completion(.failure(.invalidUser))
-                return
-            }
+            do {
+                guard strongSelf.user != nil else {
+                    throw ClientError.invalidUser
+                }
 
-            switch result {
-            case let .success(model):
-                agreementsCache.store(model, forUserID: userID)
-                log(from: self, "stored agreements to cache")
-                let isAccepted = model.client && model.platform
-                completion(.success(isAccepted))
-            case let .failure(error):
+                let agreements = try result.materialize()
+                log(from: self, "fetch agreements status - \(agreements)")
+
+                agreementsCache.store(agreements, forUserID: userID)
+                log(level: .verbose, from: self, "stored agreements to cache")
+
+                completion(.success(agreements.client && agreements.platform))
+            } catch {
+                log(level: .error, from: self, "\(error)")
                 completion(.failure(ClientError(error)))
             }
         }

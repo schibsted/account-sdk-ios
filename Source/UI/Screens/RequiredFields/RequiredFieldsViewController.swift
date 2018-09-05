@@ -46,18 +46,23 @@ class RequiredFieldsViewController: IdentityUIViewController {
                 // These views are arranged in a way that matches the indices in ViewIndex enum above.
                 // If you change order make sure to change those as well
                 //
+
+                let field = self.viewModel.supportedRequiredFields[index]
+
                 let title = NormalLabel()
-                title.text = self.viewModel.titleForField(at: index)
+                title.text = self.viewModel.titleForField(field)
 
                 let input = TextField()
-                input.placeholder = self.viewModel.placeholderForField(at: index)
-                input.enableCursorMotion = self.enableCursorMotionForField(at: index)
+                input.placeholder = self.viewModel.placeholderForField(field)
+                input.enableCursorMotion = field.allowsCursorMotion
+                input.keyboardType = field.keyboardType
                 input.clearButtonMode = .whileEditing
                 input.returnKeyType = .default
                 input.autocorrectionType = .no
                 input.inputAccessoryView = toolbar
                 // Mark this so that when it becomes active we can set the currentInputIndex on view model
                 input.tag = index
+                assert(input.tag >= 0)
                 input.delegate = self
 
                 let error = ErrorLabel()
@@ -80,11 +85,11 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     @IBOutlet var continueButtonLayoutGuide: NSLayoutConstraint!
-    var currentInputIndex: Int = 0
+    var currentInputIndex: UInt = 0
 
     private var values: [String?]
 
-    private let viewModel: RequiredFieldsViewModel
+    let viewModel: RequiredFieldsViewModel
 
     private var overrideScrollViewBottomContentInset: CGFloat?
 
@@ -103,15 +108,11 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     @objc func didTapNext() {
-        if self.currentInputIndex < (self.viewModel.supportedRequiredFields.count - 1) {
-            self.gotoInput(at: self.currentInputIndex + 1)
-        }
+        self.gotoInput(at: (self.currentInputIndex.addingReportingOverflow(1).partialValue) % UInt(self.viewModel.supportedRequiredFields.count))
     }
 
     @objc func didTapPrevious() {
-        if self.currentInputIndex > 0 {
-            self.gotoInput(at: self.currentInputIndex - 1)
-        }
+        self.gotoInput(at: (self.currentInputIndex.subtractingReportingOverflow(1).partialValue) % UInt(self.viewModel.supportedRequiredFields.count))
     }
 
     override func viewDidLayoutSubviews() {
@@ -133,13 +134,6 @@ class RequiredFieldsViewController: IdentityUIViewController {
 
         self.scrollView.contentInset.bottom = bottom
         self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
-    }
-
-    private func enableCursorMotionForField(at index: Int) -> Bool {
-        guard index < self.viewModel.supportedRequiredFields.count else {
-            return true
-        }
-        return self.viewModel.supportedRequiredFields[index].allowsCursorMotion
     }
 
     override func viewDidAppear(_: Bool) {
@@ -194,7 +188,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     private func getActiveInput() -> UIView? {
-        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[self.currentInputIndex] as? UIStackView else {
+        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[Int(self.currentInputIndex)] as? UIStackView else {
             return nil
         }
         return subStack.arrangedSubviews[ViewIndex.input.rawValue]
@@ -249,7 +243,7 @@ extension RequiredFieldsViewController: UITextViewDelegate {
 
 extension RequiredFieldsViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        self.currentInputIndex = textField.tag
+        self.currentInputIndex = UInt(textField.tag)
         return true
     }
 
@@ -261,15 +255,40 @@ extension RequiredFieldsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let oldText = (textField.text ?? "") as NSString
         let newText = oldText.replacingCharacters(in: range, with: string)
-        textField.text = self.setValueForField(at: textField.tag, from: oldText as String, to: newText)
-        return false
+
+        guard let processedText = self.processValueForField(at: textField.tag, from: oldText as String, to: newText),
+            processedText.count != newText.count else {
+            return true
+        }
+
+        let beginning = textField.beginningOfDocument
+        let cursorOffset: Int?
+        if let start = textField.position(from: beginning, offset: range.location + range.length) {
+            cursorOffset = textField.offset(from: beginning, to: start)
+        } else {
+            cursorOffset = nil
+        }
+
+        textField.text = processedText
+
+        let newBeginning = textField.beginningOfDocument
+        if let cursorOffset = cursorOffset,
+            let newPosition = textField.position(from: newBeginning, offset: cursorOffset + (processedText.count - (oldText as String).count)) {
+            textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
+            return false
+        }
+
+        return true
     }
 
-    private func setValueForField(at index: Int, from oldValue: String, to newValue: String) -> String? {
+    private func processValueForField(at index: Int, from oldValue: String, to newValue: String) -> String? {
         guard index < self.viewModel.supportedRequiredFields.count else {
             return nil
         }
-        let formattedString = self.viewModel.supportedRequiredFields[index].format(oldValue: oldValue, with: newValue)
+        guard let formattedString = self.viewModel.supportedRequiredFields[index].format(oldValue: oldValue, with: newValue) else {
+            self.values[index] = newValue
+            return nil
+        }
         self.values[index] = formattedString
         return formattedString
     }
@@ -280,8 +299,8 @@ extension RequiredFieldsViewController {
         return self.viewModel.supportedRequiredFields.count
     }
 
-    func gotoInput(at index: Int) {
-        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[index] as? UIStackView else {
+    func gotoInput(at index: UInt) {
+        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[Int(index)] as? UIStackView else {
             return
         }
         subStack.arrangedSubviews[ViewIndex.input.rawValue].becomeFirstResponder()

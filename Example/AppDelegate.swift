@@ -124,11 +124,20 @@ extension UIApplication {
     static var identityUI: IdentityUI {
         return (UIApplication.shared.delegate as! AppDelegate).identityUI // swiftlint:disable:this force_cast
     }
+    static var currentUser: User {
+        get {
+            return (UIApplication.shared.delegate as! AppDelegate).currentUser // swiftlint:disable:this force_cast
+        }
+        set(newValue) {
+            (UIApplication.shared.delegate as! AppDelegate).currentUser = newValue // swiftlint:disable:this force_cast
+        }
+    }
 }
 
 private struct InitializeLogger {
     init() {
         Logger.shared.addTransport({ print($0) })
+        Logger.shared.outputTags = true
     }
 }
 
@@ -141,6 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let identityManager: IdentityManager = IdentityManager(clientConfiguration: .current)
     let identityUI = IdentityUI(configuration: .current)
+    var currentUser = User.loadLast(withConfiguration: .current)
 
     var passwordFlowViewController: PasswordFlowViewController? {
         // swiftlint:disable:next force_cast
@@ -169,7 +179,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         let doesLaunchOptionsContainRecognizedURL = AppLaunchData(launchOptions: options, clientConfiguration: .current) != nil
-        if !doesLaunchOptionsContainRecognizedURL, self.identityManager.currentUser.state == .loggedIn {
+        if !doesLaunchOptionsContainRecognizedURL, self.currentUser.state == .loggedIn {
             self.ensureAcceptanceOfNewTerms()
             return true
         }
@@ -178,7 +188,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func ensureAcceptanceOfNewTerms() {
-        self.identityManager.currentUser.agreements.status { [weak self] result in
+        self.currentUser.agreements.status { [weak self] result in
             switch result {
             case let .success(hasAcceptedLatestTerms):
                 if hasAcceptedLatestTerms {
@@ -235,6 +245,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case let .codeAfterSignup(code, shouldPersistUser):
             self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: shouldPersistUser)
         case let .codeAfterUnvalidatedLogin(code):
+            self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
+        case let .codeAfterAccountSummary(code):
             self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
         }
         return true
