@@ -115,6 +115,8 @@ extension RequiredFieldsViewModel {
             return "RequiredField.error.birthdateInvalid".localized(from: self.localizationBundle)
         case .numberInvalid:
             return "RequiredField.error.numberInvalid".localized(from: self.localizationBundle)
+        case .tooYoung:
+            return "PasswordScreenString.ageLimit".localized(from: self.localizationBundle)
         }
     }
 }

@@ -50,6 +50,8 @@ extension ClientError {
         case .requiredField, .agreements:
             // These are just here because of tracking right now. See GH issues 601, 603
             return self.description
+        case .passwordTooShort:
+            return "PasswordScreenString.passwordTooShort".localized(from: localizationBundle)
         }
     }
 }
