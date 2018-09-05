@@ -74,7 +74,6 @@
 		B01D7288D000E9D03EE12E06 /* invalid-authcode.json in Resources */ = {isa = PBXBuildFile; fileRef = B01D7A12229555E82E19C0A2 /* invalid-authcode.json */; };
 		B01D7296681467B377B377D0 /* ErrorScreenStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D79D7975B730FA888A658 /* ErrorScreenStrings.swift */; };
 		B01D7299449EF35C2BA75884 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D78BD1F383C2E1DD111C9 /* Checkbox.swift */; };
-		B01D72A3E5BA3BCAC19B5D64 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B01D7A131116CBDF61E59D5A /* Info.plist */; };
 		B01D72B724576E0F9A57630C /* NetworkingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7617403B82E75F7AE8E1 /* NetworkingHeaders.swift */; };
 		B01D72BE8AF32BF1E0912618 /* FlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7ED4B7383C90513D2534 /* FlowCoordinator.swift */; };
 		B01D72C31DB5434A2BDA1C29 /* NoopTaskHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D74917CC7E92311075FCE /* NoopTaskHandle.swift */; };
@@ -1806,7 +1805,6 @@
 				E1DBA10A20A592B70005B3B9 /* Localizable.strings in Resources */,
 				E1DBA10720A592970005B3B9 /* Localizable.strings in Resources */,
 				43E1602D2063BE8C00D9BA3E /* Images.xcassets in Resources */,
-				B01D72A3E5BA3BCAC19B5D64 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
