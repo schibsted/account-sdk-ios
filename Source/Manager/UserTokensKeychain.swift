@@ -113,7 +113,7 @@ class UserTokensKeychain: KeychainGenericPasswordType {
     }
 
     init() {
-        var downcastedSelf = self as KeychainGenericPasswordType
+        var downcastedSelf = self
         if (try? downcastedSelf.fetchFromKeychain()) != nil {
             self.fetchedData = downcastedSelf.fetchedData
             try? self.migrate()
