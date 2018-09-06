@@ -99,7 +99,7 @@ public protocol IdentityUIDelegate: class {
      - parameter topViewController: The currently shown top view controller
      - parameter done: call this to say you're done so the UI can continue
      */
-    func willSucceed(with user: User, on topViewController: UIViewController?, done: @escaping (LoginWillSucceedDisposition) -> Void)
+    func willSucceed(with user: User, done: @escaping (LoginWillSucceedDisposition) -> Void)
 }
 
 public extension IdentityUIDelegate {
@@ -111,7 +111,7 @@ public extension IdentityUIDelegate {
         done(.continue)
     }
 
-    func willSucceed(with _: User, on _: UIViewController?, done: @escaping (LoginWillSucceedDisposition) -> Void) {
+    func willSucceed(with _: User, done: @escaping (LoginWillSucceedDisposition) -> Void) {
         done(.continue)
     }
 }
