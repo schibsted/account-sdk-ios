@@ -38,7 +38,7 @@ class SynchronizedDictionary<K: Hashable, V> {
        onlyIf { // check some conditions related to $0 }
      )
      */
-    func removeValue(forKey key: K, onlyIf predicate: (V) -> Bool) -> V? {
+    func removeValue(forKey key: K, if predicate: (V) -> Bool) -> V? {
         var maybeValue: V?
         self.dispatchQueue.sync {
             guard let value = self.dictionary[key] else {
@@ -50,6 +50,14 @@ class SynchronizedDictionary<K: Hashable, V> {
             }
         }
         return maybeValue
+    }
+
+    func forEach(_ callback: @escaping (K, V) -> Void) {
+        self.dispatchQueue.async(flags: .barrier) {
+            for (key, val) in self.dictionary {
+                callback(key, val)
+            }
+        }
     }
 
     var count: Int {
