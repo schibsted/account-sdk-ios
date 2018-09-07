@@ -53,6 +53,9 @@
                 <a href="../Classes/User.html">User</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/User/Agreements.html">– Agreements</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
@@ -60,9 +63,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/User/Profile.html">– Profile</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/User/Agreements.html">– Agreements</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/UserDelegate.html">UserDelegate</a>
@@ -276,7 +276,7 @@
             <a href="../Other Global Variables.html">Other Global Variables</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Other Global Variables.html#/s:16SchibstedAccount10sdkVersionSSv">sdkVersion</a>
+                <a href="../Other Global Variables.html#/s:16SchibstedAccount10sdkVersionSSvp">sdkVersion</a>
               </li>
             </ul>
           </li>
@@ -361,7 +361,7 @@
             <h1>User</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">User</span><span class="p">:</span> <span class="kt"><a href="../Protocols/UserProtocol.html">UserProtocol</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">User</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/UserProtocol.html">UserProtocol</a></span></code></pre>
 
                 </div>
               </div>
@@ -379,15 +379,15 @@ to it until you do not need it anymore.</p>
 approach is also documented, but not <q>officially</q> supported.</p>
 <h3 id='checking-if-you-have-an-already-logged-in-user' class='heading'>Checking if you have an already logged in user</h3>
 
-<p>The process to check that is currently supported by the <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code> object. Once an
+<p>The process to check that is currently supported by the <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cvp">IdentityManager.currentUser</a></code> object. Once an
 identity manager is initialized, it&rsquo;s internal user object is either in a logged in state or not.</p>
 
-<p>Based on the state of <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>, you may either proceed to get one or store it and
+<p>Based on the state of <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cvp">IdentityManager.currentUser</a></code>, you may either proceed to get one or store it and
 use it for whatever else.</p>
 
 <p>In order to comply with privacy regulations, you need to make sure that the user accepts any update
 to terms and conditions that may have been issued since the last visit. For this reason, at the
-startup of your app, right after having obtained the <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code> and verified the
+startup of your app, right after having obtained the <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cvp">IdentityManager.currentUser</a></code> and verified the
 login status, if the user is logged-in you should call <code>user.agreements.status(:)</code> and, in case of
 <code>false</code> result (meaning the user has yet to accepted the latest terms), obtain the latest terms by
 calling <code>IdentityManager.fetchTerms(:) and finally present a screen where the user can review and accept
@@ -405,9 +405,9 @@ rejected them.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC4authAA0C7AuthAPI_pv"></a>
+                    <a name="/s:16SchibstedAccount4UserC4authAA0C7AuthAPI_pvp"></a>
                     <a name="//apple_ref/swift/Property/auth" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC4authAA0C7AuthAPI_pv">auth</a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC4authAA0C7AuthAPI_pvp">auth</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -432,9 +432,9 @@ rejected them.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC7profileAA0C10ProfileAPI_pv"></a>
+                    <a name="/s:16SchibstedAccount4UserC7profileAA0C10ProfileAPI_pvp"></a>
                     <a name="//apple_ref/swift/Property/profile" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC7profileAA0C10ProfileAPI_pv">profile</a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC7profileAA0C10ProfileAPI_pvp">profile</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -459,9 +459,9 @@ rejected them.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC10agreementsAA0C13AgreementsAPI_pv"></a>
+                    <a name="/s:16SchibstedAccount4UserC10agreementsAA0C13AgreementsAPI_pvp"></a>
                     <a name="//apple_ref/swift/Property/agreements" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC10agreementsAA0C13AgreementsAPI_pv">agreements</a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC10agreementsAA0C13AgreementsAPI_pvp">agreements</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -486,9 +486,9 @@ rejected them.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC7productAA0C10ProductAPI_pv"></a>
+                    <a name="/s:16SchibstedAccount4UserC7productAA0C10ProductAPI_pvp"></a>
                     <a name="//apple_ref/swift/Property/product" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC7productAA0C10ProductAPI_pv">product</a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC7productAA0C10ProductAPI_pvp">product</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -514,9 +514,9 @@ Note: This is a privileged API and access must be requested through <a href="mai
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC8delegateAA0C8Delegate_pSgXwv"></a>
+                    <a name="/s:16SchibstedAccount4UserC8delegateAA0C8Delegate_pSgXwvp"></a>
                     <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC8delegateAA0C8Delegate_pSgXwv">delegate</a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC8delegateAA0C8Delegate_pSgXwvp">delegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -540,9 +540,9 @@ Note: This is a privileged API and access must be requested through <a href="mai
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC8legacyIDSSSgv"></a>
+                    <a name="/s:16SchibstedAccount4UserC8legacyIDSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/legacyID" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC8legacyIDSSSgv">legacyID</a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC8legacyIDSSSgvp">legacyID</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -552,14 +552,14 @@ Note: This is a privileged API and access must be requested through <a href="mai
                       <div class="abstract">
                         <p>A user_id used by some SPID APIs</p>
 
-<p>It is recommended to use <code><a href="../Classes/User.html#/s:16SchibstedAccount4UserC2idSSSgv">id</a></code> instead of this.</p>
+<p>It is recommended to use <code><a href="../Classes/User.html#/s:16SchibstedAccount4UserC2idSSSgvp">id</a></code> instead of this.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">legacyID</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">legacyID</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -569,9 +569,9 @@ Note: This is a privileged API and access must be requested through <a href="mai
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC2idSSSgv"></a>
+                    <a name="/s:16SchibstedAccount4UserC2idSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC2idSSSgv">id</a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC2idSSSgvp">id</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -586,7 +586,7 @@ Note: This is a privileged API and access must be requested through <a href="mai
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -596,9 +596,9 @@ Note: This is a privileged API and access must be requested through <a href="mai
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount4UserC5stateAA0C5StateOv"></a>
+                    <a name="/s:16SchibstedAccount4UserC5stateAA0C5StateOvp"></a>
                     <a name="//apple_ref/swift/Property/state" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC5stateAA0C5StateOv">state</a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC5stateAA0C5StateOvp">state</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -613,7 +613,7 @@ Note: This is a privileged API and access must be requested through <a href="mai
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt"><a href="../Enums/UserState.html">UserState</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt"><a href="../Enums/UserState.html">UserState</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -689,9 +689,140 @@ via the <code><a href="../Classes/IdentityUI.html">IdentityUI</a></code> or the 
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s23CustomStringConvertibleP11descriptionSSv"></a>
+                    <a name="/s:16SchibstedAccount4UserC10AgreementsC"></a>
+                    <a name="//apple_ref/swift/Class/Agreements" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC10AgreementsC">Agreements</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Agreement related APIs that give you information about the status of this user&rsquo;s agreements acceptance.</p>
+
+<p>Agreements consists of terms and conditions and privacy policies. Acccepting agreements means the user
+has accepted all the agreements fetchable via <code>IdentityManager.fetchAgreements(...)</code></p>
+
+                        <a href="../Classes/User/Agreements.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Agreements</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/UserAgreementsAPI.html">UserAgreementsAPI</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount4UserC4AuthC"></a>
+                    <a name="//apple_ref/swift/Class/Auth" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC4AuthC">Auth</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Contains APIs that allow you get access to tokens and control some oauth related settings for a user</p>
+
+                        <a href="../Classes/User/Auth.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Auth</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/UserAuthAPI.html">UserAuthAPI</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount4UserC7ProductC"></a>
+                    <a name="//apple_ref/swift/Class/Product" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC7ProductC">Product</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gives you access to product related information for a user</p>
+
+                        <a href="../Classes/User/Product.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Product</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/UserProductAPI.html">UserProductAPI</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount4UserC7ProfileC"></a>
+                    <a name="//apple_ref/swift/Class/Profile" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount4UserC7ProfileC">Profile</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gives you access to user profile related information</p>
+
+                        <a href="../Classes/User/Profile.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Profile</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/UserProfileAPI.html">UserProfileAPI</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s23CustomStringConvertibleP11descriptionSSvp"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSv">description</a>
+                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSvp">description</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -705,7 +836,7 @@ via the <code><a href="../Classes/IdentityUI.html">IdentityUI</a></code> or the 
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -745,142 +876,11 @@ via the <code><a href="../Classes/IdentityUI.html">IdentityUI</a></code> or the 
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount4UserC4AuthC"></a>
-                    <a name="//apple_ref/swift/Class/Auth" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC4AuthC">Auth</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Contains APIs that allow you get access to tokens and control some oauth related settings for a user</p>
-
-                        <a href="../Classes/User/Auth.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Auth</span><span class="p">:</span> <span class="kt"><a href="../Protocols/UserAuthAPI.html">UserAuthAPI</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount4UserC7ProductC"></a>
-                    <a name="//apple_ref/swift/Class/Product" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC7ProductC">Product</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Gives you access to product related information for a user</p>
-
-                        <a href="../Classes/User/Product.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Product</span><span class="p">:</span> <span class="kt"><a href="../Protocols/UserProductAPI.html">UserProductAPI</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount4UserC7ProfileC"></a>
-                    <a name="//apple_ref/swift/Class/Profile" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC7ProfileC">Profile</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Gives you access to user profile related information</p>
-
-                        <a href="../Classes/User/Profile.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Profile</span><span class="p">:</span> <span class="kt"><a href="../Protocols/UserProfileAPI.html">UserProfileAPI</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:16SchibstedAccount4UserC10AgreementsC"></a>
-                    <a name="//apple_ref/swift/Class/Agreements" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount4UserC10AgreementsC">Agreements</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Agreement related APIs that give you information about the status of this user&rsquo;s agreements acceptance.</p>
-
-<p>Agreements consists of terms and conditions and privacy policies. Acccepting agreements means the user
-has accepted all the agreements fetchable via <code>IdentityManager.fetchAgreements(...)</code></p>
-
-                        <a href="../Classes/User/Agreements.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Agreements</span><span class="p">:</span> <span class="kt"><a href="../Protocols/UserAgreementsAPI.html">UserAgreementsAPI</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </section>
         </section>
         <section id="footer">
           <p>© 2016-2018 Schibsted Products &amp; Technology</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

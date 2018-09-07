@@ -10,6 +10,7 @@
     
   </head>
   <body>
+    <a name="//apple_ref/swift/Section/Creating a User" class="dashAnchor"></a>
     <a title="Creating a User  Reference"></a>
     <header>
       <div class="content-wrapper">
@@ -52,6 +53,9 @@
                 <a href="Classes/User.html">User</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/User/Agreements.html">– Agreements</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
@@ -59,9 +63,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/User/Profile.html">– Profile</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/User/Agreements.html">– Agreements</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/UserDelegate.html">UserDelegate</a>
@@ -275,7 +276,7 @@
             <a href="Other Global Variables.html">Other Global Variables</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Other Global Variables.html#/s:16SchibstedAccount10sdkVersionSSv">sdkVersion</a>
+                <a href="Other Global Variables.html#/s:16SchibstedAccount10sdkVersionSSvp">sdkVersion</a>
               </li>
             </ul>
           </li>
@@ -398,7 +399,7 @@
  with a different ClientConfiguration, you will not get the results you want.</p>
 
 <p>This object is used to set your <code><a href="Structs/ClientConfiguration/Environment.html">ClientConfiguration.Environment</a></code>, your
- <code><a href="Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSv">ClientConfiguration.appURLScheme</a></code> and your locale.</p>
+ <code><a href="Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSvp">ClientConfiguration.appURLScheme</a></code> and your locale.</p>
 
 <p>### App URL Scheme</p>
 
@@ -450,7 +451,7 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>This manager provides access to various auth related APIs and manages the creation and persistence of an internal <code><a href="Classes/User.html">User</a></code> object that
-can be accessed through <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>.</p>
+can be accessed through <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cvp">IdentityManager.currentUser</a></code>.</p>
 
 <p>A number of methods of creating a user exist within this manager. They include:</p>
 
@@ -462,7 +463,7 @@ can be accessed through <code><a href="Classes/IdentityManager.html#/s:16Schibst
 </ol>
 
 <p>The general approach is to first create an IdentityManager with a <code><a href="Structs/ClientConfiguration.html">ClientConfiguration</a></code>. After that you may check if there already
-is a user that was previously persisted. This can be checked via <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>&lsquo;s <code><a href="Classes/User.html#/s:16SchibstedAccount4UserC5stateAA0C5StateOv">User.state</a></code> which will tell you if the internal
+is a user that was previously persisted. This can be checked via <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cvp">IdentityManager.currentUser</a></code>&lsquo;s <code><a href="Classes/User.html#/s:16SchibstedAccount4UserC5stateAA0C5StateOvp">User.state</a></code> which will tell you if the internal
 user is in a logged in or logged out state. In order to comply with privacy regulations, you also need to make sure that the user accepts any update to terms
 and conditions that may have been issued since the user&rsquo;s last visit: see <code><a href="Classes/User.html">User</a></code>&rsquo;s documentation for more details on how to do that.</p>
 
@@ -502,7 +503,7 @@ used to check if there&rsquo;s already an existing user.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">IdentityManager</span><span class="p">:</span> <span class="kt"><a href="Protocols/IdentityManagerProtocol.html">IdentityManagerProtocol</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">IdentityManager</span> <span class="p">:</span> <span class="kt"><a href="Protocols/IdentityManagerProtocol.html">IdentityManagerProtocol</a></span></code></pre>
 
                         </div>
                       </div>
@@ -576,15 +577,15 @@ to it until you do not need it anymore.</p>
 approach is also documented, but not <q>officially</q> supported.</p>
 <h3 id='checking-if-you-have-an-already-logged-in-user' class='heading'>Checking if you have an already logged in user</h3>
 
-<p>The process to check that is currently supported by the <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code> object. Once an
+<p>The process to check that is currently supported by the <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cvp">IdentityManager.currentUser</a></code> object. Once an
 identity manager is initialized, it&rsquo;s internal user object is either in a logged in state or not.</p>
 
-<p>Based on the state of <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code>, you may either proceed to get one or store it and
+<p>Based on the state of <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cvp">IdentityManager.currentUser</a></code>, you may either proceed to get one or store it and
 use it for whatever else.</p>
 
 <p>In order to comply with privacy regulations, you need to make sure that the user accepts any update
 to terms and conditions that may have been issued since the last visit. For this reason, at the
-startup of your app, right after having obtained the <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cv">IdentityManager.currentUser</a></code> and verified the
+startup of your app, right after having obtained the <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cvp">IdentityManager.currentUser</a></code> and verified the
 login status, if the user is logged-in you should call <code>user.agreements.status(:)</code> and, in case of
 <code>false</code> result (meaning the user has yet to accepted the latest terms), obtain the latest terms by
 calling <code>IdentityManager.fetchTerms(:) and finally present a screen where the user can review and accept
@@ -601,7 +602,7 @@ rejected them.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">User</span><span class="p">:</span> <span class="kt"><a href="Protocols/UserProtocol.html">UserProtocol</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">User</span> <span class="p">:</span> <span class="kt"><a href="Protocols/UserProtocol.html">UserProtocol</a></span></code></pre>
 
                         </div>
                       </div>
@@ -633,7 +634,7 @@ rejected them.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">UserDelegate</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">UserDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                         </div>
                       </div>
@@ -665,7 +666,7 @@ rejected them.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">UserState</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">UserState</span> <span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
 
                         </div>
                       </div>
@@ -678,7 +679,7 @@ rejected them.</p>
         </section>
         <section id="footer">
           <p>© 2016-2018 Schibsted Products &amp; Technology</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
