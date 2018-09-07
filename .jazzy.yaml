@@ -5,6 +5,8 @@ hide_documentation_coverage: true
 exclude:
   - Example/**
   - Source/Manager/SwiftKeychain.swift
+  - Source/UI/Screens/Identifier/IdentifierViewModel.swift
+  - Source/UI/Screens/RequiredFields/RequiredFieldsViewModel.swift
 github_url: https://www.github.com/schibsted/account-sdk-ios
 copyright: © 2016-2018 Schibsted Products & Technology
 xcodebuild_arguments: ["-scheme", "SchibstedAccount", "-sdk", "iphonesimulator", "-derivedDataPath", "build/DerivedData"]
