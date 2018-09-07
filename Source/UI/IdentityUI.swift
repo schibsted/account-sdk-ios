@@ -359,7 +359,7 @@ public class IdentityUI {
         }
 
         if let delegate = self.delegate, case let .completed(user) = uiResult {
-            delegate.willSucceed(with: user, on: self.navigationController.topViewController) { disposition in
+            delegate.willSucceed(with: user) { disposition in
                 switch disposition {
                 case .continue:
                     dismissFlow()
