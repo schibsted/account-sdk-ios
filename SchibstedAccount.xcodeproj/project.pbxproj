@@ -280,6 +280,7 @@
 		E18394E2208DF43300B05EC9 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18394CD208DF43300B05EC9 /* InfoViewController.swift */; };
 		E18394E3208DF43300B05EC9 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18394CE208DF43300B05EC9 /* InfoViewModel.swift */; };
 		E18394E4208DF43300B05EC9 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18394CF208DF43300B05EC9 /* InfoViewController.xib */; };
+		E18AF8A22146983300D64811 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43E160582063C7A200D9BA3E /* Info.plist */; };
 		E18F86EA2075026F0074BE41 /* password-grant-invalid-scope.json in Resources */ = {isa = PBXBuildFile; fileRef = E18F86E92075026F0074BE41 /* password-grant-invalid-scope.json */; };
 		E192BA0020ECDD930066FB84 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E192B9EC20ECDD750066FB84 /* Nimble.framework */; };
 		E192BA0120ECDD9A0066FB84 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E160172063B5D100D9BA3E /* Quick.framework */; };
@@ -1863,6 +1864,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E18AF8A22146983300D64811 /* Info.plist in Resources */,
 				E1CEE55B20E39EB0003EC549 /* Localizable.strings in Resources */,
 				E1CEE55C20E39EB0003EC549 /* Localizable.strings in Resources */,
 				E1CEE55D20E39EB0003EC549 /* Localizable.strings in Resources */,
