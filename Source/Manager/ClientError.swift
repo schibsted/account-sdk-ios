@@ -96,7 +96,7 @@ extension ClientError: CustomStringConvertible {
             }
             return "Invalid user credentials"
         case .invalidClientCredentials:
-            return "Invalid clientcredentials"
+            return "Invalid client credentials"
         case .invalidUser:
             return "User invalid"
         case let .unexpected(error):
