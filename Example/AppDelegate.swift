@@ -124,6 +124,14 @@ extension UIApplication {
     static var identityUI: IdentityUI {
         return (UIApplication.shared.delegate as! AppDelegate).identityUI // swiftlint:disable:this force_cast
     }
+    static var user: User {
+        get {
+            return (UIApplication.shared.delegate as! AppDelegate).user // swiftlint:disable:this force_cast
+        }
+        set(newUser) {
+            (UIApplication.shared.delegate as! AppDelegate).user = newUser
+        }
+    }
 }
 
 private struct InitializeLogger {
@@ -141,6 +149,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let identityManager: IdentityManager = IdentityManager(clientConfiguration: .current)
     let identityUI = IdentityUI(configuration: .current)
+    lazy var user = {
+        self.identityManager.currentUser
+    }()
 
     var passwordFlowViewController: PasswordFlowViewController? {
         // swiftlint:disable:next force_cast
@@ -169,7 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         let doesLaunchOptionsContainRecognizedURL = AppLaunchData(launchOptions: options, clientConfiguration: .current) != nil
-        if !doesLaunchOptionsContainRecognizedURL, self.identityManager.currentUser.state == .loggedIn {
+        if !doesLaunchOptionsContainRecognizedURL, self.user.state == .loggedIn {
             self.ensureAcceptanceOfNewTerms()
             return true
         }
@@ -178,7 +189,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func ensureAcceptanceOfNewTerms() {
-        self.identityManager.currentUser.agreements.status { [weak self] result in
+        self.user.agreements.status { [weak self] result in
             switch result {
             case let .success(hasAcceptedLatestTerms):
                 if hasAcceptedLatestTerms {
@@ -191,7 +202,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     switch result {
                     case let .success(terms):
                         // Present UI to accept new terms.
-                        guard let viewController = self?.window?.rootViewController, let user = self?.identityManager.currentUser else {
+                        guard let viewController = self?.window?.rootViewController, let user = self?.user else {
                             return
                         }
 

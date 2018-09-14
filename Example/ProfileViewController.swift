@@ -19,7 +19,7 @@ class ProfileViewController: UIViewController {
         guard let familyName = familyNameTextField.text else { return }
         let profile = UserProfile(givenName: givenName, familyName: familyName)
 
-        UIApplication.identityManager.currentUser.profile.update(profile) { result in
+        UIApplication.user.profile.update(profile) { result in
             switch result {
             case .success:
                 print("profile.update success!")

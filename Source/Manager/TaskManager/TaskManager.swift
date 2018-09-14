@@ -86,7 +86,9 @@ class TaskManager {
 
         let taskData = TaskData(
             operation: TaskOperation(executor: executor),
-            errorCallback: { completion?(.failure($0)) },
+            errorCallback: {
+                completion?(.failure($0))
+            },
             taskDidCancelCallback: { [weak task] in task?.didCancel() },
             retryCount: 0,
             taskReference: task
