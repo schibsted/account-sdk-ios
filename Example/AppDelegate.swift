@@ -49,6 +49,16 @@ struct ConfigurationLoader {
     subscript(env: ClientConfiguration.Environment) -> EnvData {
         return self.data[env] ?? EnvData()
     }
+
+    var custom: EnvData {
+        return EnvData(
+            clientID: "56c5a5ce4557703300639757",
+            clientSecret: "oDyNgJ7FeBQp4xAlSzjv",
+            clientScheme: "spid-56c5a5ce4557703300639757",
+            webClientID: "d00de8d6bf92fc86deadbeef",
+            scopes: nil
+        )
+    }
 }
 
 extension SchibstedAccount.ClientConfiguration {
@@ -70,16 +80,29 @@ extension SchibstedAccount.ClientConfiguration {
         appURLScheme: config[.development].clientScheme
     )
 
+    static let custom = ClientConfiguration(
+        serverURL: URL(string: "http://id.localhost")!,
+        clientID: config.custom.clientID,
+        clientSecret: config.custom.clientSecret,
+        appURLScheme: config.custom.clientScheme
+    )
+
     // Set this to what the app should use
-    static let current = ClientConfiguration.preprod
+    static let current = ClientConfiguration.custom
 }
 
 extension SchibstedAccount.ClientConfiguration {
     var webClientID: String? {
-        return ClientConfiguration.config[self.environment!].webClientID
+        guard let env = self.environment else {
+            return type(of: self).config.custom.webClientID
+        }
+        return ClientConfiguration.config[env].webClientID
     }
 
     var sdkExampleRedirectURL: URL? {
+        if self.clientID == type(of: self).config.custom.clientID {
+            return URL(string: "http://zoopermarket.com")
+        }
         if self.clientID == ClientConfiguration.config[.preproduction].clientID {
             return URL(string: "https://pre.sdk-example.com/")
         }
@@ -90,7 +113,10 @@ extension SchibstedAccount.ClientConfiguration {
     }
 
     var scopes: [String] {
-        return ClientConfiguration.config[self.environment!].scopes ?? []
+        guard let env = self.environment else {
+            return type(of: self).config.custom.scopes ?? []
+        }
+        return ClientConfiguration.config[env].scopes ?? []
     }
 }
 
