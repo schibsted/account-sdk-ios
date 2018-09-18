@@ -49,6 +49,16 @@ struct ConfigurationLoader {
     subscript(env: ClientConfiguration.Environment) -> EnvData {
         return self.data[env] ?? EnvData()
     }
+
+    var custom: EnvData {
+        return EnvData(
+            clientID: "56c5a5ce4557703300639757",
+            clientSecret: "oDyNgJ7FeBQp4xAlSzjv",
+            clientScheme: "spid-56c5a5ce4557703300639757",
+            webClientID: "d00de8d6bf92fc86deadbeef",
+            scopes: nil
+        )
+    }
 }
 
 extension SchibstedAccount.ClientConfiguration {
@@ -70,16 +80,29 @@ extension SchibstedAccount.ClientConfiguration {
         appURLScheme: config[.development].clientScheme
     )
 
+    static let custom = ClientConfiguration(
+        serverURL: URL(string: "http://id.localhost")!,
+        clientID: config.custom.clientID,
+        clientSecret: config.custom.clientSecret,
+        appURLScheme: config.custom.clientScheme
+    )
+
     // Set this to what the app should use
     static let current = ClientConfiguration.preprod
 }
 
 extension SchibstedAccount.ClientConfiguration {
     var webClientID: String? {
-        return ClientConfiguration.config[self.environment!].webClientID
+        guard let env = self.environment else {
+            return type(of: self).config.custom.webClientID
+        }
+        return ClientConfiguration.config[env].webClientID
     }
 
     var sdkExampleRedirectURL: URL? {
+        if self.clientID == type(of: self).config.custom.clientID {
+            return URL(string: "http://zoopermarket.com")
+        }
         if self.clientID == ClientConfiguration.config[.preproduction].clientID {
             return URL(string: "https://pre.sdk-example.com/")
         }
@@ -90,7 +113,10 @@ extension SchibstedAccount.ClientConfiguration {
     }
 
     var scopes: [String] {
-        return ClientConfiguration.config[self.environment!].scopes ?? []
+        guard let env = self.environment else {
+            return type(of: self).config.custom.scopes ?? []
+        }
+        return ClientConfiguration.config[env].scopes ?? []
     }
 }
 
@@ -124,6 +150,14 @@ extension UIApplication {
     static var identityUI: IdentityUI {
         return (UIApplication.shared.delegate as! AppDelegate).identityUI // swiftlint:disable:this force_cast
     }
+    static var user: User {
+        get {
+            return (UIApplication.shared.delegate as! AppDelegate).user // swiftlint:disable:this force_cast
+        }
+        set(newUser) {
+            (UIApplication.shared.delegate as! AppDelegate).user = newUser
+        }
+    }
 }
 
 private struct InitializeLogger {
@@ -141,6 +175,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let identityManager: IdentityManager = IdentityManager(clientConfiguration: .current)
     let identityUI = IdentityUI(configuration: .current)
+    lazy var user = {
+        self.identityManager.currentUser
+    }()
 
     var passwordFlowViewController: PasswordFlowViewController? {
         // swiftlint:disable:next force_cast
@@ -169,7 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         let doesLaunchOptionsContainRecognizedURL = AppLaunchData(launchOptions: options, clientConfiguration: .current) != nil
-        if !doesLaunchOptionsContainRecognizedURL, self.identityManager.currentUser.state == .loggedIn {
+        if !doesLaunchOptionsContainRecognizedURL, self.user.state == .loggedIn {
             self.ensureAcceptanceOfNewTerms()
             return true
         }
@@ -178,7 +215,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func ensureAcceptanceOfNewTerms() {
-        self.identityManager.currentUser.agreements.status { [weak self] result in
+        self.user.agreements.status { [weak self] result in
             switch result {
             case let .success(hasAcceptedLatestTerms):
                 if hasAcceptedLatestTerms {
@@ -191,7 +228,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     switch result {
                     case let .success(terms):
                         // Present UI to accept new terms.
-                        guard let viewController = self?.window?.rootViewController, let user = self?.identityManager.currentUser else {
+                        guard let viewController = self?.window?.rootViewController, let user = self?.user else {
                             return
                         }
 

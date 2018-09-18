@@ -9,6 +9,9 @@ import UIKit
 extension StatusViewController: IdentityManagerDelegate {
     // IdentityManagerDelegate
     func userStateChanged(_: UserState) {
+        UIApplication.user = UIApplication.identityManager.currentUser
+        UIApplication.user.delegate = self
+
         print("Login state changed to: \(self.isUserLoggedIn)")
         self.updateFromCurrentUser()
 
@@ -19,14 +22,23 @@ extension StatusViewController: IdentityManagerDelegate {
     }
 }
 
+extension StatusViewController: UserDelegate {
+    func user(_: User, didChangeStateTo _: UserState) {
+        self.updateFromCurrentUser()
+    }
+}
+
 extension StatusViewController: IdentityUIDelegate {
     func didFinish(result: IdentityUIResult) {
         switch result {
         case .canceled:
             print("The user canceled the login process")
         case let .completed(user):
+            UIApplication.user = user
+            UIApplication.user.delegate = self
             self.session = URLSession(user: user, configuration: URLSessionConfiguration.default)
             print("User logged in - \(user)")
+            self.updateFromCurrentUser()
         case .skipped:
             print("User skipped login")
         case let .failed(error):
@@ -122,7 +134,7 @@ class StatusViewController: UIViewController {
 
     @IBAction func didClickScopes(_: Any) {
         var message: String = "n/a"
-        if let scopes = UIApplication.identityManager.currentUser.tokens?.accessToken {
+        if let scopes = UIApplication.user.tokens?.accessToken {
             if let jwt = try? JWTHelper.toJSON(string: scopes) {
                 do {
                     message = try jwt.string(for: "scope").replacingOccurrences(of: " ", with: "\n")
@@ -137,7 +149,7 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didClickRefresh(_: Any) {
-        UIApplication.identityManager.currentUser.refresh { result in
+        UIApplication.user.refresh { result in
             switch result {
             case .success:
                 print("refresh succeeded")
@@ -157,21 +169,21 @@ class StatusViewController: UIViewController {
     }
 
     var isUserLoggedIn: Bool {
-        return UIApplication.identityManager.currentUser.state == .loggedIn
+        return UIApplication.user.state == .loggedIn
     }
 
     func updateFromCurrentUser() {
         self.userStateLabel.text = self.isUserLoggedIn ? "yes" : "no"
-        self.userIDLabel.text = String(describing: UIApplication.identityManager.currentUser)
-        self.session = URLSession(user: UIApplication.identityManager.currentUser, configuration: URLSessionConfiguration.default)
+        self.userIDLabel.text = String(describing: UIApplication.user)
+        self.session = URLSession(user: UIApplication.user, configuration: URLSessionConfiguration.default)
     }
 
     @IBAction func logOut(_: UIButton) {
-        UIApplication.identityManager.currentUser.logout()
+        UIApplication.user.logout()
     }
 
     @IBAction func didTapReadProfileButton(_: UIButton) {
-        UIApplication.identityManager.currentUser.profile.fetch { result in
+        UIApplication.user.profile.fetch { result in
             switch result {
             case let .success(profile):
                 print("profile.fetch: \(profile)")
