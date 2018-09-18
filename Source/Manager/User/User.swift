@@ -149,25 +149,38 @@ public class User: UserProtocol {
      */
     public func logout() {
         log(from: self, "state = \(self.state)")
-        var maybeOldTokens: TokenData?
-        self.dispatchQueue.sync {
-            if self._tokens == nil {
-                return
-            }
-            maybeOldTokens = self._tokens
-            self._tokens = nil
-        }
-
-        guard let oldTokens = maybeOldTokens else {
+        guard let oldTokens = self.clearTokens() else {
             return
         }
 
         try? UserTokensStorage().clearAll()
         self.delegate?.user(self, didChangeStateTo: .loggedOut)
 
+        User.globalStore.forEach { _, weakVal in
+            guard let value = weakVal.value else { return }
+            if value.tokens == oldTokens {
+                if value.clearTokens() != nil {
+                    value.delegate?.user(value, didChangeStateTo: .loggedOut)
+                }
+            }
+        }
+
         self.api.logout(oauthToken: oldTokens.accessToken) { [weak self] result in
             log(level: .verbose, from: self, "logging out - server session result: \(result)")
         }
+    }
+
+    private func clearTokens() -> TokenData? {
+        var oldTokens: TokenData?
+        self.dispatchQueue.sync {
+            if self._tokens == nil {
+                return
+            }
+            oldTokens = self._tokens
+            self._tokens = nil
+        }
+
+        return oldTokens
     }
 
     func set(
