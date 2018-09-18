@@ -88,7 +88,7 @@ extension SchibstedAccount.ClientConfiguration {
     )
 
     // Set this to what the app should use
-    static let current = ClientConfiguration.custom
+    static let current = ClientConfiguration.preprod
 }
 
 extension SchibstedAccount.ClientConfiguration {
