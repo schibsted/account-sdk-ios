@@ -2,6 +2,8 @@
 
 brew update > /dev/null
 
+echo "test"
+
 brew outdated swiftlint || brew upgrade swiftlint
 brew install swiftformat
 
