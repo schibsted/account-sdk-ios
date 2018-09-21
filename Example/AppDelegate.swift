@@ -88,7 +88,7 @@ extension SchibstedAccount.ClientConfiguration {
     )
 
     // Set this to what the app should use
-    static let current = ClientConfiguration.preprod
+    static let current = ClientConfiguration.custom
 }
 
 extension SchibstedAccount.ClientConfiguration {
@@ -101,7 +101,7 @@ extension SchibstedAccount.ClientConfiguration {
 
     var sdkExampleRedirectURL: URL? {
         if self.clientID == type(of: self).config.custom.clientID {
-            return URL(string: "http://zoopermarket.com")
+            return URL(string: "http://zoopermarket.com/safepage")
         }
         if self.clientID == ClientConfiguration.config[.preproduction].clientID {
             return URL(string: "https://pre.sdk-example.com/")
@@ -160,15 +160,18 @@ extension UIApplication {
     }
 }
 
-private struct InitializeLogger {
+private struct Initialize {
     init() {
+        #if DEBUG
+            SDKConfiguration.shared.invalidateteAuthTokenAfterSuccessfullRequest = true
+        #endif
         Logger.shared.addTransport({ print($0) })
     }
 }
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    private let initializeLogger = InitializeLogger()
+    private let initialize = Initialize()
 
     var window: UIWindow?
     var offlineMode = false
