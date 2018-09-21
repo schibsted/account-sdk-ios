@@ -134,8 +134,11 @@ extension UIApplication {
     }
 }
 
-private struct InitializeLogger {
+private struct Initialize {
     init() {
+        #if DEBUG
+            SDKConfiguration.shared.invalidateteAuthTokenAfterSuccessfullRequest = true
+        #endif
         Logger.shared.addTransport({ print($0) })
         Logger.shared.outputTags = true
     }
@@ -143,7 +146,7 @@ private struct InitializeLogger {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    private let initializeLogger = InitializeLogger()
+    private let initialize = Initialize()
 
     var window: UIWindow?
     var offlineMode = false

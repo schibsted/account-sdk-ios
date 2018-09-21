@@ -76,8 +76,15 @@ public class User: UserProtocol {
     var isPersistent = false
 
     var tokens: TokenData? {
-        return self.dispatchQueue.sync {
-            self._tokens
+        get {
+            return self.dispatchQueue.sync {
+                self._tokens
+            }
+        }
+        set {
+            self.dispatchQueue.async {
+                self._tokens = newValue
+            }
         }
     }
 
