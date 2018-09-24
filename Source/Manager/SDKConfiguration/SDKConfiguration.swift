@@ -36,4 +36,16 @@ public class SDKConfiguration {
     func reset() {
         self.agreementsCache = .default
     }
+
+    #if DEBUG
+    /**
+     Set this to debug access token and refreshing requests. If set to true then every successful request
+     will also invalidate the access token so that a refresh will be forces
+
+     Only settable in debug mode
+     */
+        public var invalidateteAuthTokenAfterSuccessfullRequest = false
+    #else
+        internal let invalidateteAuthTokenAfterSuccessfullRequest = false
+    #endif
 }
