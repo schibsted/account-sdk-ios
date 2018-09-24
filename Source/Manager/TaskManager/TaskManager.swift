@@ -77,6 +77,28 @@ class TaskManager {
                         DispatchQueue.main.async {
                             completion?(result)
                         }
+
+                        #if DEBUG
+                            if SDKConfiguration.shared.invalidateteAuthTokenAfterSuccessfullRequest {
+                                if let oldTokens = self?.user?.tokens {
+                                    var string = Array(oldTokens.accessToken)
+                                    if string.count > 2 {
+                                        string.swapAt(0, string.count - 1)
+                                    }
+
+                                    let invalidAccessToken = String(string)
+                                    let badTokens = TokenData(
+                                        accessToken: invalidAccessToken,
+                                        refreshToken: oldTokens.refreshToken,
+                                        idToken: oldTokens.idToken,
+                                        userID: oldTokens.userID
+                                    )
+                                    self?.user?.tokens = badTokens
+
+                                    log(from: self, "invalidated access token: \(oldTokens.accessToken.gut()) to: \(invalidAccessToken.gut())")
+                                }
+                            }
+                        #endif
                     } else {
                         log(from: self, "did not find \(handle)")
                     }
