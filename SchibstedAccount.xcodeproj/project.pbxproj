@@ -450,6 +450,13 @@
 			remoteGlobalIDString = 1F1A74281940169200FFFC47;
 			remoteInfo = "Nimble-iOS";
 		};
+		E173E10C215A2B9E00B2AF23 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43C2417F205BF1BE00154866 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 43E160492063C7A200D9BA3E;
+			remoteInfo = Example;
+		};
 		E18F86D520739B8B0074BE41 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43C2417F205BF1BE00154866 /* Project object */;
@@ -1569,6 +1576,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E173E10D215A2B9E00B2AF23 /* PBXTargetDependency */,
 				43E160292063B5EC00D9BA3E /* PBXTargetDependency */,
 				43E1602B2063B5EC00D9BA3E /* PBXTargetDependency */,
 				43C24194205BF1BF00154866 /* PBXTargetDependency */,
@@ -2132,6 +2140,11 @@
 			isa = PBXTargetDependency;
 			name = "Nimble-iOS";
 			targetProxy = 43E1602A2063B5EC00D9BA3E /* PBXContainerItemProxy */;
+		};
+		E173E10D215A2B9E00B2AF23 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 43E160492063C7A200D9BA3E /* Example */;
+			targetProxy = E173E10C215A2B9E00B2AF23 /* PBXContainerItemProxy */;
 		};
 		E18F86D620739B8B0074BE41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
