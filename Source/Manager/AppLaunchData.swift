@@ -34,7 +34,7 @@ extension AppLaunchData {
      - parameter url: The url you get through `UIApplicationDelegate.application(_:url:options:)`.
      */
     public init?(launchOptions: [AnyHashable: Any]?, clientConfiguration: ClientConfiguration) {
-        guard let maybeURL = launchOptions?[UIApplicationLaunchOptionsKey.url], let url = maybeURL as? URL else {
+        guard let maybeURL = launchOptions?[UIApplication.LaunchOptionsKey.url], let url = maybeURL as? URL else {
             return nil
         }
         self.init(deepLink: url, clientConfiguration: clientConfiguration)
