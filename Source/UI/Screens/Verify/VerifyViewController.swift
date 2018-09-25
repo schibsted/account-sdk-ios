@@ -93,7 +93,7 @@ class VerifyViewController: IdentityUIViewController {
                 codeBox.inputAccessoryView = toolbar
 
                 codeBox.isEnabled = $0 == 0
-                codeBox.addTarget(self, action: #selector(textFieldChanged(_:)), for: UIControlEvents.editingChanged)
+                codeBox.addTarget(self, action: #selector(textFieldChanged(_:)), for: UIControl.Event.editingChanged)
             }
         }
     }
