@@ -74,7 +74,6 @@
 		B01D7288D000E9D03EE12E06 /* invalid-authcode.json in Resources */ = {isa = PBXBuildFile; fileRef = B01D7A12229555E82E19C0A2 /* invalid-authcode.json */; };
 		B01D7296681467B377B377D0 /* ErrorScreenStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D79D7975B730FA888A658 /* ErrorScreenStrings.swift */; };
 		B01D7299449EF35C2BA75884 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D78BD1F383C2E1DD111C9 /* Checkbox.swift */; };
-		B01D72A3E5BA3BCAC19B5D64 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B01D7A131116CBDF61E59D5A /* Info.plist */; };
 		B01D72B724576E0F9A57630C /* NetworkingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7617403B82E75F7AE8E1 /* NetworkingHeaders.swift */; };
 		B01D72BE8AF32BF1E0912618 /* FlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7ED4B7383C90513D2534 /* FlowCoordinator.swift */; };
 		B01D72C31DB5434A2BDA1C29 /* NoopTaskHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D74917CC7E92311075FCE /* NoopTaskHandle.swift */; };
@@ -450,6 +449,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1F1A74281940169200FFFC47;
 			remoteInfo = "Nimble-iOS";
+		};
+		E173E10C215A2B9E00B2AF23 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43C2417F205BF1BE00154866 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 43E160492063C7A200D9BA3E;
+			remoteInfo = Example;
 		};
 		E18F86D520739B8B0074BE41 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1570,6 +1576,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E173E10D215A2B9E00B2AF23 /* PBXTargetDependency */,
 				43E160292063B5EC00D9BA3E /* PBXTargetDependency */,
 				43E1602B2063B5EC00D9BA3E /* PBXTargetDependency */,
 				43C24194205BF1BF00154866 /* PBXTargetDependency */,
@@ -1610,16 +1617,18 @@
 				TargetAttributes = {
 					43C24187205BF1BE00154866 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 					43C24190205BF1BE00154866 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 43E160492063C7A200D9BA3E;
 					};
 					43E160492063C7A200D9BA3E = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1806,7 +1815,6 @@
 				E1DBA10A20A592B70005B3B9 /* Localizable.strings in Resources */,
 				E1DBA10720A592970005B3B9 /* Localizable.strings in Resources */,
 				43E1602D2063BE8C00D9BA3E /* Images.xcassets in Resources */,
-				B01D72A3E5BA3BCAC19B5D64 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2135,6 +2143,11 @@
 			name = "Nimble-iOS";
 			targetProxy = 43E1602A2063B5EC00D9BA3E /* PBXContainerItemProxy */;
 		};
+		E173E10D215A2B9E00B2AF23 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 43E160492063C7A200D9BA3E /* Example */;
+			targetProxy = E173E10C215A2B9E00B2AF23 /* PBXContainerItemProxy */;
+		};
 		E18F86D620739B8B0074BE41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 43C24187205BF1BE00154866 /* SchibstedAccount */;
@@ -2326,7 +2339,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2349,7 +2362,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.schibsted.SchibstedAccount;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2366,7 +2379,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.schibsted.SchibstedAccountTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
@@ -2384,7 +2397,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.schibsted.SchibstedAccountTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
@@ -2402,7 +2415,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.schibsted.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2419,7 +2432,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.schibsted.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

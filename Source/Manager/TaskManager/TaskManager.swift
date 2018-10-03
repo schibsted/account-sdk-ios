@@ -86,6 +86,32 @@ class TaskManager {
                         DispatchQueue.main.async {
                             completion?(result)
                         }
+
+                        #if DEBUG
+                            if SDKConfiguration.shared.invalidateteAuthTokenAfterSuccessfullRequest {
+                                if let oldTokens = self?.user?.tokens {
+                                    var string = Array(oldTokens.accessToken)
+                                    if string.count > 2 {
+                                        string.swapAt(0, string.count - 1)
+                                    }
+
+                                    let invalidAccessToken = String(string)
+                                    let badTokens = TokenData(
+                                        accessToken: invalidAccessToken,
+                                        refreshToken: oldTokens.refreshToken,
+                                        idToken: oldTokens.idToken,
+                                        userID: oldTokens.userID
+                                    )
+                                    self?.user?.tokens = badTokens
+
+                                    log(
+                                        level: .debug,
+                                        from: self,
+                                        "invalidated access token: \(oldTokens.accessToken.shortened) to: \(invalidAccessToken.shortened)"
+                                    )
+                                }
+                            }
+                        #endif
                     } else {
                         log(level: .debug, from: self, "did not find \(handle)")
                     }
@@ -210,21 +236,30 @@ class TaskManager {
                     }
                 }
 
-                if case let ClientError.networkingError(NetworkingError.unexpectedStatus(status, _)) = error,
-                    [400, 401, 403].contains(status) {
-                    strongSelf.user?.logout()
-                    //
-                    // HACK HACK HACK!
-                    //
-                    // this is a hack for now. oauth/token returns invalid_grant when the grant type is authorization_code
-                    // and the code is wrong, and it returns invalid_grant when the authorization_type is refresh_token
-                    // and the token is invalid. They are parsed as invalidCode inside IdentityAPI error handling, but invalidCode
-                    // is for a client to see, where as a refresh failure should not have a corresponding ClientError and there's
-                    // no way (short of if-else hacks on the form_data that is passed to the requstor) to distinguish the two
-                    // cases. So for now we handle it here until someone thinks of a better way
-                    //
-                } else if case ClientError.invalidCode = error {
-                    strongSelf.user?.logout()
+                if let clientError = error as? ClientError {
+                    switch clientError {
+                    case let .networkingError(internaleError):
+                        let logoutCodes = [400, 401, 403]
+                        if case let NetworkingError.unexpectedStatus(status, _) = internaleError, logoutCodes.contains(status) {
+                            strongSelf.user?.logout()
+                        }
+                    case .invalidClientCredentials:
+                        strongSelf.user?.logout()
+                        //
+                        // HACK HACK HACK!
+                        //
+                        // this is a hack for now. oauth/token returns invalid_grant when the grant type is authorization_code
+                        // and the code is wrong, and it returns invalid_grant when the authorization_type is refresh_token
+                        // and the token is invalid. They are parsed as invalidCode inside IdentityAPI error handling, but invalidCode
+                        // is for a client to see, where as a refresh failure should not have a corresponding ClientError and there's
+                        // no way (short of if-else hacks on the form_data that is passed to the requstor) to distinguish the two
+                        // cases. So for now we handle it here until someone thinks of a better way
+                        //
+                    case .invalidCode:
+                        strongSelf.user?.logout()
+                    default:
+                        break
+                    }
                 }
             }
         }

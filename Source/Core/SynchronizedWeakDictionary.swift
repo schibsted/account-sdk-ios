@@ -26,7 +26,7 @@ class SynchronizedWeakDictionary<K: Hashable, V: AnyObject> {
             self.dictionary[key] = WeakValue(newValue)
         }
         get {
-            guard let weakValue = self.dictionary.removeValue(forKey: key, onlyIf: { $0.value == nil }) else {
+            guard let weakValue = self.dictionary.removeValue(forKey: key, if: { $0.value == nil }) else {
                 return nil
             }
             return weakValue.value
@@ -39,5 +39,9 @@ class SynchronizedWeakDictionary<K: Hashable, V: AnyObject> {
 
     func removeAll(keepingCapacity keepCapacity: Bool = false) {
         self.dictionary.removeAll(keepingCapacity: keepCapacity)
+    }
+
+    func forEach(_ callback: @escaping (K, WeakValue<V>) -> Void) {
+        self.dictionary.forEach(callback)
     }
 }

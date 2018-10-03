@@ -121,7 +121,7 @@ public struct IdentityUITheme {
             Style.fonts.small.attributed().mergedByOverwriting(with: [
                 .foregroundColor: UIColor.schibstedPrimary,
                 .underlineColor: UIColor.schibstedPrimary,
-                .underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+                .underlineStyle: NSUnderlineStyle.single.rawValue,
             ])
         }()
         ///

@@ -84,7 +84,7 @@ extension SchibstedAccount.ClientConfiguration {
 }
 ```
 
-Sll these fields must be retrieved from the selfservice portal. If you set `appURLScheme` to nil then the SDK assumes the defult scheme which is `spid-<your-client-code>`. Please double check that this is the same as the default scheme as listed in your Redirect URI tab in self service.
+All these fields must be retrieved from the selfservice portal. If you set `appURLScheme` to nil then the SDK assumes the defult scheme which is `spid-<your-client-code>`. Please double check that this is the same as the default scheme as listed in your Redirect URI tab in self service.
 
 ### **Check if you already have a user**
 

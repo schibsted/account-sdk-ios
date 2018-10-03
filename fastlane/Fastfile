@@ -11,7 +11,7 @@ platform :ios do
       scheme: 'SchibstedAccount',
       derived_data_path: 'build/DerivedData',
       output_directory: 'build/',
-      device: 'iPhone 8',
+      device: 'iPhone X',
       buildlog_path: 'build/logs',
       code_coverage: true,
       formatter: "fastlane/custom_formatter.rb"
