@@ -16,13 +16,13 @@ class TestingUserAuth: UserAuthAPI {
 
     var refreshRetryCount: Int? {
         get {
-            return self.wrapped.refreshRetryCount
+            return self.wrapped.nonDeprecatedRefreshRetryCount
         }
         set {
-            self.wrapped.refreshRetryCount = newValue
+            self.wrapped.nonDeprecatedRefreshRetryCount = newValue
         }
     }
-
+    
     func oneTimeCode(clientID: String, completion: @escaping StringResultCallback) -> TaskHandle {
         return Utils.waitUntilDone(completion) { [unowned self] in
             self.wrapped.oneTimeCode(clientID: clientID, completion: $0)

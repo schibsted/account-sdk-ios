@@ -351,5 +351,35 @@ class TaskManagerTests: QuickSpec {
                 taskManager.waitForRequestsToFinish()
             }
         }
+        
+        describe("refreshRetryCountFor") {
+            it("Should default to 1") {
+                expect(refreshRetryCountFor(userAuth: User.Auth())) == 1
+            }
+            
+            it("Should respect manually set value from UserAuthAPI") {
+                let auth = User.Auth()
+                auth.refreshRetryCount = 3
+                expect(refreshRetryCountFor(userAuth: auth)) == 3
+            }
+            
+            it("Should respect manually set nil value from UserAuthAPI") {
+                let auth = User.Auth()
+                auth.refreshRetryCount = nil
+                expect(refreshRetryCountFor(userAuth: auth)).to(beNil())
+            }
+            
+            it("Should respect manually set SDKConfiguration.refreshRetryCount") {
+                SDKConfiguration.shared.refreshRetryCount = 5
+                expect(refreshRetryCountFor(userAuth: User.Auth())) == 5
+            }
+            
+            it("Should prefer UserAuthAPI.refreshRetryCount over SDKConfiguration.refreshRetryCount for backwards compat") {
+                let auth = User.Auth()
+                auth.refreshRetryCount = 3
+                SDKConfiguration.shared.refreshRetryCount = 2
+                expect(refreshRetryCountFor(userAuth: auth)) == 3
+            }
+        }
     }
 }

@@ -5,6 +5,19 @@
 
 import Foundation
 
+func refreshRetryCountFor(userAuth: UserAuthAPI?) -> Int? {
+    /* for backwards compatibility: use old deprecated value if it is
+     * explicilty set (either to nil or a value)
+     */
+    if let count = (userAuth as? User.Auth)?.nonDeprecatedRefreshRetryCount {
+        if count == -1 {
+            return nil
+        }
+        return count
+    }
+    return SDKConfiguration.shared.refreshRetryCount
+}
+
 class TaskManager {
     struct TaskData {
         let operation: TaskOperation
@@ -153,7 +166,7 @@ class TaskManager {
             }
 
             // If retry count exceeded, cancel it, we're done
-            if let maxRetryCount = user.auth.refreshRetryCount,
+            if let maxRetryCount = refreshRetryCountFor(userAuth: user.auth),
                 taskData.retryCount >= maxRetryCount,
                 let data = self.pendingTasks.removeValue(forKey: handle) {
                 log(level: .warn, from: self, "refresh retry count for \(handle) exceeeded")

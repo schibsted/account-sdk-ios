@@ -59,6 +59,23 @@ class UserAuthTests: QuickSpec {
                     expect(result).to(beSuccess())
                 }
             }
+
+            describe("refreshRetryCount") {
+                it("Should default to nil") {
+                    let user = User(state: .loggedIn)
+                    let userAuth = user.auth as? User.Auth
+                    expect(userAuth?.nonDeprecatedRefreshRetryCount).to(beNil())
+                    expect(userAuth?.refreshRetryCount).to(beNil())
+                }
+                
+                it("Should be nil if set to nil") {
+                    let user = User(state: .loggedIn)
+                    let userAuth = user.auth as? User.Auth
+                    userAuth?.refreshRetryCount = nil
+                    expect(userAuth?.nonDeprecatedRefreshRetryCount) == -1
+                    expect(userAuth?.refreshRetryCount).to(beNil())
+                }
+            }
         }
     }
 }

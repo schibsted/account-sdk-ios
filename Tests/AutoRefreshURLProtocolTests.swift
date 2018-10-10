@@ -215,7 +215,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let user = TestingUser(state: .loggedIn)
             let session = URLSession(user: user, configuration: URLSessionConfiguration.default)
 
-            user.auth.refreshRetryCount = nil
+            (user.auth as? TestingUserAuth)?.refreshRetryCount = nil
 
             var tasks: [URLSessionTask] = []
             var doneCounter = 0

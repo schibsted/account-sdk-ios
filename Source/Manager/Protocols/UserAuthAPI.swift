@@ -8,6 +8,7 @@ import Foundation
 ///
 public protocol UserAuthAPI: class {
     ///
+    @available(*, deprecated, message: "Use SDKConfiguration.refreshRetryCount")
     var refreshRetryCount: Int? { get set }
     ///
     @discardableResult

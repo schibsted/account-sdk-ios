@@ -19,19 +19,38 @@ extension User {
          how many times it should retry a request that previously came back with a 401. If the count is exceeded
          then you get back whatever the response and data was from the actual request, and the error will be
          `ClientError.RefreshRetryExceededCode` with the NSUnderlyingErrorKey set to actual request error (if there was one)
-
-         - note default = 1
+         - note default = 0 (to be overriden by SDKConfiguration.refreshRetryCount)
          */
+        @available(*, deprecated, message: "Use SDKConfiguration.refreshRetryCount")
         public var refreshRetryCount: Int? {
+            get {
+                if self.nonDeprecatedRefreshRetryCount == -1 {
+                    return nil
+                }
+                return self.nonDeprecatedRefreshRetryCount
+            }
+            set(newValue) {
+                self.nonDeprecatedRefreshRetryCount = newValue
+            }
+        }
+        /* needs to be 0 for the logic in refreshRetryCountFor(userAuth:)
+         * to fallback to new value in SDKConfiguration.refreshRetryCount
+         */
+        private var _refreshRetryCount = AtomicInt(0)
+        // TODO: remove this when deprecated UserAuthAPI.refreshRetryCount is removed
+        internal var nonDeprecatedRefreshRetryCount: Int? {
             get {
                 let value = self._refreshRetryCount.value
                 return value == 0 ? nil : value
             }
             set(newValue) {
+                if newValue == nil {
+                    self._refreshRetryCount.value = -1 // to distinguish when user sets it to nil using the deprecated property
+                    return
+                }
                 self._refreshRetryCount.value = newValue ?? 0
             }
         }
-        private var _refreshRetryCount = AtomicInt(1)
 
         /**
          Get a one-time API authentication code for the current user.

@@ -198,7 +198,9 @@ class URLSessionTests: QuickSpec {
 
             it("Should handle butt loads of requests") {
                 let (session, user) = Utils.makeURLSession()
-                user.auth.refreshRetryCount = nil // don't error on refresh retries
+                // don't error on refresh retries
+                (user.auth as? User.Auth)?.nonDeprecatedRefreshRetryCount = nil
+                SDKConfiguration.shared.refreshRetryCount = nil
                 Utils.hold(user)
 
                 let wantedUrl = "http://www.example.com/"
@@ -258,7 +260,7 @@ class URLSessionTests: QuickSpec {
                 StubbedNetworkingProxy.addStub(stubSignup)
 
                 let (session, user) = Utils.makeURLSession()
-                user.auth.refreshRetryCount = 2
+                SDKConfiguration.shared.refreshRetryCount = 2
                 doDataTask(session, url: URL(string: wantedUrl)!) { _, _, error in
                     expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
                     guard let clientError = error as? ClientError, case let ClientError.userRefreshFailed(error) = clientError else {
