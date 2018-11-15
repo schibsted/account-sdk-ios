@@ -92,8 +92,8 @@ class VerifyViewController: IdentityUIViewController {
                 codeBox.keyboardType = .decimalPad
                 codeBox.inputAccessoryView = toolbar
 
-                codeBox.isEnabled = $0 == 0
-                codeBox.addTarget(self, action: #selector(textFieldChanged(_:)), for: UIControlEvents.editingChanged)
+                codeBox.isEnabled = true
+                codeBox.addTarget(self, action: #selector(textFieldChanged(_:)), for: UIControl.Event.editingChanged)
             }
         }
     }
@@ -125,6 +125,10 @@ class VerifyViewController: IdentityUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.stackViewClicked(_:)))
+        self.textFieldStackView.addGestureRecognizer(tapGesture)
+
         self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.textFieldStackView
     }
 
@@ -212,7 +216,12 @@ extension VerifyViewController: UITextFieldDelegate {
             return false
         }
 
-        return self.currentIndex == index
+        if index != self.currentIndex {
+            self.nextField(index: self.currentIndex)
+            return false
+        }
+
+        return true
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -255,6 +264,10 @@ extension VerifyViewController: UITextFieldDelegate {
     @objc func textFieldChanged(_ sender: UITextField) {
         self.resetError()
         self.handleTextFieldChange(code: sender.text ?? "")
+    }
+
+    @objc func stackViewClicked(_: AnyObject) {
+        self.nextField(index: self.currentIndex)
     }
 
     private func normalizeCodeText(_ text: String) -> String {
