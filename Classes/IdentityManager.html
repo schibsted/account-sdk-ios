@@ -371,9 +371,9 @@ can be accessed through <code><a href="../Classes/IdentityManager.html#/s:16Schi
 <p>A number of methods of creating a user exist within this manager. They include:</p>
 
 <ol>
-<li>Passwordless login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code>)</li>
-<li>Password login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
-<li>Signup APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
+<li>Passwordless login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">IdentityManager.sendCode(...)</a></code>)</li>
+<li>Password login APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5login8username8password6scopes11persistUser10completionyAA10IdentifierO_SSSaySSGSbyAA6ResultOyytAA11ClientErrorOGctF">IdentityManager.login(...)</a></code>)</li>
+<li>Signup APIs (<code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signup8username8password7profile11acceptTerms12redirectPath11persistUser10completionyAA10IdentifierO_SSAA0N7ProfileVSgSbSgSSSgSbyAA6ResultOyytAA11ClientErrorOGctF">IdentityManager.signup(...)</a></code>)</li>
 <li>APIs to access client specific information</li>
 </ol>
 
@@ -387,14 +387,14 @@ you have a reference to the internal user object.</p>
 <h3 id='authorization-code-vs-one-time-code' class='heading'>Authorization code vs one-time code</h3>
 
 <p>There are two <q>code</q> validation APIs in the manager. One of them operates on one time codes that are explicitly send to an <code><a href="../Enums/Identifier.html">Identifier</a></code>
-using <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code> to start a passwordless login process. The other is an OAuth-related authroization code, which
+using <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">IdentityManager.sendCode(...)</a></code> to start a passwordless login process. The other is an OAuth-related authroization code, which
 is not explicily requested. The current use-case for authorization code validation is after a signup process, when a user verifies
 their email. Or after an unverified identifier tries to login.</p>
 <h3 id='after-logging-in' class='heading'>After logging in</h3>
 
 <p>After you successfully login by either the passwordless or password APIs, it is recommended that you check the profile status of your
 user object. This means checking if there are updated terms and conditions that need to be accepted or if there are required fields
-that need to be updated. These can both be done via <code><a href="../Classes/User/Agreements.html#/s:16SchibstedAccount4UserC10AgreementsC6statusAA10TaskHandle_pyAA6ResultOySbAA11ClientErrorOGc10completion_tF">User.Agreements.status(...)</a></code> and <code><a href="../Classes/User/Profile.html#/s:16SchibstedAccount4UserC7ProfileC14requiredFieldsAA10TaskHandle_pyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">User.Profile.requiredFields(...)</a></code>.</p>
+that need to be updated. These can both be done via <code><a href="../Classes/User/Agreements.html#/s:16SchibstedAccount4UserC10AgreementsC6status10completionAA10TaskHandle_pyAA6ResultOySbAA11ClientErrorOGc_tF">User.Agreements.status(...)</a></code> and <code><a href="../Classes/User/Profile.html#/s:16SchibstedAccount4UserC7ProfileC14requiredFields10completionAA10TaskHandle_pyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc_tF">User.Profile.requiredFields(...)</a></code>.</p>
 <h3 id='user-persistence' class='heading'>User persistence</h3>
 
 <p>If the <code>persistUser</code> parameter passed to the <code>IdentityManager</code>&rsquo;s methods is <code>true</code>, the user that is internally managed by an identity manager is also
@@ -517,7 +517,7 @@ just resume the previously saved user session.</p>
                       <div class="abstract">
                         <p>Gives you access to SPiD web flow routes.</p>
 
-<p>Where relevent, these can typically be used with <code><a href="../Classes/User/Auth.html#/s:16SchibstedAccount4UserC4AuthC13webSessionURLAA10TaskHandle_pSS8clientID_10Foundation0G0V08redirectG0yAA6ResultOyAkA11ClientErrorOGc10completiontF">User.Auth.webSessionURL(...)</a></code> to create a web session on a SPiD page
+<p>Where relevent, these can typically be used with <code><a href="../Classes/User/Auth.html#/s:16SchibstedAccount4UserC4AuthC13webSessionURL8clientID08redirectG010completionAA10TaskHandle_pSS_10Foundation0G0VyAA6ResultOyAmA11ClientErrorOGctF">User.Auth.webSessionURL(...)</a></code> to create a web session on a SPiD page
 where a user is considered as logged in.</p>
 
                       </div>
@@ -535,9 +535,9 @@ where a user is considered as logged in.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerCAcA19ClientConfigurationV06clientF0_tcfc"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC19clientConfigurationAcA06ClientF0V_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(clientConfiguration:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerCAcA19ClientConfigurationV06clientF0_tcfc">init(clientConfiguration:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC19clientConfigurationAcA06ClientF0V_tcfc">init(clientConfiguration:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -584,9 +584,9 @@ using one of the aformentioned methods.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/sendCode(to:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(to:completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">sendCode(to:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -646,9 +646,9 @@ can be used with <code>validate(oneTimeCode:for:completion:)</code> to create a 
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC10resendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC10resendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/resendCode(to:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC10resendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">resendCode(to:completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC10resendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">resendCode(to:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -656,10 +656,10 @@ can be used with <code>validate(oneTimeCode:for:completion:)</code> to create a 
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Resends the code that was tried previously with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code>.</p>
+                        <p>Resends the code that was tried previously with <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">sendCode(...)</a></code>.</p>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <p><code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code></p>
+    <p><code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">sendCode(...)</a></code></p>
 
 </div>
 
@@ -709,9 +709,9 @@ can be used with <code>validate(oneTimeCode:for:completion:)</code> to create a 
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3forSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8validate11oneTimeCode3for6scopes11persistUser10completionySS_AA10IdentifierOSaySSGSbyAA6ResultOyytAA11ClientErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/validate(oneTimeCode:for:scopes:persistUser:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_AA10IdentifierO3forSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:for:scopes:persistUser:completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validate11oneTimeCode3for6scopes11persistUser10completionySS_AA10IdentifierOSaySSGSbyAA6ResultOyytAA11ClientErrorOGctF">validate(oneTimeCode:for:scopes:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -719,7 +719,7 @@ can be used with <code>validate(oneTimeCode:for:completion:)</code> to create a 
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Used after a call to <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code> to validate the one time code that was sent to an identifier.</p>
+                        <p>Used after a call to <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">sendCode(...)</a></code> to validate the one time code that was sent to an identifier.</p>
 
                       </div>
                       <div class="declaration">
@@ -754,7 +754,7 @@ can be used with <code>validate(oneTimeCode:for:completion:)</code> to create a 
                               </td>
                               <td>
                                 <div>
-                                  <p>the user&rsquo;s identifier. Should match the one used in <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code></p>
+                                  <p>the user&rsquo;s identifier. Should match the one used in <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">sendCode(...)</a></code></p>
                                 </div>
                               </td>
                             </tr>
@@ -803,9 +803,9 @@ can be used with <code>validate(oneTimeCode:for:completion:)</code> to create a 
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_SaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8validate11oneTimeCode6scopes11persistUser10completionySS_SaySSGSbyAA6ResultOyytAA11ClientErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/validate(oneTimeCode:scopes:persistUser:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS11oneTimeCode_SaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(oneTimeCode:scopes:persistUser:completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validate11oneTimeCode6scopes11persistUser10completionySS_SaySSGSbyAA6ResultOyytAA11ClientErrorOGctF">validate(oneTimeCode:scopes:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -815,7 +815,7 @@ can be used with <code>validate(oneTimeCode:for:completion:)</code> to create a 
                       <div class="abstract">
                         <p>Used to validate an authorization code</p>
 
-<p><code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">sendCode(...)</a></code> must have been called before. The difference between this overload
+<p><code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">sendCode(...)</a></code> must have been called before. The difference between this overload
 and the one that takes an explicit identifier is that this will try and validate against any identifier
 that was previously used (during a single session) and succeed if any succeed.</p>
 
@@ -889,9 +889,9 @@ that was previously used (during a single session) and succeed if any succeed.</
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC5login8username8password6scopes11persistUser10completionyAA10IdentifierO_SSSaySSGSbyAA6ResultOyytAA11ClientErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/login(username:password:scopes:persistUser:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">login(username:password:scopes:persistUser:completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC5login8username8password6scopes11persistUser10completionyAA10IdentifierO_SSSaySSGSbyAA6ResultOyytAA11ClientErrorOGctF">login(username:password:scopes:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -983,9 +983,9 @@ that was previously used (during a single session) and succeed if any succeed.</
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC6signup8username8password7profile11acceptTerms12redirectPath11persistUser10completionyAA10IdentifierO_SSAA0N7ProfileVSgSbSgSSSgSbyAA6ResultOyytAA11ClientErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/signup(username:password:profile:acceptTerms:redirectPath:persistUser:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF">signup(username:password:profile:acceptTerms:redirectPath:persistUser:completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC6signup8username8password7profile11acceptTerms12redirectPath11persistUser10completionyAA10IdentifierO_SSAA0N7ProfileVSgSbSgSSSgSbyAA6ResultOyytAA11ClientErrorOGctF">signup(username:password:profile:acceptTerms:redirectPath:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -996,7 +996,7 @@ that was previously used (during a single session) and succeed if any succeed.</
                         <p>Signup using e-mail and password.</p>
 
 <p>This method does not result in a valid <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11currentUserAA0F0Cvp">currentUser</a></code> object. The reason is that either the identifier
-already exists in the system, in which case you will get a <code><a href="../Enums/ClientError.html#/s:16SchibstedAccount11ClientErrorO17alreadyRegisteredACSS7message_tcACmF">ClientError.alreadyRegistered</a></code>, or the
+already exists in the system, in which case you will get a <code>ClientError.alreadyRegistered</code>, or the
 identifier needs to be verified, in which case there will be an eventual deep link back in to your
 application that can be parsed with <code><a href="../Enums/AppLaunchData.html">AppLaunchData</a></code> and verified with <code>validate(authCode:completion:)</code></p>
 
@@ -1011,7 +1011,7 @@ email, a number of things can happen, they can be:</p>
 <h3 id='checking-identifier-before-calling-signup' class='heading'>Checking identifier before calling signup</h3>
 
 <p>If you try and signup with an identifier that already exists, you will get an error. If you need to check the
-status of an identifier you should use <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11fetchStatusyAA10IdentifierO3for_yAA6ResultOyAA0gF0VAA11ClientErrorOGc10completiontF">fetchStatus(for:completion:)</a></code> first.</p>
+status of an identifier you should use <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC11fetchStatus3for10completionyAA10IdentifierO_yAA6ResultOyAA0iF0VAA11ClientErrorOGctF">fetchStatus(for:completion:)</a></code> first.</p>
 <h3 id='terms-and-conditions-and-privacy-policy' class='heading'>Terms and conditions and privacy policy</h3>
 
 <p>The redirection to the webflow terms and condition screen can be bypassed if you accept terms through this API.
@@ -1020,7 +1020,7 @@ that the user has explicitly accepted the platform (SPiD) terms and conditions a
 policy, and also has done the same for the client&rsquo;s (your) terms and conditions and privacy policy.</p>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC10fetchTermsyyAA6ResultOyAA0F0VAA11ClientErrorOGc10completion_tF">fetchTerms(completion:)</a></code>
+    <code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC10fetchTerms10completionyyAA6ResultOyAA0F0VAA11ClientErrorOGc_tF">fetchTerms(completion:)</a></code>
 
 </div>
 <h3 id='required-fields' class='heading'>Required fields</h3>
@@ -1030,7 +1030,7 @@ If you want to bypass the webflow for these as well, then you must provide a val
 all of your client&rsquo;s required fields.</p>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <p><code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC14requiredFieldsyyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">requiredFields(completion:)</a></code></p>
+    <p><code><a href="../Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC14requiredFields10completionyyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc_tF">requiredFields(completion:)</a></code></p>
 
 </div>
 
@@ -1148,9 +1148,9 @@ all of your client&rsquo;s required fields.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_Sb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC8validate8authCode11persistUser10completionySS_SbyAA6ResultOyytAA11ClientErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/validate(authCode:persistUser:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validateySS8authCode_Sb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">validate(authCode:persistUser:completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC8validate8authCode11persistUser10completionySS_SbyAA6ResultOyytAA11ClientErrorOGctF">validate(authCode:persistUser:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1237,9 +1237,9 @@ all of your client&rsquo;s required fields.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC11fetchStatusyAA10IdentifierO3for_yAA6ResultOyAA0gF0VAA11ClientErrorOGc10completiontF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC11fetchStatus3for10completionyAA10IdentifierO_yAA6ResultOyAA0iF0VAA11ClientErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/fetchStatus(for:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC11fetchStatusyAA10IdentifierO3for_yAA6ResultOyAA0gF0VAA11ClientErrorOGc10completiontF">fetchStatus(for:completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC11fetchStatus3for10completionyAA10IdentifierO_yAA6ResultOyAA0iF0VAA11ClientErrorOGctF">fetchStatus(for:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1295,9 +1295,9 @@ all of your client&rsquo;s required fields.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC10fetchTermsyyAA6ResultOyAA0F0VAA11ClientErrorOGc10completion_tF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC10fetchTerms10completionyyAA6ResultOyAA0F0VAA11ClientErrorOGc_tF"></a>
                     <a name="//apple_ref/swift/Method/fetchTerms(completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC10fetchTermsyyAA6ResultOyAA0F0VAA11ClientErrorOGc10completion_tF">fetchTerms(completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC10fetchTerms10completionyyAA6ResultOyAA0F0VAA11ClientErrorOGc_tF">fetchTerms(completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1345,9 +1345,9 @@ The client terms are what are associated with your client ID and can be set in
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC14requiredFieldsyyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC14requiredFields10completionyyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc_tF"></a>
                     <a name="//apple_ref/swift/Method/requiredFields(completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC14requiredFieldsyyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">requiredFields(completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC14requiredFields10completionyyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc_tF">requiredFields(completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1393,9 +1393,9 @@ The client terms are what are associated with your client ID and can be set in
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount15IdentityManagerC11fetchClientyyAA6ResultOyAA0F0VAA0F5ErrorOGc10completion_tF"></a>
+                    <a name="/s:16SchibstedAccount15IdentityManagerC11fetchClient10completionyyAA6ResultOyAA0F0VAA0F5ErrorOGc_tF"></a>
                     <a name="//apple_ref/swift/Method/fetchClient(completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC11fetchClientyyAA6ResultOyAA0F0VAA0F5ErrorOGc10completion_tF">fetchClient(completion:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount15IdentityManagerC11fetchClient10completionyyAA6ResultOyAA0F0VAA0F5ErrorOGc_tF">fetchClient(completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1446,9 +1446,9 @@ The client terms are what are associated with your client ID and can be set in
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount12UserDelegateP4useryAA0C0C_AA0C5StateO09didChangeF2TotF"></a>
+                    <a name="/s:16SchibstedAccount12UserDelegateP4user_16didChangeStateToyAA0C0C_AA0cH0OtF"></a>
                     <a name="//apple_ref/swift/Method/user(_:didChangeStateTo:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount12UserDelegateP4useryAA0C0C_AA0C5StateO09didChangeF2TotF">user(_:didChangeStateTo:)</a>
+                    <a class="token" href="#/s:16SchibstedAccount12UserDelegateP4user_16didChangeStateToyAA0C0C_AA0cH0OtF">user(_:didChangeStateTo:)</a>
                     </code>
                   </div>
                   <div class="height-container">

@@ -456,9 +456,9 @@ can be accessed through <code><a href="Classes/IdentityManager.html#/s:16Schibst
 <p>A number of methods of creating a user exist within this manager. They include:</p>
 
 <ol>
-<li>Passwordless login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code>)</li>
-<li>Password login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5loginyAA10IdentifierO8username_SS8passwordSaySSG6scopesSb11persistUseryAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.login(...)</a></code>)</li>
-<li>Signup APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signupyAA10IdentifierO8username_SS8passwordAA11UserProfileVSg7profileSbSg11acceptTermsSSSg12redirectPathSb07persistI0yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.signup(...)</a></code>)</li>
+<li>Passwordless login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">IdentityManager.sendCode(...)</a></code>)</li>
+<li>Password login APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC5login8username8password6scopes11persistUser10completionyAA10IdentifierO_SSSaySSGSbyAA6ResultOyytAA11ClientErrorOGctF">IdentityManager.login(...)</a></code>)</li>
+<li>Signup APIs (<code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC6signup8username8password7profile11acceptTerms12redirectPath11persistUser10completionyAA10IdentifierO_SSAA0N7ProfileVSgSbSgSSSgSbyAA6ResultOyytAA11ClientErrorOGctF">IdentityManager.signup(...)</a></code>)</li>
 <li>APIs to access client specific information</li>
 </ol>
 
@@ -472,14 +472,14 @@ you have a reference to the internal user object.</p>
 <h3 id='authorization-code-vs-one-time-code' class='heading'>Authorization code vs one-time code</h3>
 
 <p>There are two <q>code</q> validation APIs in the manager. One of them operates on one time codes that are explicitly send to an <code><a href="Enums/Identifier.html">Identifier</a></code>
-using <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCodeyAA10IdentifierO2to_yAA6ResultOyytAA11ClientErrorOGc10completiontF">IdentityManager.sendCode(...)</a></code> to start a passwordless login process. The other is an OAuth-related authroization code, which
+using <code><a href="Classes/IdentityManager.html#/s:16SchibstedAccount15IdentityManagerC8sendCode2to10completionyAA10IdentifierO_yAA6ResultOyytAA11ClientErrorOGctF">IdentityManager.sendCode(...)</a></code> to start a passwordless login process. The other is an OAuth-related authroization code, which
 is not explicily requested. The current use-case for authorization code validation is after a signup process, when a user verifies
 their email. Or after an unverified identifier tries to login.</p>
 <h3 id='after-logging-in' class='heading'>After logging in</h3>
 
 <p>After you successfully login by either the passwordless or password APIs, it is recommended that you check the profile status of your
 user object. This means checking if there are updated terms and conditions that need to be accepted or if there are required fields
-that need to be updated. These can both be done via <code><a href="Classes/User/Agreements.html#/s:16SchibstedAccount4UserC10AgreementsC6statusAA10TaskHandle_pyAA6ResultOySbAA11ClientErrorOGc10completion_tF">User.Agreements.status(...)</a></code> and <code><a href="Classes/User/Profile.html#/s:16SchibstedAccount4UserC7ProfileC14requiredFieldsAA10TaskHandle_pyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc10completion_tF">User.Profile.requiredFields(...)</a></code>.</p>
+that need to be updated. These can both be done via <code><a href="Classes/User/Agreements.html#/s:16SchibstedAccount4UserC10AgreementsC6status10completionAA10TaskHandle_pyAA6ResultOySbAA11ClientErrorOGc_tF">User.Agreements.status(...)</a></code> and <code><a href="Classes/User/Profile.html#/s:16SchibstedAccount4UserC7ProfileC14requiredFields10completionAA10TaskHandle_pyAA6ResultOySayAA13RequiredFieldOGAA11ClientErrorOGc_tF">User.Profile.requiredFields(...)</a></code>.</p>
 <h3 id='user-persistence' class='heading'>User persistence</h3>
 
 <p>If the <code>persistUser</code> parameter passed to the <code>IdentityManager</code>&rsquo;s methods is <code>true</code>, the user that is internally managed by an identity manager is also
