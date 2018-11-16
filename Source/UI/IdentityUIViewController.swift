@@ -8,7 +8,7 @@ import UIKit
 private class IdentityUIBarButtonItem: UIBarButtonItem {
     private var actionHandler: (() -> Void)?
 
-    convenience init(title: String?, style: UIBarButtonItemStyle, action: (() -> Void)?) {
+    convenience init(title: String?, style: UIBarButtonItem.Style, action: (() -> Void)?) {
         self.init(title: title, style: style, target: nil, action: nil)
         self.target = self
         self.action = #selector(self.barButtonItemPressed(sender:))
@@ -136,14 +136,14 @@ class IdentityUIViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.keyboardDidShow),
-            name: NSNotification.Name.UIKeyboardDidShow,
+            name: UIResponder.keyboardDidShowNotification,
             object: nil
         )
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
     }
 
     @objc private func dismissKeyboard() {
@@ -163,7 +163,7 @@ class IdentityUIViewController: UIViewController {
             return
         }
 
-        guard let endFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+        guard let endFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
         }
 
