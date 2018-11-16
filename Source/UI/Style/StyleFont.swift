@@ -88,7 +88,7 @@ public enum StyleFont {
      Retrieves attributes for NSAttributedString with requested configuration
      */
 
-    public func attributed(color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> [NSAttributedStringKey: Any] {
+    public func attributed(color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> [NSAttributedString.Key: Any] {
         let style = NSMutableParagraphStyle()
         style.minimumLineHeight = self.lineHeight
         style.lineBreakMode = .byWordWrapping
