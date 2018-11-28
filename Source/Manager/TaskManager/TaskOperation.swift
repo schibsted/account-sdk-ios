@@ -20,15 +20,17 @@ class TaskOperation: Operation {
         case finished
     }
 
+    private var _state: State = .ready
     var state: State {
-        return self.lock.scope {
-            if _finished {
-                return .finished
+        get {
+            return self.lock.scope {
+                self._state
             }
-            if _executing {
-                return .executing
+        }
+        set {
+            self.lock.scope {
+                self._state = newValue
             }
-            return .ready
         }
     }
 
@@ -55,34 +57,24 @@ class TaskOperation: Operation {
         case isExecuting, isFinished, isCancelled
     }
 
-    private var _executing: Bool = false
     public private(set) override var isExecuting: Bool {
         get {
-            return self.lock.scope {
-                self._executing
-            }
+            return self.state == .executing
         }
         set {
             willChangeValue(forKey: KVOKey.isExecuting.rawValue)
-            self.lock.scope {
-                self._executing = newValue
-            }
+            self.state = .executing
             didChangeValue(forKey: KVOKey.isExecuting.rawValue)
         }
     }
 
-    private var _finished: Bool = false
     public private(set) override var isFinished: Bool {
         get {
-            return self.lock.scope {
-                self._finished
-            }
+            return self.state == .finished
         }
         set {
             willChangeValue(forKey: KVOKey.isFinished.rawValue)
-            self.lock.scope {
-                self._finished = newValue
-            }
+            self.state = .finished
             didChangeValue(forKey: KVOKey.isFinished.rawValue)
         }
     }
@@ -104,16 +96,8 @@ class TaskOperation: Operation {
     func finish() {
         willChangeValue(forKey: KVOKey.isExecuting.rawValue)
         willChangeValue(forKey: KVOKey.isFinished.rawValue)
-        self.lock.scope {
-            self._executing = false
-            self._finished = true
-        }
+        self.isFinished = true
         didChangeValue(forKey: KVOKey.isExecuting.rawValue)
         didChangeValue(forKey: KVOKey.isFinished.rawValue)
-    }
-
-    open override func cancel() {
-        super.cancel()
-        self.finish()
     }
 }
