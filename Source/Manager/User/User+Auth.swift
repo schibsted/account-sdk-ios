@@ -13,27 +13,6 @@ extension User {
         weak var user: UserProtocol?
 
         /**
-         When you send out a request associated with this user and it returns with a 401, the `User` is refreshed and
-         the the request is refired with a new set of auth tokens. In the case that your request still comes back with a 401,
-         even though the tokens were just refreshed and should be valid, an infinite loop can ensue. This variable controls
-         how many times it should retry a request that previously came back with a 401. If the count is exceeded
-         then you get back whatever the response and data was from the actual request, and the error will be
-         `ClientError.RefreshRetryExceededCode` with the NSUnderlyingErrorKey set to actual request error (if there was one)
-
-         - note default = 1
-         */
-        public var refreshRetryCount: Int? {
-            get {
-                let value = self._refreshRetryCount.value
-                return value == 0 ? nil : value
-            }
-            set(newValue) {
-                self._refreshRetryCount.value = newValue ?? 0
-            }
-        }
-        private var _refreshRetryCount = AtomicInt(1)
-
-        /**
          Get a one-time API authentication code for the current user.
 
          This code can be sent to a different API, or a different SDK (for example a JS SDK),
