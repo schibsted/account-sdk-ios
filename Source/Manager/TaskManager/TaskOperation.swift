@@ -100,9 +100,4 @@ class TaskOperation: Operation {
         didChangeValue(forKey: KVOKey.isExecuting.rawValue)
         didChangeValue(forKey: KVOKey.isFinished.rawValue)
     }
-
-    open override func cancel() {
-        super.cancel()
-        self.finish()
-    }
 }
