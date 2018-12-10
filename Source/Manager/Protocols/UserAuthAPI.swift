@@ -8,8 +8,6 @@ import Foundation
 ///
 public protocol UserAuthAPI: class {
     ///
-    var refreshRetryCount: Int? { get set }
-    ///
     @discardableResult
     func oneTimeCode(clientID: String, completion: @escaping StringResultCallback) -> TaskHandle
     ///

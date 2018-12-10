@@ -59,6 +59,8 @@ class SchibstedAccountConfiguration: QuickConfiguration {
             Settings.clearAll()
 
             Logger.shared.waitTillAllLogsTransported()
+
+            SDKConfiguration.shared.refreshRetryCount = 1
         }
     }
 }
