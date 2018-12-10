@@ -214,13 +214,7 @@ class TaskManager {
 
                 log(level: .debug, from: self, "unsuspending queue")
                 strongSelf.operationQueue.isSuspended = false
-
-                // handle.cancel could have been called in which case the operation is "finished"
-                // And you can't add a finished operation to the queue.
-                strongSelf.operationQueue.addOperations(
-                    strongSelf.operationsToReAdd.filter { !$0.isFinished },
-                    waitUntilFinished: false
-                )
+                strongSelf.operationQueue.addOperations(strongSelf.operationsToReAdd, waitUntilFinished: false)
                 strongSelf.operationsToReAdd.removeAll()
             } catch {
                 strongSelf.lock.lock()
