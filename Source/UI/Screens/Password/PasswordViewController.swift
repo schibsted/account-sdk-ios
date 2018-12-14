@@ -83,6 +83,24 @@ class PasswordViewController: IdentityUIViewController {
             self.identifierLabel.text = self.viewModel.identifier.originalString
         }
     }
+    @IBOutlet var newAccountCreateInfoLabel: NormalLabel! {
+        didSet {
+            // set text with info icon
+            let iconAttachment = NSTextAttachment()
+            let iconImage = self.theme.icons.info
+            iconAttachment.image = iconImage
+            let iconOffsetY = (self.newAccountCreateInfoLabel.font.capHeight - iconImage.size.height) / 2.0
+            iconAttachment.bounds = CGRect(x: 0, y: iconOffsetY, width: iconImage.size.width, height: iconImage.size.height)
+            let iconString = NSAttributedString(attachment: iconAttachment)
+            let text = NSAttributedString(string: " " + self.viewModel.creatingNewAccountNotice)
+            let completeText = NSMutableAttributedString(string: " ")
+            completeText.append(iconString)
+            completeText.append(text)
+            self.newAccountCreateInfoLabel.attributedText = completeText
+
+            self.newAccountCreateInfoLabel.isHidden = true
+        }
+    }
     @objc func changeIdentifier() {
         let prefereblyActionSheet = UIAlertController(title: self.viewModel.identifier.originalString, message: nil, preferredStyle: .actionSheet)
 
@@ -157,6 +175,8 @@ class PasswordViewController: IdentityUIViewController {
             self.infoLabelHeight.constant = 200 // (less than or equal of some big value).
             self.forgotPasswordButton.isHidden = true
             self.ageLabel.isHidden = false
+            self.newAccountCreateInfoLabel.isHidden = false
+            self.continueButton.setTitle(self.viewModel.createAccount, for: .normal)
         case .signin:
             self.infoLabel.isHidden = true
             self.infoLabelHeight.constant = 0
