@@ -93,11 +93,18 @@ class PasswordViewController: IdentityUIViewController {
             iconAttachment.bounds = CGRect(x: 0, y: iconOffsetY, width: iconImage.size.width, height: iconImage.size.height)
             let iconString = NSAttributedString(attachment: iconAttachment)
             let text = NSAttributedString(string: " " + self.viewModel.creatingNewAccountNotice)
-            let completeText = NSMutableAttributedString(string: " ")
+            
+            // make sure the second line (if wrapped due to length) is to the right of the icon
+            let fontAttributes: [NSAttributedString.Key:Any] = [NSAttributedString.Key.font: self.newAccountCreateInfoLabel.font];
+            let paddingSize = ("  " as NSString).size(withAttributes: fontAttributes).width;
+            let indentParagraphStyle = NSMutableParagraphStyle();
+            indentParagraphStyle.headIndent = iconImage.size.width + paddingSize;
+            let attributes = [NSAttributedString.Key.paragraphStyle: indentParagraphStyle];
+            let completeText = NSMutableAttributedString(string: " ", attributes: attributes)
+            
             completeText.append(iconString)
             completeText.append(text)
             self.newAccountCreateInfoLabel.attributedText = completeText
-
             self.newAccountCreateInfoLabel.isHidden = true
         }
     }
