@@ -85,26 +85,7 @@ class PasswordViewController: IdentityUIViewController {
     }
     @IBOutlet var newAccountCreateInfoLabel: NormalLabel! {
         didSet {
-            // set text with info icon
-            let iconAttachment = NSTextAttachment()
-            let iconImage = self.theme.icons.info
-            iconAttachment.image = iconImage
-            let iconOffsetY = (self.newAccountCreateInfoLabel.font.capHeight - iconImage.size.height) / 2.0
-            iconAttachment.bounds = CGRect(x: 0, y: iconOffsetY, width: iconImage.size.width, height: iconImage.size.height)
-            let iconString = NSAttributedString(attachment: iconAttachment)
-            let text = NSAttributedString(string: " " + self.viewModel.creatingNewAccountNotice)
-
-            // make sure the second line (if wrapped due to length) is to the right of the icon
-            let fontAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: self.newAccountCreateInfoLabel.font]
-            let paddingSize = ("  " as NSString).size(withAttributes: fontAttributes).width
-            let indentParagraphStyle = NSMutableParagraphStyle()
-            indentParagraphStyle.headIndent = iconImage.size.width + paddingSize
-            let attributes = [NSAttributedString.Key.paragraphStyle: indentParagraphStyle]
-            let completeText = NSMutableAttributedString(string: " ", attributes: attributes)
-
-            completeText.append(iconString)
-            completeText.append(text)
-            self.newAccountCreateInfoLabel.attributedText = completeText
+            self.newAccountCreateInfoLabel.text = self.viewModel.creatingNewAccountNotice
             self.newAccountCreateInfoLabel.isHidden = true
         }
     }
