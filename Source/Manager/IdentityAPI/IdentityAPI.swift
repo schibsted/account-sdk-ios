@@ -21,8 +21,7 @@ class IdentityAPI {
 
         let block: ((Result<T, ClientError>) -> Void) = { [weak self] (result) in
             if retry > 0,
-                case .failure(let clientError) = result,
-                case .networkingError(let error) = clientError,
+                case .failure(.networkingError(let error)) = result,
                 (error as NSError).domain == NSURLErrorDomain {
                 self?.requestWithRetries(retry: retry-1,
                                          router: router,
