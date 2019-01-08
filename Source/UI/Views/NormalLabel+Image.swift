@@ -1,64 +1,45 @@
 //
-//  IconLabel.swift
-//  SchibstedAccount
-//
-//  Created by Oussama Sarhraoui on 2019-01-07.
-//  Copyright © 2019 Schibsted. All rights reserved.
+// Copyright 2011 - 2018 Schibsted Products & Technology AS.
+// Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
 
 extension NormalLabel {
-    /**
-     This function adding image with text on label.
-     
-     - parameter text: The text to add
-     - parameter image: The image to add
-     - parameter imageBehindText: A boolean value that indicate if the imaga is behind text or not
-     - parameter keepPreviousText: A boolean value that indicate if the function keep the actual text or not
-     */
-    func addTextWithImage(text: String, image: UIImage, imageBehindText: Bool, keepPreviousText: Bool) {
-        let lAttachment = NSTextAttachment()
-        lAttachment.image = image
+
+    func addImage(text: String, image: UIImage, imageBehindText: Bool, keepPreviousText: Bool) {
+        let attachment = NSTextAttachment()
+        attachment.image = image
         
         // 1pt = 1.32px
-        let lFontSize = round(self.font.pointSize * 1.32)
-        let lRatio = image.size.width / image.size.height
+        let fontSize = round(self.font.pointSize * 1.32)
+        let ratio = image.size.width / image.size.height
         
-        lAttachment.bounds = CGRect(x: 0, y: ((self.font.capHeight - lFontSize) / 2).rounded(), width: lRatio * lFontSize, height: lFontSize)
+        attachment.bounds = CGRect(x: 0, y: ((self.font.capHeight - fontSize) / 2).rounded(), width: ratio * fontSize, height: fontSize)
         
-        let lAttachmentString = NSAttributedString(attachment: lAttachment)
+        let attachmentString = NSAttributedString(attachment: attachment)
+        let labelText: NSMutableAttributedString
         
         if imageBehindText {
-            let lStrLabelText: NSMutableAttributedString
-            
             if keepPreviousText, let lCurrentAttributedString = self.attributedText {
-                lStrLabelText = NSMutableAttributedString(attributedString: lCurrentAttributedString)
-                lStrLabelText.append(NSMutableAttributedString(string: text))
+                labelText = NSMutableAttributedString(attributedString: lCurrentAttributedString)
+                labelText.append(NSMutableAttributedString(string: text))
             } else {
-                lStrLabelText = NSMutableAttributedString(string: text)
+                labelText = NSMutableAttributedString(string: text)
             }
             
-            lStrLabelText.append(lAttachmentString)
-            self.attributedText = lStrLabelText
+            labelText.append(attachmentString)
+            self.attributedText = labelText
         } else {
-            let lStrLabelText: NSMutableAttributedString
-            
-            if keepPreviousText, let lCurrentAttributedString = self.attributedText {
-                lStrLabelText = NSMutableAttributedString(attributedString: lCurrentAttributedString)
-                lStrLabelText.append(NSMutableAttributedString(attributedString: lAttachmentString))
-                lStrLabelText.append(NSMutableAttributedString(string: text))
+            if keepPreviousText, let currentAttributedString = self.attributedText {
+                labelText = NSMutableAttributedString(attributedString: currentAttributedString)
+                labelText.append(NSMutableAttributedString(attributedString: attachmentString))
+                labelText.append(NSMutableAttributedString(string: text))
             } else {
-                lStrLabelText = NSMutableAttributedString(attributedString: lAttachmentString)
-                lStrLabelText.append(NSMutableAttributedString(string: text))
+                labelText = NSMutableAttributedString(attributedString: attachmentString)
+                labelText.append(NSMutableAttributedString(string: text))
             }
             
-            self.attributedText = lStrLabelText
+            self.attributedText = labelText
         }
-    }
-    
-    func removeImage() {
-        let text = self.text
-        self.attributedText = nil
-        self.text = text
     }
 }
