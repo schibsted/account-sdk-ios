@@ -9,7 +9,7 @@ extension NormalLabel {
     func addImage(text: String, image: UIImage, imageBehindText: Bool, keepPreviousText: Bool) {
         let attachment = NSTextAttachment()
         attachment.image = image
-        
+        self.numberOfLines = 1
         // 1pt = 1.32px
         let fontSize = round(self.font.pointSize * 1.32)
         let ratio = image.size.width / image.size.height
