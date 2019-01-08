@@ -85,7 +85,13 @@ class PasswordViewController: IdentityUIViewController {
     }
     @IBOutlet var newAccountCreateInfoLabel: NormalLabel! {
         didSet {
-            self.newAccountCreateInfoLabel.text = self.viewModel.creatingNewAccountNotice
+            self.newAccountCreateInfoLabel.text = " "
+            self.newAccountCreateInfoLabel.addImage(
+                text: " " + self.viewModel.creatingNewAccountNotice,
+                image: UIImage.schibstedInfo,
+                imageBehindText: false,
+                keepPreviousText: true
+            )
             self.newAccountCreateInfoLabel.isHidden = true
         }
     }
