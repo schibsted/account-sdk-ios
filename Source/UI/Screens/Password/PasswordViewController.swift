@@ -86,9 +86,11 @@ class PasswordViewController: IdentityUIViewController {
     @IBOutlet var newAccountCreateInfoLabel: NormalLabel! {
         didSet {
             self.newAccountCreateInfoLabel.text = self.viewModel.creatingNewAccountNotice
-            self.newAccountCreateInfoLabel.isHidden = true
         }
     }
+    @IBOutlet weak var newAccountCreateNoticeStackView: UIStackView!
+    
+    
     @objc func changeIdentifier() {
         let prefereblyActionSheet = UIAlertController(title: self.viewModel.identifier.originalString, message: nil, preferredStyle: .actionSheet)
 
@@ -163,7 +165,7 @@ class PasswordViewController: IdentityUIViewController {
             self.infoLabelHeight.constant = 200 // (less than or equal of some big value).
             self.forgotPasswordButton.isHidden = true
             self.ageLabel.isHidden = false
-            self.newAccountCreateInfoLabel.isHidden = false
+            self.newAccountCreateNoticeStackView.isHidden = false
             self.continueButton.setTitle(self.viewModel.createAccount, for: .normal)
         case .signin:
             self.infoLabel.isHidden = true
