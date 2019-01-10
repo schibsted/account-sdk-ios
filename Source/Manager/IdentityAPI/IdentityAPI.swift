@@ -34,7 +34,7 @@ class IdentityAPI {
                 completion(result)
             }
         }
-        
+
         let task = request(router: router, formData: formData, headers: headers, parameters: parameters, completion: block)
 
         task?.resume()
