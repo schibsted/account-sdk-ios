@@ -88,9 +88,8 @@ class PasswordViewController: IdentityUIViewController {
             self.newAccountCreateInfoLabel.text = self.viewModel.creatingNewAccountNotice
         }
     }
-    @IBOutlet weak var newAccountCreateNoticeStackView: UIStackView!
-    
-    
+    @IBOutlet var newAccountCreateNoticeStackView: UIStackView!
+
     @objc func changeIdentifier() {
         let prefereblyActionSheet = UIAlertController(title: self.viewModel.identifier.originalString, message: nil, preferredStyle: .actionSheet)
 
