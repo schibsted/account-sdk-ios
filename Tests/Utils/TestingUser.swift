@@ -14,15 +14,6 @@ class TestingUserAuth: UserAuthAPI {
         self.wrapped = auth
     }
 
-    var refreshRetryCount: Int? {
-        get {
-            return self.wrapped.refreshRetryCount
-        }
-        set {
-            self.wrapped.refreshRetryCount = newValue
-        }
-    }
-
     func oneTimeCode(clientID: String, completion: @escaping StringResultCallback) -> TaskHandle {
         return Utils.waitUntilDone(completion) { [unowned self] in
             self.wrapped.oneTimeCode(clientID: clientID, completion: $0)
