@@ -125,10 +125,10 @@ enum NetworkStubPath: Hashable, CustomStringConvertible {
         }
     }
 
-    var hashValue: Int {
+    func hash(into hasher: inout Hasher) {
         switch self {
-        case let .path(path): return path.hashValue
-        case let .url(url): return url.absoluteString.hashValue
+        case let .path(path): hasher.combine(path)
+        case let .url(url): hasher.combine(url.absoluteString)
         }
     }
 }
