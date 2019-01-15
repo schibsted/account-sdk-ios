@@ -28,8 +28,8 @@ extension OwnedTaskHandle: CustomStringConvertible {
 }
 
 extension OwnedTaskHandle: Hashable {
-    var hashValue: Int {
-        return self.identifier
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.identifier)
     }
 
     static func == (lhs: OwnedTaskHandle, rhs: OwnedTaskHandle) -> Bool {
