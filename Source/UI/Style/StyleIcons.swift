@@ -23,6 +23,8 @@ public enum StyleIconKind: String {
     case rememberMeInfo = "remember-me-info"
     ///
     case infoPlaceholder = "placeholder"
+    ///
+    case circularInfo = "circular-info"
 }
 
 extension UIImage {
