@@ -12,7 +12,6 @@ matrix:
     - env:
         - COMMAND=FASTLANE_ALL
       script:
-        - scripts/brew_setup.sh
         - scripts/populate-dummy-secrets.sh
         - FASTLANE_SKIP_UPDATE_CHECK=true bundle exec fastlane all
       after_success:
