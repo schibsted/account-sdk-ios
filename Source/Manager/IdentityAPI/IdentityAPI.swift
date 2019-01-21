@@ -18,13 +18,12 @@ class IdentityAPI {
                                              headers: [Networking.Header: String] = [:],
                                              parameters: [String: String] = [:],
                                              completion: @escaping ((Result<T, ClientError>) -> Void)) {
-
-        let block: ((Result<T, ClientError>) -> Void) = { [weak self] (result) in
+        let block: ((Result<T, ClientError>) -> Void) = { [weak self] result in
             if retry > 0,
-                case .failure(.networkingError(let error as NSError)) = result,
+                case let .failure(.networkingError(error as NSError)) = result,
                 error.domain == NSURLErrorDomain &&
-                    error.code == NSURLErrorNetworkConnectionLost {
-                self?.requestWithRetries(retry: retry-1,
+                error.code == NSURLErrorNetworkConnectionLost {
+                self?.requestWithRetries(retry: retry - 1,
                                          router: router,
                                          formData: formData,
                                          headers: headers,
@@ -41,7 +40,7 @@ class IdentityAPI {
     }
 
     func fetchClient(oauthToken: String, clientID: String, completion: @escaping ((Result<Client, ClientError>) -> Void)) {
-        requestWithRetries(
+        self.requestWithRetries(
             router: .client(clientID: clientID),
             headers: [.authorization: oauthToken.bearer],
             completion: completion
@@ -51,17 +50,17 @@ class IdentityAPI {
     func fetchAgreementsAcceptanceStatus(oauthToken: String,
                                          userID: String,
                                          completion: @escaping ((Result<Agreements, ClientError>) -> Void)) {
-        requestWithRetries(router: .agreementsStatus(userID: userID),
-                           headers: [.authorization: oauthToken.bearer],
-                           completion: completion)
+        self.requestWithRetries(router: .agreementsStatus(userID: userID),
+                                headers: [.authorization: oauthToken.bearer],
+                                completion: completion)
     }
 
     func acceptAgreements(oauthToken: String,
                           userID: String,
                           completion: @escaping ((Result<EmptyResponse, ClientError>) -> Void)) {
-        requestWithRetries(router: .acceptAgreements(userID: userID),
-                           headers: [.authorization: oauthToken.bearer],
-                           completion: completion)
+        self.requestWithRetries(router: .acceptAgreements(userID: userID),
+                                headers: [.authorization: oauthToken.bearer],
+                                completion: completion)
     }
 
     func fetchClientAccessToken(clientID: String,
@@ -74,42 +73,42 @@ class IdentityAPI {
                                identifierInBase64: String,
                                connection: Connection,
                                completion: @escaping ((Result<IdentifierStatus, ClientError>) -> Void)) {
-        requestWithRetries(router: .identifierStatus(connection: connection,
-                                                     identifierInBase64: identifierInBase64),
-                           headers: [.authorization: oauthToken.bearer],
-                           completion: completion)
+        self.requestWithRetries(router: .identifierStatus(connection: connection,
+                                                          identifierInBase64: identifierInBase64),
+                                headers: [.authorization: oauthToken.bearer],
+                                completion: completion)
     }
 
     func fetchUserAssets(oauthToken: String,
                          userID: String,
                          completion: @escaping (Result<UserAssets, ClientError>) -> Void) {
-        requestWithRetries(router: .assets(userID: userID),
-                           headers: [.authorization: oauthToken.bearer],
-                           completion: completion)
+        self.requestWithRetries(router: .assets(userID: userID),
+                                headers: [.authorization: oauthToken.bearer],
+                                completion: completion)
     }
 
     func fetchUserProfile(userID: String,
                           oauthToken: String,
                           completion: @escaping ((Result<UserProfile, ClientError>) -> Void)) {
-        requestWithRetries(router: .profile(userID: userID),
-                           headers: [.authorization: oauthToken.bearer],
-                           completion: completion)
+        self.requestWithRetries(router: .profile(userID: userID),
+                                headers: [.authorization: oauthToken.bearer],
+                                completion: completion)
     }
 
     func fetchUserProduct(oauthToken: String,
                           userID: String,
                           productID: String,
                           completion: @escaping ((Result<UserProduct, ClientError>) -> Void)) {
-        requestWithRetries(router: .product(userID: userID, productID: productID),
-                           headers: [.authorization: oauthToken.bearer],
-                           completion: completion)
+        self.requestWithRetries(router: .product(userID: userID, productID: productID),
+                                headers: [.authorization: oauthToken.bearer],
+                                completion: completion)
     }
 
     func logout(oauthToken: String,
                 completion: @escaping ((Result<EmptyResponse, ClientError>) -> Void)) {
-        requestWithRetries(router: .logout,
-                           headers: [.authorization: oauthToken.bearer],
-                           completion: completion)
+        self.requestWithRetries(router: .logout,
+                                headers: [.authorization: oauthToken.bearer],
+                                completion: completion)
     }
 
     func requestAccessToken(clientID: String,
@@ -159,7 +158,7 @@ class IdentityAPI {
             formData["email"] = identifier
         }
 
-        requestWithRetries(router: .passwordlessStart, formData: formData, completion: completion)
+        self.requestWithRetries(router: .passwordlessStart, formData: formData, completion: completion)
     }
 
     func resendCode(clientID: String,
@@ -203,7 +202,7 @@ class IdentityAPI {
             formData["acceptTerms"] = acceptTerms ? String(1) : String(0)
         }
 
-        requestWithRetries(router: .signup, formData: formData, headers: [.authorization: oauthToken.bearer], completion: completion)
+        self.requestWithRetries(router: .signup, formData: formData, headers: [.authorization: oauthToken.bearer], completion: completion)
     }
 
     func tokenExchange(oauthToken: String,
@@ -253,11 +252,11 @@ class IdentityAPI {
     }
 
     func fetchTerms(clientID: String, completion: @escaping TermsResultCallback) {
-        requestWithRetries(router: .terms, parameters: ["client_id": clientID], completion: completion)
+        self.requestWithRetries(router: .terms, parameters: ["client_id": clientID], completion: completion)
     }
 
     func fetchRequiredFields(oauthToken: String, userID: String, completion: @escaping (Result<RequiredFields, ClientError>) -> Void) {
-        requestWithRetries(router: .requiredFields(userID: userID), headers: [.authorization: oauthToken.bearer], completion: completion)
+        self.requestWithRetries(router: .requiredFields(userID: userID), headers: [.authorization: oauthToken.bearer], completion: completion)
     }
 
     private static func triviallyParseSpidError(_ error: Error, path: String) -> ClientError? {
