@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name = 'SchibstedAccount'
-  s.version = '1.1.0'
+  s.version = '2.0.0'
   s.summary = "SDK for a Schibsted identity service"
   s.license = { :type => "MIT" }
   s.homepage = "https://schibsted.github.io/account-sdk-ios/"
