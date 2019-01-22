@@ -55,6 +55,9 @@
                 <a href="Classes/User/Agreements.html">– Agreements</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/User/Assets.html">– Assets</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
@@ -98,6 +101,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/Logger.html">Logger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/LogLevel.html">LogLevel</a>
               </li>
             </ul>
           </li>
@@ -210,6 +216,9 @@
                 <a href="Structs/PhoneNumber.html">PhoneNumber</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/PhoneNumber.html#/s:16SchibstedAccount11PhoneNumberV10ComponentsV">– Components</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/Identifier.html">Identifier</a>
               </li>
             </ul>
@@ -231,6 +240,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/UserProduct.html">UserProduct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/UserAsset.html">UserAsset</a>
               </li>
             </ul>
           </li>
@@ -254,6 +266,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/UserProductAPI.html">UserProductAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/UserAssetsAPI.html">UserAssetsAPI</a>
               </li>
             </ul>
           </li>
@@ -283,10 +298,16 @@
             <a href="Other Enums.html">Other Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Enums/AccessStatus.html">AccessStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/Birthdate.html">Birthdate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/LoginWillSucceedDisposition.html">LoginWillSucceedDisposition</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
@@ -301,6 +322,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/URLSessionTask/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UserAssets.html">UserAssets</a>
               </li>
             </ul>
           </li>
@@ -349,6 +373,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other Typealiases.html#/s:16SchibstedAccount24UserAssetsResultCallbacka">UserAssetsResultCallback</a>
               </li>
             </ul>
           </li>
@@ -429,18 +456,21 @@ of client credentials. The first thing you must do is get some credentials, whic
 <h3 id='strong-set-your-client-configuration-strong' class='heading'><strong>Set your client configuration</strong></h3>
 
 <p>See above for getting credentials. But once you have them you have to set up a <code><a href="Structs/ClientConfiguration.html">ClientConfiguration</a></code> object:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">clientConfiguration</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SchibstedAccount</span><span class="o">.</span><span class="kt">ClientConfiguration</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">let</span> <span class="err">`</span><span class="k">default</span><span class="err">`</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
         <span class="nv">environment</span><span class="p">:</span> <span class="o">.</span><span class="n">preproduction</span><span class="p">,</span>
-        <span class="nv">clientID</span><span class="p">:</span> <span class="s">"&lt;you-client-code&gt;"</span><span class="p">,</span>
+        <span class="nv">clientID</span><span class="p">:</span> <span class="s">"&lt;your-client-code&gt;"</span><span class="p">,</span>
         <span class="nv">clientSecret</span><span class="p">:</span> <span class="s">"&lt;your-client-secret&gt;"</span><span class="p">,</span>
         <span class="nv">appURLScheme</span><span class="p">:</span> <span class="kc">nil</span>
     <span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
+
+<p>All these fields must be retrieved from the selfservice portal. If you set <code>appURLScheme</code> to nil then the SDK assumes the defult scheme which is <code>spid-&lt;your-client-code&gt;</code>. Please double check that this is the same as the default scheme as listed in your Redirect URI tab in self service.</p>
 <h3 id='strong-check-if-you-already-have-a-user-strong' class='heading'><strong>Check if you already have a user</strong></h3>
 
-<p>To check if you already have a user logged in, you may use the IdentityManager:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">user</span> <span class="o">=</span> <span class="kt">IdentityManager</span><span class="p">(</span><span class="nv">clientConfiguration</span><span class="p">:</span> <span class="n">clientConfiguration</span><span class="p">)</span><span class="o">.</span><span class="n">currentUser</span>
+<p>Get the last user that was logged in with the SDK</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">user</span> <span class="o">=</span> <span class="kt">User</span><span class="o">.</span><span class="nf">loadLast</span><span class="p">(</span><span class="nv">clientConfiguration</span><span class="p">:</span> <span class="o">.</span><span class="k">default</span><span class="p">);</span>
 <span class="n">user</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="c1">//...</span>
 <span class="k">switch</span> <span class="n">user</span><span class="o">.</span><span class="n">state</span> <span class="p">{</span>
 <span class="k">case</span> <span class="o">.</span><span class="nv">loggedIn</span><span class="p">:</span>
@@ -449,12 +479,25 @@ of client credentials. The first thing you must do is get some credentials, whic
     <span class="c1">// Ok, fire up the IdentityUI</span>
 <span class="p">}</span>
 </code></pre>
+
+<p>Even if there was no user persisted to the keychain, this function will return an initialized user object. Checking the <code>state</code> of the user tells you if the keychain data <q>looks</q> valid.</p>
+
+<p><strong>Note</strong>: however that the data may have expired even though it is in the keychain, in which case the SDK will try and refresh it automatically for you if you make any requests using the provided extension on <code>URLSession</code>.</p>
 <h3 id='strong-visual-login-with-identityui-strong' class='heading'><strong>Visual login with IdentityUI</strong></h3>
 
-<p>To start the login process you can fire up an <code><a href="Classes/IdentityUI.html">IdentityUI</a></code> object, configure it and it will create a <code><a href="Classes/User.html">User</a></code> object for you if everything goes right. It is recommended to use the IdentityUI to create a User object because it makes sure that the correct login flows supported by the Schibsted Identity backend are adhered to (ie: required fields are filled in, and terms and conditions are accepted, etc).</p>
+<p>To start the login process you can fire up an <code><a href="Classes/IdentityUI.html">IdentityUI</a></code> object with an <code><a href="Structs/IdentityUIConfiguration.html">IdentityUIConfiguration</a></code> (this is different than the <code><a href="Structs/ClientConfiguration.html">ClientConfiguration</a></code>) and it will create a <code><a href="Classes/User.html">User</a></code> object for you if everything goes right. It is recommended to use the IdentityUI to create a User object because it makes sure that the correct login flows supported by the Schibsted Identity backend are adhered to (ie: required fields are filled in, and terms and conditions are accepted, etc).</p>
 <h4 id='logging-in-with-the-identityui' class='heading'>Logging in with the IdentityUI</h4>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">UIKit</span>
 <span class="kd">import</span> <span class="kt">SchibstedAccount</span>
+
+<span class="kd">extension</span> <span class="kt">IdentityUIConfiguration</span> <span class="p">{</span>
+    <span class="c1">// See docs for more options</span>
+    <span class="kd">static</span> <span class="kd">let</span> <span class="err">`</span><span class="k">default</span><span class="err">`</span> <span class="o">=</span> <span class="kt">IdentityUIConfiguration</span><span class="p">(</span>
+        <span class="nv">clientConfiguration</span><span class="p">:</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+        <span class="nv">isCancelable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nv">isSkippable</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">)</span>
+<span class="p">}</span>
 
 <span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
 
@@ -463,7 +506,7 @@ of client credentials. The first thing you must do is get some credentials, whic
 
     <span class="kd">@IBAction</span> <span class="kd">func</span> <span class="nf">didTapLoginButton</span><span class="p">(</span><span class="n">_</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">let</span> <span class="nv">identifierType</span><span class="p">:</span> <span class="kt">IdentifierType</span> <span class="o">=</span> <span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">?</span> <span class="o">.</span><span class="nv">phone</span> <span class="p">:</span> <span class="o">.</span><span class="n">email</span>
-        <span class="k">self</span><span class="o">.</span><span class="n">identityUI</span> <span class="o">=</span> <span class="kt">IdentityUI</span><span class="p">(</span><span class="nv">clientConfiguration</span><span class="p">:</span> <span class="n">defaultClientConfiguration</span><span class="p">,</span> <span class="nv">identifierType</span><span class="p">:</span> <span class="n">identifierType</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">identityUI</span> <span class="o">=</span> <span class="kt">IdentityUI</span><span class="p">(</span><span class="nv">configuration</span><span class="p">:</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span> <span class="nv">identifierType</span><span class="p">:</span> <span class="n">identifierType</span><span class="p">)</span>
         <span class="k">self</span><span class="o">.</span><span class="n">identityUI</span><span class="p">?</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="c1">//...</span>
         <span class="k">self</span><span class="o">.</span><span class="n">identityUI</span><span class="p">?</span><span class="o">.</span><span class="nf">presentIdentityProcess</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
     <span class="p">}</span>
@@ -474,6 +517,8 @@ of client credentials. The first thing you must do is get some credentials, whic
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
+
+<p>To handle the login/signup/error/or any other supported events you can set the <code>IDentityUIDelegate</code>.</p>
 <h4 id='identityuidelegate-and-userdelegate' class='heading'>IdentityUIDelegate and UserDelegate</h4>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">IdentityUIDelegate</span> <span class="p">{</span>
     <span class="kd">func</span> <span class="nf">didFinish</span><span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">IdentityUIResult</span><span class="p">)</span> <span class="p">{</span>
@@ -484,6 +529,7 @@ of client credentials. The first thing you must do is get some credentials, whic
             <span class="k">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
             <span class="k">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="c1">//...</span>
             <span class="nf">print</span><span class="p">(</span><span class="s">"User with id </span><span class="se">\(</span><span class="kt">String</span><span class="p">(</span><span class="nv">describing</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="se">)</span><span class="s"> is logged in"</span><span class="p">)</span>
+        <span class="c1">// ... see docs for more cases</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>

@@ -56,6 +56,9 @@
                 <a href="../Classes/User/Agreements.html">– Agreements</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/User/Assets.html">– Assets</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
@@ -99,6 +102,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Classes/Logger.html">Logger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LogLevel.html">LogLevel</a>
               </li>
             </ul>
           </li>
@@ -211,6 +217,9 @@
                 <a href="../Structs/PhoneNumber.html">PhoneNumber</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/PhoneNumber.html#/s:16SchibstedAccount11PhoneNumberV10ComponentsV">– Components</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/Identifier.html">Identifier</a>
               </li>
             </ul>
@@ -232,6 +241,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/UserProduct.html">UserProduct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserAsset.html">UserAsset</a>
               </li>
             </ul>
           </li>
@@ -255,6 +267,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/UserProductAPI.html">UserProductAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAssetsAPI.html">UserAssetsAPI</a>
               </li>
             </ul>
           </li>
@@ -284,10 +299,16 @@
             <a href="../Other Enums.html">Other Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/AccessStatus.html">AccessStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/Birthdate.html">Birthdate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginWillSucceedDisposition.html">LoginWillSucceedDisposition</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
@@ -302,6 +323,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/URLSessionTask/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UserAssets.html">UserAssets</a>
               </li>
             </ul>
           </li>
@@ -351,6 +375,9 @@
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount24UserAssetsResultCallbacka">UserAssetsResultCallback</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -365,16 +392,17 @@
 
                 </div>
               </div>
-            <p>A logging class that can be told where to log to. All logs created by the SDK can be gotten
-and filtered through here.</p>
-<h2 id='filtering' class='heading'>Filtering</h2>
+            <p>A logging class that can be told where to log to via transports.</p>
 
-<p>Every log call is automatically tagged with which thread it was called on (BG or UI),
-the function that it was called from, and the file it was called from. So if you wanted to
-only see logs from <code><a href="../Classes/IdentityManager.html">IdentityManager</a></code> and the networking object:</p>
-<pre class="highlight swift"><code><span class="kt">Logger</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">addTransport</span> <span class="p">{</span> <span class="nf">print</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="p">}</span> <span class="c1">// just print all logs</span>
-<span class="kt">Logger</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">filterUnless</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="p">[</span><span class="s">"Networking"</span><span class="p">,</span> <span class="s">"IdentityManager"</span><span class="p">])</span>
-</code></pre>
+<p>Features include:</p>
+
+<ul>
+<li>Asynchronous, ordered output to transports</li>
+<li>All log messages can be tagged and filtered</li>
+<li><code><a href="../Enums/LogLevel.html">LogLevel</a></code>s are provided as well</li>
+<li>Force logging enables output via <code>print</code> even if no transports available</li>
+</ul>
+<h2 id='filtering' class='heading'>Filtering</h2>
 
 <p>Two methods exist to allow for filtering of the log stream.</p>
 
@@ -417,9 +445,64 @@ only see logs from <code><a href="../Classes/IdentityManager.html">IdentityManag
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:16SchibstedAccount6LoggerC8showTagsSbvp"></a>
-                    <a name="//apple_ref/swift/Property/showTags" class="dashAnchor"></a>
-                    <a class="token" href="#/s:16SchibstedAccount6LoggerC8showTagsSbvp">showTags</a>
+                    <a name="/s:16SchibstedAccount6LoggerC5labelACSSSg_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(label:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount6LoggerC5labelACSSSg_tcfc">init(label:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes a Logger object</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">label</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount6LoggerC26waitTillAllLogsTransportedyyF"></a>
+                    <a name="//apple_ref/swift/Method/waitTillAllLogsTransported()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount6LoggerC26waitTillAllLogsTransportedyyF">waitTillAllLogsTransported()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Transports are called asynchronously, if you need to wait till all logging output has been sent to
+all transports then this function blocks until that happens</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">waitTillAllLogsTransported</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount6LoggerC10outputTagsSbvp"></a>
+                    <a name="//apple_ref/swift/Property/outputTags" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount6LoggerC10outputTagsSbvp">outputTags</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -434,7 +517,34 @@ only see logs from <code><a href="../Classes/IdentityManager.html">IdentityManag
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">showTags</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">outputTags</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount6LoggerC7enabledSbvp"></a>
+                    <a name="//apple_ref/swift/Property/enabled" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount6LoggerC7enabledSbvp">enabled</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If this is false then it ignores all logs</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">enabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -454,7 +564,7 @@ only see logs from <code><a href="../Classes/IdentityManager.html">IdentityManag
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Adding a transport allows you to customize where the output goes to. You may add as
+                        <p>Adding a transport allows you to tell the logger where the output goes to. You may add as
 many as you like.</p>
 
                       </div>
@@ -484,6 +594,33 @@ many as you like.</p>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount6LoggerC16removeTransportsyyF"></a>
+                    <a name="//apple_ref/swift/Method/removeTransports()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount6LoggerC16removeTransportsyyF">removeTransports()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes all transports</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeTransports</span><span class="p">()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>

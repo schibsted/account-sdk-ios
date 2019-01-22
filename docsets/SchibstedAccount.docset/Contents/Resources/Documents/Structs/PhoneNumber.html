@@ -56,6 +56,9 @@
                 <a href="../Classes/User/Agreements.html">– Agreements</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/User/Assets.html">– Assets</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
@@ -99,6 +102,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Classes/Logger.html">Logger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LogLevel.html">LogLevel</a>
               </li>
             </ul>
           </li>
@@ -211,6 +217,9 @@
                 <a href="../Structs/PhoneNumber.html">PhoneNumber</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/PhoneNumber.html#/s:16SchibstedAccount11PhoneNumberV10ComponentsV">– Components</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/Identifier.html">Identifier</a>
               </li>
             </ul>
@@ -232,6 +241,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/UserProduct.html">UserProduct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserAsset.html">UserAsset</a>
               </li>
             </ul>
           </li>
@@ -255,6 +267,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/UserProductAPI.html">UserProductAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAssetsAPI.html">UserAssetsAPI</a>
               </li>
             </ul>
           </li>
@@ -284,10 +299,16 @@
             <a href="../Other Enums.html">Other Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/AccessStatus.html">AccessStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/Birthdate.html">Birthdate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginWillSucceedDisposition.html">LoginWillSucceedDisposition</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
@@ -302,6 +323,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/URLSessionTask/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UserAssets.html">UserAssets</a>
               </li>
             </ul>
           </li>
@@ -350,6 +374,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount24UserAssetsResultCallbacka">UserAssetsResultCallback</a>
               </li>
             </ul>
           </li>
@@ -428,6 +455,62 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:16SchibstedAccount11PhoneNumberV10ComponentsV"></a>
+                    <a name="//apple_ref/swift/Struct/Components" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11PhoneNumberV10ComponentsV">Components</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents the components of a full phone number, i.e. dialing code and number</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Components</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11PhoneNumberV10componentsAC10ComponentsVyKF"></a>
+                    <a name="//apple_ref/swift/Method/components()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11PhoneNumberV10componentsAC10ComponentsVyKF">components()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a PhoneNumber.Components object out of this PhoneNumber.</p>
+
+<p>This will only work if you have used the initializer that allows seperation of code and parts</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">components</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/PhoneNumber.html#/s:16SchibstedAccount11PhoneNumberV10ComponentsV">Components</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:16SchibstedAccount11PhoneNumberV11countryCode6numberACSgSS_SStcfc"></a>
                     <a name="//apple_ref/swift/Method/init(countryCode:number:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:16SchibstedAccount11PhoneNumberV11countryCode6numberACSgSS_SStcfc">init(countryCode:number:)</a>
@@ -486,6 +569,89 @@ digit in each string. The country code is normalized by removing &lsquo;00&rsquo
                       <div>
                         <h4>Return Value</h4>
                         <p>PhoneNumber or nil if parsing fails</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount11PhoneNumberV04fullD0ACSgSSSg_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(fullNumber:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount11PhoneNumberV04fullD0ACSgSSSg_tcfc">init(fullNumber:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize PhoneNumber identifier</p>
+
+<p>Assumes the values passed in is a full phone number including the internal dialing code. The number is normalized by removing &lsquo;00&rsquo; in the
+front (if present) and adding &lsquo;+&rsquo; as the first char.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="nv">fullNumber</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fullNumber</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a phone number including full country code</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>PhoneNumber or nil if parsing fails</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">PhoneNumber</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">PhoneNumber</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>

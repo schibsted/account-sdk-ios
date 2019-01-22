@@ -56,6 +56,9 @@
                 <a href="../Classes/User/Agreements.html">– Agreements</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/User/Assets.html">– Assets</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
@@ -99,6 +102,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Classes/Logger.html">Logger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LogLevel.html">LogLevel</a>
               </li>
             </ul>
           </li>
@@ -211,6 +217,9 @@
                 <a href="../Structs/PhoneNumber.html">PhoneNumber</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/PhoneNumber.html#/s:16SchibstedAccount11PhoneNumberV10ComponentsV">– Components</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/Identifier.html">Identifier</a>
               </li>
             </ul>
@@ -232,6 +241,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/UserProduct.html">UserProduct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserAsset.html">UserAsset</a>
               </li>
             </ul>
           </li>
@@ -255,6 +267,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/UserProductAPI.html">UserProductAPI</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/UserAssetsAPI.html">UserAssetsAPI</a>
               </li>
             </ul>
           </li>
@@ -284,10 +299,16 @@
             <a href="../Other Enums.html">Other Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/AccessStatus.html">AccessStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/Birthdate.html">Birthdate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/LoginFlowDisposition.html">LoginFlowDisposition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LoginWillSucceedDisposition.html">LoginWillSucceedDisposition</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/SkipLoginDisposition.html">SkipLoginDisposition</a>
@@ -302,6 +323,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/URLSessionTask/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UserAssets.html">UserAssets</a>
               </li>
             </ul>
           </li>
@@ -350,6 +374,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Other Typealiases.html#/s:16SchibstedAccount17URLResultCallbacka">URLResultCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other Typealiases.html#/s:16SchibstedAccount24UserAssetsResultCallbacka">UserAssetsResultCallback</a>
               </li>
             </ul>
           </li>
@@ -422,6 +449,43 @@ you know what you&rsquo;re doing.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">agreementsCache</span><span class="p">:</span> <span class="kt"><a href="../Classes/SDKConfiguration/AgreementsCache.html">AgreementsCache</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:16SchibstedAccount16SDKConfigurationC17refreshRetryCountSiSgvp"></a>
+                    <a name="//apple_ref/swift/Property/refreshRetryCount" class="dashAnchor"></a>
+                    <a class="token" href="#/s:16SchibstedAccount16SDKConfigurationC17refreshRetryCountSiSgvp">refreshRetryCount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When you send out a request associated with a user access token and it returns with a 401, the <code><a href="../Classes/User.html">User</a></code> is refreshed and
+the request is refired with a new set of auth tokens. In the case that your request still comes back with a 401,
+even though the tokens were just refreshed and should be valid, an infinite loop can ensue. This variable controls
+how many times it should retry a request that previously came back with a 401. If the count is exceeded
+then you get back whatever the response and data was from the actual request, and the error will be
+<code><a href="../Enums/ClientError.html#/s:16SchibstedAccount11ClientErrorO24RefreshRetryExceededCodeSivpZ">ClientError.RefreshRetryExceededCode</a></code> with the NSUnderlyingErrorKey set to actual request error (if there was one)</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    note default = 1
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">refreshRetryCount</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
