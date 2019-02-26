@@ -24,7 +24,7 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
         if configuration.useBiometrics, #available(iOS 11.3, *) {
             let password = self.getPasswordFromKeychain(for: input.identifier)
             if password == nil {
-                self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes,  completion: completion)
+                self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
             } else {
                 let context = LAContext()
                 let localizedReasonString = viewModel.biometricsPrompt + input.identifier.normalizedString
@@ -32,7 +32,7 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
                 if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
                     context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString) { success, evaluateError in
                         DispatchQueue.main.async {
-                            if success{
+                            if success {
                                 self.submit(password: password!, for: input.identifier, on: input.loginFlowVariant, persistUser: true, scopes: input.scopes, completion: completion)
                             } else {
                                 self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes,  completion: completion)
@@ -43,11 +43,9 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
                     self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
                 }
             }
-            
         } else {
             self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
         }
-        
 
     }
 
@@ -232,18 +230,17 @@ extension PasswordCoordinator {
     private func getPasswordFromKeychain(for identifier: Identifier) -> String? {
         if #available(iOS 11.3, *) {
             var query = [String: Any]()
-    
             query[kSecClass as String] = kSecClassGenericPassword
             query[kSecReturnData as String] = kCFBooleanTrue
             query[kSecAttrAccount as String] = identifier.normalizedString as CFString
             query[kSecAttrLabel as String] = "com.schibsted.account.biometrics.secrets" as CFString
             query[kSecUseOperationPrompt as String] = "Please put your fingers on that button" as CFString
-    
+
             var queryResult: AnyObject?
             let status = withUnsafeMutablePointer(to: &queryResult) {
                 SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
             }
-    
+
             if status == noErr {
                 let password = String(data: queryResult as! Data, encoding: .utf8)!
                 print("Password: \(password)")
@@ -251,6 +248,7 @@ extension PasswordCoordinator {
             } else {
                 print("Authorization not passed")
                 return nil
+
             }
         } else {
             // Fallback to password login.
@@ -260,7 +258,7 @@ extension PasswordCoordinator {
     private func updatekeyChain(for identifier: Identifier, loginFlowVariant: LoginMethod.FlowVariant,  password: String, completion: @escaping () -> Void ) {
         if #available(iOS 11.3, *) {
             let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .userPresence, nil)
-            var dictionary = [String : Any]()
+            var dictionary = [String: Any]()
             dictionary[kSecClass as String] = kSecClassGenericPassword
             dictionary[kSecAttrLabel as String] = "com.schibsted.account.biometrics.secrets" as CFString
             dictionary[kSecAttrAccount as String] = identifier.normalizedString as CFString
