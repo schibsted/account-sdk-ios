@@ -127,7 +127,7 @@ public struct IdentityUIConfiguration {
             appName: appName ?? self.appName
         )
     }
-    
+
     /**
      Call this the enroll biometrics login
 
