@@ -22,7 +22,7 @@ class IdentityAPI {
             if retry > 0,
                 case let .failure(.networkingError(error as NSError)) = result,
                 ((error.domain == NSURLErrorDomain && error.code == NSURLErrorNetworkConnectionLost) ||
-                 (error.domain == NSPOSIXErrorDomain && error.code == POSIXError.ECONNABORTED.rawValue)) {
+                    (error.domain == NSPOSIXErrorDomain && error.code == POSIXError.ECONNABORTED.rawValue)) {
                 self?.requestWithRetries(retry: retry - 1,
                                          router: router,
                                          formData: formData,
