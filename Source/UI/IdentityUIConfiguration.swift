@@ -19,6 +19,17 @@ public struct IdentityUIConfiguration {
     public let tracker: TrackingEventsHandler?
     /// This determines whether you want to allow the user to dismiss the login flow
     public let isCancelable: Bool
+    /// This will determin if you want to use biometric login.
+    public var useBiometrics: Bool {
+        get {
+            // This will return false if the key is not present.
+            let value = UserDefaults.standard.bool(forKey: "Identity.useBiometrics")
+            return value
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "Identity.useBiometrics")
+        }
+    }
     /// This will be given the navigationController we use internally before we start presentation incase you want to customize
     /// certain aspects
     public let presentationHook: ((UIViewController) -> Void)?
@@ -56,12 +67,14 @@ public struct IdentityUIConfiguration {
      - parameter tracker: Required implementation of the trackinge events handler
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
+     - parameter useBiometrics: If you want to enable biometrics authentication.
     */
     public init(
         clientConfiguration: ClientConfiguration,
         theme: IdentityUITheme = .default,
         isCancelable: Bool = true,
         isSkippable: Bool = false,
+        useBiometrics: Bool = UserDefaults.standard.bool(forKey: "Identity.useBiometrics"),
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
@@ -77,6 +90,7 @@ public struct IdentityUIConfiguration {
         if let appName = appName {
             self.appName = appName
         }
+        self.useBiometrics = useBiometrics
     }
 
     /**
@@ -89,11 +103,13 @@ public struct IdentityUIConfiguration {
      - parameter tracker: Required implementation of the trackinge events handler
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
+     - parameter useBiometrics: If you want to enable biometrics authentication.
     */
     public func replacing(
         theme: IdentityUITheme? = nil,
         isCancelable: Bool? = nil,
         isSkippable: Bool? = nil,
+        useBiometrics: Bool? = UserDefaults.standard.bool(forKey: "Identity.useBiometrics"),
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
@@ -104,11 +120,21 @@ public struct IdentityUIConfiguration {
             theme: theme ?? self.theme,
             isCancelable: isCancelable ?? self.isCancelable,
             isSkippable: isSkippable ?? self.isSkippable,
+            useBiometrics: useBiometrics ?? self.useBiometrics,
             presentationHook: presentationHook ?? self.presentationHook,
             tracker: tracker ?? self.tracker,
             localizationBundle: localizationBundle ?? self.localizationBundle,
             appName: appName ?? self.appName
         )
+    }
+    
+    /**
+     Call this the enroll biometrics login
+
+    - parameter useBiometrics: If you want to enable biometrics authentication.
+    */
+    public func enrollBiometrics(useBiometrics: Bool) {
+        UserDefaults.standard.set(useBiometrics, forKey: "Identity.useBiometrics")
     }
 }
 
@@ -117,6 +143,7 @@ extension IdentityUIConfiguration: CustomStringConvertible {
         return "(\n\tname: \(self.appName), "
             + "\n\tcancelable: \(self.isCancelable), "
             + "\n\tskippable: \(self.isSkippable), "
+            + "\n\tuseBiometrics: \(self.useBiometrics), "
             + "\n\ttracker: \(self.tracker != nil), "
             + "\n\tclient: \(self.clientConfiguration)\n)"
     }

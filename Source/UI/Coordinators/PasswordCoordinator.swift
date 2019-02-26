@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     private let signinInteractor: SigninInteractor
@@ -14,7 +15,40 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     }
 
     override func start(input: Input, completion: @escaping (Output) -> Void) {
-        self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
+        let viewModel = PasswordViewModel(
+            identifier: input.identifier,
+            loginFlowVariant: input.loginFlowVariant,
+            localizationBundle: self.configuration.localizationBundle
+        )
+        // Are we allowed to use biometric login?
+        if configuration.useBiometrics, #available(iOS 11.3, *) {
+            let password = self.getPasswordFromKeychain(for: input.identifier)
+            if password == nil {
+                self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes,  completion: completion)
+            } else {
+                let context = LAContext()
+                let localizedReasonString = viewModel.biometricsPrompt + input.identifier.normalizedString
+                var authError: NSError?
+                if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
+                    context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString) { success, evaluateError in
+                        DispatchQueue.main.async {
+                            if success{
+                                self.submit(password: password!, for: input.identifier, on: input.loginFlowVariant, persistUser: true, scopes: input.scopes, completion: completion)
+                            } else {
+                                self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes,  completion: completion)
+                            }
+                        }
+                    }
+                } else {
+                    self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
+                }
+            }
+            
+        } else {
+            self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
+        }
+        
+
     }
 
     func handle(route: IdentityUI.Route) -> RouteHandlerResult {
@@ -59,7 +93,6 @@ extension PasswordCoordinator {
             localizationBundle: self.configuration.localizationBundle
         )
         let viewController = PasswordViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(password, shouldPersistUser):
@@ -112,7 +145,9 @@ extension PasswordCoordinator {
             switch result {
             case let .success(currentUser):
                 self?.configuration.tracker?.loginID = currentUser.legacyID
-                self?.spawnCompleteProfileCoordinator(for: .signin(user: currentUser), persistUser: persistUser, completion: completion)
+                self?.updatekeyChain(for: identifier,loginFlowVariant: loginFlowVariant, password: password) {
+                    self?.spawnCompleteProfileCoordinator(for: .signin(user: currentUser), persistUser: persistUser, completion: completion)
+                }
             case let .failure(error):
                 if self?.presentedViewController?.showInlineError(error) == true {
                     return
@@ -193,5 +228,73 @@ extension PasswordCoordinator {
             }
         }
         self.navigationController.pushViewController(viewController, animated: true)
+    }
+    private func getPasswordFromKeychain(for identifier: Identifier) -> String? {
+        if #available(iOS 11.3, *) {
+            var query = [String: Any]()
+    
+            query[kSecClass as String] = kSecClassGenericPassword
+            query[kSecReturnData as String] = kCFBooleanTrue
+            query[kSecAttrAccount as String] = identifier.normalizedString as CFString
+            query[kSecAttrLabel as String] = "com.schibsted.account.biometrics.secrets" as CFString
+            query[kSecUseOperationPrompt as String] = "Please put your fingers on that button" as CFString
+    
+            var queryResult: AnyObject?
+            let status = withUnsafeMutablePointer(to: &queryResult) {
+                SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
+            }
+    
+            if status == noErr {
+                let password = String(data: queryResult as! Data, encoding: .utf8)!
+                print("Password: \(password)")
+                return password
+            } else {
+                print("Authorization not passed")
+                return nil
+            }
+        } else {
+            // Fallback to password login.
+            return nil
+        }
+    }
+    private func updatekeyChain(for identifier: Identifier, loginFlowVariant: LoginMethod.FlowVariant,  password: String, completion: @escaping () -> Void ) {
+        if #available(iOS 11.3, *) {
+            let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .userPresence, nil)
+            var dictionary = [String : Any]()
+            dictionary[kSecClass as String] = kSecClassGenericPassword
+            dictionary[kSecAttrLabel as String] = "com.schibsted.account.biometrics.secrets" as CFString
+            dictionary[kSecAttrAccount as String] = identifier.normalizedString as CFString
+            dictionary[kSecValueData as String] = password.data(using: .utf8)! as CFData
+            dictionary[kSecAttrAccessControl as String] = accessControl
+            
+            let identityNotFirstLogin = UserDefaults.standard.bool(forKey: "identity.isNotFirst.login")
+            if identityNotFirstLogin == false {
+                UserDefaults.standard.set(true, forKey: "identity.isNotFirst.login")
+                let viewModel = PasswordViewModel(
+                    identifier: identifier,
+                    loginFlowVariant: loginFlowVariant,
+                    localizationBundle: self.configuration.localizationBundle
+                )
+                let message = viewModel.biometricsOnboardingMessage.replacingOccurrences(of: "$0", with: configuration.appName)
+                let alert = UIAlertController(title: viewModel.biometricsOnboardingTitle, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Yes", style: .default) { _ in
+                    self.configuration.enrollBiometrics(useBiometrics: true)
+                    SecItemAdd(dictionary as CFDictionary, nil)
+                    completion()
+                })
+                alert.addAction(UIAlertAction(title: "No", style: .default) { _ in
+                    self.configuration.enrollBiometrics(useBiometrics: false)
+                    completion()
+                })
+                
+                self.navigationController.present(alert, animated: false)
+                        // is this our first login
+            } else {
+                if self.getPasswordFromKeychain(for: identifier) == nil && self.configuration.useBiometrics == true {
+                    SecItemAdd(dictionary as CFDictionary, nil)
+                }
+                completion()
+            }
+        }
     }
 }

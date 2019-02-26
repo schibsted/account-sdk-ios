@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="SgE-pY-Kzs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="SgE-pY-Kzs">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -600,6 +598,18 @@
                                     <action selector="didClickRefresh:" destination="czm-5q-iif" eventType="touchUpInside" id="Tab-yZ-WmK"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zHV-4A-PZR">
+                                <rect key="frame" x="239" y="372" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TouchId Enabled" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tXw-SZ-gmL">
+                                <rect key="frame" x="35" y="377" width="127" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="4sw-Dt-gSd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -615,6 +625,7 @@
                             <constraint firstItem="s47-qz-gjO" firstAttribute="leading" secondItem="kfW-NK-hAG" secondAttribute="trailing" constant="8" id="A9G-35-X7V"/>
                             <constraint firstItem="P9o-dm-rVs" firstAttribute="top" secondItem="GdL-QY-r6J" secondAttribute="bottom" constant="8" id="BVq-av-L3q"/>
                             <constraint firstItem="pQp-xD-bX9" firstAttribute="top" secondItem="YMG-Z6-3xU" secondAttribute="bottom" constant="2" id="C2X-rT-0Nl"/>
+                            <constraint firstItem="tXw-SZ-gmL" firstAttribute="leading" secondItem="dCa-4O-SuN" secondAttribute="leadingMargin" constant="19" id="Cwl-2i-rHz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ibp-r2-dm8" secondAttribute="trailing" constant="16" id="DBD-y4-mc8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aDz-fS-xKD" secondAttribute="trailing" constant="16" id="EGH-Bu-WDb"/>
                             <constraint firstItem="XYo-3C-Pip" firstAttribute="trailing" secondItem="dCa-4O-SuN" secondAttribute="trailingMargin" id="EKh-Dn-yZC"/>
@@ -623,6 +634,7 @@
                             <constraint firstItem="frZ-Kb-wSe" firstAttribute="top" secondItem="cge-X5-enk" secondAttribute="bottom" id="JMv-Kt-DkX"/>
                             <constraint firstItem="aDz-fS-xKD" firstAttribute="top" secondItem="o0y-Ib-T8o" secondAttribute="bottom" constant="8" id="KnN-Sv-Jzu"/>
                             <constraint firstItem="c8o-6x-eLw" firstAttribute="top" secondItem="Ibp-r2-dm8" secondAttribute="bottom" constant="13" id="Mda-KA-9uP"/>
+                            <constraint firstItem="zHV-4A-PZR" firstAttribute="top" secondItem="pQp-xD-bX9" secondAttribute="bottom" constant="2" id="NUu-s8-q3H"/>
                             <constraint firstAttribute="trailing" secondItem="s47-qz-gjO" secondAttribute="trailing" constant="8" id="NgH-IQ-MIk"/>
                             <constraint firstItem="czP-y2-gak" firstAttribute="top" secondItem="XYo-3C-Pip" secondAttribute="bottom" constant="8" id="P10-NR-8i3"/>
                             <constraint firstItem="Ibp-r2-dm8" firstAttribute="leading" secondItem="dCa-4O-SuN" secondAttribute="leadingMargin" constant="16" id="PMN-um-lDW"/>
@@ -640,6 +652,7 @@
                             <constraint firstItem="P2e-By-Ilz" firstAttribute="top" secondItem="T7x-oh-Ulc" secondAttribute="bottom" constant="8" id="aT6-pY-ea1"/>
                             <constraint firstItem="GdL-QY-r6J" firstAttribute="top" secondItem="cge-X5-enk" secondAttribute="bottom" constant="20" id="f21-2Y-k63"/>
                             <constraint firstItem="Ibp-r2-dm8" firstAttribute="top" secondItem="aDz-fS-xKD" secondAttribute="bottom" constant="8" id="fOa-0a-r1M"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zHV-4A-PZR" secondAttribute="trailing" constant="16" id="hku-zm-pV5"/>
                             <constraint firstItem="czP-y2-gak" firstAttribute="leading" secondItem="P9o-dm-rVs" secondAttribute="trailing" constant="8" id="iNE-pW-hND"/>
                             <constraint firstItem="P9o-dm-rVs" firstAttribute="leading" secondItem="dCa-4O-SuN" secondAttribute="leadingMargin" id="iw5-Nq-4Kf"/>
                             <constraint firstItem="T7x-oh-Ulc" firstAttribute="trailing" secondItem="dCa-4O-SuN" secondAttribute="trailingMargin" id="jVO-A7-ivJ"/>
@@ -651,6 +664,7 @@
                             <constraint firstItem="XYo-3C-Pip" firstAttribute="top" secondItem="cge-X5-enk" secondAttribute="bottom" constant="20" id="rQr-aj-vJ2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3T2-fx-xtf" secondAttribute="trailing" constant="16" id="shK-bm-Xmf"/>
                             <constraint firstItem="kfW-NK-hAG" firstAttribute="width" secondItem="P2e-By-Ilz" secondAttribute="width" id="tjo-BG-dfA"/>
+                            <constraint firstItem="tXw-SZ-gmL" firstAttribute="top" secondItem="8tO-Fb-RdT" secondAttribute="bottom" constant="12" id="uC6-G4-Fwz"/>
                             <constraint firstItem="CCt-x8-6Rp" firstAttribute="leading" secondItem="P2e-By-Ilz" secondAttribute="trailing" constant="8" id="uIi-Ng-QOo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YMG-Z6-3xU" secondAttribute="trailing" constant="16" id="vt8-Fa-QVf"/>
                             <constraint firstItem="3T2-fx-xtf" firstAttribute="top" secondItem="P2e-By-Ilz" secondAttribute="bottom" constant="7" id="x4i-MY-4qX"/>
@@ -664,6 +678,7 @@
                         <outlet property="loginOnlySwitch" destination="YMG-Z6-3xU" id="rqM-np-sYn"/>
                         <outlet property="offlineModeSwitch" destination="3T2-fx-xtf" id="LCP-iv-vOL"/>
                         <outlet property="postOauthFailSwitch" destination="pQp-xD-bX9" id="rEL-hM-Fy9"/>
+                        <outlet property="touchIDEnabled" destination="zHV-4A-PZR" id="EMn-kh-3Wj"/>
                         <outlet property="userIDLabel" destination="czP-y2-gak" id="dVO-GM-YAS"/>
                         <outlet property="userStateLabel" destination="XYo-3C-Pip" id="ojO-Va-Hzp"/>
                     </connections>
@@ -697,12 +712,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="authcode" width="25" height="25"/>
-        <image name="calvin-hobbes" width="392" height="510"/>
-        <image name="home" width="25" height="25"/>
-        <image name="key" width="25" height="25"/>
-        <image name="letter" width="25" height="25"/>
-        <image name="man" width="25" height="25"/>
-        <image name="pwstars" width="25" height="25"/>
+        <image name="authcode" width="50" height="50"/>
+        <image name="calvin-hobbes" width="282.239990234375" height="367.20001220703125"/>
+        <image name="home" width="50" height="50"/>
+        <image name="key" width="50" height="50"/>
+        <image name="letter" width="50" height="50"/>
+        <image name="man" width="50" height="50"/>
+        <image name="pwstars" width="50" height="50"/>
     </resources>
 </document>
