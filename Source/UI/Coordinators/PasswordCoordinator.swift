@@ -243,12 +243,9 @@ extension PasswordCoordinator {
 
             if status == noErr {
                 let password = String(data: queryResult as! Data, encoding: .utf8)!
-                print("Password: \(password)")
                 return password
             } else {
-                print("Authorization not passed")
                 return nil
-
             }
         } else {
             // Fallback to password login.
@@ -264,7 +261,7 @@ extension PasswordCoordinator {
             dictionary[kSecAttrAccount as String] = identifier.normalizedString as CFString
             dictionary[kSecValueData as String] = password.data(using: .utf8)! as CFData
             dictionary[kSecAttrAccessControl as String] = accessControl
-            
+
             let identityNotFirstLogin = UserDefaults.standard.bool(forKey: "identity.isNotFirst.login")
             if identityNotFirstLogin == false {
                 UserDefaults.standard.set(true, forKey: "identity.isNotFirst.login")
@@ -284,7 +281,7 @@ extension PasswordCoordinator {
                     self.configuration.enrollBiometrics(useBiometrics: false)
                     completion()
                 })
-                
+
                 self.navigationController.present(alert, animated: false)
                         // is this our first login
             } else {
