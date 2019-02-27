@@ -37,9 +37,21 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
         context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString) { success, _ in
             DispatchQueue.main.async {
                 if success {
-                    self.submit(password: password, for: input.identifier, on: input.loginFlowVariant, persistUser: true, scopes: input.scopes, completion: completion)
+                    self.submit(
+                        password: password,
+                        for: input.identifier,
+                        on: input.loginFlowVariant,
+                        persistUser: true,
+                        scopes: input.scopes,
+                        completion: completion
+                    )
                 } else {
-                    self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes,  completion: completion)
+                    self.showPasswordView(
+                        for: input.identifier,
+                        on: input.loginFlowVariant,
+                        scopes: input.scopes,
+                        completion: completion
+                    )
                 }
             }
         }
@@ -139,7 +151,11 @@ extension PasswordCoordinator {
             switch result {
             case let .success(currentUser):
                 self?.configuration.tracker?.loginID = currentUser.legacyID
-                self?.updatekeyChain(for: identifier,loginFlowVariant: loginFlowVariant, password: password) {
+                self?.updatekeyChain(
+                    for: identifier,
+                    loginFlowVariant: loginFlowVariant,
+                    password: password
+                ) {
                     self?.spawnCompleteProfileCoordinator(for: .signin(user: currentUser), persistUser: persistUser, completion: completion)
                 }
             case let .failure(error):
@@ -247,7 +263,7 @@ extension PasswordCoordinator {
             return nil
         }
     }
-    private func updatekeyChain(for identifier: Identifier, loginFlowVariant: LoginMethod.FlowVariant,  password: String, completion: @escaping () -> Void ) {
+    private func updatekeyChain(for identifier: Identifier, loginFlowVariant: LoginMethod.FlowVariant, password: String, completion: @escaping () -> Void ) {
         if #available(iOS 11.3, *) {
             let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .userPresence, nil)
             var dictionary = [String: Any]()
