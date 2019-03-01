@@ -6,6 +6,10 @@
 import UIKit
 import LocalAuthentication
 
+fileprivate struct Constants {
+    static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
+}
+
 class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     private let signinInteractor: SigninInteractor
 
@@ -248,7 +252,7 @@ extension PasswordCoordinator {
         query[kSecClass as String] = kSecClassGenericPassword
         query[kSecReturnData as String] = kCFBooleanTrue
         query[kSecAttrAccount as String] = identifier.normalizedString as CFString
-        query[kSecAttrLabel as String] = "com.schibsted.account.biometrics.secrets" as CFString
+        query[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
         query[kSecUseOperationPrompt as String] = "Please put your fingers on that button" as CFString
 
         var queryResult: AnyObject?
@@ -268,7 +272,7 @@ extension PasswordCoordinator {
             let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .userPresence, nil)
             var dictionary = [String: Any]()
             dictionary[kSecClass as String] = kSecClassGenericPassword
-            dictionary[kSecAttrLabel as String] = "com.schibsted.account.biometrics.secrets" as CFString
+            dictionary[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
             dictionary[kSecAttrAccount as String] = identifier.normalizedString as CFString
             dictionary[kSecValueData as String] = password.data(using: .utf8)! as CFData
             dictionary[kSecAttrAccessControl as String] = accessControl

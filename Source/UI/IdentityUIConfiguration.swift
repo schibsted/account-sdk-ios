@@ -8,6 +8,10 @@ import Foundation
 /**
  Configuration to start an identity UI flow
  */
+fileprivate struct Constants {
+    static let BiometricsSettingsKey = "Identity.useBiometrics"
+}
+
 public struct IdentityUIConfiguration {
     /// The client configuration that determines your backend configuration
     public let clientConfiguration: ClientConfiguration
@@ -23,11 +27,13 @@ public struct IdentityUIConfiguration {
     public var useBiometrics: Bool {
         get {
             // This will return false if the key is not present.
-            let value = UserDefaults.standard.bool(forKey: "Identity.useBiometrics")
+            guard let value = Settings.value(forKey: Constants.BiometricsSettingsKey ) as? Bool else {
+                return false
+            }
             return value
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "Identity.useBiometrics")
+            Settings.setValue(newValue, forKey: Constants.BiometricsSettingsKey )
         }
     }
     /// This will be given the navigationController we use internally before we start presentation incase you want to customize
@@ -74,7 +80,7 @@ public struct IdentityUIConfiguration {
         theme: IdentityUITheme = .default,
         isCancelable: Bool = true,
         isSkippable: Bool = false,
-        useBiometrics: Bool = UserDefaults.standard.bool(forKey: "Identity.useBiometrics"),
+        useBiometrics: Bool? = nil,
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
@@ -90,7 +96,7 @@ public struct IdentityUIConfiguration {
         if let appName = appName {
             self.appName = appName
         }
-        self.useBiometrics = useBiometrics
+        self.useBiometrics = useBiometrics ?? self.useBiometrics
     }
 
     /**
@@ -109,7 +115,7 @@ public struct IdentityUIConfiguration {
         theme: IdentityUITheme? = nil,
         isCancelable: Bool? = nil,
         isSkippable: Bool? = nil,
-        useBiometrics: Bool? = UserDefaults.standard.bool(forKey: "Identity.useBiometrics"),
+        useBiometrics: Bool? = nil,
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
@@ -134,7 +140,7 @@ public struct IdentityUIConfiguration {
     - parameter useBiometrics: If you want to enable biometrics authentication.
     */
     public func enrollBiometrics(useBiometrics: Bool) {
-        UserDefaults.standard.set(useBiometrics, forKey: "Identity.useBiometrics")
+        Settings.setValue(useBiometrics, forKey: Constants.BiometricsSettingsKey)
     }
 }
 
