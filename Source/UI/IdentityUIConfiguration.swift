@@ -23,10 +23,9 @@ public struct IdentityUIConfiguration {
     public let tracker: TrackingEventsHandler?
     /// This determines whether you want to allow the user to dismiss the login flow
     public let isCancelable: Bool
-    /// This will determin if you want to use biometric login.
+    /// This determines whether the user wants to use biometric login, defaults to false
     public var useBiometrics: Bool {
         get {
-            // This will return false if the key is not present.
             guard let value = Settings.value(forKey: Constants.BiometricsSettingsKey ) as? Bool else {
                 return false
             }
@@ -73,7 +72,7 @@ public struct IdentityUIConfiguration {
      - parameter tracker: Required implementation of the trackinge events handler
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
-     - parameter useBiometrics: If you want to enable biometrics authentication.
+     - parameter useBiometrics: If you want to enable biometrics authentication
     */
     public init(
         clientConfiguration: ClientConfiguration,
@@ -109,7 +108,7 @@ public struct IdentityUIConfiguration {
      - parameter tracker: Required implementation of the trackinge events handler
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
-     - parameter useBiometrics: If you want to enable biometrics authentication.
+     - parameter useBiometrics: If you want to enable biometrics authentication
     */
     public func replacing(
         theme: IdentityUITheme? = nil,
@@ -135,11 +134,11 @@ public struct IdentityUIConfiguration {
     }
 
     /**
-     Call this the enroll biometrics login
+     Call this to enroll biometrics login
 
     - parameter useBiometrics: If you want to enable biometrics authentication.
     */
-    public func enrollBiometrics(useBiometrics: Bool) {
+    public func useBiometrics(_ useBiometrics: Bool) {
         Settings.setValue(useBiometrics, forKey: Constants.BiometricsSettingsKey)
     }
 }

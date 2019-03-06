@@ -36,7 +36,7 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
             return
         }
 
-        let localizedReasonString = viewModel.biometricsPrompt + input.identifier.normalizedString
+        let localizedReasonString = viewModel.biometricsPrompt.replacingOccurrences(of: "$0", with: input.identifier.normalizedString)
 
         context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString) { success, _ in
             DispatchQueue.main.async {
@@ -253,56 +253,73 @@ extension PasswordCoordinator {
         query[kSecReturnData as String] = kCFBooleanTrue
         query[kSecAttrAccount as String] = identifier.normalizedString as CFString
         query[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
-        query[kSecUseOperationPrompt as String] = "Please put your fingers on that button" as CFString
 
         var queryResult: AnyObject?
-        let status = withUnsafeMutablePointer(to: &queryResult) {
-            SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
-        }
+        let status = SecItemCopyMatching(query as CFDictionary, &queryResult)
 
-        if status == noErr, let qresult =  queryResult as? Data {
-            let password = String(data: qresult as Data, encoding: .utf8)!
+
+        if status == noErr, let qresult =  queryResult as? Data, let password = String(data: qresult as Data, encoding: .utf8) {
             return password
         } else {
             return nil
         }
     }
-    private func updatekeyChain(for identifier: Identifier, loginFlowVariant: LoginMethod.FlowVariant, password: String, completion: @escaping () -> Void ) {
-        if #available(iOS 11.3, *) {
-            let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .userPresence, nil)
-            var dictionary = [String: Any]()
-            dictionary[kSecClass as String] = kSecClassGenericPassword
-            dictionary[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
-            dictionary[kSecAttrAccount as String] = identifier.normalizedString as CFString
-            dictionary[kSecValueData as String] = password.data(using: .utf8)! as CFData
-            dictionary[kSecAttrAccessControl as String] = accessControl
+    private func updatekeyChain(
+        for identifier: Identifier,
+        loginFlowVariant: LoginMethod.FlowVariant,
+        password: String,
+        completion: @escaping () -> Void
+    ) {
+        let context = LAContext()
+        guard #available(iOS 11.3, *), context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else {
+            completion()
+            return
+        }
+        let biometeryType: String
+        if context.biometryType == .faceID {
+            biometeryType = "Face ID"
+        } else {
+            biometeryType = "Touch ID"
+        }
+        let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .userPresence, nil)
+        var dictionary = [String: Any]()
+        dictionary[kSecClass as String] = kSecClassGenericPassword
+        dictionary[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
+        dictionary[kSecAttrAccount as String] = identifier.normalizedString as CFString
+        dictionary[kSecValueData as String] = password.data(using: .utf8)! as CFData
+        dictionary[kSecAttrAccessControl as String] = accessControl
 
-            if let identityNotFirstLogin = Settings.value(forKey: "isNotFirstLogin") as? Bool, identityNotFirstLogin {
-                if self.getPasswordFromKeychain(for: identifier) == nil && self.configuration.useBiometrics == true {
-                    SecItemAdd(dictionary as CFDictionary, nil)
-                }
-                completion()
-            } else {
-                Settings.setValue(true, forKey: "isNotFirstLogin")
-                let viewModel = PasswordViewModel(
-                    identifier: identifier,
-                    loginFlowVariant: loginFlowVariant,
-                    localizationBundle: self.configuration.localizationBundle
-                )
-                let message = viewModel.biometricsOnboardingMessage.replacingOccurrences(of: "$0", with: configuration.appName)
-                let alert = UIAlertController(title: viewModel.biometricsOnboardingTitle, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Yes", style: .default) { _ in
-                    self.configuration.enrollBiometrics(useBiometrics: true)
-                    SecItemAdd(dictionary as CFDictionary, nil)
-                    completion()
-                })
-                alert.addAction(UIAlertAction(title: "No", style: .default) { _ in
-                    self.configuration.enrollBiometrics(useBiometrics: false)
-                    completion()
-                })
-
-                self.navigationController.present(alert, animated: false)
+        let hasLoggedInBeforeSettingsKey = "hasLoggedInBefore"
+        if let hasLoggedInBefore = Settings.value(forKey: hasLoggedInBeforeSettingsKey) as? Bool, hasLoggedInBefore {
+            if self.configuration.useBiometrics && self.getPasswordFromKeychain(for: identifier) == nil {
+                SecItemAdd(dictionary as CFDictionary, nil)
             }
+            completion()
+        } else {
+            Settings.setValue(true, forKey: hasLoggedInBeforeSettingsKey)
+            let viewModel = PasswordViewModel(
+                identifier: identifier,
+                loginFlowVariant: loginFlowVariant,
+                localizationBundle: self.configuration.localizationBundle
+            )
+            let message = viewModel.biometricsOnboardingMessage
+                .replacingOccurrences(of: "$0", with: configuration.appName)
+                .replacingOccurrences(of: "$1", with: biometeryType)
+            let title = viewModel.biometricsOnboardingTitle
+                .replacingOccurrences(of: "$0", with: biometeryType)
+
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Enable", style: .default) { _ in
+                self.configuration.useBiometrics(true)
+                SecItemAdd(dictionary as CFDictionary, nil)
+                completion()
+            })
+            alert.addAction(UIAlertAction(title: "Ignore", style: .cancel) { _ in
+                self.configuration.useBiometrics(false)
+                completion()
+            })
+
+            self.navigationController.present(alert, animated: false)
         }
     }
 }
