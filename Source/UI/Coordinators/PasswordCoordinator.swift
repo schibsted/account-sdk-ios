@@ -26,7 +26,11 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
         )
         // Are we allowed/able to use biometric login?
         let context = LAContext()
-        guard configuration.useBiometrics, #available(iOS 11.3, *), context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else {
+        guard configuration.useBiometrics,
+            #available(iOS 11.3, *),
+            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
+            context.biometryType == .touchID
+        else {
             self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
             return
         }
@@ -271,15 +275,12 @@ extension PasswordCoordinator {
         completion: @escaping () -> Void
     ) {
         let context = LAContext()
-        guard #available(iOS 11.3, *), context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else {
+        guard #available(iOS 11.3, *),
+            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
+            context.biometryType == .touchID
+        else {
             completion()
             return
-        }
-        let biometeryType: String
-        if context.biometryType == .faceID {
-            biometeryType = "Face ID"
-        } else {
-            biometeryType = "Touch ID"
         }
         let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .userPresence, nil)
         var dictionary = [String: Any]()
@@ -304,9 +305,7 @@ extension PasswordCoordinator {
             )
             let message = viewModel.biometricsOnboardingMessage
                 .replacingOccurrences(of: "$0", with: configuration.appName)
-                .replacingOccurrences(of: "$1", with: biometeryType)
             let title = viewModel.biometricsOnboardingTitle
-                .replacingOccurrences(of: "$0", with: biometeryType)
 
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Enable", style: .default) { _ in

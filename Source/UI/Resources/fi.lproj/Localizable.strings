@@ -31,7 +31,7 @@
 "PasswordScreenString.ageLimit" = "Sinun tulee olla vähintään 16 vuoden ikäinen, jotta voit luoda Schibsted-tilin";
 "PasswordScreenString.creatingNewAccountNotice" = "Olet nyt luomassa uutta Schibsted-tiliä";
 "PasswordScreenString.createAccount" = "Luo tilit";
-"PasswordScreenString.biometricsPrompt" = "Kirjaudu sisään ";
+"PasswordScreenString.biometricsPrompt" = "Kirjaudu sisään $0";
 "PasswordScreenString.biometricsOnboarding.title" = "Haluatko aktivoida Touch ID:n?";
 "PasswordScreenString.biometricsOnboarding.message" = "Kirjaudu $0 sormenjälkitunnistautumisella";
 
