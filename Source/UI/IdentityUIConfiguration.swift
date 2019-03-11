@@ -5,13 +5,13 @@
 
 import Foundation
 
-/**
- Configuration to start an identity UI flow
- */
 private struct Constants {
     static let BiometricsSettingsKey = "Identity.useBiometrics"
 }
 
+/**
+ Configuration to start an identity UI flow
+ */
 public struct IdentityUIConfiguration {
     /// The client configuration that determines your backend configuration
     public let clientConfiguration: ClientConfiguration
