@@ -8,7 +8,7 @@ import Foundation
 /**
  Configuration to start an identity UI flow
  */
-fileprivate struct Constants {
+private struct Constants {
     static let BiometricsSettingsKey = "Identity.useBiometrics"
 }
 

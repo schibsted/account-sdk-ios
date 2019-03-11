@@ -6,7 +6,7 @@
 import UIKit
 import LocalAuthentication
 
-fileprivate struct Constants {
+private struct Constants {
     static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
 }
 
@@ -260,8 +260,6 @@ extension PasswordCoordinator {
 
         var queryResult: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &queryResult)
-
-
         if status == noErr, let qresult =  queryResult as? Data, let password = String(data: qresult as Data, encoding: .utf8) {
             return password
         } else {
