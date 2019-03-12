@@ -4,8 +4,8 @@
 
 "InfoString.rememberMe" = "Vi plasserer en informasjonskapsel på enheten din for å holde deg logget inn. Du kan endre dette alternativet senere, ved å logge deg ut eller slette informasjonskapselen.";
 
-"IdentifierScreenString.title.sms" = "Logg inn eller opprett bruker";
-"IdentifierScreenString.title.email" = "Logg inn eller opprett bruker";
+"IdentifierScreenString.title.sms" = "Logg inn eller opprett konto";
+"IdentifierScreenString.title.email" = "Logg inn eller opprett konto";
 "IdentifierScreenString.inputTitle.phone" = "Skriv inn din telefonnummer";
 "IdentifierScreenString.inputTitle.email" = "Skriv inn din e-postadresse";
 "IdentifierScreenString.inputTitle.password" = "Skriv inn din e-postadresse";
@@ -17,7 +17,7 @@
 "IdentifierScreenString.skip" = "Hopp over";
 
 "PasswordScreenString.title.signin" = "Velkommen tilbake";
-"PasswordScreenString.title.signup" = "Opprett bruker";
+"PasswordScreenString.title.signup" = "Opprett konto";
 "PasswordScreenString.inputTitle" = "Vennligst oppgi passordet ditt";
 "PasswordScreenString.proceed" = "Fortsett";
 "PasswordScreenString.invalidPassword" = "Passordet du oppga er feil. Vennligst prøv igjen.";
@@ -29,6 +29,8 @@
 "PasswordScreenString.persistentLogin" = "Husk meg på denne enheten";
 "PasswordScreenString.whatsThis" = "Hva er dette?";
 "PasswordScreenString.ageLimit" = "Du må være minst 16 år for å opprette en Schibsted-konto";
+"PasswordScreenString.creatingNewAccountNotice" = "Du oppretter nå en ny Schibsted-konto";
+"PasswordScreenString.createAccount" = "Opprett konto";
 
 "VerifyScreenString.title" = "Vi har sendt deg en kode";
 "VerifyScreenString.subtext" = "Tast inn bekreftelseskoden vi sendte til: ";

@@ -90,6 +90,8 @@ public struct IdentityUITheme {
         public var checkedBox = UIImage.schibstedCheckedBox
         /// Checkbox unchecked image
         public var uncheckedBox = UIImage.schibstedUncheckedBox
+        /// Circular filled info icon
+        public var info = UIImage.schibstedInfo
     }
 
     ///

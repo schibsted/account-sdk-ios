@@ -34,6 +34,8 @@ platform :ios do
 
   desc 'Lint the source code and other linteable artifacts'
   lane :lint do
+    sh "../scripts/brew_setup.sh"
+
     swiftlint(
       :mode => :lint,
       # treat warnings as errors

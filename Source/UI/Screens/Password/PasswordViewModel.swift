@@ -77,4 +77,12 @@ extension PasswordViewModel {
     var rememberMe: String {
         return "InfoString.rememberMe".localized(from: self.localizationBundle)
     }
+
+    var creatingNewAccountNotice: String {
+        return "PasswordScreenString.creatingNewAccountNotice".localized(from: self.localizationBundle)
+    }
+
+    var createAccount: String {
+        return "PasswordScreenString.createAccount".localized(from: self.localizationBundle)
+    }
 }

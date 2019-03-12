@@ -61,7 +61,7 @@ class TaskOperation: Operation {
         get {
             return self.state == .executing
         }
-        set {
+        set { // swiftlint:disable:this unused_setter_value
             willChangeValue(forKey: KVOKey.isExecuting.rawValue)
             self.state = .executing
             didChangeValue(forKey: KVOKey.isExecuting.rawValue)
@@ -72,7 +72,7 @@ class TaskOperation: Operation {
         get {
             return self.state == .finished
         }
-        set {
+        set { // swiftlint:disable:this unused_setter_value
             willChangeValue(forKey: KVOKey.isFinished.rawValue)
             self.state = .finished
             didChangeValue(forKey: KVOKey.isFinished.rawValue)
