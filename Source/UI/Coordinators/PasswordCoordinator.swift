@@ -260,6 +260,7 @@ extension PasswordCoordinator {
         }
         return true
     }
+
     private func clearKeyChain(for identifier: Identifier) {
         if canUseBiometrics() {
             var query = [String: Any]()
@@ -272,6 +273,7 @@ extension PasswordCoordinator {
             return
         }
     }
+
     private func updatekeyChain(
         for identifier: Identifier,
         loginFlowVariant: LoginMethod.FlowVariant,
