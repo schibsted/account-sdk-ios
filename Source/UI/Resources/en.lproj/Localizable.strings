@@ -34,6 +34,8 @@
 "PasswordScreenString.biometricsPrompt" = "Log in as $0";
 "PasswordScreenString.biometricsOnboarding.title" = "Would you like to enable Touch ID?";
 "PasswordScreenString.biometricsOnboarding.message" = "Log in to $0 with your fingerprint";
+"PasswordScreenString.biometricsOnboarding.accept" = "Enable";
+"PasswordScreenString.biometricsOnboarding.refuse" = "Not now";
 
 "VerifyScreenString.title" = "We sent you a code";
 "VerifyScreenString.subtext" = "Enter the verification code we sent to:";

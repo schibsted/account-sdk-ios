@@ -34,6 +34,8 @@
 "PasswordScreenString.biometricsPrompt" = "Logga in som $0";
 "PasswordScreenString.biometricsOnboarding.title" = "Vill du aktivera Touch ID?";
 "PasswordScreenString.biometricsOnboarding.message" = "Logga in på $0 med ditt fingeravtryck";
+"PasswordScreenString.biometricsOnboarding.accept" = "Aktivera";
+"PasswordScreenString.biometricsOnboarding.refuse" = "Inte nu";
 
 "VerifyScreenString.title" = "Vi har skickat en kod till dig";
 "VerifyScreenString.subtext" = "Ange verifieringskoden vi skickade till: ";

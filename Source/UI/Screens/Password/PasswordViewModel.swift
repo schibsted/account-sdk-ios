@@ -94,4 +94,10 @@ extension PasswordViewModel {
     var biometricsOnboardingMessage: String {
         return "PasswordScreenString.biometricsOnboarding.message".localized(from: self.localizationBundle)
     }
+    var biometricsOnboardingAccept: String {
+        return "PasswordScreenString.biometricsOnboarding.accept".localized(from: self.localizationBundle)
+    }
+    var biometricsOnboardingRefuse: String {
+        return "PasswordScreenString.biometricsOnboarding.refuse".localized(from: self.localizationBundle)
+    }
 }

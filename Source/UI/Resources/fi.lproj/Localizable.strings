@@ -34,6 +34,8 @@
 "PasswordScreenString.biometricsPrompt" = "Kirjaudu sisään $0";
 "PasswordScreenString.biometricsOnboarding.title" = "Haluatko aktivoida Touch ID:n?";
 "PasswordScreenString.biometricsOnboarding.message" = "Kirjaudu $0 sormenjälkitunnistautumisella";
+"PasswordScreenString.biometricsOnboarding.accept" = "Aktivoida";
+"PasswordScreenString.biometricsOnboarding.refuse" = "Ei nyt";
 
 "VerifyScreenString.title" = "Koodi on lähetetty sinulle";
 "VerifyScreenString.subtext" = "Kirjoita vahvistuskoodi, jonka lähetimme, vastaanottaja:";
