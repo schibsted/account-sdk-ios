@@ -25,44 +25,25 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
             localizationBundle: self.configuration.localizationBundle
         )
         // Are we allowed/able to use biometric login?
-        let context = LAContext()
-        guard configuration.useBiometrics,
-            #available(iOS 11.3, *),
-            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
-            context.biometryType == .touchID
-        else {
-            self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
-            return
-        }
-
-        guard let password = self.getPasswordFromKeychain(for: input.identifier) else {
+        if !self.canUseBiometrics() || !configuration.useBiometrics {
             self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
             return
         }
 
         let localizedReasonString = viewModel.biometricsPrompt.replacingOccurrences(of: "$0", with: input.identifier.normalizedString)
 
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString) { success, _ in
-            DispatchQueue.main.async {
-                if success {
-                    self.submit(
-                        password: password,
-                        for: input.identifier,
-                        on: input.loginFlowVariant,
-                        persistUser: true,
-                        scopes: input.scopes,
-                        completion: completion
-                    )
-                } else {
-                    self.showPasswordView(
-                        for: input.identifier,
-                        on: input.loginFlowVariant,
-                        scopes: input.scopes,
-                        completion: completion
-                    )
-                }
-            }
+        guard let password = self.getPasswordFromKeychain(for: input.identifier, localizedReasonString) else {
+            self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
+            return
         }
+        self.submit(
+            password: password,
+            for: input.identifier,
+            on: input.loginFlowVariant,
+            persistUser: true,
+            scopes: input.scopes,
+            completion: completion
+        )
     }
 
     func handle(route: IdentityUI.Route) -> RouteHandlerResult {
@@ -167,6 +148,7 @@ extension PasswordCoordinator {
                     self?.spawnCompleteProfileCoordinator(for: .signin(user: currentUser), persistUser: persistUser, completion: completion)
                 }
             case let .failure(error):
+                self?.clearKeyChain(for: identifier)
                 if self?.presentedViewController?.showInlineError(error) == true {
                     return
                 }
@@ -247,7 +229,7 @@ extension PasswordCoordinator {
         }
         self.navigationController.pushViewController(viewController, animated: true)
     }
-    private func getPasswordFromKeychain(for identifier: Identifier) -> String? {
+    private func getPasswordFromKeychain(for identifier: Identifier, _ localizedReasonString: String) -> String? {
         guard #available(iOS 11.3, *) else {
             // Fallback to passsword login
             return nil
@@ -257,6 +239,7 @@ extension PasswordCoordinator {
         query[kSecReturnData as String] = kCFBooleanTrue
         query[kSecAttrAccount as String] = identifier.normalizedString as CFString
         query[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
+        query[kSecUseOperationPrompt as String] = localizedReasonString as CFString
 
         var queryResult: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &queryResult)
@@ -266,21 +249,42 @@ extension PasswordCoordinator {
             return nil
         }
     }
+
+    private func canUseBiometrics() -> Bool {
+        let context = LAContext()
+        guard #available(iOS 11.3, *),
+            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
+            context.biometryType == .touchID
+        else {
+            return false
+        }
+        return true
+    }
+    private func clearKeyChain(for identifier: Identifier) {
+        if canUseBiometrics() {
+            var query = [String: Any]()
+            query[kSecClass as String] = kSecClassGenericPassword
+            query[kSecReturnData as String] = kCFBooleanTrue
+            query[kSecAttrAccount as String] = identifier.normalizedString as CFString
+            query[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
+
+            SecItemDelete(query as CFDictionary)
+            return
+        }
+    }
     private func updatekeyChain(
         for identifier: Identifier,
         loginFlowVariant: LoginMethod.FlowVariant,
         password: String,
         completion: @escaping () -> Void
     ) {
-        let context = LAContext()
-        guard #available(iOS 11.3, *),
-            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
-            context.biometryType == .touchID
-        else {
+        if !canUseBiometrics() {
             completion()
             return
         }
-        let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .userPresence, nil)
+        guard #available(iOS 11.3, *), let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .biometryCurrentSet, nil) else {
+           return
+        }
         var dictionary = [String: Any]()
         dictionary[kSecClass as String] = kSecClassGenericPassword
         dictionary[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
@@ -290,7 +294,7 @@ extension PasswordCoordinator {
 
         let hasLoggedInBeforeSettingsKey = "hasLoggedInBefore"
         if let hasLoggedInBefore = Settings.value(forKey: hasLoggedInBeforeSettingsKey) as? Bool, hasLoggedInBefore {
-            if self.configuration.useBiometrics && self.getPasswordFromKeychain(for: identifier) == nil {
+            if self.configuration.useBiometrics {
                 SecItemAdd(dictionary as CFDictionary, nil)
             }
             completion()
@@ -306,12 +310,12 @@ extension PasswordCoordinator {
             let title = viewModel.biometricsOnboardingTitle
 
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Enable", style: .default) { _ in
+            alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingAccept, style: .default) { _ in
                 self.configuration.useBiometrics(true)
                 SecItemAdd(dictionary as CFDictionary, nil)
                 completion()
             })
-            alert.addAction(UIAlertAction(title: "Ignore", style: .cancel) { _ in
+            alert.addAction(UIAlertAction(title:  viewModel.biometricsOnboardingRefuse, style: .cancel) { _ in
                 self.configuration.useBiometrics(false)
                 completion()
             })
