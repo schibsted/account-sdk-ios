@@ -284,7 +284,13 @@ extension PasswordCoordinator {
             completion()
             return
         }
-        guard #available(iOS 11.3, *), let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, .biometryCurrentSet, nil) else {
+        guard #available(iOS 11.3, *),
+        let accessControl = SecAccessControlCreateWithFlags(
+            kCFAllocatorDefault,
+            kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+            .biometryCurrentSet,
+            nil
+        ) else {
            return
         }
         var dictionary = [String: Any]()
@@ -317,7 +323,7 @@ extension PasswordCoordinator {
                 SecItemAdd(dictionary as CFDictionary, nil)
                 completion()
             })
-            alert.addAction(UIAlertAction(title:  viewModel.biometricsOnboardingRefuse, style: .cancel) { _ in
+            alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingRefuse, style: .cancel) { _ in
                 self.configuration.useBiometrics(false)
                 completion()
             })
