@@ -24,7 +24,6 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
             loginFlowVariant: input.loginFlowVariant,
             localizationBundle: self.configuration.localizationBundle
         )
-        // Are we allowed/able to use biometric login?
         if !self.canUseBiometrics() || !configuration.useBiometrics {
             self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
             return
@@ -265,7 +264,7 @@ extension PasswordCoordinator {
         if canUseBiometrics() {
             var query = [String: Any]()
             query[kSecClass as String] = kSecClassGenericPassword
-            query[kSecReturnData as String] = kCFBooleanTrue
+            query[kSecReturnData as String] = kCFBooleanFalse
             query[kSecAttrAccount as String] = identifier.normalizedString as CFString
             query[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
 
