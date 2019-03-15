@@ -189,6 +189,12 @@ The SDK comes with the following localization support:
 1. 🇸🇪 Swedish
 1. 🇫🇮 Finnish
 
+#### Touch ID
+
+Starting from version [2.1.0](https://github.com/schibsted/account-sdk-ios/releases/tag/2.1.0) of the SDK, and after a first successful password authentication,
+users can enroll their Touch ID to later use it in a place of entering their password. It is also *strongly* recommended that users should be able to disable/enable
+authentication using Touch ID at any time, for which you need to add a UI component (typically a `UISwitch`) to your app settings which calls `IdentityUIConfiguration.useBiometrics`.
+
 ### **Headless login with IdentityManager**
 
 Note: It is recommended to use the UI approach.
