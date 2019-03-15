@@ -85,4 +85,19 @@ extension PasswordViewModel {
     var createAccount: String {
         return "PasswordScreenString.createAccount".localized(from: self.localizationBundle)
     }
+    var biometricsPrompt: String {
+        return "PasswordScreenString.biometricsPrompt".localized(from: self.localizationBundle)
+    }
+    var biometricsOnboardingTitle: String {
+        return "PasswordScreenString.biometricsOnboarding.title".localized(from: self.localizationBundle)
+    }
+    var biometricsOnboardingMessage: String {
+        return "PasswordScreenString.biometricsOnboarding.message".localized(from: self.localizationBundle)
+    }
+    var biometricsOnboardingAccept: String {
+        return "PasswordScreenString.biometricsOnboarding.accept".localized(from: self.localizationBundle)
+    }
+    var biometricsOnboardingRefuse: String {
+        return "PasswordScreenString.biometricsOnboarding.refuse".localized(from: self.localizationBundle)
+    }
 }

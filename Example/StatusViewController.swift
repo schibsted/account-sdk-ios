@@ -92,6 +92,7 @@ class StatusViewController: UIViewController {
     @IBOutlet var offlineModeSwitch: UISwitch!
     @IBOutlet var loginOnlySwitch: UISwitch!
     @IBOutlet var postOauthFailSwitch: UISwitch!
+    @IBOutlet var touchIDSwitch: UISwitch!
 
     @IBAction func offlineModeValueChanged(_: UISwitch) {
         UIApplication.offlineMode = self.offlineModeSwitch.isOn
@@ -106,6 +107,11 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didClickPasswordLogin(_: Any) {
+        if (touchIDSwitch.isOn) {
+            UIApplication.identityUI.configuration.useBiometrics(true)
+        } else {
+            UIApplication.identityUI.configuration.useBiometrics(false)
+        }
         UIApplication.identityUI.presentIdentityProcess(
             from: self,
             loginMethod: .password,
@@ -192,6 +198,7 @@ class StatusViewController: UIViewController {
     func updateFromCurrentUser() {
         self.userStateLabel.text = self.isUserLoggedIn ? "yes" : "no"
         self.userIDLabel.text = String(describing: UIApplication.currentUser)
+        touchIDSwitch.setOn(UIApplication.identityUI.configuration.useBiometrics, animated: true)
         self.session = URLSession(user: UIApplication.currentUser, configuration: URLSessionConfiguration.default)
     }
 

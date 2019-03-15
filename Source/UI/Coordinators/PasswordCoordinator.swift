@@ -4,6 +4,11 @@
 //
 
 import UIKit
+import LocalAuthentication
+
+private struct Constants {
+    static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
+}
 
 class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     private let signinInteractor: SigninInteractor
@@ -14,7 +19,30 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     }
 
     override func start(input: Input, completion: @escaping (Output) -> Void) {
-        self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
+        let viewModel = PasswordViewModel(
+            identifier: input.identifier,
+            loginFlowVariant: input.loginFlowVariant,
+            localizationBundle: self.configuration.localizationBundle
+        )
+        if !self.canUseBiometrics() || !configuration.useBiometrics {
+            self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
+            return
+        }
+
+        let localizedReasonString = viewModel.biometricsPrompt.replacingOccurrences(of: "$0", with: input.identifier.normalizedString)
+
+        guard let password = self.getPasswordFromKeychain(for: input.identifier, localizedReasonString) else {
+            self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
+            return
+        }
+        self.submit(
+            password: password,
+            for: input.identifier,
+            on: input.loginFlowVariant,
+            persistUser: true,
+            scopes: input.scopes,
+            completion: completion
+        )
     }
 
     func handle(route: IdentityUI.Route) -> RouteHandlerResult {
@@ -59,7 +87,6 @@ extension PasswordCoordinator {
             localizationBundle: self.configuration.localizationBundle
         )
         let viewController = PasswordViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(password, shouldPersistUser):
@@ -112,8 +139,15 @@ extension PasswordCoordinator {
             switch result {
             case let .success(currentUser):
                 self?.configuration.tracker?.loginID = currentUser.legacyID
-                self?.spawnCompleteProfileCoordinator(for: .signin(user: currentUser), persistUser: persistUser, completion: completion)
+                self?.updatekeyChain(
+                    for: identifier,
+                    loginFlowVariant: loginFlowVariant,
+                    password: password
+                ) {
+                    self?.spawnCompleteProfileCoordinator(for: .signin(user: currentUser), persistUser: persistUser, completion: completion)
+                }
             case let .failure(error):
+                self?.clearKeyChain(for: identifier)
                 if self?.presentedViewController?.showInlineError(error) == true {
                     return
                 }
@@ -193,5 +227,107 @@ extension PasswordCoordinator {
             }
         }
         self.navigationController.pushViewController(viewController, animated: true)
+    }
+    private func getPasswordFromKeychain(for identifier: Identifier, _ localizedReasonString: String) -> String? {
+        guard #available(iOS 11.3, *) else {
+            // Fallback to passsword login
+            return nil
+        }
+        var query = [String: Any]()
+        query[kSecClass as String] = kSecClassGenericPassword
+        query[kSecReturnData as String] = kCFBooleanTrue
+        query[kSecAttrAccount as String] = identifier.normalizedString as CFString
+        query[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
+        query[kSecUseOperationPrompt as String] = localizedReasonString as CFString
+
+        var queryResult: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &queryResult)
+        if status == noErr, let qresult =  queryResult as? Data, let password = String(data: qresult as Data, encoding: .utf8) {
+            return password
+        } else {
+            return nil
+        }
+    }
+
+    private func canUseBiometrics() -> Bool {
+        let context = LAContext()
+        guard #available(iOS 11.3, *),
+            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
+            context.biometryType == .touchID
+        else {
+            return false
+        }
+        return true
+    }
+
+    private func clearKeyChain(for identifier: Identifier) {
+        if canUseBiometrics() {
+            var query = [String: Any]()
+            query[kSecClass as String] = kSecClassGenericPassword
+            query[kSecReturnData as String] = kCFBooleanFalse
+            query[kSecAttrAccount as String] = identifier.normalizedString as CFString
+            query[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
+
+            SecItemDelete(query as CFDictionary)
+            return
+        }
+    }
+
+    private func updatekeyChain(
+        for identifier: Identifier,
+        loginFlowVariant: LoginMethod.FlowVariant,
+        password: String,
+        completion: @escaping () -> Void
+    ) {
+        if !canUseBiometrics() {
+            completion()
+            return
+        }
+        guard #available(iOS 11.3, *),
+        let accessControl = SecAccessControlCreateWithFlags(
+            kCFAllocatorDefault,
+            kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+            .biometryCurrentSet,
+            nil
+        ) else {
+           return
+        }
+        var dictionary = [String: Any]()
+        dictionary[kSecClass as String] = kSecClassGenericPassword
+        dictionary[kSecAttrLabel as String] = Constants.BiometricsSecretsLabel as CFString
+        dictionary[kSecAttrAccount as String] = identifier.normalizedString as CFString
+        dictionary[kSecValueData as String] = password.data(using: .utf8)! as CFData
+        dictionary[kSecAttrAccessControl as String] = accessControl
+
+        let hasLoggedInBeforeSettingsKey = "hasLoggedInBefore"
+        if let hasLoggedInBefore = Settings.value(forKey: hasLoggedInBeforeSettingsKey) as? Bool, hasLoggedInBefore {
+            if self.configuration.useBiometrics {
+                SecItemAdd(dictionary as CFDictionary, nil)
+            }
+            completion()
+        } else {
+            Settings.setValue(true, forKey: hasLoggedInBeforeSettingsKey)
+            let viewModel = PasswordViewModel(
+                identifier: identifier,
+                loginFlowVariant: loginFlowVariant,
+                localizationBundle: self.configuration.localizationBundle
+            )
+            let message = viewModel.biometricsOnboardingMessage
+                .replacingOccurrences(of: "$0", with: configuration.appName)
+            let title = viewModel.biometricsOnboardingTitle
+
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingAccept, style: .default) { _ in
+                self.configuration.useBiometrics(true)
+                SecItemAdd(dictionary as CFDictionary, nil)
+                completion()
+            })
+            alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingRefuse, style: .cancel) { _ in
+                self.configuration.useBiometrics(false)
+                completion()
+            })
+
+            self.navigationController.present(alert, animated: false)
+        }
     }
 }

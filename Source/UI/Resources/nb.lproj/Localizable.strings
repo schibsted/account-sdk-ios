@@ -20,7 +20,7 @@
 "PasswordScreenString.title.signup" = "Opprett konto";
 "PasswordScreenString.inputTitle" = "Vennligst oppgi passordet ditt";
 "PasswordScreenString.proceed" = "Fortsett";
-"PasswordScreenString.invalidPassword" = "Passordet du oppga er feil. Prøv igjen senere.";
+"PasswordScreenString.invalidPassword" = "Passordet du oppga er feil. Vennligst prøv igjen.";
 "PasswordScreenString.passwordTooShort" = "Passordet ditt skal ha minst 8 tegn.";
 "PasswordScreenString.change" = "Ikke deg?";
 "PasswordScreenString.cancel" = "Avbryt";
@@ -31,6 +31,11 @@
 "PasswordScreenString.ageLimit" = "Du må være minst 16 år for å opprette en Schibsted-konto";
 "PasswordScreenString.creatingNewAccountNotice" = "Du oppretter nå en ny Schibsted-konto";
 "PasswordScreenString.createAccount" = "Opprett konto";
+"PasswordScreenString.biometricsPrompt" = "Logg inn som $0";
+"PasswordScreenString.biometricsOnboarding.title" = "Vil du aktivere Touch ID?";
+"PasswordScreenString.biometricsOnboarding.message" = "Logg inn på $0 med fingeravtrykket ditt";
+"PasswordScreenString.biometricsOnboarding.accept" = "Aktivere";
+"PasswordScreenString.biometricsOnboarding.refuse" = "Ikke nå";
 
 "VerifyScreenString.title" = "Vi har sendt deg en kode";
 "VerifyScreenString.subtext" = "Tast inn bekreftelseskoden vi sendte til: ";
