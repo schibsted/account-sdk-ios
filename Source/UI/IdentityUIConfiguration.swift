@@ -25,12 +25,10 @@ public struct IdentityUIConfiguration {
     public let isCancelable: Bool
     /// This determines whether the user wants to use biometric login, defaults to false
     public var useBiometrics: Bool {
-        get {
-            guard let value = Settings.value(forKey: Constants.BiometricsSettingsKey ) as? Bool else {
-                return false
-            }
-            return value
+        guard let value = Settings.value(forKey: Constants.BiometricsSettingsKey ) as? Bool else {
+            return false
         }
+        return value
     }
     /// This will be given the navigationController we use internally before we start presentation incase you want to customize
     /// certain aspects
