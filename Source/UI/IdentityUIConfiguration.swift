@@ -31,9 +31,6 @@ public struct IdentityUIConfiguration {
             }
             return value
         }
-        set {
-            Settings.setValue(newValue, forKey: Constants.BiometricsSettingsKey )
-        }
     }
     /// This will be given the navigationController we use internally before we start presentation incase you want to customize
     /// certain aspects
@@ -95,7 +92,7 @@ public struct IdentityUIConfiguration {
         if let appName = appName {
             self.appName = appName
         }
-        self.useBiometrics = useBiometrics ?? self.useBiometrics
+        self.useBiometrics(useBiometrics ?? self.useBiometrics)
     }
 
     /**
