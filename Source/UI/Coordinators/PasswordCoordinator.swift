@@ -252,6 +252,7 @@ extension PasswordCoordinator {
     private func canUseBiometrics() -> Bool {
         let context = LAContext()
         guard #available(iOS 11.3, *),
+            configuration.enableBiometrics,
             context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
             context.biometryType == .touchID
         else {
