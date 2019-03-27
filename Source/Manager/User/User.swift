@@ -50,6 +50,9 @@ public class User: UserProtocol {
 
     /// Provides access to this user's profile data
     public internal(set) var profile: UserProfileAPI
+    
+    /// Provides access to this user's device data
+    public internal(set) var device: UserDeviceAPI
 
     /// Provides access to the state of this user's terms acceptance
     public internal(set) var agreements: UserAgreementsAPI
@@ -127,16 +130,19 @@ public class User: UserProtocol {
         let userAgreements = User.Agreements()
         let userAssets = User.Assets()
         let userProfile = User.Profile()
+        let userDevice = User.Device()
         let userProduct = User.Product()
         self.auth = userAuth
         self.agreements = userAgreements
         self.assets = userAssets
         self.profile = userProfile
+        self.device = userDevice
         self.product = userProduct
         userAuth.user = self
         userAgreements.user = self
         userAssets.user = self
         userProfile.user = self
+        userDevice.user = self
         userProduct.user = self
         self.taskManager = TaskManager(for: self)
         User.globalStore[ObjectIdentifier(self).hashValue] = self

@@ -85,7 +85,20 @@ extension PasswordlessCoordinator {
             switch result {
             case let .success(currentUser):
                 self?.configuration.tracker?.loginID = currentUser.legacyID
-                self?.spawnCompleteProfileCoordinator(for: currentUser, on: loginFlowVariant, persistUser: persistUser, completion: completion)
+                let device = UserDevice(
+                    hash: nil,
+                    applicationName: self?.configuration.appName,
+                    applicationVersion: self?.configuration.appVersion
+                )
+                currentUser.device.update(device){ result in
+                    switch result {
+                    case .success:
+                        self?.spawnCompleteProfileCoordinator(for: currentUser, on: loginFlowVariant, persistUser: persistUser, completion: completion)
+                    case let .failure(error):
+                        self?.present(error: error)
+                    }
+                }
+
             case let .failure(error):
                 if self?.presentedViewController?.showInlineError(error) == true {
                     return

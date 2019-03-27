@@ -229,6 +229,16 @@ class IdentityAPI {
         requestWithRetries(router: .updateProfile(userID: userID), formData: formData, headers: [.authorization: oauthToken.bearer], completion: completion)
     }
 
+    func UpdateUserDevice(
+        userID: String,
+        oauthToken: String,
+        device: UserDevice,
+        completion: @escaping ((Result<UserDevice, ClientError>) -> Void)
+    ) {
+        let formData = device.formData()
+        requestWithRetries(router: .devices(userID: userID), formData: formData, headers: [.authorization: oauthToken.bearer], completion: completion)
+    }
+
     func validateCode(clientID: String,
                       clientSecret: String,
                       identifier: String,
@@ -359,6 +369,8 @@ class IdentityAPI {
             return .tooManyRequests
         case let .object("ApiException", .string(string), 400) where string.contains("valid phone number"):
             return .invalidPhoneNumber
+        case let .object("ApiException", .string(string), 400) where string.contains("Invalid payload data"):
+            return .invalidDevicePayloadData
         case let .object("ApiException", .string(string), 302):
             return .alreadyRegistered(message: string)
         case let .object("ApiException", .string(string), 404) where string == "No access to that product.":

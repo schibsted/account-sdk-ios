@@ -300,6 +300,10 @@
 		E1DBA10A20A592B70005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10820A592B70005B3B9 /* Localizable.strings */; };
 		E1DBA10D20A592DD0005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10B20A592DD0005B3B9 /* Localizable.strings */; };
 		E1DBA11720A5B9710005B3B9 /* Local+GDPRLanguageCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DBA11620A5B9710005B3B9 /* Local+GDPRLanguageCode.swift */; };
+		EF28CF8C224A5A37009F7D4B /* UserDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF28CF8B224A5A37009F7D4B /* UserDevice.swift */; };
+		EF28CF8E224A5D9C009F7D4B /* UserDeviceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF28CF8D224A5D9C009F7D4B /* UserDeviceAPI.swift */; };
+		EF28CF90224A5E84009F7D4B /* UpdateUserDeviceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF28CF8F224A5E84009F7D4B /* UpdateUserDeviceTask.swift */; };
+		EF28CF92224B72FD009F7D4B /* User+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF28CF91224B72FD009F7D4B /* User+Device.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -775,6 +779,10 @@
 		E1DBA10920A592B70005B3B9 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA10C20A592DD0005B3B9 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA11620A5B9710005B3B9 /* Local+GDPRLanguageCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Local+GDPRLanguageCode.swift"; sourceTree = "<group>"; };
+		EF28CF8B224A5A37009F7D4B /* UserDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDevice.swift; sourceTree = "<group>"; };
+		EF28CF8D224A5D9C009F7D4B /* UserDeviceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDeviceAPI.swift; sourceTree = "<group>"; };
+		EF28CF8F224A5E84009F7D4B /* UpdateUserDeviceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDeviceTask.swift; sourceTree = "<group>"; };
+		EF28CF91224B72FD009F7D4B /* User+Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Device.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1112,6 +1120,7 @@
 				B01D7B5E89353B278019AFE7 /* UserState.swift */,
 				B01D7D3D34A1F550C517B3EE /* User+Product.swift */,
 				B01D721E152294D4A77DA16D /* User+Profile.swift */,
+				EF28CF91224B72FD009F7D4B /* User+Device.swift */,
 				B01D7473BB4E189261DBC4A8 /* UserDelegate.swift */,
 				B01D713B2E932B7E658B725F /* URLSession+User.swift */,
 				B01D751757C5D8BC1A53FC09 /* User+Agreements.swift */,
@@ -1262,6 +1271,7 @@
 				B01D74BE9B683AF6F3CE9407 /* FetchUserProfileTask.swift */,
 				B01D7FAC65185FEEDB2C7E5B /* UpdateUserProfileTask.swift */,
 				B01D740BD2C638F00E2C22D7 /* FetchAgreementsStatusTask.swift */,
+				EF28CF8F224A5E84009F7D4B /* UpdateUserDeviceTask.swift */,
 			);
 			path = APITasks;
 			sourceTree = "<group>";
@@ -1364,6 +1374,7 @@
 				B01D74369E0052EBE3F6E466 /* UserProfileAPI.swift */,
 				B01D781F302566A9E7B33C05 /* UserAgreementsAPI.swift */,
 				B01D7099030EE364F652730C /* IdentityManagerProtocol.swift */,
+				EF28CF8D224A5D9C009F7D4B /* UserDeviceAPI.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1382,6 +1393,7 @@
 				9E7F135721106D0300BBEFED /* UserAssets.swift */,
 				B01D72F379A8609B7E9C321F /* UserProduct.swift */,
 				B01D7F6C9C0C794A139A53A6 /* UserProfile.swift */,
+				EF28CF8B224A5A37009F7D4B /* UserDevice.swift */,
 				B01D7AF346A6DA50E05A80C7 /* EmptyResponse.swift */,
 				B01D7AA6EDB146002DE8C6D0 /* TokenExchange.swift */,
 				B01D7C54B157A9D91CCD620D /* RequiredFields.swift */,
@@ -1896,6 +1908,7 @@
 				B01D7E6E02CAA6734807D42F /* KitchenSink.swift in Sources */,
 				E1D58AD521104F89009E2902 /* User+load.swift in Sources */,
 				B01D75958BDFEEBCD4F6CCD0 /* StringExtensions.swift in Sources */,
+				EF28CF8C224A5A37009F7D4B /* UserDevice.swift in Sources */,
 				9E7F135A21106D0300BBEFED /* UserAsset.swift in Sources */,
 				B01D7FE467756DB12531438F /* Storage.swift in Sources */,
 				B01D76247C9415A476084D39 /* Settings.swift in Sources */,
@@ -1944,6 +1957,7 @@
 				B01D749190B0CB0A5BB41B07 /* IdentityManagerProtocol.swift in Sources */,
 				B01D722A6DEC77BDDC18CC60 /* Identifier.swift in Sources */,
 				B01D7102DF9CE5A4F3C2DE22 /* PhoneNumber.swift in Sources */,
+				EF28CF8E224A5D9C009F7D4B /* UserDeviceAPI.swift in Sources */,
 				B01D7B5A68E565A37A5568E4 /* EmailAddress.swift in Sources */,
 				B01D7750F38D5AA5A950721D /* IdentifierProtocol.swift in Sources */,
 				B01D710C32A0B926D594EDE4 /* Terms.swift in Sources */,
@@ -1953,6 +1967,7 @@
 				B01D7D5E08F7D6B83727421A /* IDToken.swift in Sources */,
 				B01D786E47A1C5F1E3782CBC /* Birthdate.swift in Sources */,
 				E1CDD5032065208100B23063 /* JSONObject+Data.swift in Sources */,
+				EF28CF90224A5E84009F7D4B /* UpdateUserDeviceTask.swift in Sources */,
 				B01D776522D14BF4ABF4DDFC /* TokenData.swift in Sources */,
 				B01D71C2CCD7FF65A150E6ED /* UserModel.swift in Sources */,
 				9E7F135E21106D3B00BBEFED /* User+Assets.swift in Sources */,
@@ -2037,6 +2052,7 @@
 				B01D7E078DD8158FCB031F69 /* TrackingEventsHandler.swift in Sources */,
 				43C241B1205C015A00154866 /* SPiDKeychainWrapper.m in Sources */,
 				B01D7C1095ACFFA0D0E2F4D8 /* TermsInteractor.swift in Sources */,
+				EF28CF92224B72FD009F7D4B /* User+Device.swift in Sources */,
 				B01D7DF36A1DA33AF2C58C6C /* SigninInteractor.swift in Sources */,
 				B01D72E960E119520C7432C2 /* SignupInteractor.swift in Sources */,
 				B01D74D5F0410193F4773E6E /* FetchStatusInteractor.swift in Sources */,

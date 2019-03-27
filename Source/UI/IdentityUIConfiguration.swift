@@ -40,6 +40,7 @@ public struct IdentityUIConfiguration {
 
     private var _appName: String?
 
+
     /**
      Some of the UI screens will use the bundle name of your app. Sometimes this is not what you want
      so you can set this to override it
@@ -60,6 +61,13 @@ public struct IdentityUIConfiguration {
         }
     }
 
+    public var appVersion: String {
+        guard let name = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String else {
+            preconditionFailure("Could not fetch bundle name. Please set IdentityUIConfiguration.appName")
+        }
+        return name
+    }
+
     /**
      - parameter clientConfiguration: the `ClientConfiguration` object
      - parameter theme: The `IdentityUITheme` object
@@ -69,7 +77,7 @@ public struct IdentityUIConfiguration {
      - parameter tracker: Required implementation of the trackinge events handler
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
-     - parameter enableBiometrics: If you want to enable biometrics authentication
+     - parameter enableBiometrics: If you want to enable authentication using biometrics
     */
     public init(
         clientConfiguration: ClientConfiguration,
