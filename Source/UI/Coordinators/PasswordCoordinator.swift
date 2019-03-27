@@ -144,7 +144,7 @@ extension PasswordCoordinator {
                     applicationName: self?.configuration.appName,
                     applicationVersion: self?.configuration.appVersion
                 )
-                currentUser.device.update(device){ result in
+                currentUser.device.update(device) { result in
                     switch result {
                     case .success:
                         self?.updatekeyChain(

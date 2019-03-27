@@ -40,7 +40,6 @@ public struct IdentityUIConfiguration {
 
     private var _appName: String?
 
-
     /**
      Some of the UI screens will use the bundle name of your app. Sometimes this is not what you want
      so you can set this to override it

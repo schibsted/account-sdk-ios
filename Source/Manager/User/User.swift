@@ -50,7 +50,7 @@ public class User: UserProtocol {
 
     /// Provides access to this user's profile data
     public internal(set) var profile: UserProfileAPI
-    
+
     /// Provides access to this user's device data
     public internal(set) var device: UserDeviceAPI
 
