@@ -90,13 +90,8 @@ extension PasswordlessCoordinator {
                     applicationName: self?.configuration.appName,
                     applicationVersion: self?.configuration.appVersion
                 )
-                currentUser.device.update(device) { result in
-                    switch result {
-                    case .success:
-                        self?.spawnCompleteProfileCoordinator(for: currentUser, on: loginFlowVariant, persistUser: persistUser, completion: completion)
-                    case let .failure(error):
-                        self?.present(error: error)
-                    }
+                currentUser.device.update(device) { _ in
+                    self?.spawnCompleteProfileCoordinator(for: currentUser, on: loginFlowVariant, persistUser: persistUser, completion: completion)
                 }
 
             case let .failure(error):
