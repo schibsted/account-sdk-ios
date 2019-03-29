@@ -18,7 +18,7 @@ class UpdateUserDeviceTask: TaskProtocol {
             return
         }
 
-        user.api.UpdateUserDevice(
+        user.api.updateUserDevice(
             userID: userID,
             oauthToken: tokens.accessToken,
             device: self.device
