@@ -8,15 +8,15 @@ import Foundation
 /**
  The user device data.
 
- SeeAlso: ?
+ SeeAlso: https://techdocs.spid.no/types/device-fingerprint/
  */
 public struct UserDevice: JSONParsable {
     ///
-    public var hash: String?
+    private var hash: String?
     private var deviceId: String?
-    public var applicationName: String?
-    public var applicationVersion: String?
-    public var platform: String?
+    private var applicationName: String?
+    private var applicationVersion: String?
+    private var platform: String?
     ///
     public init(
         hash: String? = nil,
