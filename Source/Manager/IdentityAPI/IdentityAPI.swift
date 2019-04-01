@@ -229,7 +229,7 @@ class IdentityAPI {
         requestWithRetries(router: .updateProfile(userID: userID), formData: formData, headers: [.authorization: oauthToken.bearer], completion: completion)
     }
 
-    func updateUserDevice(
+    internal func updateUserDevice(
         userID: String,
         oauthToken: String,
         device: UserDevice,
