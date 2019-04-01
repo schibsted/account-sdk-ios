@@ -61,10 +61,10 @@ public struct IdentityUIConfiguration {
     }
 
     public var appVersion: String {
-        guard let name = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String else {
-            preconditionFailure("Could not fetch bundle name. Please set IdentityUIConfiguration.appName")
+        guard let version = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String else {
+            preconditionFailure("Could not fetch bundle version.")
         }
-        return name
+        return version
     }
 
     /**
