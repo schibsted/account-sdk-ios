@@ -37,7 +37,6 @@ extension UserDevice: CustomStringConvertible {
         desc = desc.appendingFormat("  applicationVersion: %@\n", self.applicationVersion)
         desc = desc.appendingFormat("  platform: %@\n", self.platform )
 
-
         return desc
     }
 }
