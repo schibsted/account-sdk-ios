@@ -552,7 +552,6 @@ public class IdentityManager: IdentityManagerProtocol {
                 makePersistent: persistUser
             )
             let device = UserDevice(
-                hash: nil,
                 applicationName: clientConfiguration.appName,
                 applicationVersion: clientConfiguration.appVersion
             )

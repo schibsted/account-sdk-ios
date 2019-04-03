@@ -300,6 +300,7 @@
 		E1DBA10A20A592B70005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10820A592B70005B3B9 /* Localizable.strings */; };
 		E1DBA10D20A592DD0005B3B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA10B20A592DD0005B3B9 /* Localizable.strings */; };
 		E1DBA11720A5B9710005B3B9 /* Local+GDPRLanguageCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DBA11620A5B9710005B3B9 /* Local+GDPRLanguageCode.swift */; };
+		EF09C90F2254ACDE00ACD90F /* UserDeviceHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF09C90E2254ACDE00ACD90F /* UserDeviceHash.swift */; };
 		EF28CF8C224A5A37009F7D4B /* UserDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF28CF8B224A5A37009F7D4B /* UserDevice.swift */; };
 		EF28CF8E224A5D9C009F7D4B /* UserDeviceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF28CF8D224A5D9C009F7D4B /* UserDeviceAPI.swift */; };
 		EF28CF90224A5E84009F7D4B /* UpdateUserDeviceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF28CF8F224A5E84009F7D4B /* UpdateUserDeviceTask.swift */; };
@@ -779,6 +780,7 @@
 		E1DBA10920A592B70005B3B9 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA10C20A592DD0005B3B9 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = Localizable.strings; sourceTree = "<group>"; };
 		E1DBA11620A5B9710005B3B9 /* Local+GDPRLanguageCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Local+GDPRLanguageCode.swift"; sourceTree = "<group>"; };
+		EF09C90E2254ACDE00ACD90F /* UserDeviceHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDeviceHash.swift; sourceTree = "<group>"; };
 		EF28CF8B224A5A37009F7D4B /* UserDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDevice.swift; sourceTree = "<group>"; };
 		EF28CF8D224A5D9C009F7D4B /* UserDeviceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDeviceAPI.swift; sourceTree = "<group>"; };
 		EF28CF8F224A5E84009F7D4B /* UpdateUserDeviceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDeviceTask.swift; sourceTree = "<group>"; };
@@ -1394,6 +1396,7 @@
 				B01D72F379A8609B7E9C321F /* UserProduct.swift */,
 				B01D7F6C9C0C794A139A53A6 /* UserProfile.swift */,
 				EF28CF8B224A5A37009F7D4B /* UserDevice.swift */,
+				EF09C90E2254ACDE00ACD90F /* UserDeviceHash.swift */,
 				B01D7AF346A6DA50E05A80C7 /* EmptyResponse.swift */,
 				B01D7AA6EDB146002DE8C6D0 /* TokenExchange.swift */,
 				B01D7C54B157A9D91CCD620D /* RequiredFields.swift */,
@@ -2063,6 +2066,7 @@
 				B01D71A166D99A2BF965D6CA /* AuthenticationCodeInteractor.swift in Sources */,
 				9E7F135C21106D2000BBEFED /* UserAssetsAPI.swift in Sources */,
 				B01D72BE8AF32BF1E0912618 /* FlowCoordinator.swift in Sources */,
+				EF09C90F2254ACDE00ACD90F /* UserDeviceHash.swift in Sources */,
 				B01D7AAC96A5DF77118897FF /* PasswordCoordinator.swift in Sources */,
 				B01D75E356815C47AF366F18 /* PasswordlessCoordinator.swift in Sources */,
 				B01D79AFDE7C2C686327764E /* AuthenticationCoordinator.swift in Sources */,
