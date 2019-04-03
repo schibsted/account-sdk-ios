@@ -121,6 +121,10 @@ public struct ClientConfiguration {
      Which environment (if any) is this configuration using
      */
     public let environment: Environment?
+    /// The bundle name of the application
+    internal let appName: String
+    /// The bundle version of the application
+    internal let appVersion: String
 
     /**
      Alternative initializer if you do not want to specify a pre-existing `Environment`. Usually used for testing.
@@ -163,6 +167,14 @@ public struct ClientConfiguration {
         self.appURLScheme = appURLScheme ?? defaultAppURLScheme
         self.defaultAppURLScheme = defaultAppURLScheme
         self.environment = environment
+        guard let name = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String else {
+            preconditionFailure("Could not fetch bundle name.")
+        }
+        self.appName = name
+        guard let version = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String else {
+            preconditionFailure("Could not fetch bundle version.")
+        }
+        self.appVersion = version
         precondition(self.appURLScheme.contains(self.clientID), "Valid appURLSchemes must contain the clientID in it")
     }
 

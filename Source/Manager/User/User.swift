@@ -52,7 +52,7 @@ public class User: UserProtocol {
     public internal(set) var profile: UserProfileAPI
 
     /// Provides access to this user's device data
-    public internal(set) var device: UserDeviceAPI
+    internal var device: UserDeviceAPI
 
     /// Provides access to the state of this user's terms acceptance
     public internal(set) var agreements: UserAgreementsAPI

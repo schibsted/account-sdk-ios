@@ -230,13 +230,12 @@ class IdentityAPI {
     }
 
     internal func updateUserDevice(
-        userID: String,
         oauthToken: String,
         device: UserDevice,
         completion: @escaping ((Result<UserDevice, ClientError>) -> Void)
     ) {
         let formData = device.formData()
-        requestWithRetries(router: .devices(userID: userID), formData: formData, headers: [.authorization: oauthToken.bearer], completion: completion)
+        requestWithRetries(router: .devices, formData: formData, headers: [.authorization: oauthToken.bearer], completion: completion)
     }
 
     func validateCode(clientID: String,

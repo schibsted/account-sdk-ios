@@ -23,7 +23,7 @@ enum Router {
     case requiredFields(userID: String)
     case client(clientID: String)
     case product(userID: String, productID: String)
-    case devices(userID: String)
+    case devices
 
     var method: Networking.HTTPMethod {
         switch self {

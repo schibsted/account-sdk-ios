@@ -139,19 +139,12 @@ extension PasswordCoordinator {
             switch result {
             case let .success(currentUser):
                 self?.configuration.tracker?.loginID = currentUser.legacyID
-                let device = UserDevice(
-                    hash: nil,
-                    applicationName: self?.configuration.appName,
-                    applicationVersion: self?.configuration.appVersion
-                )
-                currentUser.device.update(device) { _ in
-                    self?.updatekeyChain(
-                        for: identifier,
-                        loginFlowVariant: loginFlowVariant,
-                        password: password
-                    ) {
-                        self?.spawnCompleteProfileCoordinator(for: .signin(user: currentUser), persistUser: persistUser, completion: completion)
-                    }
+                self?.updatekeyChain(
+                    for: identifier,
+                    loginFlowVariant: loginFlowVariant,
+                    password: password
+                ) {
+                    self?.spawnCompleteProfileCoordinator(for: .signin(user: currentUser), persistUser: persistUser, completion: completion)
                 }
             case let .failure(error):
                 self?.clearKeyChain(for: identifier)
