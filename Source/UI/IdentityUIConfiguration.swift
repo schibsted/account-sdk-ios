@@ -60,12 +60,6 @@ public struct IdentityUIConfiguration {
         }
     }
 
-    public var appVersion: String {
-        guard let version = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String else {
-            preconditionFailure("Could not fetch bundle version.")
-        }
-        return version
-    }
 
     /**
      - parameter clientConfiguration: the `ClientConfiguration` object
