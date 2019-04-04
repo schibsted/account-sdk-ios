@@ -18,7 +18,7 @@ extension User {
          - parameter completion: a callback that's called on completion and might receive an error.
          */
         @discardableResult
-        public func update(_ device: UserDevice, completion: @escaping NoValueCallback ) -> TaskHandle {
+        public func update(_ device: UserDevice, completion: @escaping NoValueCallback) -> TaskHandle {
             guard let user = self.user as? User else {
                 completion(.failure(.invalidUser))
                 return NoopTaskHandle()
