@@ -60,7 +60,6 @@ public struct IdentityUIConfiguration {
         }
     }
 
-
     /**
      - parameter clientConfiguration: the `ClientConfiguration` object
      - parameter theme: The `IdentityUITheme` object
