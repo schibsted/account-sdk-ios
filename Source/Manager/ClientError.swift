@@ -61,6 +61,9 @@ public enum ClientError: Error {
     /// Will happen when the user is missing some agreements
     case agreements
 
+    /// Occurs when an invalid payload data is send to device api
+    case invalidDevicePayloadData
+
     /// Will happen if a required field is failing validation
     case requiredField([String])
 
@@ -124,6 +127,8 @@ extension ClientError: CustomStringConvertible {
             return "Access is not allowed"
         case .passwordTooShort:
             return "Your password should have at least 8 characters."
+        case .invalidDevicePayloadData:
+            return "Invalid device payload data"
         }
     }
 }

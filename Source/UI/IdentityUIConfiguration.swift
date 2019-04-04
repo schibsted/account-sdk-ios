@@ -69,7 +69,7 @@ public struct IdentityUIConfiguration {
      - parameter tracker: Required implementation of the trackinge events handler
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
-     - parameter enableBiometrics: If you want to enable biometrics authentication
+     - parameter enableBiometrics: If you want to enable authentication using biometrics
     */
     public init(
         clientConfiguration: ClientConfiguration,

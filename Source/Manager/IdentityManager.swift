@@ -551,6 +551,12 @@ public class IdentityManager: IdentityManagerProtocol {
                 userID: tokens.userID,
                 makePersistent: persistUser
             )
+            let device = UserDevice(
+                applicationName: clientConfiguration.appName,
+                applicationVersion: clientConfiguration.appVersion
+            )
+
+            self.currentUser.device.update(device, completion: { _ in })
             PasswordlessTokenStore.clear()
             self.dispatchIfSelf {
                 completion?(.success(()))
