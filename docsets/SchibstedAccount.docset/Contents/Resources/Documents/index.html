@@ -61,6 +61,9 @@
                 <a href="Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/User/Device.html">– Device</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/User/Product.html">– Product</a>
               </li>
               <li class="nav-group-task">
@@ -345,6 +348,12 @@
               <li class="nav-group-task">
                 <a href="Structs/Client/Kind.html">– Kind</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Structs/UserDevice.html">UserDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/UserDeviceHash.html">UserDeviceHash</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -557,6 +566,9 @@ of client credentials. The first thing you must do is get some credentials, whic
 <li>🇸🇪 Swedish</li>
 <li>🇫🇮 Finnish</li>
 </ol>
+<h4 id='touch-id' class='heading'>Touch ID</h4>
+
+<p>Starting from version <a href="https://github.com/schibsted/account-sdk-ios/releases/tag/2.1.0">2.1.0</a> of the SDK, and after a first successful password authentication, users can enroll their Touch ID to later use it in a place of entering their password. It is also <strong>strongly</strong> recommended that users should be able to disable/enable authentication using Touch ID at any time, for which you need to add a UI component (typically a <code>UISwitch</code>) to your app settings which calls <code><a href="Structs/IdentityUIConfiguration.html#/s:16SchibstedAccount23IdentityUIConfigurationV13useBiometricsSbvp">IdentityUIConfiguration.useBiometrics</a></code>.</p>
 <h3 id='strong-headless-login-with-identitymanager-strong' class='heading'><strong>Headless login with IdentityManager</strong></h3>
 
 <p>Note: It is recommended to use the UI approach.</p>

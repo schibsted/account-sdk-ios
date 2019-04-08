@@ -62,6 +62,9 @@
                 <a href="../Classes/User/Auth.html">– Auth</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/User/Device.html">– Device</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/User/Product.html">– Product</a>
               </li>
               <li class="nav-group-task">
@@ -346,6 +349,12 @@
               <li class="nav-group-task">
                 <a href="../Structs/Client/Kind.html">– Kind</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserDevice.html">UserDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserDeviceHash.html">UserDeviceHash</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -393,37 +402,36 @@
                 </div>
               </div>
             <p>Configuration for your client. Allows client to set their ID and decide
- which backend environment to point the SDK at.</p>
+which backend environment to point the SDK at.</p>
 
 <p>This is the first structure you must create in your SDK. Typically, an application will
- have one for testing/debugging purposes and one that is used in a production environment.
- A tip for organizing them would be to have it globally available in your applications:</p>
-<pre class="highlight swift"><code> <span class="kd">extension</span> <span class="kt">ClientConfiguration</span> <span class="p">{</span>
-   <span class="kd">static</span> <span class="k">let</span> <span class="nv">debug</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
-     <span class="o">...</span>
-   <span class="p">)</span>
+have one for testing/debugging purposes and one that is used in a production environment.
+A tip for organizing them would be to have it globally available in your applications:</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ClientConfiguration</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="k">let</span> <span class="nv">debug</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
+    <span class="o">...</span>
+  <span class="p">)</span>
 
-   <span class="kd">static</span> <span class="k">let</span> <span class="nv">production</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
-     <span class="o">...</span>
-   <span class="p">)</span>
- <span class="p">}</span>
+  <span class="kd">static</span> <span class="k">let</span> <span class="nv">production</span> <span class="o">=</span> <span class="kt">ClientConfiguration</span><span class="p">(</span>
+    <span class="o">...</span>
+  <span class="p">)</span>
+<span class="p">}</span>
 </code></pre>
 
 <p>API calls will NOT work accross different ClientConfiguration objects. If you have state
- that is left over after using one ClientConfiguration, and then you try and use that state
- with a different ClientConfiguration, you will not get the results you want.</p>
+that is left over after using one ClientConfiguration, and then you try and use that state
+with a different ClientConfiguration, you will not get the results you want.</p>
 
 <p>This object is used to set your <code><a href="../Structs/ClientConfiguration/Environment.html">ClientConfiguration.Environment</a></code>, your
- <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSvp">ClientConfiguration.appURLScheme</a></code> and your locale.</p>
-
-<p>### App URL Scheme</p>
+<code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSvp">ClientConfiguration.appURLScheme</a></code> and your locale.</p>
+<h3 id='app-url-scheme' class='heading'>App URL Scheme</h3>
 
 <p>If you want deep linking to work, then you must specify your app&rsquo;s URL scheme as well.
- For SPiD mobile clients, the scheme is fixed and is available from the SPiD self-service
- portal.</p>
+For SPiD mobile clients, the scheme is fixed and is available from the SPiD self-service
+portal.</p>
 
 <p>You should specify this string value when creating your ClientConfiguration and you should
- also register the url scheme as per Apple guidelines.</p>
+also register the url scheme as per Apple guidelines.</p>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
     <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a>
@@ -431,7 +439,7 @@
 </div>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="https://developer.apple.com/library/content/documentation/iPhone/Conceptual/%0AiPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#%0A//apple_ref/doc/uid/TP40007072-CH6-SW1">Apple docs: Inter App Communication</a>
+    <a href="https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#//apple_ref/doc/uid/TP40007072-CH6-SW1">Apple docs: Inter App Communication</a>
 
 </div>
 
