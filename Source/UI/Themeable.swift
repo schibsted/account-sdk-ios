@@ -5,6 +5,6 @@
 
 import Foundation
 
-protocol Themeable: class {
+protocol Themeable: AnyObject {
     func applyTheme(theme: IdentityUITheme)
 }

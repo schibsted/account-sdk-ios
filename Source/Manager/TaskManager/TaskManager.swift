@@ -245,16 +245,16 @@ class TaskManager {
                         }
                     case .invalidClientCredentials:
                         strongSelf.user?.logout()
-                        //
-                        // HACK HACK HACK!
-                        //
-                        // this is a hack for now. oauth/token returns invalid_grant when the grant type is authorization_code
-                        // and the code is wrong, and it returns invalid_grant when the authorization_type is refresh_token
-                        // and the token is invalid. They are parsed as invalidCode inside IdentityAPI error handling, but invalidCode
-                        // is for a client to see, where as a refresh failure should not have a corresponding ClientError and there's
-                        // no way (short of if-else hacks on the form_data that is passed to the requstor) to distinguish the two
-                        // cases. So for now we handle it here until someone thinks of a better way
-                        //
+                    //
+                    // HACK HACK HACK!
+                    //
+                    // this is a hack for now. oauth/token returns invalid_grant when the grant type is authorization_code
+                    // and the code is wrong, and it returns invalid_grant when the authorization_type is refresh_token
+                    // and the token is invalid. They are parsed as invalidCode inside IdentityAPI error handling, but invalidCode
+                    // is for a client to see, where as a refresh failure should not have a corresponding ClientError and there's
+                    // no way (short of if-else hacks on the form_data that is passed to the requstor) to distinguish the two
+                    // cases. So for now we handle it here until someone thinks of a better way
+                    //
                     case .invalidCode:
                         strongSelf.user?.logout()
                     default:

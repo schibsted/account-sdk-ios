@@ -10,22 +10,22 @@ import Foundation
  */
 public extension IdentityManagerProtocol {
     /// - SeeAlso: `IdentityManager.sendCode(...)`
-    public func sendCode(to email: EmailAddress, completion: @escaping NoValueCallback) {
+    func sendCode(to email: EmailAddress, completion: @escaping NoValueCallback) {
         return self.sendCode(to: Identifier(email), completion: completion)
     }
 
     /// - SeeAlso: `IdentityManager.sendCode(...)`
-    public func sendCode(to phone: PhoneNumber, completion: @escaping NoValueCallback) {
+    func sendCode(to phone: PhoneNumber, completion: @escaping NoValueCallback) {
         return self.sendCode(to: Identifier(phone), completion: completion)
     }
 
     /// - SeeAlso: `IdentityManager.resendCode(...)`
-    public func resendCode(to email: EmailAddress, completion: @escaping NoValueCallback) {
+    func resendCode(to email: EmailAddress, completion: @escaping NoValueCallback) {
         return self.resendCode(to: Identifier(email), completion: completion)
     }
 
     /// - SeeAlso: `IdentityManager.resendCode(...)`
-    public func resendCode(to phone: PhoneNumber, completion: @escaping NoValueCallback) {
+    func resendCode(to phone: PhoneNumber, completion: @escaping NoValueCallback) {
         return self.resendCode(to: Identifier(phone), completion: completion)
     }
 

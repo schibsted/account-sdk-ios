@@ -139,7 +139,7 @@ private struct Initialize {
         #if DEBUG
             SDKConfiguration.shared.invalidateteAuthTokenAfterSuccessfullRequest = true
         #endif
-        Logger.shared.addTransport({ print($0) })
+        Logger.shared.addTransport { print($0) }
         Logger.shared.outputTags = true
     }
 }

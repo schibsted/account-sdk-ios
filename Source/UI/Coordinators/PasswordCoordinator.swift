@@ -3,8 +3,8 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import UIKit
 import LocalAuthentication
+import UIKit
 
 private struct Constants {
     static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
@@ -242,7 +242,7 @@ extension PasswordCoordinator {
 
         var queryResult: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &queryResult)
-        if status == noErr, let qresult =  queryResult as? Data, let password = String(data: qresult as Data, encoding: .utf8) {
+        if status == noErr, let qresult = queryResult as? Data, let password = String(data: qresult as Data, encoding: .utf8) {
             return password
         } else {
             return nil
@@ -262,7 +262,7 @@ extension PasswordCoordinator {
     }
 
     private func clearKeyChain(for identifier: Identifier) {
-        if canUseBiometrics() {
+        if self.canUseBiometrics() {
             var query = [String: Any]()
             query[kSecClass as String] = kSecClassGenericPassword
             query[kSecReturnData as String] = kCFBooleanFalse
@@ -280,18 +280,18 @@ extension PasswordCoordinator {
         password: String,
         completion: @escaping () -> Void
     ) {
-        if !canUseBiometrics() {
+        if !self.canUseBiometrics() {
             completion()
             return
         }
         guard #available(iOS 11.3, *),
-        let accessControl = SecAccessControlCreateWithFlags(
-            kCFAllocatorDefault,
-            kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-            .biometryCurrentSet,
-            nil
-        ) else {
-           return
+            let accessControl = SecAccessControlCreateWithFlags(
+                kCFAllocatorDefault,
+                kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+                .biometryCurrentSet,
+                nil
+            ) else {
+            return
         }
         var dictionary = [String: Any]()
         dictionary[kSecClass as String] = kSecClassGenericPassword

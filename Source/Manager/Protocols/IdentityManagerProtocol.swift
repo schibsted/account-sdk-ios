@@ -6,7 +6,7 @@
 import Foundation
 
 ///
-public protocol IdentityManagerProtocol: class {
+public protocol IdentityManagerProtocol: AnyObject {
     ///
     var delegate: IdentityManagerDelegate? { get set }
 

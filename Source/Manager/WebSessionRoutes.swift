@@ -7,7 +7,7 @@ import Foundation
 
 /**
  SPID web page URLs useful for web views in hybrid apps.
-*/
+ */
 public class WebSessionRoutes {
     private let clientConfiguration: ClientConfiguration
 

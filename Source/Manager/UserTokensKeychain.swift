@@ -6,27 +6,27 @@
 import Foundation
 
 /*
-    == Keychain JSON structure ==
-    {
-        // deprecated keys
-        access_token: <string>
-        refresh_token: <string>
-        id_token: <string>
-        legacy_user_id: <string>
+ == Keychain JSON structure ==
+ {
+     // deprecated keys
+     access_token: <string>
+     refresh_token: <string>
+     id_token: <string>
+     legacy_user_id: <string>
 
-        // -----------------
-        // The above 4 tokens can be replaced with the below structures eventually. But since current
-        // clients (as of sdk version 0.14.0) load a user based on the above keys, we can't delete them
-        // just yet.
-        // -----------------
+     // -----------------
+     // The above 4 tokens can be replaced with the below structures eventually. But since current
+     // clients (as of sdk version 0.14.0) load a user based on the above keys, we can't delete them
+     // just yet.
+     // -----------------
 
-        "logged_in_users": {
-            <access_token>: { refresh_token: <string>, id_token: <string>, user_id: <string> }
-            <access_token>: { refresh_token: <string>, id_token: <string>, user_id: <string> }
-            .
-            .
-            <access_token>: { refresh_token: <string>, id_token: <string>, user_id: <string> }
-        }
+     "logged_in_users": {
+         <access_token>: { refresh_token: <string>, id_token: <string>, user_id: <string> }
+         <access_token>: { refresh_token: <string>, id_token: <string>, user_id: <string> }
+         .
+         .
+         <access_token>: { refresh_token: <string>, id_token: <string>, user_id: <string> }
+     }
  */
 
 class UserTokensKeychain: KeychainGenericPasswordType {

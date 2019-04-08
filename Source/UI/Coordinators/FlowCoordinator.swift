@@ -6,7 +6,7 @@
 import SafariServices
 import UIKit
 
-protocol FlowCoordinator: class {
+protocol FlowCoordinator: AnyObject {
     associatedtype Output
     associatedtype Input
 

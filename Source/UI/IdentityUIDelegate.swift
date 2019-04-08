@@ -37,7 +37,7 @@ public enum LoginFlowDisposition {
 
 /**
  The skip disposition tells the login flow how you want to handle the user pressing the skip button
-*/
+ */
 public enum SkipLoginDisposition {
     /// Carry on, the flow will be dismissed
     case `continue`
@@ -61,7 +61,7 @@ public enum LoginWillSucceedDisposition {
 /**
  Implement this delegate to handle the events that occur inside the UI flow
  */
-public protocol IdentityUIDelegate: class {
+public protocol IdentityUIDelegate: AnyObject {
     /**
      Called when the UI flow is finished.
      */

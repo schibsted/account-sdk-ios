@@ -139,7 +139,7 @@ public class IdentityUI {
     lazy var navigationController: UINavigationController = {
         DismissableNavigationController { [weak self] in
             // Ensure we're not nil and that we are the prsenting identityUI
-            guard self != nil && IdentityUI.presentedIdentityUI === self else { return }
+            guard self != nil, IdentityUI.presentedIdentityUI === self else { return }
             self?.complete(with: .cancel, presentingViewController: self?.navigationController.presentingViewController)
         }
     }()

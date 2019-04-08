@@ -253,7 +253,7 @@ extension VerifyViewController: UITextFieldDelegate {
         // validate to only allow single digits
         let hasOnlyDigits = normalized.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
 
-        if normalized.count == VerifyViewModel.numberOfCodeDigits && hasOnlyDigits {
+        if normalized.count == VerifyViewModel.numberOfCodeDigits, hasOnlyDigits {
             self.updateAllTextFields(numbers: normalized.map(String.init))
             return false
         }

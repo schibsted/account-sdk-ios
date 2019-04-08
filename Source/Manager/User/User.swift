@@ -383,7 +383,7 @@ extension User.Failure: CustomStringConvertible {
         case let .missingToken(accessToken, refreshToken):
             let a: String? = accessToken == nil ? "accessToken" : nil
             let r: String? = refreshToken == nil ? "refreshToken" : nil
-            let tokens = [a, r].filter { return $0 != nil }.map { $0! }
+            let tokens = [a, r].filter { $0 != nil }.map { $0! }
             return "Did not find all expected tokens. Missing - \(tokens.joined(separator: ","))"
         case .missingUserID:
             return "IDToken and userID missing. One required"

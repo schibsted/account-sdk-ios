@@ -27,7 +27,7 @@ public struct IdentityUIConfiguration {
     public let enableBiometrics: Bool
     /// This determines whether the user wants to use biometric login, defaults to false
     public var useBiometrics: Bool {
-        guard let value = Settings.value(forKey: Constants.BiometricsSettingsKey ) as? Bool else {
+        guard let value = Settings.value(forKey: Constants.BiometricsSettingsKey) as? Bool else {
             return false
         }
         return value
@@ -70,7 +70,7 @@ public struct IdentityUIConfiguration {
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
      - parameter enableBiometrics: If you want to enable authentication using biometrics
-    */
+     */
     public init(
         clientConfiguration: ClientConfiguration,
         theme: IdentityUITheme = .default,
@@ -106,7 +106,7 @@ public struct IdentityUIConfiguration {
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
      - parameter enableBiometrics: If you want to enable biometrics authentication
-    */
+     */
     public func replacing(
         theme: IdentityUITheme? = nil,
         isCancelable: Bool? = nil,
@@ -132,10 +132,10 @@ public struct IdentityUIConfiguration {
     }
 
     /**
-     Call this to enroll biometrics login
+      Call this to enroll biometrics login
 
-    - parameter useBiometrics: If you want to enable biometrics authentication.
-    */
+     - parameter useBiometrics: If you want to enable biometrics authentication.
+     */
     public func useBiometrics(_ useBiometrics: Bool) {
         Settings.setValue(useBiometrics, forKey: Constants.BiometricsSettingsKey)
     }
