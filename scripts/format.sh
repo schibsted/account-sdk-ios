@@ -4,7 +4,7 @@ set -e
 
 copyright="\
 \n\
-Copyright 2011 - 2019 Schibsted Products & Technology AS.\n\
+Copyright 2011 - `date +'%Y'` Schibsted Products & Technology AS.\n\
 Licensed under the terms of the MIT license. See LICENSE in the project root.\n\
 "
 common_args=("Source/" "Example/"
