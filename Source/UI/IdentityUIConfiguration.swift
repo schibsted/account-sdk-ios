@@ -112,7 +112,6 @@ public struct IdentityUIConfiguration {
         isCancelable: Bool? = nil,
         isSkippable: Bool? = nil,
         enableBiometrics: Bool? = nil,
-        useBiometrics: Bool? = nil,
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
