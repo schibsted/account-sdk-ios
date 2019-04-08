@@ -54,7 +54,7 @@ extension StatusViewController: IdentityUIDelegate {
     }
 
     func willPresent(flow: LoginMethod.FlowVariant) -> LoginFlowDisposition {
-        if self.loginOnlySwitch.isOn && flow == .signup {
+        if self.loginOnlySwitch.isOn, flow == .signup {
             return .showError(
                 title: "Custom error",
                 description: "It's my desc and I'll do what I want"
@@ -107,7 +107,7 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didClickPasswordLogin(_: Any) {
-        if (touchIDSwitch.isOn) {
+        if self.touchIDSwitch.isOn {
             UIApplication.identityUI.configuration.useBiometrics(true)
         } else {
             UIApplication.identityUI.configuration.useBiometrics(false)
@@ -198,7 +198,7 @@ class StatusViewController: UIViewController {
     func updateFromCurrentUser() {
         self.userStateLabel.text = self.isUserLoggedIn ? "yes" : "no"
         self.userIDLabel.text = String(describing: UIApplication.currentUser)
-        touchIDSwitch.setOn(UIApplication.identityUI.configuration.useBiometrics, animated: true)
+        self.touchIDSwitch.setOn(UIApplication.identityUI.configuration.useBiometrics, animated: true)
         self.session = URLSession(user: UIApplication.currentUser, configuration: URLSessionConfiguration.default)
     }
 

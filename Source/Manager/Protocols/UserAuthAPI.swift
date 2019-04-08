@@ -6,7 +6,7 @@
 import Foundation
 
 ///
-public protocol UserAuthAPI: class {
+public protocol UserAuthAPI: AnyObject {
     ///
     @discardableResult
     func oneTimeCode(clientID: String, completion: @escaping StringResultCallback) -> TaskHandle

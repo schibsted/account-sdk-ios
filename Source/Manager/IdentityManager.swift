@@ -14,7 +14,7 @@ private extension Array where Element: Hashable {
 /**
  This delegate informs you of changes within the `IdentityManager`.
  */
-public protocol IdentityManagerDelegate: class {
+public protocol IdentityManagerDelegate: AnyObject {
     /**
      Informs you when the state of `IdentityManager.currentUser` changes
 
@@ -310,7 +310,7 @@ public class IdentityManager: IdentityManagerProtocol {
             maybePhone == nil ? .unavailable : .unsent,
         ]
 
-        if callbackStatuses[0] == .unavailable && callbackStatuses[1] == .unavailable {
+        if callbackStatuses[0] == .unavailable, callbackStatuses[1] == .unavailable {
             struct NothingToValidate: Error {}
             completion(.failure(ClientError.unexpected(NothingToValidate())))
             return

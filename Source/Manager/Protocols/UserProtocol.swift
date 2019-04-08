@@ -8,7 +8,7 @@ import Foundation
 /**
  Provided for testing and mocking purposes. See `User` for field descriptions.
  */
-public protocol UserProtocol: class {
+public protocol UserProtocol: AnyObject {
     ///
     var delegate: UserDelegate? { get set }
     ///

@@ -108,11 +108,11 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     @objc func didTapNext() {
-        self.gotoInput(at: (self.currentInputIndex.addingReportingOverflow(1).partialValue) % UInt(self.viewModel.supportedRequiredFields.count))
+        self.gotoInput(at: self.currentInputIndex.addingReportingOverflow(1).partialValue % UInt(self.viewModel.supportedRequiredFields.count))
     }
 
     @objc func didTapPrevious() {
-        self.gotoInput(at: (self.currentInputIndex.subtractingReportingOverflow(1).partialValue) % UInt(self.viewModel.supportedRequiredFields.count))
+        self.gotoInput(at: self.currentInputIndex.subtractingReportingOverflow(1).partialValue % UInt(self.viewModel.supportedRequiredFields.count))
     }
 
     override func viewDidLayoutSubviews() {

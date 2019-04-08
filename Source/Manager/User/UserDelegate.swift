@@ -6,7 +6,7 @@
 import Foundation
 
 /// `User` object delegate to be notified of changes
-public protocol UserDelegate: class {
+public protocol UserDelegate: AnyObject {
     /**
      Is notified when the state of the user changes
      */

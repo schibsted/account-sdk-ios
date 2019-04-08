@@ -278,7 +278,7 @@ public class Logger {
         }
 
         var tagsString = ""
-        if explicitTags.count > 0 && self._outputTags {
+        if explicitTags.count > 0, self._outputTags {
             tagsString = ",\(explicitTags.joined(separator: ","))"
         }
 

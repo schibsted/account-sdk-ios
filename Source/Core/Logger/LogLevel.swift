@@ -8,7 +8,7 @@ import Foundation
 /**
  Used by the logger to set various log levels. You cannot directly use this but the idea is
  that you will be able to filter based on levels if needed
-*/
+ */
 public enum LogLevel: String {
     /// Only logs if DEBUG is defined
     case debug = "D"

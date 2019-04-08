@@ -120,7 +120,7 @@ public enum Identifier: IdentifierProtocol {
          ]
 
          It is stored in an array so it can be used as a FIFO
-        */
+         */
 
         // First check if we already have a key mapping for this identifier
         var array = (Settings.value(forKey: Identifier.mappingsKey) as? [JSONObject]) ?? []

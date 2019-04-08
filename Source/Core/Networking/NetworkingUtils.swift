@@ -17,7 +17,7 @@ extension Networking {
                 guard let data = data else {
                     throw NetworkingError.noData(response.statusCode)
                 }
-                if expectedStatuses.count > 0 && !expectedStatuses.contains(response.statusCode) {
+                if expectedStatuses.count > 0, !expectedStatuses.contains(response.statusCode) {
                     throw NetworkingError.unexpectedStatus(status: response.statusCode, data: data)
                 }
                 return data

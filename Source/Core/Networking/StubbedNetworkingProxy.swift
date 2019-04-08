@@ -41,14 +41,14 @@ class MockURLSessionDataTask: URLSessionDataTask {
         self.callback = callback
         if let responseData = stub.responseData {
             switch responseData {
-                // If it's just a JSON object, we serialize it to a Data and just set that and we're done
+            // If it's just a JSON object, we serialize it to a Data and just set that and we're done
             case let .jsonObject(json):
                 self._data = try? JSONSerialization.data(withJSONObject: json, options: [])
 
             case let .string(string):
                 self._data = string.data(using: .utf8)
 
-                // If it's an array of datas, we just take the first data and the first status code and set the data and response to that
+            // If it's an array of datas, we just take the first data and the first status code and set the data and response to that
             case let .arrayOfData(datas):
                 self._data = datas.first?.data
                 if let statusCode = datas.first?.statusCode {
@@ -155,7 +155,7 @@ struct NetworkStub: Equatable, Comparable {
                 if case let .arrayOfData(b) = rhs {
                     guard a.count == b.count else { return false }
                     for (index, element) in a.enumerated() {
-                        guard element.data == b[index].data && element.statusCode == b[index].statusCode else {
+                        guard element.data == b[index].data, element.statusCode == b[index].statusCode else {
                             return false
                         }
                     }

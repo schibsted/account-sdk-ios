@@ -5,6 +5,7 @@
 
 import Foundation
 
+// swiftlint:disable line_length
 /**
  Configuration for your client. Allows client to set their ID and decide
  which backend environment to point the SDK at.
@@ -43,12 +44,11 @@ import Foundation
 
  - SeeAlso: [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
  - SeeAlso: [Apple docs: Inter App Communication](
-        https://developer.apple.com/library/content/documentation/iPhone/Conceptual/
-iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#
-//apple_ref/doc/uid/TP40007072-CH6-SW1)
-
+        https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#//apple_ref/doc/uid/TP40007072-CH6-SW1)
  */
 public struct ClientConfiguration {
+    // swiftlint:enable line_length
+
     /**
      Determines which backend requests will be sent to. Most of the values here are
      explained on the SPiD self service site where you also must set up your client.

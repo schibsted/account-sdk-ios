@@ -60,7 +60,7 @@ extension AppLaunchData {
 
         // See if there's an auth code here first, then we have one of the code related deep links
         if let code = payload.queryComponents[QueryKey.code.rawValue]?.first {
-            guard !code.isEmpty && code.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil else {
+            guard !code.isEmpty, code.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil else {
                 return nil
             }
 

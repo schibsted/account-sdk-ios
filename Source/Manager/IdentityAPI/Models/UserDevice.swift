@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2018 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -35,7 +35,7 @@ extension UserDevice: CustomStringConvertible {
         desc = desc.appendingFormat("  deviceId: %@\n", self.deviceId)
         desc = desc.appendingFormat("  applicationName: %@\n", self.applicationName)
         desc = desc.appendingFormat("  applicationVersion: %@\n", self.applicationVersion)
-        desc = desc.appendingFormat("  platform: %@\n", self.platform )
+        desc = desc.appendingFormat("  platform: %@\n", self.platform)
 
         return desc
     }
@@ -48,6 +48,6 @@ extension UserDevice {
             "platform": self.platform,
             "applicationName": self.applicationName,
             "applicationVersion": self.applicationVersion,
-            ]
+        ]
     }
 }

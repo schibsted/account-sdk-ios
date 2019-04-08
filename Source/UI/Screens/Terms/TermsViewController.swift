@@ -76,7 +76,7 @@ class TermsViewController: IdentityUIViewController {
         let termOneAccepted = self.termOneCheck.isChecked
         let termTwoAccepted = self.termTwoCheck.isChecked
 
-        guard termOneAccepted && termTwoAccepted else {
+        guard termOneAccepted, termTwoAccepted else {
             self.termsNeedsAccept(termOne: !termOneAccepted, termTwo: !termTwoAccepted)
             return
         }

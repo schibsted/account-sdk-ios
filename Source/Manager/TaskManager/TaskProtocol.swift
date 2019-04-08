@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol TaskProtocol: class {
+protocol TaskProtocol: AnyObject {
     associatedtype SuccessType
     func execute(completion: @escaping (Result<SuccessType, ClientError>) -> Void)
     func shouldRefresh(result: Result<SuccessType, ClientError>) -> Bool

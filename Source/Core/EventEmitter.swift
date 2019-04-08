@@ -6,8 +6,8 @@
 import Foundation
 
 /*
-A lot of code here is explained in Mike Ash's "Let's Build Swift Notifications" article:
-https://mikeash.com/pyblog/friday-qa-2015-01-23-lets-build-swift-notifications.html
+ A lot of code here is explained in Mike Ash's "Let's Build Swift Notifications" article:
+ https://mikeash.com/pyblog/friday-qa-2015-01-23-lets-build-swift-notifications.html
  */
 
 class ReceiverHandle<Parameters>: Hashable {
@@ -95,8 +95,8 @@ class EventEmitter<Parameters> {
         return validHandles
     }
 
-    func normalizeHandlers(in handles: [ReceiverHandle<Parameters>]) -> [(ReceiverHandle<Parameters>, ((Parameters) -> Void))] {
-        return handles.compactOrFlatMap { (handle) -> (ReceiverHandle<Parameters>, ((Parameters) -> Void))? in
+    func normalizeHandlers(in handles: [ReceiverHandle<Parameters>]) -> [(ReceiverHandle<Parameters>, (Parameters) -> Void)] {
+        return handles.compactOrFlatMap { (handle) -> (ReceiverHandle<Parameters>, (Parameters) -> Void)? in
             var maybeHandler: ((Parameters) -> Void)?
             if let block = handle.block {
                 maybeHandler = block

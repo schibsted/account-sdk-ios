@@ -6,7 +6,7 @@
 import Foundation
 
 /**
-  Can be used to customize the UI
+ Can be used to customize the UI
  */
 public struct IdentityUITheme {
     /// Default UI theme object

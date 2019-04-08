@@ -89,7 +89,7 @@ class TaskOperation: Operation {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.executor({ [weak self] in self?.finish() })
+            strongSelf.executor { [weak self] in self?.finish() }
         }
     }
 
