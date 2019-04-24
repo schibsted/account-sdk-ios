@@ -136,7 +136,7 @@ public struct ClientConfiguration {
      - parameter appURLScheme: set your `appURLSceheme` here. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want to use for requests - defaults to system
      */
-    public init(serverURL: URL, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil) {
+    public init(serverURL: URL, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil, bundle: Bundle = Bundle.main) {
         let data = Environment.dataForServerURL(serverURL)
         self.init(
             environment: data?.environment,
@@ -145,7 +145,8 @@ public struct ClientConfiguration {
             clientID: clientID,
             clientSecret: clientSecret,
             appURLScheme: appURLScheme,
-            locale: locale
+            locale: locale,
+            bundle: bundle
         )
     }
 
@@ -156,7 +157,8 @@ public struct ClientConfiguration {
         clientID: String,
         clientSecret: String,
         appURLScheme: String?,
-        locale: Locale? = nil
+        locale: Locale? = nil,
+        bundle: Bundle
     ) {
         self.serverURL = serverURL
         self.providerComponent = providerComponent
@@ -167,11 +169,11 @@ public struct ClientConfiguration {
         self.appURLScheme = appURLScheme ?? defaultAppURLScheme
         self.defaultAppURLScheme = defaultAppURLScheme
         self.environment = environment
-        guard let name = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String else {
+        guard let name = bundle.infoDictionary?[kCFBundleNameKey as String] as? String else {
             preconditionFailure("Could not fetch bundle name.")
         }
         self.appName = name
-        guard let version = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String else {
+        guard let version = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String else {
             preconditionFailure("Could not fetch bundle version.")
         }
         self.appVersion = version
@@ -189,7 +191,7 @@ public struct ClientConfiguration {
      - parameter appURLScheme: set your `appURLSceheme`. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want IdentityManager to use for requests
      */
-    public init(environment: Environment, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil) {
+    public init(environment: Environment, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil, bundle: Bundle = Bundle.main) {
         let envConfig = environment.loadConfiguration()
         self.init(
             environment: environment,
@@ -198,7 +200,8 @@ public struct ClientConfiguration {
             clientID: clientID,
             clientSecret: clientSecret,
             appURLScheme: appURLScheme,
-            locale: locale
+            locale: locale,
+            bundle: bundle
         )
     }
 
