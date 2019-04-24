@@ -135,6 +135,7 @@ public struct ClientConfiguration {
      - parameter clientSecret: the secret associated with the client ID
      - parameter appURLScheme: set your `appURLSceheme` here. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want to use for requests - defaults to system
+     - parameter bundle: Bundle which you take bundle name and version from
      */
     public init(serverURL: URL, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil, bundle: Bundle = Bundle.main) {
         let data = Environment.dataForServerURL(serverURL)
@@ -190,6 +191,7 @@ public struct ClientConfiguration {
      - parameter clientSecret: the secret associated with the client ID
      - parameter appURLScheme: set your `appURLSceheme`. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want IdentityManager to use for requests
+     - parameter bundle: Bundle which you take bundle name and version from
      */
     public init(environment: Environment, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil, bundle: Bundle = Bundle.main) {
         let envConfig = environment.loadConfiguration()
