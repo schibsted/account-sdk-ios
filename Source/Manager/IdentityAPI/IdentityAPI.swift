@@ -104,13 +104,6 @@ class IdentityAPI {
                                 completion: completion)
     }
 
-    func logout(oauthToken: String,
-                completion: @escaping ((Result<EmptyResponse, ClientError>) -> Void)) {
-        self.requestWithRetries(router: .logout,
-                                headers: [.authorization: oauthToken.bearer],
-                                completion: completion)
-    }
-
     func requestAccessToken(clientID: String,
                             clientSecret: String,
                             grantType: RequestAccessTokenType,
