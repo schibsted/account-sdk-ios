@@ -19,7 +19,6 @@ enum Router {
     case profile(userID: String)
     case updateProfile(userID: String)
     case terms
-    case logout
     case requiredFields(userID: String)
     case client(clientID: String)
     case product(userID: String, productID: String)
@@ -52,8 +51,6 @@ enum Router {
         case .updateProfile:
             return .POST
         case .terms:
-            return .GET
-        case .logout:
             return .GET
         case .requiredFields:
             return .GET
@@ -110,8 +107,6 @@ enum Router {
             return "/api/2/user/\(userID)"
         case .terms:
             return "/api/2/terms"
-        case .logout:
-            return "/api/2/logout"
         case let .requiredFields(userID):
             return "/api/2/user/\(userID)/required_fields"
         case let .product(userID, productID):

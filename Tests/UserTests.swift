@@ -101,16 +101,6 @@ class UserTests: QuickSpec {
                     delegate.stateChangedData.count >= 1
                 }
             }
-
-            it("Should fire the API logout call asynchronously") {
-                var stubSignup = NetworkStub(path: .path(Router.logout.path))
-                stubSignup.returnResponse(status: 200)
-                StubbedNetworkingProxy.addStub(stubSignup)
-
-                let user = TestingUser(state: .loggedIn)
-                user.logout()
-                expect(Networking.testingProxy.calledOnce).toEventually(beTrue())
-            }
         }
 
         describe("Setting tokens") {

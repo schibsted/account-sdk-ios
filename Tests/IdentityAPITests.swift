@@ -730,27 +730,6 @@ class IdentityAPITests: QuickSpec {
             }
         }
 
-        describe("logout") {
-            it("should pass in correct data") {
-                let stub = NetworkStub(path: .path(Router.logout.path))
-                StubbedNetworkingProxy.addStub(stub)
-                let api = IdentityAPI(basePath: self.testBasePath)
-
-                waitUntil { done in
-                    api.logout(
-                        oauthToken: self.testOauthToken
-                    ) { _ in
-                        done()
-                    }
-                }
-
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
-                let callData = Networking.testingProxy.calls[0]
-                expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
-                expect(callData.sentHTTPHeaders).to(haveStandardHeadersSet())
-            }
-        }
-
         describe("signup") {
             it("should pass in correct data") {
                 let stub = NetworkStub(path: .path(Router.signup.path))

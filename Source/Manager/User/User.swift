@@ -177,10 +177,6 @@ public class User: UserProtocol {
                 }
             }
         }
-
-        self.api.logout(oauthToken: oldTokens.accessToken) { [weak self] result in
-            log(level: .verbose, from: self, "logging out - server session result: \(result)")
-        }
     }
 
     private func clearTokens() -> TokenData? {
