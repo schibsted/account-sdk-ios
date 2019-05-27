@@ -232,8 +232,8 @@ public struct ClientConfiguration {
      1. format0 - this is in the format of "spid-<client-id>" - SDK treats this as default.
      1. format1 - this is in the format of "<reverse-dns-of-your-service-domain>.<client-id>"
 
-     Schibsted account has a number of default routes set up for mobile clients (referred to as roots in the SDK - see `redirectURLRoot`). The way these are added
-     to a redirect depends on the format of your app scheme.
+     Schibsted account has a number of default routes set up for mobile clients (referred to as roots in the SDK - see `redirectURLRoot`).
+     The way these are added to a redirect depends on the format of your app scheme.
 
      With format0 Schibsted account adds the root s a URL host component. I.e. scheme://root. This is usually "login" and the SDK defaults to that, but it
      can be others (see your self service and they will be listed there). For format1, the root is a URL path component. I.e. scheme://host/path-component.
