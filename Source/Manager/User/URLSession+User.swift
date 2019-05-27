@@ -22,7 +22,7 @@ import Foundation
  them all otherwise.
 
  - Note: Your servers MUST validate the accesstoken that is issued with your requets with the
- [SPiD introspection](https://techdocs.spid.no/oauth/introspect/) endpoint.
+ [token introspection](https://techdocs.spid.no/oauth/introspect/) endpoint.
 
  ### Errors
 

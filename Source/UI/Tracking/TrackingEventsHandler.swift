@@ -14,7 +14,7 @@ public protocol TrackingEventsHandlerDelegate: AnyObject {
      Should be called when a new JWE is returned
 
      This is used by the `IdentityUI` to link tracking events between
-     the SDK and the SPiD backend
+     the SDK and the Schibsted account backend
      */
     func trackingEventsHandlerDidReceivedJWE(_ jwe: String)
 }

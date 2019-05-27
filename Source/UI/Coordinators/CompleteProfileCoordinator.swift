@@ -268,7 +268,7 @@ extension CompleteProfileCoordinator {
     private func handle(error: ClientError) -> Bool {
         if self.presentedViewController is TermsViewController || self.presentedViewController is RequiredFieldsViewController {
             /*
-             So when you use a phone number in a required field, the error spid returns is
+             So when you use a phone number in a required field, the error Schibsted account returns is
 
              SPIDError: object: {
                type: ApiException,
@@ -282,7 +282,7 @@ extension CompleteProfileCoordinator {
 
              So the error parse in IdentityAPI.swift prases that "exists" key in that error as alreadyRegistered - since, well, that's what it is. So
              since we know within the context of the complete profile coordinator that we have a valid identifier in flight, this can only happen if
-             someone tried to use a phone number in a required field that has already been used as an identifier in spid.
+             someone tried to use a phone number in a required field that has already been used as an identifier in Schibsted account.
              */
             if let vc = self.presentedViewController as? RequiredFieldsViewController, case .alreadyRegistered = error {
                 self.presentError(description: vc.viewModel.string(for: .numberInvalid))

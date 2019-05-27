@@ -66,7 +66,7 @@ public protocol IdentityManagerDelegate: AnyObject {
  ### Scopes
 
  Some of the functions take a scope parameter. This is related to OAuth scopes. If you want to add the ability to specify custom scopes or you
- want access to some already available predefined scopes, then you'll have to send a support request to support@spid.no
+ want access to some already available predefined scopes, then you'll have to send a support request to schibstedaccount@schibsted.com
 
  ### **Support**
 
@@ -100,9 +100,9 @@ public class IdentityManager: IdentityManagerProtocol {
     public let clientConfiguration: ClientConfiguration
 
     /**
-     Gives you access to SPiD web flow routes.
+     Gives you access to Schibsted account web flow routes.
 
-     Where relevent, these can typically be used with `User.Auth.webSessionURL(...)` to create a web session on a SPiD page
+     Where relevent, these can typically be used with `User.Auth.webSessionURL(...)` to create a web session on a Schibsted account page
      where a user is considered as logged in.
      */
     public let routes: WebSessionRoutes
@@ -423,7 +423,7 @@ public class IdentityManager: IdentityManagerProtocol {
 
      The redirection to the webflow terms and condition screen can be bypassed if you accept terms through this API.
      However, if you do do this then you are responsible for actually showing the terms to the user. This tells us
-     that the user has explicitly accepted the platform (SPiD) terms and conditions and been notified of the privacy
+     that the user has explicitly accepted the Schibsted account terms and conditions and been notified of the privacy
      policy, and also has done the same for the client's (your) terms and conditions and privacy policy.
 
      - SeeAlso: `fetchTerms(completion:)`
@@ -518,7 +518,7 @@ public class IdentityManager: IdentityManagerProtocol {
     /**
      Log in by an auth code.
 
-     The authorization code is passed into the app from SPiD after the user verified their email.
+     The authorization code is passed into the app from Schibsted account after the user verified their email.
 
      - parameter authCode: an authorization code (currently it's just available through deeplinks)
      - parameter completion: the callback that is called after validation
@@ -623,11 +623,11 @@ public class IdentityManager: IdentityManagerProtocol {
     }
 
     /**
-     Retrieve the latest terms & conditions links for the platform (i.e. SPiD) and client (i.e. your app).
+     Retrieve the latest terms & conditions links for Schibsted account and client (i.e. your app).
 
-     The platform terms returned are the default ones associated with the identity platform.
+     The "platform" terms returned are the default ones associated with Schibsted account.
      The client terms are what are associated with your client ID and can be set in
-     [SPiD selfservice](http://techdocs.spid.no/selfservice/access/) under "Assign T&C" page.
+     [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/) under "Assign T&C" page.
 
      - parameter completion: a callback that receives the `Terms` model.
      */
@@ -656,7 +656,7 @@ public class IdentityManager: IdentityManagerProtocol {
     /**
      Fetches the list of required fields that this client expects
 
-     The required fields can be set in [SPiD selfservice](http://techdocs.spid.no/selfservice/access/).
+     The required fields can be set in [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/).
 
      - parameter completion: a callback that's called on completion and might receive an error.
      */
@@ -706,8 +706,8 @@ public class IdentityManager: IdentityManagerProtocol {
     /**
      Retrieve information from self serivice about your app
 
-     Some information from spid that is associated with your client ID and can be set in
-     [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
+     Some information from Schibsted account that is associated with your client ID and can be set in
+     [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
 
      - parameter completion: a callback that receives the `Client` model.
      */

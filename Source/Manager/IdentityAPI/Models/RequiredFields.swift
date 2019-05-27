@@ -7,7 +7,7 @@ import Foundation
 
 /**
  The fields that may be set as required by your client. You can set these under the configuration
- section of [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
+ section of [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
  */
 public enum RequiredField: String {
     ///

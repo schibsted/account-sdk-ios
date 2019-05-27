@@ -6,7 +6,7 @@
 import Foundation
 
 /**
- SPID web page URLs useful for web views in hybrid apps.
+ Schibsted account web page URLs useful for web views in hybrid apps.
  */
 public class WebSessionRoutes {
     private let clientConfiguration: ClientConfiguration
@@ -34,9 +34,9 @@ public class WebSessionRoutes {
     }
 
     /**
-     SPID "logout" action URL
+     Schibsted account "logout" action URL
 
-     Use this URL for a web view that has a web session (SPID cookie).
+     Use this URL for a web view that has a web session (Schibsted account cookie).
      Navigation such a web view will logout the web user inside.
      */
     public var logoutURL: URL {
@@ -48,7 +48,7 @@ public class WebSessionRoutes {
     }
 
     /**
-     SPID "forgot password" web page URL
+     Schibsted account "forgot password" web page URL
 
      Navigate a web view with this URL to show a password reminder form.
      */
@@ -68,7 +68,7 @@ public class WebSessionRoutes {
     }
 
     /**
-     SPID "account summary" web page URL
+     Schibsted account "account summary" web page URL
 
      Navigate a web view with this URL to go to user accounts page
      */

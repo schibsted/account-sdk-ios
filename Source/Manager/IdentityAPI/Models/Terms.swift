@@ -17,7 +17,7 @@ private extension URL {
 /**
  The links and data that are associated with the terms and conditions for your client
 
- - SeeAlso: [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
+ - SeeAlso: [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
  */
 public struct Terms: JSONParsable {
     ///

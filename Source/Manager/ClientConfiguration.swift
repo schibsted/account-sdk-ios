@@ -36,13 +36,13 @@ import Foundation
  ### App URL Scheme
 
  If you want deep linking to work, then you must specify your app's URL scheme as well.
- For SPiD mobile clients, the scheme is fixed and is available from the SPiD self-service
- portal.
+ For Schibsted account mobile clients, the scheme is fixed and is available from the
+ Schibsted account Self Service.
 
  You should specify this string value when creating your ClientConfiguration and you should
  also register the url scheme as per Apple guidelines.
 
- - SeeAlso: [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
+ - SeeAlso: [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
  - SeeAlso: [Apple docs: Inter App Communication](
         https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#//apple_ref/doc/uid/TP40007072-CH6-SW1)
  */
@@ -51,12 +51,12 @@ public struct ClientConfiguration {
 
     /**
      Determines which backend requests will be sent to. Most of the values here are
-     explained on the SPiD self service site where you also must set up your client.
+     explained in Schibsted account Self Service where you also must set up your client.
 
      Basically this is what determines if this is a production configuration, or
-     pre production, etc. Please read the [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
+     pre production, etc. Please read the [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
 
-     - SeeAlso: [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
+     - SeeAlso: [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
      */
     public enum Environment: String {
         /// login.schibsted.com
@@ -203,7 +203,7 @@ public struct ClientConfiguration {
     }
 
     /**
-     This is used for generating the redirect URI needed for going back to the app. You can find this in the SPiD selfservice
+     This is used for generating the redirect URI needed for going back to the app. You can find this in the Schibsted account Self Service
      under the "Redirect" tab for your client. It **must** be equal to the value under "Custom URI Scheme"
 
      You will also have to register the scheme in the your apps Info.plist "URL Types" under "URL Schemes".
@@ -227,15 +227,15 @@ public struct ClientConfiguration {
     /**
      Base URL for redirects that will be created by the SDK for various API calls.
 
-     The way this is constructed depends on your `appURLScheme`. The SDK currently supports two formats that SPiD uses:
+     The way this is constructed depends on your `appURLScheme`. The SDK currently supports two formats that Schibsted account uses:
 
      1. format0 - this is in the format of "spid-<client-id>" - SDK treats this as default.
      1. format1 - this is in the format of "<reverse-dns-of-your-service-domain>.<client-id>"
 
-     SPiD has a number of default routes set up for mobile clients (referred to as roots in the SDK - see `redirectURLRoot`). The way these are added
+     Schibsted account has a number of default routes set up for mobile clients (referred to as roots in the SDK - see `redirectURLRoot`). The way these are added
      to a redirect depends on the format of your app scheme.
 
-     With format0 SPiD adds the root s a URL host component. I.e. scheme://root. This is usually "login" and the SDK defaults to that, but it
+     With format0 Schibsted account adds the root s a URL host component. I.e. scheme://root. This is usually "login" and the SDK defaults to that, but it
      can be others (see your self service and they will be listed there). For format1, the root is a URL path component. I.e. scheme://host/path-component.
      And the host (or more accurately "authority") URL component is omitted, which means the format is: scheme:/root
 
