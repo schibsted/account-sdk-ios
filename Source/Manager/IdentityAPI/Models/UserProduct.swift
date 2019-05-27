@@ -8,7 +8,7 @@ import Foundation
 /**
  A user product data.
 
- SeeAlso: https://techdocs.spid.no/endpoints/GET/user/%7BuserId%7D/product/%7BproductId%7D/
+ SeeAlso: https://techdocs.login.schibsted.com/endpoints/GET/user/%7BuserId%7D/product/%7BproductId%7D/
  */
 public struct UserProduct: JSONParsable {
     ///

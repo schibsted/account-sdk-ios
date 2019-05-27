@@ -627,7 +627,7 @@ public class IdentityManager: IdentityManagerProtocol {
 
      The "platform" terms returned are the default ones associated with Schibsted account.
      The client terms are what are associated with your client ID and can be set in
-     [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/) under "Assign T&C" page.
+     [Schibsted account Self Service](https://techdocs.login.schibsted.com/selfservice/access/) under "Assign T&C" page.
 
      - parameter completion: a callback that receives the `Terms` model.
      */
@@ -656,7 +656,7 @@ public class IdentityManager: IdentityManagerProtocol {
     /**
      Fetches the list of required fields that this client expects
 
-     The required fields can be set in [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/).
+     The required fields can be set in [Schibsted account Self Service](https://techdocs.login.schibsted.com/selfservice/access/).
 
      - parameter completion: a callback that's called on completion and might receive an error.
      */
@@ -707,7 +707,7 @@ public class IdentityManager: IdentityManagerProtocol {
      Retrieve information from self serivice about your app
 
      Some information from Schibsted account that is associated with your client ID and can be set in
-     [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
+     [Schibsted account Self Service](https://techdocs.login.schibsted.com/selfservice/access/)
 
      - parameter completion: a callback that receives the `Client` model.
      */

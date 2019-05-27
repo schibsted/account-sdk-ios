@@ -22,7 +22,7 @@ public enum AccessStatus: Int {
 /**
  A user asset data.
 
- SeeAlso: https://techdocs.spid.no/endpoints/GET/user/%7Bid%7D/asset/%7BassetId%7D/
+ SeeAlso: https://techdocs.login.schibsted.com/endpoints/GET/user/%7Bid%7D/asset/%7BassetId%7D/
  */
 public struct UserAsset: JSONParsable {
     /// Asset identifier

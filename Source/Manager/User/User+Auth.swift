@@ -18,7 +18,7 @@ extension User {
          This code can be sent to a different API, or a different SDK (for example a JS SDK),
          and then exchanged for a new access token, which has the same powers the current access token.
          You must be in the logged in state to be able to call this method.
-         See also a diagram for exchange type "code" on http://techdocs.spid.no/endpoints/POST/oauth/exchange/
+         See also a diagram for exchange type "code" on https://techdocs.login.schibsted.com/endpoints/POST/oauth/exchange/
 
          - parameter clientID: which client to get the code on behalf of
          - parameter completion: a callback that receives the code or an error.
@@ -39,7 +39,7 @@ extension User {
          That makes it possible to navigate to personalised or protected web pages in the logged in state.
 
          You must be in the logged in state to be able to call this method.
-         See also a diagram for exchange type "session" on http://techdocs.spid.no/endpoints/POST/oauth/exchange/
+         See also a diagram for exchange type "session" on https://techdocs.login.schibsted.com/endpoints/POST/oauth/exchange/
 
          - parameter clientID: which client to get the code on behalf of
          - parameter redirectURL: where to redirect a web view at the cookie is set.

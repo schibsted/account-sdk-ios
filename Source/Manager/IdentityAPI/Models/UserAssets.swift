@@ -6,7 +6,7 @@
 /**
  A list of user assets.
 
- SeeAlso: https://techdocs.spid.no/endpoints/GET/user/%7Bid%7D/assets/
+ SeeAlso: https://techdocs.login.schibsted.com/endpoints/GET/user/%7Bid%7D/assets/
  */
 struct UserAssets: JSONParsable {
     ///

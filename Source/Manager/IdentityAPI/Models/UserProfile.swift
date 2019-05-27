@@ -8,7 +8,7 @@ import Foundation
 /**
  The user profile data.
 
- SeeAlso: http://techdocs.spid.no/types/user/
+ SeeAlso: https://techdocs.login.schibsted.com/types/user/
  */
 public struct UserProfile: JSONParsable {
     ///

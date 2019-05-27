@@ -42,7 +42,7 @@ import Foundation
  You should specify this string value when creating your ClientConfiguration and you should
  also register the url scheme as per Apple guidelines.
 
- - SeeAlso: [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
+ - SeeAlso: [Schibsted account Self Service](https://techdocs.login.schibsted.com/selfservice/access/)
  - SeeAlso: [Apple docs: Inter App Communication](
         https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#//apple_ref/doc/uid/TP40007072-CH6-SW1)
  */
@@ -54,9 +54,9 @@ public struct ClientConfiguration {
      explained in Schibsted account Self Service where you also must set up your client.
 
      Basically this is what determines if this is a production configuration, or
-     pre production, etc. Please read the [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
+     pre production, etc. Please read the [Schibsted account Self Service](https://techdocs.login.schibsted.com/selfservice/access/)
 
-     - SeeAlso: [Schibsted account Self Service](http://techdocs.spid.no/selfservice/access/)
+     - SeeAlso: [Schibsted account Self Service](https://techdocs.login.schibsted.com/selfservice/access/)
      */
     public enum Environment: String {
         /// login.schibsted.com
