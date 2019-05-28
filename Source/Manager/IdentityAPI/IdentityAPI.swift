@@ -263,7 +263,7 @@ class IdentityAPI {
 
     private static func triviallyParseSpidError(_ error: Error, path: String) -> ClientError? {
         /*
-         Current known spid error formats (There's also a "code" key there somewhere, sometimes, but we just get that from URLResponse):
+         Current known Schibsted account error formats (There's also a "code" key there somewhere, sometimes, but we just get that from URLResponse):
          1.
            {
              "error": "string",

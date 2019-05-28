@@ -58,7 +58,7 @@ public class User: UserProtocol {
     public internal(set) var agreements: UserAgreementsAPI
 
     /// Provides access to product information for this user
-    /// Note: This is a privileged API and access must be requested through support@spid.no for your specific client.
+    /// Note: This is a privileged API and access must be requested through schibstedaccount@schibsted.com for your specific client.
     public internal(set) var product: UserProductAPI
 
     /// Provides access to asset information for this user
@@ -92,7 +92,7 @@ public class User: UserProtocol {
     }
 
     /**
-     A user_id used by some SPID APIs
+     A user_id used by some Schibsted account APIs
 
      It is recommended to use `id` instead of this.
      */

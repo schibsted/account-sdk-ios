@@ -8,7 +8,7 @@ import Foundation
 /**
  The user device data.
 
- SeeAlso: https://techdocs.spid.no/types/device-fingerprint/
+ SeeAlso: https://techdocs.login.schibsted.com/types/device-fingerprint/
  */
 public struct UserDeviceHash: JSONParsable {
     ///

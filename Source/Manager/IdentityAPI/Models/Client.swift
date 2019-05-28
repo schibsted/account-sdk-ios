@@ -32,7 +32,7 @@ private extension RequiredField {
     }
 }
 
-/// Represents a client in [SPiD selfservice](http://techdocs.spid.no/selfservice/access/)
+/// Represents a client in [Schibsted account Self Service](https://techdocs.login.schibsted.com/selfservice/access/)
 public struct Client: JSONParsable {
     /// Which fields are required by your client
     public var requiredFields: [RequiredField] = []
