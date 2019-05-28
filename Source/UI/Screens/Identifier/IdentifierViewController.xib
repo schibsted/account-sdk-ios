@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +13,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IdentifierViewController" customModule="SchibstedAccount" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundView" destination="uXc-nc-9kX" id="RvX-Fd-iho"/>
-                <outlet property="contentView" destination="dUX-Li-6fk" id="AvX-df-xgm"/>
                 <outlet property="continueButton" destination="kaw-tF-5AU" id="I7k-fI-X8s"/>
                 <outlet property="countryCode" destination="0qS-6C-iFm" id="279-FZ-5dU"/>
                 <outlet property="emailAddress" destination="KeK-Pk-rYA" id="4Ji-Jh-VPe"/>
@@ -84,7 +83,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="OUS-mb-DSr" userLabel="InputStackView">
-                                                    <rect key="frame" x="16" y="40" width="343" height="88.5"/>
+                                                    <rect key="frame" x="16" y="40.5" width="343" height="88.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="E1A-Rx-9fe" userLabel="NumberStackView">
                                                             <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>

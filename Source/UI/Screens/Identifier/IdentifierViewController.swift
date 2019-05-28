@@ -27,11 +27,6 @@ class IdentifierViewController: IdentityUIViewController {
             self.backgroundView.backgroundColor = .schibstedLightGray
         }
     }
-    @IBOutlet var contentView: UIView! {
-        didSet {
-            self.contentView.layer.cornerRadius = self.theme.geometry.contentGroupingCornerRadius
-        }
-    }
     @IBAction func didClickWhatsThis(_: Any) {
         self.configuration.tracker?.engagement(.click(on: .whatsSchibstedAccount), in: self.trackerScreenID)
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
