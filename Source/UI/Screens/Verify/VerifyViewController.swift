@@ -245,7 +245,7 @@ extension VerifyViewController: UITextFieldDelegate {
     }
 
     private func isValidUpdate(code: String) -> Bool {
-        let normalized = normalizeCodeText(code)
+        let normalized = self.normalizeCodeText(code)
         if normalized.isEmpty {
             return true
         }
@@ -281,13 +281,13 @@ extension VerifyViewController: UITextFieldDelegate {
     private func handleTextFieldChange(code: String) {
         let normalText = self.normalizeCodeText(code)
         if normalText.isEmpty {
-            let prevIndex = currentIndex - 1
+            let prevIndex = self.currentIndex - 1
             if prevIndex >= 0 {
                 self.currentIndex = prevIndex
                 self.previousField(index: prevIndex)
             }
         } else {
-            let nextIndex = currentIndex + 1
+            let nextIndex = self.currentIndex + 1
             if nextIndex < self.maxIndex {
                 self.currentIndex = nextIndex
                 self.nextField(index: nextIndex)

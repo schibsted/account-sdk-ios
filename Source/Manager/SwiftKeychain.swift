@@ -62,7 +62,7 @@ extension KeychainItemType {
         let archivedData = NSKeyedArchiver.archivedData(withRootObject: dataToStore)
 
         itemAttributes[String(kSecValueData)] = archivedData
-        itemAttributes[String(kSecAttrAccessible)] = accessMode
+        itemAttributes[String(kSecAttrAccessible)] = self.accessMode
 
         if let group = accessGroup {
             itemAttributes[String(kSecAttrAccessGroup)] = group
@@ -115,7 +115,7 @@ extension KeychainGenericPasswordType {
         var attributes = [String: Any]()
 
         attributes[String(kSecClass)] = kSecClassGenericPassword
-        attributes[String(kSecAttrService)] = serviceName
+        attributes[String(kSecAttrService)] = self.serviceName
         attributes[String(kSecAttrAccount)] = accountName
 
         return attributes
