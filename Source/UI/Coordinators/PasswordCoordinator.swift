@@ -254,7 +254,7 @@ extension PasswordCoordinator {
         guard #available(iOS 11.3, *),
             configuration.enableBiometrics,
             context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
-            context.biometryType == .touchID
+            (context.biometryType == .touchID || context.biometryType == .faceID)
         else {
             return false
         }
@@ -308,27 +308,35 @@ extension PasswordCoordinator {
             completion()
         } else {
             Settings.setValue(true, forKey: hasLoggedInBeforeSettingsKey)
-            let viewModel = PasswordViewModel(
-                identifier: identifier,
-                loginFlowVariant: loginFlowVariant,
-                localizationBundle: self.configuration.localizationBundle
-            )
-            let message = viewModel.biometricsOnboardingMessage
-                .replacingOccurrences(of: "$0", with: configuration.appName)
-            let title = viewModel.biometricsOnboardingTitle
+            let context = LAContext()
+            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+            if context.biometryType == .touchID {
+                let viewModel = PasswordViewModel(
+                    identifier: identifier,
+                    loginFlowVariant: loginFlowVariant,
+                    localizationBundle: self.configuration.localizationBundle
+                )
+                let message = viewModel.biometricsOnboardingMessage
+                    .replacingOccurrences(of: "$0", with: configuration.appName)
+                let title = viewModel.biometricsOnboardingTitle
 
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingAccept, style: .default) { _ in
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingAccept, style: .default) { _ in
+                    self.configuration.useBiometrics(true)
+                    SecItemAdd(dictionary as CFDictionary, nil)
+                    completion()
+                })
+                alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingRefuse, style: .cancel) { _ in
+                    self.configuration.useBiometrics(false)
+                    completion()
+                })
+
+                self.navigationController.present(alert, animated: false)
+            } else {
                 self.configuration.useBiometrics(true)
                 SecItemAdd(dictionary as CFDictionary, nil)
                 completion()
-            })
-            alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingRefuse, style: .cancel) { _ in
-                self.configuration.useBiometrics(false)
-                completion()
-            })
-
-            self.navigationController.present(alert, animated: false)
+            }
         }
     }
 }
