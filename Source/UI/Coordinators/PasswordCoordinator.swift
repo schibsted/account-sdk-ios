@@ -321,12 +321,12 @@ extension PasswordCoordinator {
                 let title = viewModel.touchIdOnboardingTitle
 
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingAccept, style: .default) { _ in
+                alert.addAction(UIAlertAction(title: viewModel.touchIdOnboardingAccept, style: .default) { _ in
                     self.configuration.useBiometrics(true)
                     SecItemAdd(dictionary as CFDictionary, nil)
                     completion()
                 })
-                alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingRefuse, style: .cancel) { _ in
+                alert.addAction(UIAlertAction(title: viewModel.touchIdOnboardingRefuse, style: .cancel) { _ in
                     self.configuration.useBiometrics(false)
                     completion()
                 })
