@@ -316,9 +316,9 @@ extension PasswordCoordinator {
                     loginFlowVariant: loginFlowVariant,
                     localizationBundle: self.configuration.localizationBundle
                 )
-                let message = viewModel.biometricsOnboardingMessage
+                let message = viewModel.touchIdOnboardingMessage
                     .replacingOccurrences(of: "$0", with: configuration.appName)
-                let title = viewModel.biometricsOnboardingTitle
+                let title = viewModel.touchIdOnboardingTitle
 
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingAccept, style: .default) { _ in

@@ -88,10 +88,10 @@ extension PasswordViewModel {
     var biometricsPrompt: String {
         return "PasswordScreenString.biometricsPrompt".localized(from: self.localizationBundle)
     }
-    var biometricsOnboardingTitle: String {
+    var touchIdOnboardingTitle: String {
         return "PasswordScreenString.biometricsOnboarding.title".localized(from: self.localizationBundle)
     }
-    var biometricsOnboardingMessage: String {
+    var touchIdOnboardingMessage: String {
         return "PasswordScreenString.biometricsOnboarding.message".localized(from: self.localizationBundle)
     }
     var biometricsOnboardingAccept: String {
