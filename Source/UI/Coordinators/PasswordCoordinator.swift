@@ -13,6 +13,14 @@ private struct Constants {
 class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     private let signinInteractor: SigninInteractor
 
+    @available(iOS 11.0, *)
+    private var biometryType: LABiometryType {
+        let context = LAContext()
+        // `biometryType` property is only set after you call the canEvaluatePolicy(_:error:) method. The default value is LABiometryType.none.
+        context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        return context.biometryType
+    }
+
     override init(navigationController: UINavigationController, identityManager: IdentityManager, configuration: IdentityUIConfiguration) {
         self.signinInteractor = SigninInteractor(identityManager: identityManager)
         super.init(navigationController: navigationController, identityManager: identityManager, configuration: configuration)
@@ -254,7 +262,7 @@ extension PasswordCoordinator {
         guard #available(iOS 11.3, *),
             configuration.enableBiometrics,
             context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
-            (context.biometryType == .touchID || context.biometryType == .faceID)
+            (self.biometryType == .touchID || self.biometryType == .faceID)
         else {
             return false
         }
@@ -308,9 +316,7 @@ extension PasswordCoordinator {
             completion()
         } else {
             Settings.setValue(true, forKey: hasLoggedInBeforeSettingsKey)
-            let context = LAContext()
-            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-            if context.biometryType == .touchID {
+            if self.biometryType == .touchID {
                 let viewModel = PasswordViewModel(
                     identifier: identifier,
                     loginFlowVariant: loginFlowVariant,
