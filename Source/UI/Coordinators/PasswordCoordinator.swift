@@ -262,7 +262,7 @@ extension PasswordCoordinator {
         guard #available(iOS 11.3, *),
             configuration.enableBiometrics,
             context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
-            (self.biometryType == .touchID || self.biometryType == .faceID)
+            (context.biometryType == .touchID || context.biometryType == .faceID)
         else {
             return false
         }
