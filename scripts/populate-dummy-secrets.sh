@@ -6,7 +6,7 @@ cat << 'EOF' > ./Example/Info.plist
 <plist version="1.0">
 <dict>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Example will use Touch ID to improve your login experience</string>
+	<string>Example will use Face ID to improve your login experience</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>NSAppTransportSecurity</key>
