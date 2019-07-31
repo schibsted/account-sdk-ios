@@ -136,7 +136,7 @@ extension URL {
 func waitTill(_ file: StaticString = #file, _ line: UInt = #line, _ block: () -> Bool) {
     var passed = block()
     let start = Date()
-    while Date().timeIntervalSince(start) < 1 && !passed {
+    while Date().timeIntervalSince(start) < 2 && !passed {
         let ms = 1000
         usleep(useconds_t(100 * ms))
         passed = block()
@@ -149,7 +149,7 @@ func waitTill(_ file: StaticString = #file, _ line: UInt = #line, _ block: () ->
 func waitMakeSureNot(_ file: StaticString = #file, _ line: UInt = #line, _ block: () -> Bool) {
     var passed = block()
     let start = Date()
-    while Date().timeIntervalSince(start) < 0.5 && passed {
+    while Date().timeIntervalSince(start) < 2 && passed {
         let ms = 1000
         usleep(useconds_t(100 * ms))
         passed = block()
