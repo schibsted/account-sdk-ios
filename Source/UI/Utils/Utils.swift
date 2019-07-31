@@ -64,7 +64,7 @@ extension String {
     }
 
     func localized(from bundle: Bundle, _ vars: CVarArg...) -> String {
-        let localizedString = localized(from: bundle)
+        let localizedString = self.localized(from: bundle)
         return String(format: localizedString, arguments: vars)
     }
 }

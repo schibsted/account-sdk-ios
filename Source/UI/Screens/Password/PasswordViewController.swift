@@ -102,7 +102,7 @@ class PasswordViewController: IdentityUIViewController {
         prefereblyActionSheet.addAction(changeAction)
 
         if let popoverController = prefereblyActionSheet.popoverPresentationController {
-            popoverController.sourceView = changeIdentifierButton
+            popoverController.sourceView = self.changeIdentifierButton
             popoverController.sourceRect = CGRect(x: self.changeIdentifierButton.bounds.minX, y: self.changeIdentifierButton.bounds.maxY, width: 0, height: 0)
             popoverController.permittedArrowDirections = [.right]
         }

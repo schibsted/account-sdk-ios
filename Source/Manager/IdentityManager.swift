@@ -553,7 +553,7 @@ public class IdentityManager: IdentityManagerProtocol {
             )
             let device = UserDevice(
                 applicationName: clientConfiguration.appName,
-                applicationVersion: clientConfiguration.appVersion
+                applicationVersion: self.clientConfiguration.appVersion
             )
 
             self.currentUser.device.update(device, completion: { _ in })
