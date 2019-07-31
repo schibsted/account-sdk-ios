@@ -54,10 +54,6 @@ class TestingNetworkingProxy: NetworkingProxy {
 
     var internalProxy: NetworkingProxy = StubbedNetworkingProxy()
 
-    var calledOnce: Bool {
-        return self.calls.count == 1
-    }
-
     var callCount: Int {
         return self.calls.count
     }
