@@ -8,7 +8,10 @@ import UIKit
 
 private struct Constants {
     static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
-    static let HasLoggedInBeforeSettingsKey = "hasLoggedInBefore"
+    static let HasLoggedInBeforeSettingsKey = "com.schibsted.account.hasLoggedInBefore"
+
+    // Avoid the creation of an instance of Constants
+    private init() {}
 }
 
 class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
@@ -238,15 +241,11 @@ extension PasswordCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     private func getPasswordFromKeychain(for identifier: Identifier, _ localizedReasonString: String) -> String? {
-        guard #available(iOS 11.3, *) else {
+        guard #available(iOS 11.3, *), let hasLoggedInBefore = Settings.value(forKey: Constants.HasLoggedInBeforeSettingsKey) as? Bool else {
             // Fallback to passsword login
             return nil
         }
 
-        let hasLoggedInBefore = Settings.value(forKey: Constants.HasLoggedInBeforeSettingsKey) as? Bool
-        if hasLoggedInBefore == nil {
-            return nil
-        }
         var query = [String: Any]()
         query[kSecClass as String] = kSecClassGenericPassword
         query[kSecReturnData as String] = kCFBooleanTrue
@@ -259,6 +258,7 @@ extension PasswordCoordinator {
         if status == noErr, let qresult = queryResult as? Data, let password = String(data: qresult as Data, encoding: .utf8) {
             return password
         } else {
+            Settings.setValue(false, forKey: Constants.HasLoggedInBeforeSettingsKey)
             return nil
         }
     }
