@@ -8,6 +8,7 @@ import UIKit
 
 private struct Constants {
     static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
+    static let HasLoggedInBeforeSettingsKey = "hasLoggedInBefore"
 }
 
 class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
@@ -241,6 +242,11 @@ extension PasswordCoordinator {
             // Fallback to passsword login
             return nil
         }
+
+        let hasLoggedInBefore = Settings.value(forKey: Constants.HasLoggedInBeforeSettingsKey) as? Bool
+        if hasLoggedInBefore == nil {
+            return nil
+        }
         var query = [String: Any]()
         query[kSecClass as String] = kSecClassGenericPassword
         query[kSecReturnData as String] = kCFBooleanTrue
@@ -308,14 +314,14 @@ extension PasswordCoordinator {
         dictionary[kSecValueData as String] = password.data(using: .utf8)! as CFData
         dictionary[kSecAttrAccessControl as String] = accessControl
 
-        let hasLoggedInBeforeSettingsKey = "hasLoggedInBefore"
-        if let hasLoggedInBefore = Settings.value(forKey: hasLoggedInBeforeSettingsKey) as? Bool, hasLoggedInBefore {
+
+        if let hasLoggedInBefore = Settings.value(forKey: Constants.HasLoggedInBeforeSettingsKey) as? Bool, hasLoggedInBefore {
             if self.configuration.useBiometrics {
                 SecItemAdd(dictionary as CFDictionary, nil)
             }
             completion()
         } else {
-            Settings.setValue(true, forKey: hasLoggedInBeforeSettingsKey)
+            Settings.setValue(true, forKey: Constants.HasLoggedInBeforeSettingsKey)
             if self.biometryType == .touchID {
                 let viewModel = PasswordViewModel(
                     identifier: identifier,
