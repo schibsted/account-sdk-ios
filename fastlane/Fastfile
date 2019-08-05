@@ -70,6 +70,11 @@ platform :ios do
     documentation unless skip('DOCUMENTATION')
   end
 
+  desc 'clean derived data'
+  lane :clean do
+    clear_derived_data(derived_data_path: 'build/DerivedData')
+  end
+
   def skip(step, default: false)
     value = ENV[step].to_s
     if value.empty?
