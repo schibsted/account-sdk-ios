@@ -39,7 +39,9 @@ class TaskOperation: Operation {
     init(executor: @escaping (@escaping () -> Void) -> Void) {
         self.executor = executor
         #if DEBUG
+        TaskOperation.sharedQueue.async(flags: .barrier) {
             TaskOperation.counter.getAndIncrement()
+        }
         #endif
     }
 

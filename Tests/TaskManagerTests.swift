@@ -10,9 +10,20 @@ import Quick
 
 class MockTask: TaskProtocol {
     static var counter = AtomicInt()
+    private var queue = DispatchQueue(label: "com.schibsted.account.mockTask.queue", attributes: .concurrent)
 
     var didCancelCallCount = 0
-    var executeCallCount = 0
+    var _executeCallCount = 0
+
+    var executeCallCount: Int {
+        var result = 0
+
+        queue.sync {
+            result = _executeCallCount
+        }
+
+        return result
+    }
     var shouldRefreshCallCount = 0
 
     var failureValue: ClientError?
@@ -29,7 +40,9 @@ class MockTask: TaskProtocol {
     }
 
     func execute(completion: @escaping (Result<NoValue, ClientError>) -> Void) {
-        self.executeCallCount += 1
+        queue.async(flags: .barrier) {
+            self._executeCallCount += 1
+        }
 
         if let failureValue = self.failureValue {
             completion(.failure(failureValue))
