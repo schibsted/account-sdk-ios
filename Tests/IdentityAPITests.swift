@@ -72,7 +72,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["email"]).to(beNil())
                 expect(callData.passedFormData?["phone_number"]) == self.testNumber
@@ -101,7 +101,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["phone_number"]).to(beNil())
                 expect(callData.passedFormData?["email"]) == self.testEmail
@@ -129,7 +129,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["phone_number"]).to(beNil())
                 expect(callData.passedFormData?["email"]) == self.testEmailContainingPlus
@@ -248,7 +248,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["client_id"]) == self.testClientID
                 expect(callData.passedFormData?["identifier"]) == self.testNumber
@@ -404,7 +404,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["client_id"]).to(equal(self.testClientID))
                 expect(callData.passedFormData?["grant_type"]).to(equal("refresh_token"))
@@ -495,7 +495,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["client_id"]) == self.testClientID
                 expect(callData.passedFormData?["passwordless_token"]) == String(describing: self.testPasswordlessToken)
@@ -583,7 +583,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain(self.testUserID))
@@ -605,7 +605,7 @@ class IdentityAPITests: QuickSpec {
                         done()
                     }
                 }
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain(self.testUserID))
@@ -628,7 +628,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 let query = URLComponents(url: callData.passedUrl!, resolvingAgainstBaseURL: false)
                 let contains = query?.queryItems?.contains(where: { (item) -> Bool in
@@ -652,7 +652,7 @@ class IdentityAPITests: QuickSpec {
                         done()
                     }
                 }
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["client_id"]).to(equal(self.testClientID))
                 expect(callData.passedFormData?["client_secret"]).to(equal("clientSecret"))
@@ -677,7 +677,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain("phone"))
@@ -699,7 +699,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain("email"))
@@ -722,7 +722,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedUrl?.absoluteString).to(contain(self.testUserID))
@@ -746,7 +746,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedFormData?["email"]).to(equal(self.testEmail))
@@ -789,7 +789,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedFormData?["clientId"]).to(equal(self.testClientID))
@@ -812,7 +812,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedFormData?["clientId"]).to(equal(self.testClientID))
@@ -838,7 +838,7 @@ class IdentityAPITests: QuickSpec {
                     }
                 }
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain(self.testOauthToken))
                 expect(callData.passedFormData?["name"]).to(contain("new name"))
