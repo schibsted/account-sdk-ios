@@ -13,7 +13,7 @@ class MockTask: TaskProtocol {
     private var queue = DispatchQueue(label: "com.schibsted.account.mockTask.queue", attributes: .concurrent)
 
     var didCancelCallCount = 0
-    var _executeCallCount = 0
+    private var _executeCallCount = 0
 
     var executeCallCount: Int {
         var result = 0
@@ -40,7 +40,7 @@ class MockTask: TaskProtocol {
     }
 
     func execute(completion: @escaping (Result<NoValue, ClientError>) -> Void) {
-        queue.async(flags: .barrier) {
+        queue.sync(flags: .barrier) {
             self._executeCallCount += 1
         }
 
