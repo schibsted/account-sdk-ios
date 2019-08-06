@@ -253,12 +253,13 @@ class TaskManagerTests: QuickSpec {
                 // 1 refresh
                 // Two successful 200 tasks
                 expect(Networking.testingProxy.callCount).toEventually(equal(5))
-                expect(Networking.testingProxy.calls[0].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
-                expect(Networking.testingProxy.calls[1].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
-                expect(Networking.testingProxy.calls[2].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(beNil())
-                expect(Networking.testingProxy.calls[3].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
-                expect(Networking.testingProxy.calls[4].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
-
+                if (Networking.testingProxy.callCount == 5) {
+                    expect(Networking.testingProxy.calls[0].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
+                    expect(Networking.testingProxy.calls[1].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
+                    expect(Networking.testingProxy.calls[2].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(beNil())
+                    expect(Networking.testingProxy.calls[3].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
+                    expect(Networking.testingProxy.calls[4].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
+                }
                 user.taskManager.waitForRequestsToFinish()
             }
         }
