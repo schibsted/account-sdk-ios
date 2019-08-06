@@ -74,7 +74,7 @@ class AutoRefreshURLProtocol: URLProtocol {
      */
     static let key: String = {
         let uuid = UUID().uuidString
-        return "\(self)" + uuid[..<uuid.index(uuid.startIndex, offsetBy: 6)]
+        return "\(String(describing: self))" + uuid[..<uuid.index(uuid.startIndex, offsetBy: 6)]
     }()
 
     static var userTaskManagerMap: [Int: TaskManager] = [:]

@@ -109,6 +109,7 @@ extension IdentityUIConfiguration {
         theme: .custom,
         isCancelable: true,
         isSkippable: true,
+        enableBiometrics: true,
         presentationHook: { (vc: UIViewController) -> Void in
             if UIDevice.current.userInterfaceIdiom == .pad {
                 vc.modalPresentationStyle = .formSheet

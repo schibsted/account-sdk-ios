@@ -32,10 +32,10 @@
 "PasswordScreenString.creatingNewAccountNotice" = "Du oppretter nå en ny Schibsted-konto";
 "PasswordScreenString.createAccount" = "Opprett konto";
 "PasswordScreenString.biometricsPrompt" = "Logg inn som $0";
-"PasswordScreenString.biometricsOnboarding.title" = "Vil du aktivere Touch ID?";
-"PasswordScreenString.biometricsOnboarding.message" = "Logg inn på $0 med fingeravtrykket ditt";
-"PasswordScreenString.biometricsOnboarding.accept" = "Aktivere";
-"PasswordScreenString.biometricsOnboarding.refuse" = "Ikke nå";
+"PasswordScreenString.touchIdOnboarding.title" = "Vil du aktivere Touch ID?";
+"PasswordScreenString.touchIdOnboarding.message" = "Logg inn på $0 med fingeravtrykket ditt";
+"PasswordScreenString.touchIdOnboarding.accept" = "Aktivere";
+"PasswordScreenString.touchIdOnboarding.refuse" = "Ikke nå";
 
 "VerifyScreenString.title" = "Vi har sendt deg en kode";
 "VerifyScreenString.subtext" = "Tast inn bekreftelseskoden vi sendte til: ";

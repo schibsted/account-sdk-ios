@@ -148,7 +148,9 @@ public class User: UserProtocol {
         User.globalStore[ObjectIdentifier(self).hashValue] = self
         log(level: .debug, from: self, "added User \(ObjectIdentifier(self).hashValue) to global store")
     }
-
+    /**
+     Remove user from the global store
+     */
     deinit {
         self.willDeinit.emitSync(())
         User.globalStore[ObjectIdentifier(self).hashValue] = nil

@@ -13,6 +13,14 @@ private struct Constants {
 class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     private let signinInteractor: SigninInteractor
 
+    @available(iOS 11.0, *)
+    private var biometryType: LABiometryType {
+        let context = LAContext()
+        // `biometryType` property is only set after you call the canEvaluatePolicy(_:error:) method. The default value is LABiometryType.none.
+        context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        return context.biometryType
+    }
+
     override init(navigationController: UINavigationController, identityManager: IdentityManager, configuration: IdentityUIConfiguration) {
         self.signinInteractor = SigninInteractor(identityManager: identityManager)
         super.init(navigationController: navigationController, identityManager: identityManager, configuration: configuration)
@@ -254,7 +262,7 @@ extension PasswordCoordinator {
         guard #available(iOS 11.3, *),
             configuration.enableBiometrics,
             context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
-            context.biometryType == .touchID
+            context.biometryType == .touchID || context.biometryType == .faceID
         else {
             return false
         }
@@ -308,27 +316,33 @@ extension PasswordCoordinator {
             completion()
         } else {
             Settings.setValue(true, forKey: hasLoggedInBeforeSettingsKey)
-            let viewModel = PasswordViewModel(
-                identifier: identifier,
-                loginFlowVariant: loginFlowVariant,
-                localizationBundle: self.configuration.localizationBundle
-            )
-            let message = viewModel.biometricsOnboardingMessage
-                .replacingOccurrences(of: "$0", with: configuration.appName)
-            let title = viewModel.biometricsOnboardingTitle
+            if self.biometryType == .touchID {
+                let viewModel = PasswordViewModel(
+                    identifier: identifier,
+                    loginFlowVariant: loginFlowVariant,
+                    localizationBundle: self.configuration.localizationBundle
+                )
+                let message = viewModel.touchIdOnboardingMessage
+                    .replacingOccurrences(of: "$0", with: configuration.appName)
+                let title = viewModel.touchIdOnboardingTitle
 
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingAccept, style: .default) { _ in
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: viewModel.touchIdOnboardingAccept, style: .default) { _ in
+                    self.configuration.useBiometrics(true)
+                    SecItemAdd(dictionary as CFDictionary, nil)
+                    completion()
+                })
+                alert.addAction(UIAlertAction(title: viewModel.touchIdOnboardingRefuse, style: .cancel) { _ in
+                    self.configuration.useBiometrics(false)
+                    completion()
+                })
+
+                self.navigationController.present(alert, animated: false)
+            } else {
                 self.configuration.useBiometrics(true)
                 SecItemAdd(dictionary as CFDictionary, nil)
                 completion()
-            })
-            alert.addAction(UIAlertAction(title: viewModel.biometricsOnboardingRefuse, style: .cancel) { _ in
-                self.configuration.useBiometrics(false)
-                completion()
-            })
-
-            self.navigationController.present(alert, animated: false)
+            }
         }
     }
 }
