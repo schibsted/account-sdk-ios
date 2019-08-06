@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct AtomicInt {
+class AtomicInt {
     private var queue = DispatchQueue(label: "com.schibsted.identity.AtomicInt")
     private var _value = 0
     init(_ value: Int = 0) {
@@ -28,7 +28,7 @@ struct AtomicInt {
     }
 
     @discardableResult
-    mutating func getAndIncrement() -> Int {
+    func getAndIncrement() -> Int {
         var previousValue = 0
         self.queue.sync {
             previousValue = self._value
@@ -38,7 +38,7 @@ struct AtomicInt {
     }
 
     @discardableResult
-    mutating func getAndDecrement() -> Int {
+    func getAndDecrement() -> Int {
         var previousValue = 0
         self.queue.sync {
             previousValue = self._value
