@@ -10,28 +10,31 @@ import Quick
 
 class MockTask: TaskProtocol {
     static var counter = AtomicInt()
-    private var queue = DispatchQueue(label: "com.schibsted.account.mockTask.queue", attributes: .concurrent)
+    private var queue = DispatchQueue(label: "com.schibsted.account.mockTask.queue")
 
-    var didCancelCallCount = 0
+    var _didCancelCallCount = 0
     var _executeCallCount = 0
+    var _shouldRefreshCallCount = 0
+    var _failureValue: ClientError?
 
     var executeCallCount: Int {
-        var result = 0
-
-        queue.sync {
-            result = _executeCallCount
-        }
-
-        return result
+        return queue.sync { _executeCallCount }
     }
-    var shouldRefreshCallCount = 0
+    var didCancelCallCount: Int {
+        return queue.sync { _didCancelCallCount }
+    }
+    var shouldRefreshCallCount: Int {
+        return queue.sync { _shouldRefreshCallCount }
+    }
+    var failureValue: ClientError? {
+        return queue.sync { _failureValue }
+    }
 
-    var failureValue: ClientError?
-    var shouldRefresh: Bool
+    let shouldRefresh: Bool
 
     init(failureValue: ClientError? = nil, shouldRefresh: Bool = false) {
         MockTask.counter.getAndIncrement()
-        self.failureValue = failureValue
+        self._failureValue = failureValue
         self.shouldRefresh = shouldRefresh
     }
 
@@ -40,23 +43,20 @@ class MockTask: TaskProtocol {
     }
 
     func execute(completion: @escaping (Result<NoValue, ClientError>) -> Void) {
-        queue.async(flags: .barrier) {
-            self._executeCallCount += 1
-        }
-
         if let failureValue = self.failureValue {
             completion(.failure(failureValue))
         } else {
             completion(.success(()))
         }
+        queue.sync { self._executeCallCount += 1 }
     }
 
     func didCancel() {
-        self.didCancelCallCount += 1
+        queue.sync { self._didCancelCallCount += 1 }
     }
 
     func shouldRefresh(result _: Result<NoValue, ClientError>) -> Bool {
-        self.shouldRefreshCallCount += 1
+        queue.sync { self._shouldRefreshCallCount += 1 }
         return self.shouldRefresh
     }
 }
