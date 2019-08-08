@@ -9,7 +9,7 @@ import Quick
 @testable import SchibstedAccount
 
 class MockTask: TaskProtocol {
-    static var counter = AtomicInt()
+    var counter = AtomicInt()
     private var queue = DispatchQueue(label: "com.schibsted.account.mockTask.queue")
 
     var _didCancelCallCount = 0
@@ -34,13 +34,13 @@ class MockTask: TaskProtocol {
     let shouldRefresh: Bool
 
     init(failureValue: ClientError? = nil, shouldRefresh: Bool = false) {
-        MockTask.counter.getAndIncrement()
+        self.counter.getAndIncrement()
         self._failureValue = failureValue
         self.shouldRefresh = shouldRefresh
     }
 
     deinit {
-        MockTask.counter.getAndDecrement()
+        self.counter.getAndDecrement()
     }
 
     func execute(completion: @escaping (Result<NoValue, ClientError>) -> Void) {
@@ -70,22 +70,16 @@ class TaskManagerTests: QuickSpec {
 
     override func spec() {
 
-        afterEach {
-            expect(MockTask.counter.value) == 0
-        }
-
         describe("Adding a task") {
 
             it("Should execute it") {
-                let task = MockTask()
+                let task =  MockTask()
                 let user = User(state: .loggedIn)
                 let manager = TaskManager(for: user)
 
                 _ = manager.add(task: task) { result in
                     expect(result).to(beSuccess())
-                }
-                waitTill {
-                    task.executeCallCount == 1
+                    expect(task.executeCallCount).to(equal(1))
                 }
             }
 
