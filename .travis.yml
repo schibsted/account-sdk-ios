@@ -1,14 +1,9 @@
 language: objective-c
-osx_image: xcode10.2
+osx_image: xcode10
 cache:
   bundler: true
   directories:
     - build
-addons:
-  homebrew:
-    packages:
-      - swiftlint
-      - swiftformat
 
 bundler_args: --without documentation --without development --deployment --jobs=3 --retry=3
 

@@ -34,7 +34,7 @@ platform :ios do
 
   desc 'Lint the source code and other linteable artifacts'
   lane :lint do
-    sh "../scripts/brew_packages_version.sh"
+    sh "../scripts/brew_setup.sh"
 
     swiftlint(
       :mode => :lint,
