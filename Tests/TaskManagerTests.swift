@@ -12,10 +12,10 @@ class MockTask: TaskProtocol {
     static var counter = AtomicInt()
     private var queue = DispatchQueue(label: "com.schibsted.account.mockTask.queue")
 
-    var _didCancelCallCount = 0
-    var _executeCallCount = 0
-    var _shouldRefreshCallCount = 0
-    var _failureValue: ClientError?
+    private var _didCancelCallCount = 0
+    private var _executeCallCount = 0
+    private var _shouldRefreshCallCount = 0
+    private var _failureValue: ClientError?
 
     var executeCallCount: Int {
         return queue.sync { _executeCallCount }
@@ -43,12 +43,12 @@ class MockTask: TaskProtocol {
     }
 
     func execute(completion: @escaping (Result<NoValue, ClientError>) -> Void) {
+        queue.sync { self._executeCallCount += 1 }
         if let failureValue = self.failureValue {
             completion(.failure(failureValue))
         } else {
             completion(.success(()))
         }
-        queue.sync { self._executeCallCount += 1 }
     }
 
     func didCancel() {
@@ -169,7 +169,7 @@ class TaskManagerTests: QuickSpec {
                 StubbedNetworkingProxy.addStub(stub)
 
                 let numRequestsToFire = 100
-                var results: [Result<Bool, ClientError>] = []
+                let results = SynchronizedArray<Result<Bool, ClientError>>()
 
                 for _ in 0..<numRequestsToFire {
                     user.agreements.status { result in
@@ -199,7 +199,7 @@ class TaskManagerTests: QuickSpec {
                 StubbedNetworkingProxy.addStub(stubAgreements)
 
                 let numRequestsToFire = 100
-                var results: [Result<Bool, ClientError>] = []
+                let results = SynchronizedArray<Result<Bool, ClientError>>()
 
                 for _ in 0..<numRequestsToFire {
                     user.agreements.status { result in
@@ -252,13 +252,14 @@ class TaskManagerTests: QuickSpec {
                 // Two failed 401 tasks
                 // 1 refresh
                 // Two successful 200 tasks
-                expect(Networking.testingProxy.callCount).toEventually(equal(5))
-                if (Networking.testingProxy.callCount == 5) {
-                    expect(Networking.testingProxy.calls[0].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
-                    expect(Networking.testingProxy.calls[1].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
-                    expect(Networking.testingProxy.calls[2].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(beNil())
-                    expect(Networking.testingProxy.calls[3].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
-                    expect(Networking.testingProxy.calls[4].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
+                expect(Networking.testingProxy.requests.count).toEventually(equal(5))
+                if (Networking.testingProxy.requests.count == 5) {
+                    let data = Networking.testingProxy.requests.data
+                    expect(data[0].request?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
+                    expect(data[1].request?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
+                    expect(data[2].request?.allHTTPHeaderFields?["Authorization"]).to(beNil())
+                    expect(data[3].request?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
+                    expect(data[4].request?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
                 }
                 user.taskManager.waitForRequestsToFinish()
             }
@@ -273,13 +274,13 @@ class TaskManagerTests: QuickSpec {
                 stub.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stub)
 
-                var callbackCalled = false
+                let callbackCalled = Atomic<Bool>(false)
                 let handle = user.agreements.status { _ in
-                    callbackCalled = true
+                    callbackCalled.value = true
                 }
                 handle.cancel()
 
-                waitMakeSureNot { callbackCalled }
+                waitMakeSureNot { callbackCalled.value }
             }
 
             it("Should not call callback after refresh started") {
@@ -301,7 +302,7 @@ class TaskManagerTests: QuickSpec {
                 // make sure the callback was not called.
                 //
 
-                var callbackCalled = false
+                let callbackCalled = Atomic<Bool>(false)
                 do {
                     let user = User(state: .loggedIn)
 
@@ -322,14 +323,14 @@ class TaskManagerTests: QuickSpec {
                     }
 
                     user.agreements.status { _ in
-                        callbackCalled = true
+                        callbackCalled.value = true
                     }
-                    expect(Networking.testingProxy.callCount).toEventually(equal(2))
-                    expect(Networking.testingProxy.calls[1].returnedData).toEventuallyNot(beNil())
+                    expect(Networking.testingProxy.responses.count).toEventually(equal(2))
+                    expect(Networking.testingProxy.responses.data[1].data).toEventuallyNot(beNil())
                 }
 
                 expect(User.globalStore.count).toEventually(equal(0))
-                expect(callbackCalled).toNot(equal(true))
+                expect(callbackCalled.value).toNot(equal(true))
             }
 
             it("Should call the tasks cancel override") {

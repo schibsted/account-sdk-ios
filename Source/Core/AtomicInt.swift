@@ -6,44 +6,27 @@
 import Foundation
 
 class AtomicInt {
-    private var queue = DispatchQueue(label: "com.schibsted.identity.AtomicInt")
-    private var _value = 0
+    private let _value: Atomic<Int>
     init(_ value: Int = 0) {
-        self._value = value
+        self._value = Atomic<Int>(value)
     }
     var value: Int {
         get {
-            var value: Int = 0
-            self.queue.sync {
-                value = self._value
-            }
-            return value
+            return self._value.value
         }
 
         set {
-            self.queue.sync {
-                self._value = newValue
-            }
+            self._value.value = newValue
         }
     }
 
     @discardableResult
     func getAndIncrement() -> Int {
-        var previousValue = 0
-        self.queue.sync {
-            previousValue = self._value
-            self._value += 1
-        }
-        return previousValue
+        return self._value.getAnd(set: { $0 += 1 })
     }
 
     @discardableResult
     func getAndDecrement() -> Int {
-        var previousValue = 0
-        self.queue.sync {
-            previousValue = self._value
-            self._value -= 1
-        }
-        return previousValue
+        return self._value.getAnd(set: { $0 -= 1 })
     }
 }

@@ -271,6 +271,8 @@
 		B01D7FD4237F432EA76DAF72 /* UI.h in Headers */ = {isa = PBXBuildFile; fileRef = B01D74A58CDE7E0A07C2AF89 /* UI.h */; };
 		B01D7FE467756DB12531438F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D738D65712CD22B987537 /* Storage.swift */; };
 		B01D7FF32DE3A0D668785961 /* ClientError+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D75141A07D790A4BB2511 /* ClientError+localized.swift */; };
+		E127EA9323021B290059B13F /* SynchronizedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = E127EA9223021B290059B13F /* SynchronizedArray.swift */; };
+		E127EAA72302265B0059B13F /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E127EAA62302265B0059B13F /* Atomic.swift */; };
 		E143801B20909E2E00F037FA /* ClientInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E143801A20909E2E00F037FA /* ClientInfoInteractor.swift */; };
 		E15AC27620BEBEFC00963D7D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15AC26120BEBEFC00963D7D /* Logger.swift */; };
 		E15AC27720BEBEFC00963D7D /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15AC26220BEBEFC00963D7D /* LogLevel.swift */; };
@@ -758,6 +760,8 @@
 		B01D7FA9FD6A1552F6F2AFC2 /* FetchStatusInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchStatusInteractor.swift; sourceTree = "<group>"; };
 		B01D7FAC65185FEEDB2C7E5B /* UpdateUserProfileTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserProfileTask.swift; sourceTree = "<group>"; };
 		B01D7FD3E6A4D7737E916326 /* TestingUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingUser.swift; sourceTree = "<group>"; };
+		E127EA9223021B290059B13F /* SynchronizedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedArray.swift; sourceTree = "<group>"; };
+		E127EAA62302265B0059B13F /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		E143801A20909E2E00F037FA /* ClientInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientInfoInteractor.swift; sourceTree = "<group>"; };
 		E15AC26120BEBEFC00963D7D /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		E15AC26220BEBEFC00963D7D /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
@@ -1104,10 +1108,12 @@
 				B01D76A9921FF9FC02222F43 /* AtomicInt.swift */,
 				B01D720D8DF6FC61FFE38A28 /* JWTHelper.swift */,
 				B01D7306347D3F52524909F2 /* EventEmitter.swift */,
+				E127EAA62302265B0059B13F /* Atomic.swift */,
 				B01D7F5EAC295F7F54A0D0E0 /* GenericError.swift */,
 				B01D79513A0D4671620E2CD1 /* URLRequest+cURL.swift */,
 				B01D72A62F75B0F962BA6A61 /* SynchronizedDictionary.swift */,
 				B01D7F249023189DFCDC8B4E /* SynchronizedWeakDictionary.swift */,
+				E127EA9223021B290059B13F /* SynchronizedArray.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2050,6 +2056,7 @@
 				B01D7B9AAB90915B26167D59 /* IdentifierViewModel.swift in Sources */,
 				B01D7B138D95C7CA4054836F /* IdentifierViewController.swift in Sources */,
 				B01D7CA1CE84D4D33DBA3792 /* SupportedRequiredField.swift in Sources */,
+				E127EAA72302265B0059B13F /* Atomic.swift in Sources */,
 				B01D7F83E22662B866338016 /* RequiredFieldsViewModel.swift in Sources */,
 				B01D751D7F7B2C55C7D9821F /* RequiredFieldsViewController.swift in Sources */,
 				B01D7E078DD8158FCB031F69 /* TrackingEventsHandler.swift in Sources */,
@@ -2070,6 +2077,7 @@
 				B01D7AAC96A5DF77118897FF /* PasswordCoordinator.swift in Sources */,
 				B01D75E356815C47AF366F18 /* PasswordlessCoordinator.swift in Sources */,
 				B01D79AFDE7C2C686327764E /* AuthenticationCoordinator.swift in Sources */,
+				E127EA9323021B290059B13F /* SynchronizedArray.swift in Sources */,
 				B01D75CA0F9830B13AA3C4CE /* CompleteProfileCoordinator.swift in Sources */,
 				B01D74B319A62269534D99EB /* Themeable.swift in Sources */,
 				B01D78DBDE0F44395218BB89 /* IdentityUI.swift in Sources */,

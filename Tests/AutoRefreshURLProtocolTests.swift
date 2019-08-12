@@ -92,7 +92,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             waitUntil { done in
                 session.dataTask(with: request) { _, _, _ in done() }.resume()
             }
-            expect(Networking.testingProxy.calls[0].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
+            expect(Networking.testingProxy.requests.data[0].request?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
         }
 
         it("Should refresh on 401") {
@@ -124,14 +124,14 @@ class AutoRefreshURLProtocolTests: QuickSpec {
                 task.resume()
             }
 
-            expect(Networking.testingProxy.callCount).to(equal(3))
-            guard Networking.testingProxy.calls.count > 2 else { return }
-            let call1 = Networking.testingProxy.calls[0]
-            let call2 = Networking.testingProxy.calls[1]
-            let call3 = Networking.testingProxy.calls[2]
-            expect(call1.passedUrl?.absoluteString).to(equal(wantedUrl))
-            expect(call2.passedUrl?.absoluteString.contains(refreshUrl)).to(beTrue())
-            expect(call3.passedUrl?.absoluteString).to(equal(wantedUrl))
+            expect(Networking.testingProxy.requests.count).to(equal(3))
+            guard Networking.testingProxy.requests.count > 2 else { return }
+            let call1 = Networking.testingProxy.requests.data[0]
+            let call2 = Networking.testingProxy.requests.data[1]
+            let call3 = Networking.testingProxy.requests.data[2]
+            expect(call1.url?.absoluteString).to(equal(wantedUrl))
+            expect(call2.url?.absoluteString.contains(refreshUrl)).to(beTrue())
+            expect(call3.url?.absoluteString).to(equal(wantedUrl))
 
             expect(user.tokens?.refreshToken).to(equal("abc"))
 
@@ -157,9 +157,9 @@ class AutoRefreshURLProtocolTests: QuickSpec {
                 task.resume()
             }
 
-            expect(Networking.testingProxy.callCount).to(equal(1))
-            let call1 = Networking.testingProxy.calls[0]
-            expect(call1.passedUrl?.absoluteString).to(equal(wantedUrl))
+            expect(Networking.testingProxy.requests.count).to(equal(1))
+            let call1 = Networking.testingProxy.requests.data[0]
+            expect(call1.url?.absoluteString).to(equal(wantedUrl))
             expect(user.tokens?.refreshToken).to(equal("testRefreshToken"))
 
             waitUntil { [unowned user] done in
@@ -217,16 +217,16 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
             SDKConfiguration.shared.refreshRetryCount = nil
 
-            var tasks: [URLSessionTask] = []
-            var doneCounter = 0
+            let tasks = SynchronizedArray<URLSessionTask>()
+            let doneCounter = AtomicInt(0)
             waitUntil { done in
                 for i in 0..<numRequestsToFire {
                     let request = URLRequest(url: URL(string: wantedUrl + String(i))!)
                     let task = session.dataTask(with: request) { data, _, _ in
                         if let data = data, let string = String(data: data, encoding: String.Encoding.utf8), string == "potatoes" {
-                            doneCounter += 1
+                            doneCounter.getAndIncrement()
                         }
-                        if doneCounter == numRequestsToFire {
+                        if doneCounter.value == numRequestsToFire {
                             done()
                         }
                     }
@@ -235,14 +235,14 @@ class AutoRefreshURLProtocolTests: QuickSpec {
                 }
             }
 
-            tasks.forEach { expect($0.state).to(equal(URLSessionTask.State.completed)) }
+            tasks.data.forEach { expect($0.state).to(equal(URLSessionTask.State.completed)) }
 
             waitUntil { [unowned user] done in
                 user.wrapped.taskManager.waitForRequestsToFinish()
                 done()
             }
 
-            expect(doneCounter).to(equal(numRequestsToFire))
+            expect(doneCounter.value).to(equal(numRequestsToFire))
         }
 
         it("Should handle refresh failure") {
@@ -390,14 +390,14 @@ class AutoRefreshURLProtocolTests: QuickSpec {
                 task.resume()
             }
 
-            expect(Networking.testingProxy.callCount).to(equal(3))
-            guard Networking.testingProxy.calls.count > 2 else { return }
-            let call1 = Networking.testingProxy.calls[0]
-            let call2 = Networking.testingProxy.calls[1]
-            let call3 = Networking.testingProxy.calls[2]
-            expect(call1.passedUrl?.absoluteString).to(equal(wantedUrl))
-            expect(call2.passedUrl?.absoluteString.contains(refreshUrl)).to(beTrue())
-            expect(call3.passedUrl?.absoluteString).to(equal(wantedUrl))
+            expect(Networking.testingProxy.requests.count).to(equal(3))
+            guard Networking.testingProxy.requests.count > 2 else { return }
+            let call1 = Networking.testingProxy.requests.data[0]
+            let call2 = Networking.testingProxy.requests.data[1]
+            let call3 = Networking.testingProxy.requests.data[2]
+            expect(call1.url?.absoluteString).to(equal(wantedUrl))
+            expect(call2.url?.absoluteString.contains(refreshUrl)).to(beTrue())
+            expect(call3.url?.absoluteString).to(equal(wantedUrl))
             expect(user.wrapped.tokens?.refreshToken).to(equal("abc"))
         }
 
@@ -430,14 +430,14 @@ class AutoRefreshURLProtocolTests: QuickSpec {
                 task.resume()
             }
 
-            expect(Networking.testingProxy.callCount).to(equal(3))
-            guard Networking.testingProxy.calls.count > 2 else { return }
-            let call1 = Networking.testingProxy.calls[0]
-            let call2 = Networking.testingProxy.calls[1]
-            let call3 = Networking.testingProxy.calls[2]
-            expect(call1.passedUrl?.absoluteString).to(equal(wantedUrl))
-            expect(call2.passedUrl?.absoluteString.contains(refreshUrl)).to(beTrue())
-            expect(call3.passedUrl?.absoluteString).to(equal(wantedUrl))
+            expect(Networking.testingProxy.requests.count).to(equal(3))
+            guard Networking.testingProxy.requests.count > 2 else { return }
+            let call1 = Networking.testingProxy.requests.data[0]
+            let call2 = Networking.testingProxy.requests.data[1]
+            let call3 = Networking.testingProxy.requests.data[2]
+            expect(call1.url?.absoluteString).to(equal(wantedUrl))
+            expect(call2.url?.absoluteString.contains(refreshUrl)).to(beTrue())
+            expect(call3.url?.absoluteString).to(equal(wantedUrl))
             expect(user.wrapped.tokens?.refreshToken).to(equal("abc"))
         }
     }

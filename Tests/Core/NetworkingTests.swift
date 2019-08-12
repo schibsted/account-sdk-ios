@@ -29,7 +29,7 @@ class NetworkingTests: QuickSpec {
                     }.resume()
                 }
 
-                expect(Networking.testingProxy.calls.first?.sentHTTPHeaders?["one"]) == "two"
+                expect(Networking.testingProxy.requests.data.first?.headers?["one"]) == "two"
             }
 
         }

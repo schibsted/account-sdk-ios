@@ -13,14 +13,14 @@ func doDataTask(
     request: URLRequest,
     completion: @escaping URLSessionTaskCallback = { _, _, _ in }
 ) {
-    var maybeResult: (data: Data?, response: URLResponse?, error: Error?)?
+    let maybeResult = Atomic<(data: Data?, response: URLResponse?, error: Error?)?>(nil)
     waitUntil { done in
         session.dataTask(with: request) { data, response, error in
-            maybeResult = (data, response, error)
+            maybeResult.value = (data, response, error)
             done()
         }.resume()
     }
-    if let result = maybeResult {
+    if let result = maybeResult.value {
         completion(result.data, result.response, result.error)
     }
 }
@@ -57,8 +57,8 @@ class HTTPSessionSharedExamplesConfiguration: QuickConfiguration {
                 stubWanted.returnResponse(status: 401)
                 StubbedNetworkingProxy.addStub(stubWanted)
 
-                var doneCounter = 0
-                var tasks: [URLSessionTask] = []
+                let doneCounter = AtomicInt(0)
+                let tasks = SynchronizedArray<URLSessionTask>()
                 waitUntil { done in
                     for i in 0..<numTasks {
                         let task = session.dataTask(with: URL(string: wantedUrl + String(i))!) { _, _, error in
@@ -68,18 +68,18 @@ class HTTPSessionSharedExamplesConfiguration: QuickConfiguration {
                                     matchError(ClientError.invalidUser)
                                 )
                             )
-                            doneCounter += 1
-                            if doneCounter == numTasks {
+                            doneCounter.getAndIncrement()
+                            if doneCounter.value == numTasks {
                                 done()
                             }
                         }
                         tasks.append(task)
                     }
 
-                    tasks.forEach { $0.resume() }
+                    tasks.data.forEach { $0.resume() }
                 }
 
-                for task in tasks {
+                for task in tasks.data {
                     expect(task.state).toEventually(equal(URLSessionTask.State.completed))
                 }
 
@@ -155,9 +155,9 @@ class URLSessionTests: QuickSpec {
                 StubbedNetworkingProxy.addStub(wantedStub)
 
                 doDataTask(session, url: url)
-                expect(Networking.testingProxy.callCount) == 3
-                let call0Headers = Networking.testingProxy.calls[0].passedRequest?.allHTTPHeaderFields
-                let call2Headers = Networking.testingProxy.calls[2].passedRequest?.allHTTPHeaderFields
+                expect(Networking.testingProxy.requests.count) == 3
+                let call0Headers = Networking.testingProxy.requests.data[0].request?.allHTTPHeaderFields
+                let call2Headers = Networking.testingProxy.requests.data[2].request?.allHTTPHeaderFields
                 expect(call0Headers?["Authorization"]).to(equal("Bearer testAccessToken"))
                 expect(call2Headers?["Authorization"]).to(equal("Bearer 123"))
             }
@@ -185,14 +185,14 @@ class URLSessionTests: QuickSpec {
                     expect(String(data: data!, encoding: .utf8)).to(equal(successData))
                 }
 
-                expect(Networking.testingProxy.callCount).to(equal(3))
-                guard Networking.testingProxy.calls.count == 3 else { return }
-                let call1 = Networking.testingProxy.calls[0]
-                let call2 = Networking.testingProxy.calls[1]
-                let call3 = Networking.testingProxy.calls[2]
-                expect(call1.passedUrl?.absoluteString).to(equal(wantedUrl))
-                expect(call2.passedUrl?.absoluteString).to(contain(Router.oauthToken.path))
-                expect(call3.passedUrl?.absoluteString).to(equal(wantedUrl))
+                expect(Networking.testingProxy.requests.count).to(equal(3))
+                guard Networking.testingProxy.requests.count == 3 else { return }
+                let call1 = Networking.testingProxy.requests.data[0]
+                let call2 = Networking.testingProxy.requests.data[1]
+                let call3 = Networking.testingProxy.requests.data[2]
+                expect(call1.url?.absoluteString).to(equal(wantedUrl))
+                expect(call2.url?.absoluteString).to(contain(Router.oauthToken.path))
+                expect(call3.url?.absoluteString).to(equal(wantedUrl))
                 expect(user.tokens?.refreshToken).to(equal("abc"))
             }
 
@@ -222,15 +222,15 @@ class URLSessionTests: QuickSpec {
                 wantedStub.returnData(requests)
                 StubbedNetworkingProxy.addStub(wantedStub)
 
-                var tasks: [URLSessionTask] = []
-                var doneCounter = 0
+                let tasks = SynchronizedArray<URLSessionTask>()
+                let doneCounter = AtomicInt(0)
                 waitUntil { done in
                     for i in 0..<numRequestsToFire {
                         let task = session.dataTask(with: URL(string: wantedUrl + String(i))!) { data, _, _ in
                             if let data = data, let string = String(data: data, encoding: .utf8), string == "potatoes" {
-                                doneCounter += 1
+                                doneCounter.getAndIncrement()
                             }
-                            if doneCounter == numRequestsToFire {
+                            if doneCounter.value == numRequestsToFire {
                                 done()
                             }
                         }
@@ -239,9 +239,9 @@ class URLSessionTests: QuickSpec {
                     }
                 }
 
-                tasks.forEach { expect($0.state).to(equal(URLSessionTask.State.completed)) }
+                tasks.data.forEach { expect($0.state).to(equal(URLSessionTask.State.completed)) }
 
-                expect(doneCounter).to(equal(numRequestsToFire))
+                expect(doneCounter.value).to(equal(numRequestsToFire))
             }
 
             it("should fail if refresh retry count exeeded") {
@@ -266,13 +266,13 @@ class URLSessionTests: QuickSpec {
                     }
                     expect((error as NSError).code) == ClientError.RefreshRetryExceededCode
                 }
-                expect(Networking.testingProxy.callCount).to(equal(5))
-                guard Networking.testingProxy.calls.count == 5 else { return }
-                expect(Networking.testingProxy.calls[0].passedUrl?.absoluteString).to(equal(wantedUrl))
-                expect(Networking.testingProxy.calls[1].passedUrl?.absoluteString).to(contain(refreshUrl))
-                expect(Networking.testingProxy.calls[2].passedUrl?.absoluteString).to(equal(wantedUrl))
-                expect(Networking.testingProxy.calls[3].passedUrl?.absoluteString).to(contain(refreshUrl))
-                expect(Networking.testingProxy.calls[4].passedUrl?.absoluteString).to(equal(wantedUrl))
+                expect(Networking.testingProxy.requests.count).to(equal(5))
+                guard Networking.testingProxy.requests.count == 5 else { return }
+                expect(Networking.testingProxy.requests.data[0].url?.absoluteString).to(equal(wantedUrl))
+                expect(Networking.testingProxy.requests.data[1].url?.absoluteString).to(contain(refreshUrl))
+                expect(Networking.testingProxy.requests.data[2].url?.absoluteString).to(equal(wantedUrl))
+                expect(Networking.testingProxy.requests.data[3].url?.absoluteString).to(contain(refreshUrl))
+                expect(Networking.testingProxy.requests.data[4].url?.absoluteString).to(equal(wantedUrl))
                 expect(user.tokens?.refreshToken).to(equal("abc"))
             }
 
