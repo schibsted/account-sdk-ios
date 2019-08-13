@@ -24,8 +24,6 @@ class TaskManager {
         self.operationQueue.waitUntilAllOperationsAreFinished()
     }
 
-    var willStartRefresh = EventEmitter<TaskHandle>(description: "TaskManager.willStartRefresh")
-
     init(for user: User) {
         self.user = user
     }
@@ -33,8 +31,7 @@ class TaskManager {
     func add<T: TaskProtocol>(task: T, completion: ((Result<T.SuccessType, ClientError>) -> Void)? = nil) -> TaskHandle {
         let handle = OwnedTaskHandle(owner: self)
 
-        let executor: (@escaping () -> Void) -> Void = { [weak self, weak handle, weak task] done in
-            defer { done() }
+        let executor: () -> Void = { [weak self, weak handle, weak task] in
             guard self != nil else {
                 log(level: .debug, from: self, "executor() => task manager dead")
                 return
@@ -193,11 +190,6 @@ class TaskManager {
                 return
             }
         }
-
-        #if DEBUG
-            // This is just used for running tests, lets not call it in release code
-            self.willStartRefresh.emitSync(handle)
-        #endif
 
         log(from: self, "refreshing tokens for for user \(user)")
 

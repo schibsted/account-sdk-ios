@@ -67,8 +67,6 @@ public class User: UserProtocol {
     ///
     public weak var delegate: UserDelegate?
 
-    var willDeinit = EventEmitter<()>(description: "User.willDeinit")
-
     let api: IdentityAPI
     let clientConfiguration: ClientConfiguration
 
@@ -152,7 +150,6 @@ public class User: UserProtocol {
      Remove user from the global store
      */
     deinit {
-        self.willDeinit.emitSync(())
         User.globalStore[ObjectIdentifier(self).hashValue] = nil
         log(level: .debug, from: self, "removed User \(ObjectIdentifier(self).hashValue) from global store")
     }

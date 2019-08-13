@@ -12,8 +12,6 @@ class TaskOperation: Operation {
         static let counter = AtomicInt(0)
     #endif
 
-    static let sharedQueue = DispatchQueue(label: "com.schibsted.identity.TaskOperation", attributes: [.concurrent])
-
     public enum State {
         case ready
         case executing
@@ -34,9 +32,9 @@ class TaskOperation: Operation {
         }
     }
 
-    let executor: (@escaping () -> Void) -> Void
+    let executor: () -> Void
 
-    init(executor: @escaping (@escaping () -> Void) -> Void) {
+    init(executor: @escaping () -> Void) {
         self.executor = executor
         #if DEBUG
             TaskOperation.counter.getAndIncrement()
@@ -80,17 +78,12 @@ class TaskOperation: Operation {
     }
 
     public override func start() {
+        defer { self.isFinished = true }
         guard !self.isCancelled else {
-            self.isFinished = true
             return
         }
         self.isExecuting = true
-        TaskOperation.sharedQueue.async { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.executor { [weak self] in self?.finish() }
-        }
+        self.executor()
     }
 
     func finish() {
