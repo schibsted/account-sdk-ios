@@ -179,16 +179,14 @@ public class User: UserProtocol {
     }
 
     private func clearTokens() -> TokenData? {
-        var oldTokens: TokenData?
-        self.dispatchQueue.sync {
+        return self.dispatchQueue.sync { () -> TokenData? in
             if self._tokens == nil {
-                return
+                return nil
             }
-            oldTokens = self._tokens
+            let oldTokens = self._tokens
             self._tokens = nil
+            return oldTokens
         }
-
-        return oldTokens
     }
 
     func set(
