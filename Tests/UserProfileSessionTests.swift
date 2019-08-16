@@ -56,14 +56,14 @@ class UserProfileSessionTests: QuickSpec {
                 stubSignup.returnResponse(status: 200)
                 StubbedNetworkingProxy.addStub(stubSignup)
 
-                var fields: [RequiredField] = []
+                let fields = SynchronizedArray<RequiredField>()
                 user.profile.requiredFields { result in
                     expect(result).to(beSuccess())
                     if let val = try? result.materialize() {
-                        fields = val
+                        fields.data = val
                     }
                 }
-                expect(fields) == [RequiredField.phoneNumber, RequiredField.displayName]
+                expect(fields.data) == [RequiredField.phoneNumber, RequiredField.displayName]
             }
         }
     }

@@ -34,7 +34,7 @@ platform :ios do
 
   desc 'Lint the source code and other linteable artifacts'
   lane :lint do
-    sh "../scripts/brew_setup.sh"
+    sh "../scripts/brew_packages_version.sh"
 
     swiftlint(
       :mode => :lint,
@@ -68,6 +68,11 @@ platform :ios do
     lint unless skip('LINT')
     test unless skip('TESTS')
     documentation unless skip('DOCUMENTATION')
+  end
+
+  desc 'clean derived data'
+  lane :clean do
+    clear_derived_data(derived_data_path: 'build/DerivedData')
   end
 
   def skip(step, default: false)

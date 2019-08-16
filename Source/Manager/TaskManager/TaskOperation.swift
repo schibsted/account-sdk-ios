@@ -6,98 +6,106 @@
 import Foundation
 
 class TaskOperation: Operation {
-    private let lock = NSLock()
+    enum ExecuteResult {
+        case done
+        case running
+    }
+
+    private let lock: NSLocking = NSLock()
 
     #if DEBUG
         static var counter = AtomicInt(0)
     #endif
 
-    static let sharedQueue = DispatchQueue(label: "com.schibsted.identity.TaskOperation", attributes: [.concurrent])
-
-    public enum State {
-        case ready
-        case executing
-        case finished
+    enum State: String {
+        case pending = "isPending"
+        case ready = "isReady"
+        case executing = "isExecuting"
+        case finished = "isFinished"
     }
 
-    private var _state: State = .ready
-    var state: State {
+    private var _state: State = .pending
+
+    private(set) var state: State {
         get {
             return self.lock.scope {
                 self._state
             }
         }
+
         set {
+            willChangeValue(forKey: newValue.rawValue)
             self.lock.scope {
                 self._state = newValue
+                log(level: .verbose, from: self, "set \(self).state to \(newValue)")
             }
+            didChangeValue(forKey: newValue.rawValue)
         }
     }
 
-    let executor: (@escaping () -> Void) -> Void
+    let executor: () -> ExecuteResult
 
-    init(executor: @escaping (@escaping () -> Void) -> Void) {
+    init(executor: @escaping () -> ExecuteResult) {
         self.executor = executor
         #if DEBUG
             TaskOperation.counter.getAndIncrement()
         #endif
     }
 
-    deinit {
-        #if DEBUG
+    #if DEBUG
+        deinit {
             TaskOperation.counter.getAndDecrement()
-        #endif
-    }
+        }
+    #endif
 
-    public override var isAsynchronous: Bool {
+    override var isAsynchronous: Bool {
         return true
     }
 
-    private enum KVOKey: String {
-        case isExecuting, isFinished, isCancelled
+    override var isReady: Bool {
+        return self.state == .ready
     }
 
-    public private(set) override var isExecuting: Bool {
-        get {
-            return self.state == .executing
-        }
-        set { // swiftlint:disable:this unused_setter_value
-            willChangeValue(forKey: KVOKey.isExecuting.rawValue)
-            self.state = .executing
-            didChangeValue(forKey: KVOKey.isExecuting.rawValue)
-        }
+    override var isExecuting: Bool {
+        return self.state == .executing
     }
 
-    public private(set) override var isFinished: Bool {
-        get {
-            return self.state == .finished
-        }
-        set { // swiftlint:disable:this unused_setter_value
-            willChangeValue(forKey: KVOKey.isFinished.rawValue)
-            self.state = .finished
-            didChangeValue(forKey: KVOKey.isFinished.rawValue)
-        }
+    override var isFinished: Bool {
+        return self.state == .finished
     }
 
-    public override func start() {
+    override func start() {
+        assert(self.state == .ready || self.isCancelled)
+        log(level: .debug, from: self, "starting \(self)")
         guard !self.isCancelled else {
-            self.isFinished = true
+            log(level: .debug, from: self, "cancelled, aborting \(self)")
+            self.state = .finished
             return
         }
-        self.isExecuting = true
-        TaskOperation.sharedQueue.async { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.executor { [weak self] in self?.finish() }
+        log(level: .debug, from: self, "executing \(self)")
+        self.state = .executing
+        if case .done = self.executor() {
+            self.finish()
         }
     }
 
     func finish() {
-        willChangeValue(forKey: KVOKey.isExecuting.rawValue)
-        willChangeValue(forKey: KVOKey.isFinished.rawValue)
-        self.isFinished = true
-        didChangeValue(forKey: KVOKey.isExecuting.rawValue)
-        didChangeValue(forKey: KVOKey.isFinished.rawValue)
+        log(level: .debug, from: self, "finishing \(self)")
+        self.state = .finished
+    }
+
+    func markReady() {
+        assert(self.state == .pending)
+        log(level: .debug, from: self, "readying \(self)")
+        self.state = .ready
+    }
+
+    override var description: String {
+        #if DEBUG
+            if let name = self.name {
+                return name
+            }
+        #endif
+        return super.description
     }
 }

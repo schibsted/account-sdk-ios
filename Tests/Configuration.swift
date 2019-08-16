@@ -45,7 +45,6 @@ class SchibstedAccountConfiguration: QuickConfiguration {
 
             OwnedTaskHandle.counter.value = 0
 
-            expect(AutoRefreshURLProtocol.userTaskManagerMap.count) == 0
             expect(TaskOperation.counter.value).toEventually(equal(0))
             expect(AutoRefreshURLProtocol.counter.value).toEventually(equal(0))
             expect(AutoRefreshTask.counter.value) == 0

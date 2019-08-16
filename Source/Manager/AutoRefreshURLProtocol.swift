@@ -77,8 +77,6 @@ class AutoRefreshURLProtocol: URLProtocol {
         return "\(String(describing: self))" + uuid[..<uuid.index(uuid.startIndex, offsetBy: 6)]
     }()
 
-    static var userTaskManagerMap: [Int: TaskManager] = [:]
-
     var taskHandle: TaskHandle?
 
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -114,19 +112,7 @@ class AutoRefreshURLProtocol: URLProtocol {
             return
         }
 
-        let taskManager: TaskManager
-        let key = ObjectIdentifier(user).hashValue
-        if let taskManagerForUser = type(of: self).userTaskManagerMap[key] {
-            taskManager = taskManagerForUser
-        } else {
-            taskManager = TaskManager(for: user)
-            AutoRefreshURLProtocol.userTaskManagerMap[key] = taskManager
-            user.willDeinit.register {
-                AutoRefreshURLProtocol.userTaskManagerMap.removeValue(forKey: key)
-            }.descriptionText = "\(type(of: self))"
-        }
-
-        self.taskHandle = taskManager.add(task: AutoRefreshTask(request: self.request, user: user)) { [weak self] result in
+        self.taskHandle = user.taskManager.add(task: AutoRefreshTask(request: self.request, user: user)) { [weak self] result in
             guard let strongSelf = self else {
                 return
             }

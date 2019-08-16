@@ -305,7 +305,7 @@ public class IdentityManager: IdentityManagerProtocol {
         let maybeEmail = try? PasswordlessTokenStore.getData(for: .email).identifier
         let maybePhone = try? PasswordlessTokenStore.getData(for: .sms).identifier
 
-        var callbackStatuses: [ValidateCallbackStatus] = [
+        var callbackStatuses: SynchronizedArray<ValidateCallbackStatus> = [
             maybeEmail == nil ? .unavailable : .unsent,
             maybePhone == nil ? .unavailable : .unsent,
         ]

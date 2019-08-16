@@ -116,13 +116,13 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.sendCode(to: self.testNumber, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
-                let callData = Networking.testingProxy.calls[0]
-                expect(callData.passedFormData?["email"]).to(beNil())
-                expect(callData.passedFormData?["phone_number"]) == self.testNumber.normalizedString
-                expect(callData.passedFormData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
-                expect(callData.passedFormData?["connection"]).to(equal("sms"))
-                expect(callData.passedFormData?["locale"]).to(equal(self.locale))
+                expect(Networking.testingProxy.requests.count) == 1
+                let data = Networking.testingProxy.requests.data.first
+                expect(data?.formData?["email"]).to(beNil())
+                expect(data?.formData?["phone_number"]) == self.testNumber.normalizedString
+                expect(data?.formData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
+                expect(data?.formData?["connection"]).to(equal("sms"))
+                expect(data?.formData?["locale"]).to(equal(self.locale))
             }
 
             it("Should pass in correct form data with email") {
@@ -132,13 +132,13 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.sendCode(to: self.testEmail, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
-                let callData = Networking.testingProxy.calls[0]
-                expect(callData.passedFormData?["phone_number"]).to(beNil())
-                expect(callData.passedFormData?["email"]) == self.testEmail.normalizedString
-                expect(callData.passedFormData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
-                expect(callData.passedFormData?["connection"]).to(equal("email"))
-                expect(callData.passedFormData?["locale"]).to(equal(self.locale))
+                expect(Networking.testingProxy.requests.count) == 1
+                let data = Networking.testingProxy.requests.data.first
+                expect(data?.formData?["phone_number"]).to(beNil())
+                expect(data?.formData?["email"]) == self.testEmail.normalizedString
+                expect(data?.formData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
+                expect(data?.formData?["connection"]).to(equal("email"))
+                expect(data?.formData?["locale"]).to(equal(self.locale))
             }
 
             it("Should handle network errors") {
@@ -429,14 +429,14 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.validate(oneTimeCode: self.testAuthCode, for: self.testNumber, scopes: ["random"], persistUser: false, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
-                let callData = Networking.testingProxy.calls[0]
-                expect(callData.passedFormData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
-                expect(callData.passedFormData?["identifier"]) == self.testNumber.normalizedString
-                expect(callData.passedFormData?["code"]).to(equal(self.testAuthCode))
-                expect(callData.passedFormData?["passwordless_token"]).to(equal(self.passwordlessToken.description))
-                expect(callData.passedFormData?["scope"]?.components(separatedBy: " ")).to(contain("random"))
-                expect(callData.passedFormData?["scope"]?.components(separatedBy: " ")).to(contain("openid"))
+                expect(Networking.testingProxy.requests.count) == 1
+                let data = Networking.testingProxy.requests.data.first
+                expect(data?.formData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
+                expect(data?.formData?["identifier"]) == self.testNumber.normalizedString
+                expect(data?.formData?["code"]).to(equal(self.testAuthCode))
+                expect(data?.formData?["passwordless_token"]).to(equal(self.passwordlessToken.description))
+                expect(data?.formData?["scope"]?.components(separatedBy: " ")).to(contain("random"))
+                expect(data?.formData?["scope"]?.components(separatedBy: " ")).to(contain("openid"))
             }
 
             it("Should handle network errors") {
@@ -624,11 +624,11 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.resendCode(to: self.testNumber, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
-                let callData = Networking.testingProxy.calls[0]
-                expect(callData.passedFormData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
-                expect(callData.passedFormData?["passwordless_token"]).to(equal(self.passwordlessToken.description))
-                expect(callData.passedFormData?["locale"]).to(equal(self.locale))
+                expect(Networking.testingProxy.requests.count) == 1
+                let data = Networking.testingProxy.requests.data.first
+                expect(data?.formData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
+                expect(data?.formData?["passwordless_token"]).to(equal(self.passwordlessToken.description))
+                expect(data?.formData?["locale"]).to(equal(self.locale))
             }
 
             it("Should handle network errors") {
@@ -727,12 +727,12 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.login(username: self.testEmail, password: self.testPassword, scopes: ["random"], persistUser: false, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
-                let callData = Networking.testingProxy.calls[0]
-                expect(callData.passedFormData?["username"]) == self.testEmail.normalizedString
-                expect(callData.passedFormData?["password"]).to(equal(self.testPassword))
-                expect(callData.passedFormData?["scope"]?.components(separatedBy: " ")).to(contain("random"))
-                expect(callData.passedFormData?["scope"]?.components(separatedBy: " ")).to(contain("openid"))
+                expect(Networking.testingProxy.requests.count) == 1
+                let data = Networking.testingProxy.requests.data.first
+                expect(data?.formData?["username"]) == self.testEmail.normalizedString
+                expect(data?.formData?["password"]).to(equal(self.testPassword))
+                expect(data?.formData?["scope"]?.components(separatedBy: " ")).to(contain("random"))
+                expect(data?.formData?["scope"]?.components(separatedBy: " ")).to(contain("openid"))
             }
 
             it("Should change state to be logged in") {
@@ -849,9 +849,9 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
-                expect(Networking.testingProxy.callCount).to(equal(2))
-                let callData = Networking.testingProxy.calls.last
-                expect(callData?.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("mytestcat555"))
+                expect(Networking.testingProxy.requests.count).to(equal(2))
+                let data = Networking.testingProxy.requests.data.last
+                expect(data?.request?.allHTTPHeaderFields?["Authorization"]).to(contain("mytestcat555"))
             }
 
             it("Should receive email and password") {
@@ -868,9 +868,9 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
-                let callData = Networking.testingProxy.calls.last
-                expect(callData?.passedFormData?["email"]) == self.testEmail.normalizedString
-                expect(callData?.passedFormData?["password"]).to(equal(self.testPassword))
+                let data = Networking.testingProxy.requests.data.last
+                expect(data?.formData?["email"]) == self.testEmail.normalizedString
+                expect(data?.formData?["password"]).to(equal(self.testPassword))
             }
 
             it("Should have correct redirect uri with default scheme") {
@@ -894,8 +894,8 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager(clientConfiguration: configuration)
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
-                let callData = Networking.testingProxy.calls.last
-                let redirectUri = URL(string: callData!.passedFormData!["redirectUri"]!)
+                let data = Networking.testingProxy.requests.data.last
+                let redirectUri = URL(string: data!.formData!["redirectUri"]!)
                 expect(redirectUri?.scheme) == configuration.appURLScheme
                 expect(redirectUri?.host) == configuration.redirectURLRoot
                 expect(redirectUri?.query) == "persist-user=false&path=validate-after-signup"
@@ -917,8 +917,8 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager(clientConfiguration: configuration)
                 identityManager.signup(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
 
-                let callData = Networking.testingProxy.calls.last
-                let redirectUri = URL(string: callData!.passedFormData!["redirectUri"]!)
+                let data = Networking.testingProxy.requests.data.last
+                let redirectUri = URL(string: data!.formData!["redirectUri"]!)
                 expect(redirectUri?.scheme) == configuration.appURLScheme
                 expect(redirectUri?.pathComponents[1]) == configuration.redirectURLRoot
                 expect(redirectUri?.query) == "persist-user=false&path=validate-after-signup"
@@ -1049,9 +1049,9 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.fetchStatus(for: self.testEmail, completion: { _ in })
 
-                expect(Networking.testingProxy.callCount).to(equal(2))
-                let callData = Networking.testingProxy.calls.last
-                expect(callData?.passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
+                expect(Networking.testingProxy.requests.count).to(equal(2))
+                let data = Networking.testingProxy.requests.data.last
+                expect(data?.request?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
             }
 
             it("Should fail without client access token") {
@@ -1063,7 +1063,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 identityManager.fetchStatus(for: self.testEmail) { result in
                     expect(result).to(failWith(ClientError.invalidClientCredentials))
-                    expect(Networking.testingProxy.callCount).to(equal(1))
+                    expect(Networking.testingProxy.requests.count).to(equal(1))
                 }
             }
 

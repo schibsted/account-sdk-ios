@@ -31,7 +31,7 @@ class SDKConfigurationTests: QuickSpec {
                 user.agreements.status { _ in }
                 user.agreements.status { _ in }
 
-                expect(Networking.testingProxy.callCount) == 1
+                expect(Networking.testingProxy.requests.count) == 1
             }
 
             it("should cache network requests for agreements tasks if set to off") {
@@ -52,7 +52,7 @@ class SDKConfigurationTests: QuickSpec {
                 user.agreements.status { _ in }
                 user.agreements.status { _ in }
 
-                expect(Networking.testingProxy.callCount) == 3
+                expect(Networking.testingProxy.requests.count) == 3
             }
 
             it("should update status on set") {
@@ -81,7 +81,7 @@ class SDKConfigurationTests: QuickSpec {
                 user.agreements.accept { _ in }
                 user.agreements.status { after = try! $0.materialize() }
                 expect(after) == true
-                expect(Networking.testingProxy.callCount) == 2
+                expect(Networking.testingProxy.requests.count) == 2
             }
         }
     }
