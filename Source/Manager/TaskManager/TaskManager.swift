@@ -31,23 +31,38 @@ class TaskManager {
     func add<T: TaskProtocol>(task: T, completion: ((Result<T.SuccessType, ClientError>) -> Void)? = nil) -> TaskHandle {
         let handle = OwnedTaskHandle(owner: self)
 
-        let executor: () -> Void = { [weak self, weak handle, weak task] in
-            guard self != nil else {
+        let executor: () -> TaskOperation.ExecuteResult = { [weak self, weak handle, weak task] in
+            guard let strongSelf = self else {
                 log(level: .debug, from: self, "executor() => task manager dead")
-                return
+                return .done
             }
             guard let task = task else {
                 log(level: .debug, from: self, "executor() => task dead")
-                return
+                return .done
             }
             guard let handle = handle else {
                 log(level: .debug, from: self, "executor() => handle died")
-                return
+                return .done
+            }
+
+            let maybeOperation = strongSelf.lock.scope { () -> TaskOperation? in
+                guard let data = strongSelf.pendingTasks[handle] else {
+                    return nil
+                }
+                return data.operation
+            }
+
+            guard let operation = maybeOperation else {
+                log(level: .verbose, from: self, "executor() => \(handle) operation cancelled")
+                return .done
             }
 
             log(level: .verbose, from: self, "will execute \(handle)")
 
             task.execute { [weak self, weak task, weak handle] result in
+
+                operation.finish()
+
                 guard let strongSelf = self else {
                     log(level: .debug, from: self, "task.execute => task manager dead")
                     return
@@ -78,7 +93,8 @@ class TaskManager {
                     // It's possible here that the refresh call above fails and the queue is restarted while the tasks
                     // are being cancelled. So check here that the handle we want to remove is actually still there.
                     //
-                    if strongSelf.pendingTasks.removeValue(forKey: handle) != nil {
+                    if let data = strongSelf.pendingTasks.removeValue(forKey: handle) {
+                        assert(data.operation === operation)
                         log(level: .debug, from: self, "removed \(handle)")
                         DispatchQueue.main.async {
                             completion?(result)
@@ -114,6 +130,8 @@ class TaskManager {
                     }
                 }
             }
+
+            return .running
         }
 
         let taskData = TaskData(
@@ -128,6 +146,7 @@ class TaskManager {
             self.operationQueue.addOperation(taskData.operation)
             self.pendingTasks[handle] = taskData
             log(level: .verbose, from: self, "added \(handle) (\(T.self))")
+            taskData.operation.markReady()
         }
 
         return handle
@@ -174,6 +193,7 @@ class TaskManager {
 
             log(level: .debug, from: self, "re-adding \(handle)")
             let newOperation = TaskOperation(executor: taskData.operation.executor)
+            newOperation.markReady()
 
             let newData = TaskData(
                 operation: newOperation,
@@ -186,7 +206,7 @@ class TaskManager {
             self.pendingTasks[handle] = newData
             self.operationsToReAdd.append(newOperation)
 
-            guard !refreshInProgress else {
+            if refreshInProgress {
                 return
             }
         }

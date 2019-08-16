@@ -285,6 +285,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
         }
 
         it("should cache responses from URLProtocol") {
+
             let wantedUrl = "https://example.com"
             let refreshUrl = "/oauth/token"
             let successData = "i am google"
