@@ -8,6 +8,7 @@ import UIKit
 
 private struct Constants {
     static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
+    static let EmailStorageLabel = "com.schibsted.account.user.email"
 }
 
 class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
@@ -147,6 +148,7 @@ extension PasswordCoordinator {
             switch result {
             case let .success(currentUser):
                 self?.configuration.tracker?.loginID = currentUser.legacyID
+                Settings.setValue(identifier.normalizedString, forKey: Constants.EmailStorageLabel)
                 self?.updatekeyChain(
                     for: identifier,
                     loginFlowVariant: loginFlowVariant,
