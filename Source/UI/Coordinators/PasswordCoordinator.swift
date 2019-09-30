@@ -8,6 +8,10 @@ import UIKit
 
 private struct Constants {
     static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
+    static let HasLoggedInBeforeSettingsKey = "com.schibsted.account.hasLoggedInBefore"
+
+    // Avoid the creation of an instance of Constants
+    private init() {}
 }
 
 class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
@@ -237,10 +241,11 @@ extension PasswordCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     private func getPasswordFromKeychain(for identifier: Identifier, _ localizedReasonString: String) -> String? {
-        guard #available(iOS 11.3, *) else {
+        guard #available(iOS 11.3, *), let hasLoggedInBefore = Settings.value(forKey: Constants.HasLoggedInBeforeSettingsKey) as? Bool else {
             // Fallback to passsword login
             return nil
         }
+
         var query = [String: Any]()
         query[kSecClass as String] = kSecClassGenericPassword
         query[kSecReturnData as String] = kCFBooleanTrue
@@ -253,6 +258,7 @@ extension PasswordCoordinator {
         if status == noErr, let qresult = queryResult as? Data, let password = String(data: qresult as Data, encoding: .utf8) {
             return password
         } else {
+            Settings.setValue(false, forKey: Constants.HasLoggedInBeforeSettingsKey)
             return nil
         }
     }
@@ -308,14 +314,14 @@ extension PasswordCoordinator {
         dictionary[kSecValueData as String] = password.data(using: .utf8)! as CFData
         dictionary[kSecAttrAccessControl as String] = accessControl
 
-        let hasLoggedInBeforeSettingsKey = "hasLoggedInBefore"
-        if let hasLoggedInBefore = Settings.value(forKey: hasLoggedInBeforeSettingsKey) as? Bool, hasLoggedInBefore {
+
+        if let hasLoggedInBefore = Settings.value(forKey: Constants.HasLoggedInBeforeSettingsKey) as? Bool, hasLoggedInBefore {
             if self.configuration.useBiometrics {
                 SecItemAdd(dictionary as CFDictionary, nil)
             }
             completion()
         } else {
-            Settings.setValue(true, forKey: hasLoggedInBeforeSettingsKey)
+            Settings.setValue(true, forKey: Constants.HasLoggedInBeforeSettingsKey)
             if self.biometryType == .touchID {
                 let viewModel = PasswordViewModel(
                     identifier: identifier,
