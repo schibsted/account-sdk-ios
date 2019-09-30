@@ -148,7 +148,11 @@ extension PasswordCoordinator {
             switch result {
             case let .success(currentUser):
                 self?.configuration.tracker?.loginID = currentUser.legacyID
-                Settings.setValue(identifier.normalizedString, forKey: Constants.EmailStorageLabel)
+                if persistUser {
+                    Settings.setValue(identifier.normalizedString, forKey: Constants.EmailStorageLabel)
+                } else {
+                    Settings.clearWhere(prefix: Constants.EmailStorageLabel)
+                }
                 self?.updatekeyChain(
                     for: identifier,
                     loginFlowVariant: loginFlowVariant,
