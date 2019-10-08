@@ -8,21 +8,30 @@ import Foundation
 class OneStepViewModel {
     let localizedTeaserText: String?
     let localizationBundle: Bundle
-    let kind: Client.Kind
-    let merchantName: String
-    let locale: Locale
 
     init(
-        kind: Client.Kind?,
-        merchantName: String,
         localizedTeaserText: String?,
-        localizationBundle: Bundle,
-        locale: Locale
+        localizationBundle: Bundle
     ) {
-        self.kind = kind ?? .internal
-        self.merchantName = merchantName
         self.localizedTeaserText = localizedTeaserText
         self.localizationBundle = localizationBundle
-        self.locale = locale
+    }
+}
+
+extension OneStepViewModel {
+    var invalidPassword: String {
+        return "OneStepLoginScreen.invalidPassword".localized(from: self.localizationBundle)
+    }
+
+    var proceed: String {
+        return "OneStepLoginScreen.proceed".localized(from: self.localizationBundle)
+    }
+
+    var whatsThis: String {
+        return "OneStepLoginScreen.whatsThis".localized(from: self.localizationBundle)
+    }
+
+    var persistentLogin: String {
+        return "OneStepLoginScreen.persistentLogin".localized(from: self.localizationBundle)
     }
 }

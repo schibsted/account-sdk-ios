@@ -97,3 +97,8 @@
 "ErrorString.connectionTimeout" = "Tilkoblingen ble tidsavbrutt. Prøv igjen.";
 "ErrorString.noInternetConnection" = "Kan ikke koble til internett. Sjekk tilkoblingen din.";
 "ErrorString.unableToResend" = "Klarte ikke å sende koden på nytt. Prøv igjen senere.";
+
+"OneStepLoginScreen.invalidPassword" = "Passordet du oppga er feil. Vennligst prøv igjen.";
+"OneStepLoginScreen.proceed" = "Fortsett";
+"OneStepLoginScreen.whatsThis" = "Hva er dette?";
+"OneStepLoginScreen.persistentLogin" = "Husk meg på denne enheten";

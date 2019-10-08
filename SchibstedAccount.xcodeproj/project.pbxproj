@@ -30,6 +30,10 @@
 		43E1606A2063CD1700D9BA3E /* TokenExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E160632063CD1700D9BA3E /* TokenExchangeViewController.swift */; };
 		43E1606B2063CD1700D9BA3E /* PaswordlessFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E160642063CD1700D9BA3E /* PaswordlessFlowViewController.swift */; };
 		43E1606E2063CD3B00D9BA3E /* ClientConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 43E1606D2063CD3B00D9BA3E /* ClientConfiguration.json */; };
+		76398A64234B724500787953 /* OneStepCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76398A63234B724500787953 /* OneStepCoordinator.swift */; };
+		76398A92234B82AE00787953 /* OneStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76398A90234B82AE00787953 /* OneStepViewController.swift */; };
+		76398A93234B82AE00787953 /* OneStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76398A91234B82AE00787953 /* OneStepViewController.xib */; };
+		76398A97234B84E900787953 /* OneStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76398A96234B84E900787953 /* OneStepViewModel.swift */; };
 		9E7F135621106CDA00BBEFED /* FetchUserAssetsTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F134321106CD900BBEFED /* FetchUserAssetsTask.swift */; };
 		9E7F135921106D0300BBEFED /* UserAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F135721106D0300BBEFED /* UserAssets.swift */; };
 		9E7F135A21106D0300BBEFED /* UserAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F135821106D0300BBEFED /* UserAsset.swift */; };
@@ -516,6 +520,10 @@
 		43E160632063CD1700D9BA3E /* TokenExchangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenExchangeViewController.swift; sourceTree = "<group>"; };
 		43E160642063CD1700D9BA3E /* PaswordlessFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaswordlessFlowViewController.swift; sourceTree = "<group>"; };
 		43E1606D2063CD3B00D9BA3E /* ClientConfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ClientConfiguration.json; sourceTree = "<group>"; };
+		76398A63234B724500787953 /* OneStepCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneStepCoordinator.swift; sourceTree = "<group>"; };
+		76398A90234B82AE00787953 /* OneStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneStepViewController.swift; sourceTree = "<group>"; };
+		76398A91234B82AE00787953 /* OneStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OneStepViewController.xib; sourceTree = "<group>"; };
+		76398A96234B84E900787953 /* OneStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneStepViewModel.swift; sourceTree = "<group>"; };
 		9E7F134321106CD900BBEFED /* FetchUserAssetsTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchUserAssetsTask.swift; sourceTree = "<group>"; };
 		9E7F135721106D0300BBEFED /* UserAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAssets.swift; sourceTree = "<group>"; };
 		9E7F135821106D0300BBEFED /* UserAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAsset.swift; sourceTree = "<group>"; };
@@ -960,6 +968,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		76398A77234B7E4100787953 /* OneStep */ = {
+			isa = PBXGroup;
+			children = (
+				76398A90234B82AE00787953 /* OneStepViewController.swift */,
+				76398A91234B82AE00787953 /* OneStepViewController.xib */,
+				76398A96234B84E900787953 /* OneStepViewModel.swift */,
+			);
+			path = OneStep;
+			sourceTree = "<group>";
+		};
 		B01D70398AEC4C0940626ABA /* Terms */ = {
 			isa = PBXGroup;
 			children = (
@@ -1154,6 +1172,7 @@
 			children = (
 				B01D7ED4B7383C90513D2534 /* FlowCoordinator.swift */,
 				B01D732AC60D74C69578B8DA /* PasswordCoordinator.swift */,
+				76398A63234B724500787953 /* OneStepCoordinator.swift */,
 				B01D78A1746E83042A8A0DAE /* PasswordlessCoordinator.swift */,
 				B01D783ED1F2B73B7CE6F8A5 /* AuthenticationCoordinator.swift */,
 				B01D739FA5AC38261ED7F6D5 /* CompleteProfileCoordinator.swift */,
@@ -1166,6 +1185,7 @@
 		B01D74C2523500A5606D4313 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				76398A77234B7E4100787953 /* OneStep */,
 				E18394CC208DF43300B05EC9 /* Info */,
 				B01D752D1AE8BFA2AC06B9AE /* Error */,
 				B01D70398AEC4C0940626ABA /* Terms */,
@@ -1822,6 +1842,7 @@
 				B01D755AFF33BDA98549894A /* VerifyViewController.xib in Resources */,
 				B01D7DE7AC848424E3E1EB41 /* PasswordViewController.xib in Resources */,
 				B01D7E3ECB7DD0234010B688 /* CheckInboxViewController.xib in Resources */,
+				76398A93234B82AE00787953 /* OneStepViewController.xib in Resources */,
 				E1DBA0F220A591FB0005B3B9 /* Localizable.strings in Resources */,
 				B01D701AB31648115F3D5625 /* IdentifierViewController.xib in Resources */,
 				E18394E4208DF43300B05EC9 /* InfoViewController.xib in Resources */,
@@ -1904,6 +1925,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76398A97234B84E900787953 /* OneStepViewModel.swift in Sources */,
 				B01D73E71769268623D1EF47 /* JSONError.swift in Sources */,
 				B01D7E29E5872AB15454322B /* JSONObject.swift in Sources */,
 				B01D7C2402941F27380BA14D /* JSONParsable.swift in Sources */,
@@ -2051,6 +2073,7 @@
 				B01D7B138D95C7CA4054836F /* IdentifierViewController.swift in Sources */,
 				B01D7CA1CE84D4D33DBA3792 /* SupportedRequiredField.swift in Sources */,
 				B01D7F83E22662B866338016 /* RequiredFieldsViewModel.swift in Sources */,
+				76398A64234B724500787953 /* OneStepCoordinator.swift in Sources */,
 				B01D751D7F7B2C55C7D9821F /* RequiredFieldsViewController.swift in Sources */,
 				B01D7E078DD8158FCB031F69 /* TrackingEventsHandler.swift in Sources */,
 				43C241B1205C015A00154866 /* SPiDKeychainWrapper.m in Sources */,
@@ -2062,6 +2085,7 @@
 				B01D73C78249C0138756FFC9 /* OneTimeCodeInteractor.swift in Sources */,
 				B01D702C4585A54590F4E1E6 /* UpdateProfileInteractor.swift in Sources */,
 				B01D73A95411398AAFFA5F8D /* RequiredFieldsInteractor.swift in Sources */,
+				76398A92234B82AE00787953 /* OneStepViewController.swift in Sources */,
 				B01D73D297FCD774644206D5 /* CompleteProfileInteractor.swift in Sources */,
 				B01D71A166D99A2BF965D6CA /* AuthenticationCodeInteractor.swift in Sources */,
 				9E7F135C21106D2000BBEFED /* UserAssetsAPI.swift in Sources */,

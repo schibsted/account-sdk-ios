@@ -97,3 +97,7 @@
 "ErrorString.connectionTimeout" = "Yhteys on aikakatkaistu. Yritä uudelleen.";
 "ErrorString.noInternetConnection" = "Yhteyttä ei voitu muodostaa. Tarkista internetyhteys.";
 "ErrorString.unableToResend" = "Koodia ei onnistuttu lähettämään uudelleen. Yritä myöhemmin uudelleen.";
+
+"OneStepLoginScreen.invalidPassword" = "Syöttämäsi salasana on virheellinen. Yritä uudelleen.";
+"OneStepLoginScreen.proceed" = "Jatka";
+"OneStepLoginScreen.whatsThis" = "Mikä tämä on?";

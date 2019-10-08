@@ -97,3 +97,8 @@
 "ErrorString.connectionTimeout" = "Uppkopplingen avbröts. Försök igen.";
 "ErrorString.noInternetConnection" = "Det gick inte att ansluta till internet. Kontrollera din anslutning.";
 "ErrorString.unableToResend" = "Kan inte skicka om koden. Försök igen senare.";
+
+"OneStepLoginScreen.invalidPassword" = "Lösenordet du angav är felaktigt. Försök igen.";
+"OneStepLoginScreen.proceed" = "Fortsätt";
+"OneStepLoginScreen.whatsThis" = "Vad är detta?";
+"OneStepLoginScreen.persistentLogin" = "Kom ihåg mig på den här enheten";

@@ -97,3 +97,7 @@
 "ErrorString.connectionTimeout" = "The connection has timed out. Please try again.";
 "ErrorString.noInternetConnection" = "Unable to connect to the internet. Please check your connection.";
 "ErrorString.unableToResend" = "Unable to resend code. Please try again later.";
+
+"OneStepLoginScreen.invalidPassword" = "The password you entered is incorrect. Please try again.";
+"OneStepLoginScreen.proceed" = "Continue";
+"OneStepLoginScreen.whatsThis" = "What's this?";

@@ -490,16 +490,14 @@ extension IdentityUI {
             self.configuration.presentationHook?(self.navigationController)
             vc.present(self.navigationController, animated: true)
         case let .onestep(vc, localizedTeaserText, scopes):
-            let oneStepViewController = self.makeOneStepLoginViewController(
+            self.configuration.presentationHook?(self.navigationController) // TODO what does this do?
+            self.startOneStepLoginViewController(
                 localizedTeaserText: localizedTeaserText,
                 scopes: scopes,
-                kind: client.kind,
-                merchantName: client.merchantName ?? "unknown",
                 completion: completion
             )
-            self.navigationController.viewControllers = [oneStepViewController]
-            self.configuration.presentationHook?(self.navigationController)
-            vc.present(self.navigationController, animated: true)
+
+            vc.present(self.navigationController, animated: true) // TODO what does this do?
         }
     }
 
@@ -576,47 +574,31 @@ extension IdentityUI {
         return viewController
     }
 
-    private func makeOneStepLoginViewController(
+    private func startOneStepLoginViewController(
         localizedTeaserText: String?,
         scopes: [String],
-        kind: Client.Kind?,
-        merchantName: String,
         completion: @escaping (Output) -> Void
-    ) -> IdentityUIViewController {
-        let navigationSettings = NavigationSettings(
-            cancel: configuration.isCancelable ? { completion(.cancel) } : nil
-        )
-
-        let viewModel = OneStepViewModel(
-            kind: kind,
-            merchantName: merchantName,
-            localizedTeaserText: localizedTeaserText,
-            localizationBundle: self.configuration.localizationBundle,
-            locale: self._identityManager.clientConfiguration.locale)
-
+    ) {
         let coordinator = OneStepCoordinator(
             navigationController: self.navigationController,
             identityManager: self._identityManager,
             configuration: self.configuration
         )
-        let viewController = OneStepViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-        viewController.didRequestAction = {[weak self] action in
-            switch action {
-            case let .enter(identifier, password, shouldPersistUser):
-                let input = OneStepCoordinator.Input(identifier: identifier, password: password, persistUser: shouldPersistUser, scopes: scopes)
-                coordinator.start(input: input) { [weak self] output in
-                    switch output {
-                    case let .success(user):
-                        completion(.success(user: user, persistUser: shouldPersistUser))
-                    case .cancel:
-                        completion(.cancel)
-                    case .back:
-                        self?.navigationController.popViewController(animated: true)
-                    }
+        let input = OneStepCoordinator.Input(localizedTeaserText: localizedTeaserText, scopes: scopes)
+        self.spawnChild(coordinator, input: input) { [weak self] output in
+            switch output {
+            case let .success(user, persistUser):
+                completion(.success(user: user, persistUser: persistUser))
+            case .cancel:
+                completion(.cancel)
+            case .back:
+                self?.navigationController.popViewController(animated: true)
+            case let .error(error):
+                if let error = error {
+                    self?.present(error: error)
                 }
             }
         }
-        return viewController
     }
 
     private func fetchFlowVariant(for identifier: Identifier, completion: @escaping (_ loginFlowVariant: LoginMethod.FlowVariant) -> Void) {

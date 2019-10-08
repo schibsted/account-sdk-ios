@@ -24,6 +24,20 @@ class OneStepViewController: IdentityUIViewController {
         }
     }
 
+    @IBOutlet var rememberMe: NormalLabel! {
+        didSet {
+            self.rememberMe.text = self.viewModel.persistentLogin
+        }
+    }
+
+    @IBOutlet var whatsThisButton: UIButton! {
+        didSet {
+            self.whatsThisButton.setTitle(self.viewModel.whatsThis, for: .normal)
+            self.whatsThisButton.titleLabel?.font = self.theme.fonts.info
+            self.whatsThisButton.contentEdgeInsets.top = 1
+        }
+    }
+
     @IBOutlet var password: TextField! {
         didSet {
             self.password.keyboardType = .default
@@ -44,7 +58,23 @@ class OneStepViewController: IdentityUIViewController {
         }
     }
 
+    @IBOutlet var continueButton: PrimaryButton!  {
+        didSet {
+            self.continueButton.setTitle(self.viewModel.proceed, for: .normal)
+        }
+    }
+
+    // TODO fix UI for teaser (missing logos?)
+    @IBOutlet var teaser: NormalLabel! {
+        didSet {
+            self.teaser.text = self.viewModel.localizedTeaserText
+        }
+    }
+
+    private let viewModel: OneStepViewModel
+
     init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, viewModel: OneStepViewModel) {
+        self.viewModel = viewModel
         super.init(
             configuration: configuration,
             navigationSettings: navigationSettings,
@@ -84,5 +114,40 @@ class OneStepViewController: IdentityUIViewController {
         let toolbar = UIToolbar.forKeyboard(target: self, doneString: "Done", doneSelector: #selector(self.didClickContinue))
 
         self.password.inputAccessoryView = toolbar
+    }
+
+    override func startLoading() {
+        super.startLoading()
+        self.inputError.isHidden = true
+        self.password.applyUnfocusedStyle()
+        self.continueButton.isAnimating = true
+    }
+
+    override func endLoading() {
+        super.endLoading()
+        self.continueButton.isAnimating = false
+    }
+
+    @discardableResult override func showInlineError(_ error: ClientError) -> Bool {
+        let message: String
+        switch error {
+        case .invalidUserCredentials:
+            message = self.viewModel.invalidPassword
+        default:
+            return false
+        }
+
+        self.configuration.tracker?.error(.validation(error), in: self.trackerScreenID)
+
+        self.inputError.text = message
+        self.inputError.isHidden = false
+        self.password.layer.borderColor = self.theme.colors.errorBorder.cgColor
+
+        return true
+    }
+    @IBOutlet var inputError: ErrorLabel! {
+        didSet {
+            self.inputError.isHidden = true
+        }
     }
 }
