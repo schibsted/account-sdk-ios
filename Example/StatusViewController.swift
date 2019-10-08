@@ -112,9 +112,8 @@ class StatusViewController: UIViewController {
         } else {
             UIApplication.identityUI.configuration.useBiometrics(false)
         }
-        UIApplication.identityUI.presentIdentityProcess(
+        UIApplication.identityUI.presentOneStepLoginIdentityProcess(
             from: self,
-            loginMethod: .password,
             localizedTeaserText: "I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser, I'm a teaser",
             scopes: ClientConfiguration.current.scopes
         )
