@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OneStepViewController" customModule="SchibstedAccount" customModuleProvider="target">
+            <connections>
+                <outlet property="emailAddress" destination="W5t-Tf-9WE" id="lV2-2y-g8K"/>
+                <outlet property="password" destination="dOu-od-KkF" id="NYe-os-17t"/>
+                <outlet property="shouldPersistUserCheck" destination="bRb-ng-4KI" id="bZE-s0-qe1"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="t8h-qq-LvW">
+                    <rect key="frame" x="0.0" y="44" width="414" height="110.5"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-Tf-9WE" userLabel="Email" customClass="TextField" customModule="SchibstedAccount" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="dKv-ab-D7O"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dOu-od-KkF" userLabel="Password" customClass="TextField" customModule="SchibstedAccount" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="30" width="414" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="V2Y-sB-q05"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DW0-qo-z1H" userLabel="PersistentLoginStackView">
+                            <rect key="frame" x="0.0" y="60" width="414" height="50.5"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bRb-ng-4KI" customClass="Checkbox" customModule="SchibstedAccount" customModuleProvider="target" colorLabel="IBBuiltInLabel-Yellow">
+                                    <rect key="frame" x="0.0" y="0.0" width="18" height="22"/>
+                                    <state key="normal" image="unchecked-box"/>
+                                </button>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="sOc-hN-PRu">
+                                    <rect key="frame" x="34" y="0.0" width="380" height="50.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Remember me on this device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJd-Dr-4he" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="222" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Tr-wp-Jkj" userLabel="WhatThis">
+                                            <rect key="frame" x="0.0" y="20.5" width="84" height="30"/>
+                                            <state key="normal" title="What's this?"/>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="OAH-jL-BEI"/>
+                </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zao-sL-3Ps" customClass="PrimaryButton" customModule="SchibstedAccount" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="832" width="414" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="AZl-ey-WUZ" userLabel="height = 30"/>
+                    </constraints>
+                    <state key="normal" title="Continue"/>
+                    <connections>
+                        <action selector="didClickContinue:" destination="-1" eventType="touchUpInside" id="azR-5w-zuQ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="t8h-qq-LvW" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="9Al-cJ-Uuh"/>
+                <constraint firstItem="t8h-qq-LvW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="CUb-Zx-Stx" userLabel="Stack View.leading = Safe Area.leading "/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Zao-sL-3Ps" secondAttribute="bottom" id="M7z-WD-Cs4"/>
+                <constraint firstItem="Zao-sL-3Ps" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="auq-OL-Znt"/>
+                <constraint firstItem="Zao-sL-3Ps" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="bTv-dO-g5V"/>
+                <constraint firstItem="t8h-qq-LvW" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="oQi-7L-dzl" userLabel="Stack View.top = Safe Area.top + 0"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="unchecked-box" width="18" height="18"/>
+    </resources>
+</document>

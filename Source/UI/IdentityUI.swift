@@ -270,6 +270,20 @@ public class IdentityUI {
         }
     }
 
+    public func presentOneStepLoginIdentityProcess(
+        from viewController: UIViewController,
+        localizedTeaserText: String? = nil,
+        scopes: [String] = []
+    ) {
+        self.configuration.tracker?.loginMethod = .password // TODO
+        log(from: self, "starting onestep login flow, internal user: \(self._identityManager.currentUser), config: \(self.configuration)")
+        self.start(
+            input: .onestep(presentingViewController: viewController, localizedTeaserText: localizedTeaserText, scopes: scopes)
+        ) { [weak self] output in
+            self?.complete(with: output, presentingViewController: viewController)
+        }
+    }
+
     /**
      Starts the login process from a route
 
@@ -390,6 +404,7 @@ extension IdentityUI: FlowCoordinator {
             scopes: [String]
         )
         case byRoute(Route, presentingViewController: UIViewController)
+        case onestep(presentingViewController: UIViewController, localizedTeaserText: String?, scopes: [String])
     }
 
     enum Output {
@@ -433,7 +448,7 @@ extension IdentityUI {
     func initializeAndShow(input: Input, completion: @escaping (Output) -> Void) {
         let presentingViewController: UIViewController
         switch input {
-        case let .byRoute(_, vc), let .byLoginMethod(_, vc, _, _):
+        case let .byRoute(_, vc), let .byLoginMethod(_, vc, _, _), let .onestep(vc, _, _):
             presentingViewController = vc
         }
 
@@ -472,6 +487,17 @@ extension IdentityUI {
             )
 
             self.navigationController.viewControllers = [identifierViewController]
+            self.configuration.presentationHook?(self.navigationController)
+            vc.present(self.navigationController, animated: true)
+        case let .onestep(vc, localizedTeaserText, scopes):
+            let oneStepViewController = self.makeOneStepLoginViewController(
+                localizedTeaserText: localizedTeaserText,
+                scopes: scopes,
+                kind: client.kind,
+                merchantName: client.merchantName ?? "unknown",
+                completion: completion
+            )
+            self.navigationController.viewControllers = [oneStepViewController]
             self.configuration.presentationHook?(self.navigationController)
             vc.present(self.navigationController, animated: true)
         }
@@ -547,6 +573,49 @@ extension IdentityUI {
             }
         }
 
+        return viewController
+    }
+
+    private func makeOneStepLoginViewController(
+        localizedTeaserText: String?,
+        scopes: [String],
+        kind: Client.Kind?,
+        merchantName: String,
+        completion: @escaping (Output) -> Void
+    ) -> IdentityUIViewController {
+        let navigationSettings = NavigationSettings(
+            cancel: configuration.isCancelable ? { completion(.cancel) } : nil
+        )
+
+        let viewModel = OneStepViewModel(
+            kind: kind,
+            merchantName: merchantName,
+            localizedTeaserText: localizedTeaserText,
+            localizationBundle: self.configuration.localizationBundle,
+            locale: self._identityManager.clientConfiguration.locale)
+
+        let coordinator = OneStepCoordinator(
+            navigationController: self.navigationController,
+            identityManager: self._identityManager,
+            configuration: self.configuration
+        )
+        let viewController = OneStepViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
+        viewController.didRequestAction = {[weak self] action in
+            switch action {
+            case let .enter(identifier, password, shouldPersistUser):
+                let input = OneStepCoordinator.Input(identifier: identifier, password: password, persistUser: shouldPersistUser, scopes: scopes)
+                coordinator.start(input: input) { [weak self] output in
+                    switch output {
+                    case let .success(user):
+                        completion(.success(user: user, persistUser: shouldPersistUser))
+                    case .cancel:
+                        completion(.cancel)
+                    case .back:
+                        self?.navigationController.popViewController(animated: true)
+                    }
+                }
+            }
+        }
         return viewController
     }
 

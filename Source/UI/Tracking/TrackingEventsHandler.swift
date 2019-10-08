@@ -61,6 +61,8 @@ public enum TrackingEvent {
     public enum Screen {
         /// Screen to enter identifier for password login method was viewed
         case passwordIdentificationForm
+        /// Screen to enter identifier+password for login was viewed
+        case oneStepForm
         /// Screen to enter identifier for passwordless login method was viewed
         case passwordlessIdentificationForm
         /// Screen to enter password was viewed
