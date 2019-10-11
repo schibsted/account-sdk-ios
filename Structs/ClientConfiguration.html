@@ -427,14 +427,14 @@ with a different ClientConfiguration, you will not get the results you want.</p>
 <h3 id='app-url-scheme' class='heading'>App URL Scheme</h3>
 
 <p>If you want deep linking to work, then you must specify your app&rsquo;s URL scheme as well.
-For SPiD mobile clients, the scheme is fixed and is available from the SPiD self-service
-portal.</p>
+For Schibsted account mobile clients, the scheme is fixed and is available from the
+Schibsted account Self Service.</p>
 
 <p>You should specify this string value when creating your ClientConfiguration and you should
 also register the url scheme as per Apple guidelines.</p>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a>
+    <a href="https://techdocs.login.schibsted.com/selfservice/access/">Schibsted account Self Service</a>
 
 </div>
 <div class="aside aside-see-also">
@@ -461,13 +461,13 @@ also register the url scheme as per Apple guidelines.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Determines which backend requests will be sent to. Most of the values here are
-explained on the SPiD self service site where you also must set up your client.</p>
+explained in Schibsted account Self Service where you also must set up your client.</p>
 
 <p>Basically this is what determines if this is a production configuration, or
-pre production, etc. Please read the <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a></p>
+pre production, etc. Please read the <a href="https://techdocs.login.schibsted.com/selfservice/access/">Schibsted account Self Service</a></p>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a>
+    <a href="https://techdocs.login.schibsted.com/selfservice/access/">Schibsted account Self Service</a>
 
 </div>
 
@@ -808,7 +808,7 @@ handy for local testing.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This is used for generating the redirect URI needed for going back to the app. You can find this in the SPiD selfservice
+                        <p>This is used for generating the redirect URI needed for going back to the app. You can find this in the Schibsted account Self Service
 under the <q>Redirect</q> tab for your client. It <strong>must</strong> be equal to the value under <q>Custom URI Scheme</q></p>
 
 <p>You will also have to register the scheme in the your apps Info.plist <q>URL Types</q> under <q>URL Schemes</q>.</p>
@@ -845,17 +845,17 @@ under the <q>Redirect</q> tab for your client. It <strong>must</strong> be equal
                       <div class="abstract">
                         <p>Base URL for redirects that will be created by the SDK for various API calls.</p>
 
-<p>The way this is constructed depends on your <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSvp">appURLScheme</a></code>. The SDK currently supports two formats that SPiD uses:</p>
+<p>The way this is constructed depends on your <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19ClientConfigurationV12appURLSchemeSSvp">appURLScheme</a></code>. The SDK currently supports two formats that Schibsted account uses:</p>
 
 <ol>
 <li>format0 - this is in the format of <q>spid-<client-id></q> - SDK treats this as default.</li>
 <li>format1 - this is in the format of <q><reverse-dns-of-your-service-domain>.<client-id></q></li>
 </ol>
 
-<p>SPiD has a number of default routes set up for mobile clients (referred to as roots in the SDK - see <code>redirectURLRoot</code>). The way these are added
-to a redirect depends on the format of your app scheme.</p>
+<p>Schibsted account has a number of default routes set up for mobile clients (referred to as roots in the SDK - see <code>redirectURLRoot</code>).
+The way these are added to a redirect depends on the format of your app scheme.</p>
 
-<p>With format0 SPiD adds the root s a URL host component. I.e. scheme://root. This is usually <q>login</q> and the SDK defaults to that, but it
+<p>With format0 Schibsted account adds the root s a URL host component. I.e. scheme://root. This is usually <q>login</q> and the SDK defaults to that, but it
 can be others (see your self service and they will be listed there). For format1, the root is a URL path component. I.e. scheme://host/path-component.
 And the host (or more accurately <q>authority</q>) URL component is omitted, which means the format is: scheme:/root</p>
 <div class="aside aside-see-also">
@@ -1035,7 +1035,7 @@ the <code><a href="../Structs/ClientConfiguration.html#/s:16SchibstedAccount19Cl
         </section>
         <section id="footer">
           <p>© 2016-2018 Schibsted Products &amp; Technology</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

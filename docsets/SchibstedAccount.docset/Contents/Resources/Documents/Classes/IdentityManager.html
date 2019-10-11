@@ -442,7 +442,7 @@ will be the one that is loaded by a new instance of the <code>IdentityManager</c
 <h3 id='scopes' class='heading'>Scopes</h3>
 
 <p>Some of the functions take a scope parameter. This is related to OAuth scopes. If you want to add the ability to specify custom scopes or you
-want access to some already available predefined scopes, then you&rsquo;ll have to send a support request to <a href="mailto:support@spid.no">support@spid.no</a></p>
+want access to some already available predefined scopes, then you&rsquo;ll have to send a support request to <a href="mailto:schibstedaccount@schibsted.com">schibstedaccount@schibsted.com</a></p>
 <h3 id='strong-support-strong' class='heading'><strong>Support</strong></h3>
 
 <p>The visual login via the <code><a href="../Classes/IdentityUI.html">IdentityUI</a></code> is the recommended approach to creating a <code><a href="../Classes/User.html">User</a></code>. This <code>IdentityManager</code> should just be
@@ -551,9 +551,9 @@ just resume the previously saved user session.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Gives you access to SPiD web flow routes.</p>
+                        <p>Gives you access to Schibsted account web flow routes.</p>
 
-<p>Where relevent, these can typically be used with <code><a href="../Classes/User/Auth.html#/s:16SchibstedAccount4UserC4AuthC13webSessionURL8clientID08redirectG010completionAA10TaskHandle_pSS_10Foundation0G0VyAA6ResultOyAmA11ClientErrorOGctF">User.Auth.webSessionURL(...)</a></code> to create a web session on a SPiD page
+<p>Where relevent, these can typically be used with <code><a href="../Classes/User/Auth.html#/s:16SchibstedAccount4UserC4AuthC13webSessionURL8clientID08redirectG010completionAA10TaskHandle_pSS_10Foundation0G0VyAA6ResultOyAmA11ClientErrorOGctF">User.Auth.webSessionURL(...)</a></code> to create a web session on a Schibsted account page
 where a user is considered as logged in.</p>
 
                       </div>
@@ -1052,7 +1052,7 @@ status of an identifier you should use <code><a href="../Classes/IdentityManager
 
 <p>The redirection to the webflow terms and condition screen can be bypassed if you accept terms through this API.
 However, if you do do this then you are responsible for actually showing the terms to the user. This tells us
-that the user has explicitly accepted the platform (SPiD) terms and conditions and been notified of the privacy
+that the user has explicitly accepted the Schibsted account terms and conditions and been notified of the privacy
 policy, and also has done the same for the client&rsquo;s (your) terms and conditions and privacy policy.</p>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
@@ -1196,7 +1196,7 @@ all of your client&rsquo;s required fields.</p>
                       <div class="abstract">
                         <p>Log in by an auth code.</p>
 
-<p>The authorization code is passed into the app from SPiD after the user verified their email.</p>
+<p>The authorization code is passed into the app from Schibsted account after the user verified their email.</p>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
     <p><code><a href="../Enums/AppLaunchData.html">AppLaunchData</a></code></p>
@@ -1341,11 +1341,11 @@ all of your client&rsquo;s required fields.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Retrieve the latest terms &amp; conditions links for the platform (i.e. SPiD) and client (i.e. your app).</p>
+                        <p>Retrieve the latest terms &amp; conditions links for Schibsted account and client (i.e. your app).</p>
 
-<p>The platform terms returned are the default ones associated with the identity platform.
+<p>The <q>platform</q> terms returned are the default ones associated with Schibsted account.
 The client terms are what are associated with your client ID and can be set in
-<a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a> under <q>Assign T&C</q> page.</p>
+<a href="https://techdocs.login.schibsted.com/selfservice/access/">Schibsted account Self Service</a> under <q>Assign T&C</q> page.</p>
 
                       </div>
                       <div class="declaration">
@@ -1393,7 +1393,7 @@ The client terms are what are associated with your client ID and can be set in
                       <div class="abstract">
                         <p>Fetches the list of required fields that this client expects</p>
 
-<p>The required fields can be set in <a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a>.</p>
+<p>The required fields can be set in <a href="https://techdocs.login.schibsted.com/selfservice/access/">Schibsted account Self Service</a>.</p>
 
                       </div>
                       <div class="declaration">
@@ -1441,8 +1441,8 @@ The client terms are what are associated with your client ID and can be set in
                       <div class="abstract">
                         <p>Retrieve information from self serivice about your app</p>
 
-<p>Some information from spid that is associated with your client ID and can be set in
-<a href="http://techdocs.spid.no/selfservice/access/">SPiD selfservice</a></p>
+<p>Some information from Schibsted account that is associated with your client ID and can be set in
+<a href="https://techdocs.login.schibsted.com/selfservice/access/">Schibsted account Self Service</a></p>
 
                       </div>
                       <div class="declaration">
@@ -1511,7 +1511,7 @@ The client terms are what are associated with your client ID and can be set in
         </section>
         <section id="footer">
           <p>© 2016-2018 Schibsted Products &amp; Technology</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
