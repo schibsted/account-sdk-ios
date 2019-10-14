@@ -100,4 +100,8 @@
 
 "OneStepLoginScreen.invalidPassword" = "Syöttämäsi salasana on virheellinen. Yritä uudelleen.";
 "OneStepLoginScreen.proceed" = "Jatka";
+"OneStepLoginScreen.skip" = "hypätä yli";
 "OneStepLoginScreen.whatsThis" = "Mikä tämä on?";
+"OneStepLoginScreen.inputTitle.email" = "Anna sähköpostiosoitteesi";
+"OneStepLoginScreen.inputTitle.password" = "Kirjoita salasanasi";
+"OneStepLoginScreen.title" = "Kirjaudu sisään";

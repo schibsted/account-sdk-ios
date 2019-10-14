@@ -100,5 +100,9 @@
 
 "OneStepLoginScreen.invalidPassword" = "Passordet du oppga er feil. Vennligst prøv igjen.";
 "OneStepLoginScreen.proceed" = "Fortsett";
+"OneStepLoginScreen.skip" = "Hopp over";
 "OneStepLoginScreen.whatsThis" = "Hva er dette?";
 "OneStepLoginScreen.persistentLogin" = "Husk meg på denne enheten";
+"OneStepLoginScreen.inputTitle.email" = "Skriv inn din e-postadresse";
+"OneStepLoginScreen.inputTitle.password" = "Vennligst oppgi passordet ditt";
+"OneStepLoginScreen.title" = "Logg inn";

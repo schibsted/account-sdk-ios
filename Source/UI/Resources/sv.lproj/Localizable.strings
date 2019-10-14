@@ -100,5 +100,9 @@
 
 "OneStepLoginScreen.invalidPassword" = "Lösenordet du angav är felaktigt. Försök igen.";
 "OneStepLoginScreen.proceed" = "Fortsätt";
+"OneStepLoginScreen.skip" = "Hoppa över";
 "OneStepLoginScreen.whatsThis" = "Vad är detta?";
 "OneStepLoginScreen.persistentLogin" = "Kom ihåg mig på den här enheten";
+"OneStepLoginScreen.inputTitle.email" = "Ange din e-postadress";
+"OneStepLoginScreen.inputTitle.password" = "Ange ditt lösenord";
+"OneStepLoginScreen.title" = "Logga in";

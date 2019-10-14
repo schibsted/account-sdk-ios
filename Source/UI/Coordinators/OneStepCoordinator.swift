@@ -51,8 +51,7 @@ extension OneStepCoordinator {
         completion: @escaping (Output) -> Void
     ) {
         let navigationSettings = NavigationSettings(
-            cancel: configuration.isCancelable ? { completion(.cancel) } : nil,
-            back: { completion(.back) }
+            cancel: configuration.isCancelable ? { completion(.cancel) } : nil
         )
         let viewModel = OneStepViewModel(
             localizedTeaserText: localizedTeaserText,

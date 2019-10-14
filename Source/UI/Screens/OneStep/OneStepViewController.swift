@@ -64,10 +64,39 @@ class OneStepViewController: IdentityUIViewController {
         }
     }
 
-    // TODO fix UI for teaser (missing logos?)
     @IBOutlet var teaser: NormalLabel! {
         didSet {
             self.teaser.text = self.viewModel.localizedTeaserText
+        }
+    }
+
+    @IBOutlet var emailLabel: NormalLabel! {
+        didSet {
+            self.emailLabel.text = self.viewModel.emailInputTitle
+        }
+    }
+    @IBOutlet var passwordLabel: NormalLabel! {
+        didSet {
+            self.passwordLabel.text = self.viewModel.passwordInputTitle
+        }
+    }
+
+    @IBOutlet var backgroundView: UIView! {
+        didSet {
+            self.backgroundView.backgroundColor = .schibstedLightGray
+        }
+    }
+
+    @IBOutlet var inputError: ErrorLabel! {
+        didSet {
+            self.inputError.isHidden = true
+        }
+    }
+
+
+    @IBOutlet var skipButton: SecondaryButton! {
+        didSet {
+            self.skipButton.setTitle(self.viewModel.skip, for: .normal)
         }
     }
 
@@ -110,10 +139,11 @@ class OneStepViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // TODO get raw string from viewModel
+        // TODO get raw "Done" string from viewModel instead
         let toolbar = UIToolbar.forKeyboard(target: self, doneString: "Done", doneSelector: #selector(self.didClickContinue))
 
         self.password.inputAccessoryView = toolbar
+        self.skipButton.isHidden = !self.configuration.isSkippable
     }
 
     override func startLoading() {
@@ -126,6 +156,10 @@ class OneStepViewController: IdentityUIViewController {
     override func endLoading() {
         super.endLoading()
         self.continueButton.isAnimating = false
+    }
+
+    override var navigationTitle: String {
+        return self.viewModel.title
     }
 
     @discardableResult override func showInlineError(_ error: ClientError) -> Bool {
@@ -144,10 +178,5 @@ class OneStepViewController: IdentityUIViewController {
         self.password.layer.borderColor = self.theme.colors.errorBorder.cgColor
 
         return true
-    }
-    @IBOutlet var inputError: ErrorLabel! {
-        didSet {
-            self.inputError.isHidden = true
-        }
     }
 }

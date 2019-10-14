@@ -100,4 +100,8 @@
 
 "OneStepLoginScreen.invalidPassword" = "The password you entered is incorrect. Please try again.";
 "OneStepLoginScreen.proceed" = "Continue";
+"OneStepLoginScreen.skip" = "Skip";
 "OneStepLoginScreen.whatsThis" = "What's this?";
+"OneStepLoginScreen.inputTitle.email" = "Enter your email address";
+"OneStepLoginScreen.inputTitle.password" = "Enter your password";
+"OneStepLoginScreen.title" = "Log in";
