@@ -10,13 +10,13 @@ private class IdentityUIBarButtonItem: UIBarButtonItem {
 
     convenience init(title: String?, style: UIBarButtonItem.Style, action: (() -> Void)?) {
         self.init(title: title, style: style, target: nil, action: nil)
-        self.target = self
-        self.action = #selector(self.barButtonItemPressed(sender:))
-        self.actionHandler = action
+        target = self
+        self.action = #selector(barButtonItemPressed(sender:))
+        actionHandler = action
     }
 
     @objc func barButtonItemPressed(sender _: UIBarButtonItem) {
-        self.actionHandler?()
+        actionHandler?()
     }
 }
 
@@ -28,7 +28,7 @@ struct NavigationSettings {
 
     init(cancel: Action? = nil, back: Action? = nil) {
         self.cancel = cancel
-        self.navigateBack = back
+        navigateBack = back
     }
 }
 
@@ -41,7 +41,7 @@ class IdentityUIViewController: UIViewController {
     let navigationSettings: NavigationSettings
 
     var theme: IdentityUITheme {
-        return self.configuration.theme
+        return configuration.theme
     }
 
     @IBOutlet var scrollView: UIScrollView!
@@ -73,16 +73,16 @@ class IdentityUIViewController: UIViewController {
     let trackerViewAdditionalFields: [TrackingEvent.AdditionalField]
 
     private func applyThemeToView(_ view: UIView) {
-        (view as? Themeable)?.applyTheme(theme: self.theme)
+        (view as? Themeable)?.applyTheme(theme: theme)
         for subview in view.subviews {
-            self.applyThemeToView(subview)
+            applyThemeToView(subview)
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.applyThemeToView(self.view)
+        applyThemeToView(view)
 
         var leftBarButtonItems: [UIBarButtonItem] = []
 
@@ -92,27 +92,27 @@ class IdentityUIViewController: UIViewController {
                 style: .plain,
                 action: backAction
             )
-            backBarButtonItem.image = self.theme.icons.navigateBack
-            backBarButtonItem.tintColor = self.theme.colors.iconTint
+            backBarButtonItem.image = theme.icons.navigateBack
+            backBarButtonItem.tintColor = theme.colors.iconTint
 
             leftBarButtonItems.append(backBarButtonItem)
         } else {
-            self.navigationItem.leftBarButtonItem = nil
+            navigationItem.leftBarButtonItem = nil
         }
 
-        if self.leftAlignNavigationTitle {
+        if leftAlignNavigationTitle {
             let titleLabel = UILabel()
-            titleLabel.text = self.navigationTitle
-            titleLabel.font = self.configuration.theme.fonts.title
+            titleLabel.text = navigationTitle
+            titleLabel.font = configuration.theme.fonts.title
             titleLabel.sizeToFit()
             let titleBarButtonItem = UIBarButtonItem(customView: titleLabel)
             leftBarButtonItems.append(titleBarButtonItem)
-            self.title = nil
+            title = nil
         } else {
-            self.title = self.navigationTitle
+            title = navigationTitle
         }
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItems = leftBarButtonItems
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItems = leftBarButtonItems
 
         if let cancelAction = self.navigationSettings.cancel {
             let barButtonItem = IdentityUIBarButtonItem(
@@ -120,22 +120,22 @@ class IdentityUIViewController: UIViewController {
                 style: .plain,
                 action: cancelAction
             )
-            barButtonItem.image = self.theme.icons.cancelNavigation
-            barButtonItem.tintColor = self.theme.colors.iconTint
-            self.navigationItem.rightBarButtonItem = barButtonItem
+            barButtonItem.image = theme.icons.cancelNavigation
+            barButtonItem.tintColor = theme.colors.iconTint
+            navigationItem.rightBarButtonItem = barButtonItem
         }
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        self.view.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.configuration.tracker?.interaction(.view, with: self.trackerScreenID, additionalFields: self.trackerViewAdditionalFields)
+        configuration.tracker?.interaction(.view, with: trackerScreenID, additionalFields: trackerViewAdditionalFields)
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(self.keyboardDidShow),
+            selector: #selector(keyboardDidShow),
             name: UIResponder.keyboardDidShowNotification,
             object: nil
         )
@@ -147,7 +147,7 @@ class IdentityUIViewController: UIViewController {
     }
 
     @objc private func dismissKeyboard() {
-        self.view.endEditing(false)
+        view.endEditing(false)
     }
 
     @objc private func keyboardDidShow(notification: NSNotification) {
@@ -182,11 +182,11 @@ class IdentityUIViewController: UIViewController {
     }
 
     func startLoading() {
-        self.view.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = false
     }
 
     func endLoading() {
-        self.view.isUserInteractionEnabled = true
+        view.isUserInteractionEnabled = true
     }
 
     @discardableResult func showInlineError(_: ClientError) -> Bool {

@@ -7,9 +7,9 @@ import Foundation
 
 class LogoStackView: UIStackView, Themeable {
     func applyTheme(theme: IdentityUITheme) {
-        self.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        heightAnchor.constraint(equalToConstant: 20).isActive = true
 
-        self.alignment = .center
+        alignment = .center
 
         let schImage = UIImage(named: "schibsted-logo", in: Bundle(for: IdentityUI.self), compatibleWith: nil)
         let schImageView = UIImageView(image: schImage)
@@ -30,12 +30,12 @@ class LogoStackView: UIStackView, Themeable {
             customLogoImageView.widthAnchor.constraint(equalToConstant: ceil(20 * scale)).isActive = true
             customLogoImageView.translatesAutoresizingMaskIntoConstraints = false
 
-            self.addArrangedSubview(customLogoImageView)
-            self.addArrangedSubview(filler)
-            self.addArrangedSubview(schImageView)
+            addArrangedSubview(customLogoImageView)
+            addArrangedSubview(filler)
+            addArrangedSubview(schImageView)
         } else {
-            self.addArrangedSubview(schImageView)
-            self.addArrangedSubview(filler)
+            addArrangedSubview(schImageView)
+            addArrangedSubview(filler)
         }
     }
 }

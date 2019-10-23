@@ -47,10 +47,10 @@ extension ClientError {
             //  * unverifiedEmail has no translation because it's not an error in the UI flow, it leads to a "check your inbox" screen
             //  * alreadyRegistered should never happen because it happens during signup, and we should check identifier status before getting there
             //
-            return self.description
+            return description
         case .requiredField, .agreements:
             // These are just here because of tracking right now. See GH issues 601, 603
-            return self.description
+            return description
         case .passwordTooShort:
             return "PasswordScreenString.passwordTooShort".localized(from: localizationBundle)
         }

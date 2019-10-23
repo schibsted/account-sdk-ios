@@ -39,19 +39,19 @@ class AutoRefreshTask: TaskProtocol {
             completion(.failure(.invalidUser))
             return
         }
-        var newRequest = self.request
+        var newRequest = request
         newRequest.setValue(nil, forHTTPHeaderField: AutoRefreshURLProtocol.key)
         newRequest.addValue(accessToken.bearer, forHTTPHeaderField: "Authorization")
 
-        self.dataTask = Networking.dataTask(for: AutoRefreshTask.session, request: newRequest, completion: { data, response, error in
+        dataTask = Networking.dataTask(for: AutoRefreshTask.session, request: newRequest, completion: { data, response, error in
             completion(.success((data, response, error)))
         })
 
-        self.dataTask?.resume()
+        dataTask?.resume()
     }
 
     func didCancel() {
-        self.dataTask?.cancel()
+        dataTask?.cancel()
     }
 
     func shouldRefresh(result: Result<SuccessType, ClientError>) -> Bool {
@@ -105,12 +105,12 @@ class AutoRefreshURLProtocol: URLProtocol {
     }
 
     override func startLoading() {
-        log(from: self, self.request)
+        log(from: self, request)
         guard let userInstanceAddressString = request.allHTTPHeaderFields?[type(of: self).key],
             let userInstanceAddressInt = Int(userInstanceAddressString),
             let user = User.globalStore[userInstanceAddressInt]
         else {
-            self.client?.urlProtocol(self, didFailWithError: ClientError.invalidUser)
+            client?.urlProtocol(self, didFailWithError: ClientError.invalidUser)
             return
         }
 
@@ -126,7 +126,7 @@ class AutoRefreshURLProtocol: URLProtocol {
             }.descriptionText = "\(type(of: self))"
         }
 
-        self.taskHandle = taskManager.add(task: AutoRefreshTask(request: self.request, user: user)) { [weak self] result in
+        taskHandle = taskManager.add(task: AutoRefreshTask(request: request, user: user)) { [weak self] result in
             guard let strongSelf = self else {
                 return
             }
@@ -151,7 +151,7 @@ class AutoRefreshURLProtocol: URLProtocol {
     }
 
     override func stopLoading() {
-        log(from: self, self.request)
-        self.taskHandle?.cancel()
+        log(from: self, request)
+        taskHandle?.cancel()
     }
 }

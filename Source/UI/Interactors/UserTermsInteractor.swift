@@ -11,10 +11,10 @@ class UserTermsInteractor {
     }
 
     func fetchStatus(completion: @escaping BoolResultCallback) {
-        self.user.agreements.status(completion: completion)
+        user.agreements.status(completion: completion)
     }
 
     func acceptTerms(completion: @escaping NoValueCallback) {
-        self.user.agreements.accept(completion: completion)
+        user.agreements.accept(completion: completion)
     }
 }

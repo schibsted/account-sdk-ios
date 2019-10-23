@@ -16,16 +16,16 @@ class VerifyViewController: IdentityUIViewController {
 
     @IBOutlet var whatsThisButton: UIButton! {
         didSet {
-            self.whatsThisButton.setTitle(self.viewModel.whatsThis, for: .normal)
-            self.whatsThisButton.titleLabel?.font = self.theme.fonts.info
-            self.whatsThisButton.contentEdgeInsets.top = 1
+            whatsThisButton.setTitle(viewModel.whatsThis, for: .normal)
+            whatsThisButton.titleLabel?.font = theme.fonts.info
+            whatsThisButton.contentEdgeInsets.top = 1
         }
     }
     @IBAction func didClickWhatLink(_: Any) {
-        self.configuration.tracker?.engagement(.click(on: .rememberMeInfo), in: self.trackerScreenID)
-        self.didRequestAction?(.info(
-            title: self.viewModel.persistentLogin,
-            text: self.viewModel.rememberMe
+        configuration.tracker?.engagement(.click(on: .rememberMeInfo), in: trackerScreenID)
+        didRequestAction?(.info(
+            title: viewModel.persistentLogin,
+            text: viewModel.rememberMe
         ))
     }
 
@@ -33,57 +33,57 @@ class VerifyViewController: IdentityUIViewController {
 
     @IBOutlet var shouldPersistUserCheck: Checkbox! {
         didSet {
-            self.shouldPersistUserCheck.isChecked = true
+            shouldPersistUserCheck.isChecked = true
         }
     }
     @IBOutlet var shouldPersistUserText: NormalLabel! {
         didSet {
-            self.shouldPersistUserText.text = self.viewModel.persistentLogin
+            shouldPersistUserText.text = viewModel.persistentLogin
         }
     }
     @IBOutlet var text: NormalLabel! {
         didSet {
-            self.text.text = self.viewModel.subtext
+            text.text = viewModel.subtext
         }
     }
     @IBOutlet var inputTitle: NormalLabel! {
         didSet {
-            self.inputTitle.text = self.viewModel.inputTitle
+            inputTitle.text = viewModel.inputTitle
         }
     }
     @IBOutlet var sentToText: NormalLabel! {
         didSet {
-            self.sentToText.text = self.viewModel.identifier.normalizedString
+            sentToText.text = viewModel.identifier.normalizedString
         }
     }
     @IBOutlet var resend: UIButton! {
         didSet {
-            let string = NSAttributedString(string: self.viewModel.resend, attributes: self.theme.textAttributes.linkButton)
-            self.resend.setAttributedTitle(string, for: .normal)
+            let string = NSAttributedString(string: viewModel.resend, attributes: theme.textAttributes.linkButton)
+            resend.setAttributedTitle(string, for: .normal)
         }
     }
     @IBOutlet var changeIdentifier: UIButton! {
         didSet {
-            let string = NSAttributedString(string: self.viewModel.change, attributes: self.theme.textAttributes.linkButton)
-            self.changeIdentifier.setAttributedTitle(string, for: .normal)
+            let string = NSAttributedString(string: viewModel.change, attributes: theme.textAttributes.linkButton)
+            changeIdentifier.setAttributedTitle(string, for: .normal)
         }
     }
     @IBOutlet var errorText: ErrorLabel! {
         didSet {
-            self.errorText.isHidden = true
+            errorText.isHidden = true
         }
     }
     @IBOutlet var verify: PrimaryButton! {
         didSet {
-            self.verify.setTitle(self.viewModel.proceed, for: .normal)
+            verify.setTitle(viewModel.proceed, for: .normal)
         }
     }
     @IBOutlet var verifyButtonLayoutGuide: NSLayoutConstraint!
     @IBOutlet var textFieldStackView: UIStackView! {
         didSet {
-            let toolbar = UIToolbar.forKeyboard(target: self, doneString: self.viewModel.done, doneSelector: #selector(self.didClickVerify))
-            self.maxIndex = self.textFieldStackView.arrangedSubviews.count
-            self.textFieldStackView.arrangedSubviews.enumerated().forEach {
+            let toolbar = UIToolbar.forKeyboard(target: self, doneString: viewModel.done, doneSelector: #selector(didClickVerify))
+            maxIndex = textFieldStackView.arrangedSubviews.count
+            textFieldStackView.arrangedSubviews.enumerated().forEach {
                 guard let codeBox = $1 as? ValidateTextField else {
                     return
                 }
@@ -105,7 +105,7 @@ class VerifyViewController: IdentityUIViewController {
     private static let zeroWidthSpace = "\u{200B}"
 
     var enteredCode: String {
-        return self.textFieldStackView.arrangedSubviews.reduce("") { [weak self] memo, codeBox in
+        return textFieldStackView.arrangedSubviews.reduce("") { [weak self] memo, codeBox in
             guard let codeBox = codeBox as? TextField else {
                 return ""
             }
@@ -126,78 +126,78 @@ class VerifyViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.stackViewClicked(_:)))
-        self.textFieldStackView.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stackViewClicked(_:)))
+        textFieldStackView.addGestureRecognizer(tapGesture)
 
-        self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.textFieldStackView
+        viewToEnsureVisibilityOfAfterKeyboardAppearance = textFieldStackView
     }
 
     override var navigationTitle: String {
-        return self.viewModel.title
+        return viewModel.title
     }
 
     @IBAction func didClickResend(_: Any) {
-        self.configuration.tracker?.engagement(.click(on: .resend), in: self.trackerScreenID)
-        self.didRequestAction?(.resendCode)
+        configuration.tracker?.engagement(.click(on: .resend), in: trackerScreenID)
+        didRequestAction?(.resendCode)
     }
 
     @IBAction func didClickVerify(_: Any) {
-        self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])
-        guard self.enteredCode.count == VerifyViewModel.numberOfCodeDigits else {
-            self.showInlineError(.invalidCode)
+        configuration.tracker?.interaction(.submit, with: trackerScreenID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])
+        guard enteredCode.count == VerifyViewModel.numberOfCodeDigits else {
+            showInlineError(.invalidCode)
             return
         }
 
-        self.didRequestAction?(.enter(code: self.enteredCode, shouldPersistUser: self.shouldPersistUserCheck.isChecked))
+        didRequestAction?(.enter(code: enteredCode, shouldPersistUser: shouldPersistUserCheck.isChecked))
     }
 
     @IBAction func didClickChangeIdentifier(_: Any) {
-        self.didRequestAction?(.changeIdentifier)
+        didRequestAction?(.changeIdentifier)
     }
 
     fileprivate func resetError() {
-        self.textFieldStackView.arrangedSubviews.forEach {
+        textFieldStackView.arrangedSubviews.forEach {
             guard let text = $0 as? ValidateTextField else {
                 return
             }
             text.isError = false
             text.clearButtonMode = .never
         }
-        self.errorText.text = ""
-        self.errorText.isHidden = false
+        errorText.text = ""
+        errorText.isHidden = false
     }
 
     override func startLoading() {
         super.startLoading()
-        self.resetError()
-        self.verify.isAnimating = true
-        self.navigationController?.navigationBar.isUserInteractionEnabled = false
+        resetError()
+        verify.isAnimating = true
+        navigationController?.navigationBar.isUserInteractionEnabled = false
     }
 
     override func endLoading() {
         super.endLoading()
-        self.verify.isAnimating = false
-        self.navigationController?.navigationBar.isUserInteractionEnabled = true
+        verify.isAnimating = false
+        navigationController?.navigationBar.isUserInteractionEnabled = true
     }
 
     @discardableResult override func showInlineError(_ error: ClientError) -> Bool {
         let message: String
         switch error {
         case .invalidCode:
-            message = self.viewModel.invalidCode
+            message = viewModel.invalidCode
         default:
             return false
         }
 
-        self.textFieldStackView.arrangedSubviews.forEach {
+        textFieldStackView.arrangedSubviews.forEach {
             guard let textField = $0 as? ValidateTextField else {
                 return
             }
             textField.isError = true
         }
-        self.errorText.text = message
-        self.errorText.isHidden = false
-        self.configuration.tracker?.error(.validation(error), in: self.trackerScreenID)
+        errorText.text = message
+        errorText.isHidden = false
+        configuration.tracker?.error(.validation(error), in: trackerScreenID)
 
         return true
     }
@@ -205,7 +205,7 @@ class VerifyViewController: IdentityUIViewController {
 
 extension VerifyViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.didClickVerify(textField)
+        didClickVerify(textField)
         return true
     }
 
@@ -216,8 +216,8 @@ extension VerifyViewController: UITextFieldDelegate {
             return false
         }
 
-        if index != self.currentIndex {
-            self.nextField(index: self.currentIndex)
+        if index != currentIndex {
+            nextField(index: currentIndex)
             return false
         }
 
@@ -241,11 +241,11 @@ extension VerifyViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let oldText = (textField.text ?? "") as NSString
         let newText = oldText.replacingCharacters(in: range, with: string)
-        return self.isValidUpdate(code: newText)
+        return isValidUpdate(code: newText)
     }
 
     private func isValidUpdate(code: String) -> Bool {
-        let normalized = self.normalizeCodeText(code)
+        let normalized = normalizeCodeText(code)
         if normalized.isEmpty {
             return true
         }
@@ -254,7 +254,7 @@ extension VerifyViewController: UITextFieldDelegate {
         let hasOnlyDigits = normalized.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
 
         if normalized.count == VerifyViewModel.numberOfCodeDigits, hasOnlyDigits {
-            self.updateAllTextFields(numbers: normalized.map(String.init))
+            updateAllTextFields(numbers: normalized.map(String.init))
             return false
         }
 
@@ -262,12 +262,12 @@ extension VerifyViewController: UITextFieldDelegate {
     }
 
     @objc func textFieldChanged(_ sender: UITextField) {
-        self.resetError()
-        self.handleTextFieldChange(code: sender.text ?? "")
+        resetError()
+        handleTextFieldChange(code: sender.text ?? "")
     }
 
     @objc func stackViewClicked(_: AnyObject) {
-        self.nextField(index: self.currentIndex)
+        nextField(index: currentIndex)
     }
 
     private func normalizeCodeText(_ text: String) -> String {
@@ -279,18 +279,18 @@ extension VerifyViewController: UITextFieldDelegate {
     }
 
     private func handleTextFieldChange(code: String) {
-        let normalText = self.normalizeCodeText(code)
+        let normalText = normalizeCodeText(code)
         if normalText.isEmpty {
-            let prevIndex = self.currentIndex - 1
+            let prevIndex = currentIndex - 1
             if prevIndex >= 0 {
-                self.currentIndex = prevIndex
-                self.previousField(index: prevIndex)
+                currentIndex = prevIndex
+                previousField(index: prevIndex)
             }
         } else {
-            let nextIndex = self.currentIndex + 1
-            if nextIndex < self.maxIndex {
-                self.currentIndex = nextIndex
-                self.nextField(index: nextIndex)
+            let nextIndex = currentIndex + 1
+            if nextIndex < maxIndex {
+                currentIndex = nextIndex
+                nextField(index: nextIndex)
             }
         }
     }
@@ -316,7 +316,7 @@ extension VerifyViewController {
     }
 
     func updateAllTextFields(numbers: [String]) {
-        self.textFieldStackView.arrangedSubviews.enumerated().forEach {
+        textFieldStackView.arrangedSubviews.enumerated().forEach {
             guard let text = $1 as? ValidateTextField else {
                 return
             }

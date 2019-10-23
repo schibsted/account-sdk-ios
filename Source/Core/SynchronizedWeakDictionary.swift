@@ -11,7 +11,7 @@ class WeakValue<V: AnyObject>: CustomStringConvertible {
         self.value = value
     }
     var description: String {
-        return "WeakValue<\(V.self)>(\(String(describing: self.value)))"
+        return "WeakValue<\(V.self)>(\(String(describing: value)))"
     }
 }
 
@@ -20,10 +20,10 @@ class SynchronizedWeakDictionary<K: Hashable, V: AnyObject> {
     subscript(key: K) -> V? {
         set {
             guard newValue != nil else {
-                self.dictionary[key] = nil
+                dictionary[key] = nil
                 return
             }
-            self.dictionary[key] = WeakValue(newValue)
+            dictionary[key] = WeakValue(newValue)
         }
         get {
             guard let weakValue = self.dictionary.removeValue(forKey: key, if: { $0.value == nil }) else {
@@ -34,14 +34,14 @@ class SynchronizedWeakDictionary<K: Hashable, V: AnyObject> {
     }
 
     var count: Int {
-        return self.dictionary.count
+        return dictionary.count
     }
 
     func removeAll(keepingCapacity keepCapacity: Bool = false) {
-        self.dictionary.removeAll(keepingCapacity: keepCapacity)
+        dictionary.removeAll(keepingCapacity: keepCapacity)
     }
 
     func forEach(_ callback: @escaping (K, WeakValue<V>) -> Void) {
-        self.dictionary.forEach(callback)
+        dictionary.forEach(callback)
     }
 }

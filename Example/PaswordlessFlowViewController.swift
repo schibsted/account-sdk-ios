@@ -16,8 +16,8 @@ class PaswordlessFlowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.authCodeField.isEnabled = false
-        self.resendButton.isEnabled = false
+        authCodeField.isEnabled = false
+        resendButton.isEnabled = false
     }
 
     @IBAction func sendSMS(_: UIButton) {
@@ -64,7 +64,7 @@ class PaswordlessFlowViewController: UIViewController {
             return
         }
 
-        UIApplication.identityManager.validate(oneTimeCode: code, persistUser: self.shouldPersistUserSwitch.isOn) { result in
+        UIApplication.identityManager.validate(oneTimeCode: code, persistUser: shouldPersistUserSwitch.isOn) { result in
             switch result {
             case .success:
                 print("Code validated!")

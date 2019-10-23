@@ -35,12 +35,12 @@ public struct UserAsset: JSONParsable {
     public let createdAt: Date?
 
     init(from json: JSONObject) throws {
-        self.id = try? json.string(for: "assetId")
+        id = try? json.string(for: "assetId")
 
-        self.status = json.accessStatus(for: "status")
+        status = json.accessStatus(for: "status")
 
-        self.updatedAt = json.date(for: "updated")
-        self.createdAt = json.date(for: "created")
+        updatedAt = json.date(for: "updated")
+        createdAt = json.date(for: "created")
     }
 }
 
@@ -48,10 +48,10 @@ extension UserAsset: CustomStringConvertible {
     /// human-readable string representation (YAML)
     public var description: String {
         var desc = "UserAsset:\n"
-        desc = desc.appendingFormat("  id: %@\n", self.id ?? "null")
-        desc = desc.appendingFormat("  status: %@\n", self.status?.description ?? "null")
-        desc = desc.appendingFormat("  updatedAt: %@\n", self.updatedAt?.description ?? "null")
-        desc = desc.appendingFormat("  createdAt: %@\n", self.createdAt?.description ?? "null")
+        desc = desc.appendingFormat("  id: %@\n", id ?? "null")
+        desc = desc.appendingFormat("  status: %@\n", status?.description ?? "null")
+        desc = desc.appendingFormat("  updatedAt: %@\n", updatedAt?.description ?? "null")
+        desc = desc.appendingFormat("  createdAt: %@\n", createdAt?.description ?? "null")
         return desc
     }
 }

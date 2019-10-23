@@ -17,46 +17,46 @@ class VerifyViewModel {
 
 extension VerifyViewModel {
     var subtext: String {
-        return "VerifyScreenString.subtext".localized(from: self.localizationBundle, self.identifier.normalizedString)
+        return "VerifyScreenString.subtext".localized(from: localizationBundle, identifier.normalizedString)
     }
 
     var inputTitle: String {
-        return "VerifyScreenString.inputTitle".localized(from: self.localizationBundle)
+        return "VerifyScreenString.inputTitle".localized(from: localizationBundle)
     }
 
     var resend: String {
-        return "VerifyScreenString.resend".localized(from: self.localizationBundle)
+        return "VerifyScreenString.resend".localized(from: localizationBundle)
     }
 
     var change: String {
-        return "VerifyScreenString.change".localized(from: self.localizationBundle)
+        return "VerifyScreenString.change".localized(from: localizationBundle)
     }
 
     var proceed: String {
-        return "VerifyScreenString.proceed".localized(from: self.localizationBundle)
+        return "VerifyScreenString.proceed".localized(from: localizationBundle)
     }
 
     var done: String {
-        return "GlobalString.done".localized(from: self.localizationBundle)
+        return "GlobalString.done".localized(from: localizationBundle)
     }
 
     var title: String {
-        return "VerifyScreenString.title".localized(from: self.localizationBundle)
+        return "VerifyScreenString.title".localized(from: localizationBundle)
     }
 
     var invalidCode: String {
-        return ClientError.invalidCode.localized(from: self.localizationBundle)
+        return ClientError.invalidCode.localized(from: localizationBundle)
     }
 
     var persistentLogin: String {
-        return "PasswordScreenString.persistentLogin".localized(from: self.localizationBundle)
+        return "PasswordScreenString.persistentLogin".localized(from: localizationBundle)
     }
 
     var whatsThis: String {
-        return "PasswordScreenString.whatsThis".localized(from: self.localizationBundle)
+        return "PasswordScreenString.whatsThis".localized(from: localizationBundle)
     }
 
     var rememberMe: String {
-        return "InfoString.rememberMe".localized(from: self.localizationBundle)
+        return "InfoString.rememberMe".localized(from: localizationBundle)
     }
 }

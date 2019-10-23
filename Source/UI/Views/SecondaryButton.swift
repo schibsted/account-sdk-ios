@@ -5,7 +5,7 @@
 
 class SecondaryButton: PrimaryButton {
     override func applyTheme(theme: IdentityUITheme) {
-        self.applyTheme(
+        applyTheme(
             normalColor: theme.colors.secondaryButton,
             pressedColor: theme.colors.secondaryButtonPressed,
             disabledColor: theme.colors.secondaryButtonDisabled,

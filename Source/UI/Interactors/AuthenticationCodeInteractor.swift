@@ -11,7 +11,7 @@ class AuthenticationCodeInteractor {
     }
 
     func validate(authCode: String, completion: @escaping (Result<User, ClientError>) -> Void) {
-        self.identityManager.validate(authCode: authCode, persistUser: false) { [weak self] result in
+        identityManager.validate(authCode: authCode, persistUser: false) { [weak self] result in
             guard let strongSelf = self else { return }
             switch result {
             case .success:

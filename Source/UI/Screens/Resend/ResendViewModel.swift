@@ -17,23 +17,23 @@ class ResendViewModel {
 
 extension ResendViewModel {
     var header: String {
-        return "ResendScreenString.header".localized(from: self.localizationBundle)
+        return "ResendScreenString.header".localized(from: localizationBundle)
     }
 
     var subtext: String {
-        return "ResendScreenString.subtext".localized(from: self.localizationBundle)
+        return "ResendScreenString.subtext".localized(from: localizationBundle)
     }
 
     var editText: String {
-        switch self.identifier {
+        switch identifier {
         case .phone:
-            return "ResendScreenString.edit.phone".localized(from: self.localizationBundle)
+            return "ResendScreenString.edit.phone".localized(from: localizationBundle)
         case .email:
-            return "ResendScreenString.edit.email".localized(from: self.localizationBundle)
+            return "ResendScreenString.edit.email".localized(from: localizationBundle)
         }
     }
 
     var proceed: String {
-        return "ResendScreenString.proceed".localized(from: self.localizationBundle)
+        return "ResendScreenString.proceed".localized(from: localizationBundle)
     }
 }

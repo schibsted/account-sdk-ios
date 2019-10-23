@@ -21,7 +21,7 @@ class FetchUserProductTask: TaskProtocol {
         user.api.fetchUserProduct(
             oauthToken: tokens.accessToken,
             userID: userID,
-            productID: self.productID
+            productID: productID
         ) { [weak self] result in
             guard let strongSelf = self else { return }
 

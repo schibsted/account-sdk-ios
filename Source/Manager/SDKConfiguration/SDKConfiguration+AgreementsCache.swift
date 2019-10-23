@@ -39,7 +39,7 @@ extension SDKConfiguration {
         public let maxDays: UInt32
 
         func load(forUserID userID: String) -> Agreements? {
-            guard self.isOn, let data = Settings.value(forKey: Keys.agreementsData) as? JSONObject else {
+            guard isOn, let data = Settings.value(forKey: Keys.agreementsData) as? JSONObject else {
                 return nil
             }
             do {
@@ -61,12 +61,12 @@ extension SDKConfiguration {
         }
 
         func store(_ agreements: Agreements, forUserID userID: String) {
-            guard self.isOn else {
+            guard isOn else {
                 return
             }
             let now = Date()
             let hoursPerDay: UInt32 = 24
-            let number = Int(arc4random_uniform(UInt32(self.maxDays - self.minDays) * hoursPerDay) + self.minDays * hoursPerDay)
+            let number = Int(arc4random_uniform(UInt32(maxDays - minDays) * hoursPerDay) + minDays * hoursPerDay)
             guard let later = Calendar.current.date(byAdding: .hour, value: number, to: now) else {
                 return
             }

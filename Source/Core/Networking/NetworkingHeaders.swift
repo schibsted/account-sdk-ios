@@ -19,6 +19,6 @@ extension Networking {
 
 extension URLRequest {
     mutating func setValue(_ value: String, for header: Networking.Header) {
-        self.setValue(value, forHTTPHeaderField: header.rawValue)
+        setValue(value, forHTTPHeaderField: header.rawValue)
     }
 }

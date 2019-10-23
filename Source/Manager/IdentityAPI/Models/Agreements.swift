@@ -10,15 +10,15 @@ struct Agreements: JSONParsable {
     let platform: Bool
 
     init(acceptanceStatus: Bool) {
-        self.client = acceptanceStatus
-        self.platform = acceptanceStatus
+        client = acceptanceStatus
+        platform = acceptanceStatus
     }
 
     init(from json: JSONObject) throws {
         let data = try json.jsonObject(for: "data")
         let agreements = try data.jsonObject(for: "agreements")
-        self.platform = agreements["platform"] as? Bool ?? false
-        self.client = agreements["client"] as? Bool ?? false
+        platform = agreements["platform"] as? Bool ?? false
+        client = agreements["client"] as? Bool ?? false
     }
 
     func toJSON() -> JSONObject {

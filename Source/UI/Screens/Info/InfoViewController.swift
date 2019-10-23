@@ -8,20 +8,20 @@ import UIKit
 class InfoViewController: IdentityUIViewController {
     @IBOutlet var headerLabel: Heading! {
         didSet {
-            self.headerLabel.text = self.heading
+            headerLabel.text = heading
         }
     }
     @IBOutlet var textLabel: UILabel! {
         didSet {
-            self.textLabel.attributedText = NSAttributedString(
-                string: self.text,
-                attributes: self.theme.textAttributes.infoParagraph
+            textLabel.attributedText = NSAttributedString(
+                string: text,
+                attributes: theme.textAttributes.infoParagraph
             )
         }
     }
     @IBOutlet var ok: PrimaryButton! {
         didSet {
-            self.ok.setTitle("OK", for: .normal)
+            ok.setTitle("OK", for: .normal)
         }
     }
     @IBOutlet var stackBackground: UIView!
@@ -32,7 +32,7 @@ class InfoViewController: IdentityUIViewController {
     let text: String
 
     init(configuration: IdentityUIConfiguration, title: String, text: String, titleImage: UIImage?) {
-        self.heading = title
+        heading = title
         self.text = text
         self.titleImage = titleImage
         super.init(configuration: configuration, navigationSettings: NavigationSettings(), trackerScreenID: .popup(.info))
@@ -44,16 +44,16 @@ class InfoViewController: IdentityUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.stackBackground.layer.cornerRadius = self.theme.geometry.cornerRadius
-        self.stackBackground.clipsToBounds = true
+        stackBackground.layer.cornerRadius = theme.geometry.cornerRadius
+        stackBackground.clipsToBounds = true
         if let image = self.titleImage {
-            self.infoImage.image = image
+            infoImage.image = image
         } else {
-            self.infoImage.image = .schibstedInfoPlaceholder
+            infoImage.image = .schibstedInfoPlaceholder
         }
     }
 
     @IBAction func didClickContinue(_: Any) {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
 }

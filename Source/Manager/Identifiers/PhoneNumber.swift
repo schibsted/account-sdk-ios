@@ -14,12 +14,12 @@ public struct PhoneNumber: IdentifierProtocol {
 
     /// The string that is provided during initialization
     public var originalString: String {
-        return self.phoneNumber
+        return phoneNumber
     }
 
     /// The normalized form used internally (may or may not be different)
     public var normalizedString: String {
-        return self.normalizedPhoneNumber
+        return normalizedPhoneNumber
     }
 
     /// Represents the components of a full phone number, i.e. dialing code and number
@@ -37,13 +37,13 @@ public struct PhoneNumber: IdentifierProtocol {
         guard let numberOfDigits = numberOfDigitsInNormalizedCountryCode else {
             throw ClientError.invalidPhoneNumber
         }
-        let startIndexOfNumberPart = self.normalizedPhoneNumber.index(
-            self.normalizedPhoneNumber.startIndex,
+        let startIndexOfNumberPart = normalizedPhoneNumber.index(
+            normalizedPhoneNumber.startIndex,
             offsetBy: numberOfDigits
         )
         return Components(
-            countryCode: String(self.normalizedPhoneNumber[..<startIndexOfNumberPart]),
-            number: String(self.normalizedPhoneNumber[startIndexOfNumberPart...])
+            countryCode: String(normalizedPhoneNumber[..<startIndexOfNumberPart]),
+            number: String(normalizedPhoneNumber[startIndexOfNumberPart...])
         )
     }
 
@@ -63,9 +63,9 @@ public struct PhoneNumber: IdentifierProtocol {
         else {
             return nil
         }
-        self.phoneNumber = countryCode + number
-        self.normalizedPhoneNumber = normalizedCountryCode + normalizedNumber
-        self.numberOfDigitsInNormalizedCountryCode = normalizedCountryCode.count
+        phoneNumber = countryCode + number
+        normalizedPhoneNumber = normalizedCountryCode + normalizedNumber
+        numberOfDigitsInNormalizedCountryCode = normalizedCountryCode.count
     }
 
     /**
@@ -80,9 +80,9 @@ public struct PhoneNumber: IdentifierProtocol {
     public init?(fullNumber: String?) {
         guard let fullNumber = fullNumber else { return nil }
         guard let normalizedPhoneNumber = PhoneNumber.normalizeFullNumber(fullNumber) else { return nil }
-        self.phoneNumber = fullNumber
+        phoneNumber = fullNumber
         self.normalizedPhoneNumber = normalizedPhoneNumber
-        self.numberOfDigitsInNormalizedCountryCode = nil
+        numberOfDigitsInNormalizedCountryCode = nil
     }
 
     private static func normalizeFullNumber(_ value: String) -> String? {
@@ -104,9 +104,9 @@ public struct PhoneNumber: IdentifierProtocol {
 
     private static func normalizeCountryCode(_ value: String) -> String? {
         if !value.hasPrefix("+"), !value.hasPrefix("00") {
-            return self.normalizeFullNumber("+" + value)
+            return normalizeFullNumber("+" + value)
         } else {
-            return self.normalizeFullNumber(value)
+            return normalizeFullNumber(value)
         }
     }
 

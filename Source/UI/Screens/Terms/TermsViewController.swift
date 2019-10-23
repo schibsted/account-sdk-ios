@@ -17,43 +17,43 @@ class TermsViewController: IdentityUIViewController {
 
     @IBOutlet var subtext: NormalLabel! {
         didSet {
-            if case .signin = self.viewModel.loginFlowVariant {
+            if case .signin = viewModel.loginFlowVariant {
                 self.subtext.text = self.viewModel.subtextLogin
             } else {
-                self.subtext.text = self.viewModel.subtextCreate
+                subtext.text = viewModel.subtextCreate
             }
         }
     }
     @IBOutlet var termOneText: TextView! {
         didSet {
-            self.termOneText.isEditable = false
-            self.termOneText.delegate = self
-            self.termOneText.attributedText = self.viewModel.termsLink
+            termOneText.isEditable = false
+            termOneText.delegate = self
+            termOneText.attributedText = viewModel.termsLink
         }
     }
     @IBOutlet var termOneCheck: Checkbox!
     @IBOutlet var termOneError: ErrorLabel! {
         didSet {
-            self.termOneError.isHidden = true
+            termOneError.isHidden = true
         }
     }
     @IBOutlet var termTwoText: TextView! {
         didSet {
-            self.termTwoText.isEditable = false
-            self.termTwoText.delegate = self
-            self.termTwoText.attributedText = self.viewModel.privacyLink
+            termTwoText.isEditable = false
+            termTwoText.delegate = self
+            termTwoText.attributedText = viewModel.privacyLink
         }
     }
     @IBOutlet var termTwoCheck: Checkbox!
     @IBOutlet var termTwoError: ErrorLabel! {
         didSet {
-            self.termTwoError.isHidden = true
+            termTwoError.isHidden = true
         }
     }
 
     @IBOutlet var acceptButton: PrimaryButton! {
         didSet {
-            self.acceptButton.setTitle(self.viewModel.proceed, for: .normal)
+            acceptButton.setTitle(viewModel.proceed, for: .normal)
         }
     }
 
@@ -69,35 +69,35 @@ class TermsViewController: IdentityUIViewController {
     }
 
     override var navigationTitle: String {
-        return self.viewModel.title
+        return viewModel.title
     }
 
     @IBAction func didClickContinue(_: Any) {
-        let termOneAccepted = self.termOneCheck.isChecked
-        let termTwoAccepted = self.termTwoCheck.isChecked
+        let termOneAccepted = termOneCheck.isChecked
+        let termTwoAccepted = termTwoCheck.isChecked
 
         guard termOneAccepted, termTwoAccepted else {
-            self.termsNeedsAccept(termOne: !termOneAccepted, termTwo: !termTwoAccepted)
+            termsNeedsAccept(termOne: !termOneAccepted, termTwo: !termTwoAccepted)
             return
         }
 
-        self.didRequestAction?(.acceptTerms)
+        didRequestAction?(.acceptTerms)
     }
 
     override func startLoading() {
         super.startLoading()
-        self.acceptButton.isAnimating = true
+        acceptButton.isAnimating = true
     }
 
     override func endLoading() {
         super.endLoading()
-        self.acceptButton.isAnimating = false
+        acceptButton.isAnimating = false
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        (self.view as? ViewContainingExtendedSubviews)?.extendedSubviews = [
+        (view as? ViewContainingExtendedSubviews)?.extendedSubviews = [
             self.termOneCheck,
             self.termTwoCheck,
         ]
@@ -107,28 +107,28 @@ class TermsViewController: IdentityUIViewController {
         super.viewDidLayoutSubviews()
 
         let padding: CGFloat = 8
-        let buttonY = self.view.convert(self.acceptButton.frame, from: self.acceptButton.superview).minY
-        let buttonAreaHeight = self.view.bounds.height - buttonY + padding
-        self.scrollView.contentInset.bottom = max(buttonAreaHeight, 0)
-        self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
+        let buttonY = view.convert(acceptButton.frame, from: acceptButton.superview).minY
+        let buttonAreaHeight = view.bounds.height - buttonY + padding
+        scrollView.contentInset.bottom = max(buttonAreaHeight, 0)
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
 }
 
 extension TermsViewController: UITextViewDelegate {
     func textView(_: UITextView, shouldInteractWith url: URL, in _: NSRange) -> Bool {
-        let terms = self.viewModel.terms
+        let terms = viewModel.terms
 
         if terms.clientPrivacyURL == url {
-            self.configuration.tracker?.engagement(.click(on: .privacyClient), in: self.trackerScreenID)
+            configuration.tracker?.engagement(.click(on: .privacyClient), in: trackerScreenID)
         } else if terms.platformPrivacyURL == url {
-            self.configuration.tracker?.engagement(.click(on: .privacySchibstedAccount), in: self.trackerScreenID)
+            configuration.tracker?.engagement(.click(on: .privacySchibstedAccount), in: trackerScreenID)
         } else if terms.clientTermsURL == url {
-            self.configuration.tracker?.engagement(.click(on: .agreementsClient), in: self.trackerScreenID)
+            configuration.tracker?.engagement(.click(on: .agreementsClient), in: trackerScreenID)
         } else if terms.platformTermsURL == url {
-            self.configuration.tracker?.engagement(.click(on: .agreementsSchibstedAccount), in: self.trackerScreenID)
+            configuration.tracker?.engagement(.click(on: .agreementsSchibstedAccount), in: trackerScreenID)
         }
 
-        self.didRequestAction?(.open(url: url))
+        didRequestAction?(.open(url: url))
         return false
     }
 }
@@ -136,21 +136,21 @@ extension TermsViewController: UITextViewDelegate {
 extension TermsViewController {
     func termsNeedsAccept(termOne: Bool, termTwo: Bool) {
         if termOne {
-            self.termOneError.text = self.viewModel.acceptTermError
-            self.termOneError.isHidden = false
-            self.termOneCheck.tintColor = self.theme.colors.errorBorder
+            termOneError.text = viewModel.acceptTermError
+            termOneError.isHidden = false
+            termOneCheck.tintColor = theme.colors.errorBorder
         } else {
-            self.termOneError.isHidden = true
+            termOneError.isHidden = true
         }
 
         if termTwo {
-            self.termTwoError.text = self.viewModel.acceptPrivacyError
-            self.termTwoError.isHidden = false
-            self.termTwoCheck.tintColor = self.theme.colors.errorBorder
+            termTwoError.text = viewModel.acceptPrivacyError
+            termTwoError.isHidden = false
+            termTwoCheck.tintColor = theme.colors.errorBorder
         } else {
-            self.termTwoError.isHidden = true
+            termTwoError.isHidden = true
         }
 
-        self.configuration.tracker?.error(.validation(.agreements), in: self.trackerScreenID)
+        configuration.tracker?.error(.validation(.agreements), in: trackerScreenID)
     }
 }

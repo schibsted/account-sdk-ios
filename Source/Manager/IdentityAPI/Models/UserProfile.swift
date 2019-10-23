@@ -38,11 +38,11 @@ public struct UserProfile: JSONParsable {
         let data = try json.jsonObject(for: "data")
         let nameJson = try data.jsonObject(for: "name")
 
-        self.displayName = try? data.string(for: "displayName")
-        self.givenName = try? nameJson.string(for: "givenName")
-        self.familyName = try? nameJson.string(for: "familyName")
+        displayName = try? data.string(for: "displayName")
+        givenName = try? nameJson.string(for: "givenName")
+        familyName = try? nameJson.string(for: "familyName")
         if let string = try? data.string(for: "birthday") {
-            self.birthday = Birthdate(string: string)
+            birthday = Birthdate(string: string)
         }
         if let email = try? data.string(for: "email") {
             self.email = EmailAddress(email)
@@ -50,7 +50,7 @@ public struct UserProfile: JSONParsable {
         if let emailJson = try? data.jsonArray(of: JSONObject.self, for: "emails") {
             for blob in emailJson {
                 if (try? blob.string(for: "primary")) == "true", let email = try? blob.string(for: "value") {
-                    self.primaryEmailAddress = EmailAddress(email)
+                    primaryEmailAddress = EmailAddress(email)
                 }
             }
         }
@@ -64,13 +64,13 @@ extension UserProfile: CustomStringConvertible {
     /// human-readable string representation (YAML)
     public var description: String {
         var desc = "UserProfile:\n"
-        desc = desc.appendingFormat("  givenName: %@\n", self.givenName ?? "null")
-        desc = desc.appendingFormat("  familyName: %@\n", self.familyName ?? "null")
-        desc = desc.appendingFormat("  displayName: %@\n", self.displayName ?? "null")
-        desc = desc.appendingFormat("  birthday: %@\n", self.birthday?.description ?? "null")
-        desc = desc.appendingFormat("  email: %@\n", self.email?.originalString ?? "null")
-        desc = desc.appendingFormat("  primary email: %@\n", self.primaryEmailAddress?.originalString ?? "null")
-        desc = desc.appendingFormat("  phone: %@\n", self.phoneNumber?.originalString ?? "null")
+        desc = desc.appendingFormat("  givenName: %@\n", givenName ?? "null")
+        desc = desc.appendingFormat("  familyName: %@\n", familyName ?? "null")
+        desc = desc.appendingFormat("  displayName: %@\n", displayName ?? "null")
+        desc = desc.appendingFormat("  birthday: %@\n", birthday?.description ?? "null")
+        desc = desc.appendingFormat("  email: %@\n", email?.originalString ?? "null")
+        desc = desc.appendingFormat("  primary email: %@\n", primaryEmailAddress?.originalString ?? "null")
+        desc = desc.appendingFormat("  phone: %@\n", phoneNumber?.originalString ?? "null")
         return desc
     }
 }
@@ -91,8 +91,8 @@ extension UserProfile {
             nameData = String(data: data, encoding: .utf8)
         }
 
-        let birthdayData = self.birthday?.description ?? nil
-        let numberData = self.phoneNumber?.normalizedPhoneNumber ?? nil
+        let birthdayData = birthday?.description ?? nil
+        let numberData = phoneNumber?.normalizedPhoneNumber ?? nil
 
         return [
             "name": nameData,
