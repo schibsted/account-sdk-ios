@@ -53,7 +53,7 @@ class InfoViewController: IdentityUIViewController {
         }
     }
 
-    @IBAction func didClickContinue(_: Any) {
+    @IBAction func didTapContinue(_: UIButton) {
         self.dismiss(animated: true)
     }
 }

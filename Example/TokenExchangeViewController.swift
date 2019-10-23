@@ -22,7 +22,7 @@ class TokenExchangeViewController: UIViewController {
         }
     }
 
-    @IBAction func loadWebView(_: Any) {
+    @IBAction func loadWebView(_: UIButton) {
         // The client ID here must match the web client ID of the example site.
         // And the client config used to launch the app must be the .sdkExample config
         guard let clientID = UIApplication.identityManager.clientConfiguration.webClientID,
