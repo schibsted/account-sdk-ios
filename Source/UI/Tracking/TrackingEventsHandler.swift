@@ -3,6 +3,7 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
+import LocalAuthentication
 import Foundation
 
 /**
@@ -145,5 +146,8 @@ public enum TrackingEvent {
         case keepLoggedIn(Bool)
         /// if there's a teaser or not
         case teaser(Bool)
+        /// Which biometric authentication method the user used
+        @available(iOS 11.0, *)
+        case customLoginType(LABiometryType)
     }
 }

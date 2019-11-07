@@ -257,6 +257,7 @@ extension PasswordCoordinator {
         var queryResult: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &queryResult)
         if status == noErr, let qresult = queryResult as? Data, let password = String(data: qresult as Data, encoding: .utf8) {
+            self.configuration.tracker?.interaction(.submit, with: .passwordInput, additionalFields: [.customLoginType(self.biometryType)])
             return password
         } else {
             return nil
