@@ -15,7 +15,7 @@ class LogoStackView: UIStackView, Themeable {
         let schImageView = UIImageView(image: schImage)
         schImageView.contentMode = .scaleAspectFit
         schImageView.widthAnchor.constraint(equalToConstant: 69).isActive = true
-        schImageView.heightAnchor.constraint(equalToConstant: 11).isActive = true
+        schImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         schImageView.translatesAutoresizingMaskIntoConstraints = false
 
         let filler = UIView(frame: .zero)
