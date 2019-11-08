@@ -127,6 +127,10 @@ class IdentityUIViewController: UIViewController {
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         self.view.addGestureRecognizer(tapGesture)
+
+        if #available(iOS 13.0, *) {
+            self.isModalInPresentation = !self.configuration.isCancelable
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
