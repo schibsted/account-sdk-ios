@@ -25,6 +25,11 @@ public enum StyleIconKind: String {
     case infoPlaceholder = "placeholder"
     ///
     case circularInfo = "circular-info"
+    ///
+    case passwordShow = "password-show"
+    ///
+    case passwordHide = "password-hide"
+
 }
 
 extension UIImage {

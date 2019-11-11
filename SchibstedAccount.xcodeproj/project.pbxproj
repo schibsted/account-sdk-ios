@@ -30,6 +30,7 @@
 		43E1606A2063CD1700D9BA3E /* TokenExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E160632063CD1700D9BA3E /* TokenExchangeViewController.swift */; };
 		43E1606B2063CD1700D9BA3E /* PaswordlessFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E160642063CD1700D9BA3E /* PaswordlessFlowViewController.swift */; };
 		43E1606E2063CD3B00D9BA3E /* ClientConfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 43E1606D2063CD3B00D9BA3E /* ClientConfiguration.json */; };
+		761E046F2379761500D41D9A /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E046E2379761500D41D9A /* PasswordTextField.swift */; };
 		9E7F135621106CDA00BBEFED /* FetchUserAssetsTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F134321106CD900BBEFED /* FetchUserAssetsTask.swift */; };
 		9E7F135921106D0300BBEFED /* UserAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F135721106D0300BBEFED /* UserAssets.swift */; };
 		9E7F135A21106D0300BBEFED /* UserAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F135821106D0300BBEFED /* UserAsset.swift */; };
@@ -516,6 +517,7 @@
 		43E160632063CD1700D9BA3E /* TokenExchangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenExchangeViewController.swift; sourceTree = "<group>"; };
 		43E160642063CD1700D9BA3E /* PaswordlessFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaswordlessFlowViewController.swift; sourceTree = "<group>"; };
 		43E1606D2063CD3B00D9BA3E /* ClientConfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ClientConfiguration.json; sourceTree = "<group>"; };
+		761E046E2379761500D41D9A /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		9E7F134321106CD900BBEFED /* FetchUserAssetsTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchUserAssetsTask.swift; sourceTree = "<group>"; };
 		9E7F135721106D0300BBEFED /* UserAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAssets.swift; sourceTree = "<group>"; };
 		9E7F135821106D0300BBEFED /* UserAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAsset.swift; sourceTree = "<group>"; };
@@ -1204,6 +1206,7 @@
 				B01D7A720FEE19EA8933F774 /* SecondaryButton.swift */,
 				B01D7363AB813D345B56C881 /* ValidateTextField.swift */,
 				B01D78BB0C41529A50668EBF /* ViewContainingExpandedSubviews.swift */,
+				761E046E2379761500D41D9A /* PasswordTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2056,6 +2059,7 @@
 				43C241B1205C015A00154866 /* SPiDKeychainWrapper.m in Sources */,
 				B01D7C1095ACFFA0D0E2F4D8 /* TermsInteractor.swift in Sources */,
 				EF28CF92224B72FD009F7D4B /* User+Device.swift in Sources */,
+				761E046F2379761500D41D9A /* PasswordTextField.swift in Sources */,
 				B01D7DF36A1DA33AF2C58C6C /* SigninInteractor.swift in Sources */,
 				B01D72E960E119520C7432C2 /* SignupInteractor.swift in Sources */,
 				B01D74D5F0410193F4773E6E /* FetchStatusInteractor.swift in Sources */,
