@@ -28,7 +28,7 @@ class CheckInboxViewController: IdentityUIViewController {
         }
     }
 
-    @IBAction func didClickChangeButton(_: Any) {
+    @IBAction func didTapChangeButton(_: UIButton) {
         didRequestAction?(.changeIdentifier)
     }
 

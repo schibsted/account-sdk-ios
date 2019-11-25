@@ -89,7 +89,7 @@
                                                                 <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="didClickContinue:" destination="-1" eventType="touchUpInside" id="sTA-PY-FWj"/>
+                                                                <action selector="didTapContinue:" destination="-1" eventType="touchUpInside" id="sTA-PY-FWj"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Np1-PI-Lke" customClass="SecondaryButton" customModule="SchibstedAccount" customModuleProvider="target">
@@ -98,7 +98,7 @@
                                                                 <color key="titleColor" red="0.22206924855709076" green="0.4401949942111969" blue="0.83146572113037109" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="didClickEdit:" destination="-1" eventType="touchUpInside" id="kiG-mv-BZ5"/>
+                                                                <action selector="didTapEdit:" destination="-1" eventType="touchUpInside" id="kiG-mv-BZ5"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>

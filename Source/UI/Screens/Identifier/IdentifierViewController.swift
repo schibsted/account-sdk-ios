@@ -31,7 +31,7 @@ class IdentifierViewController: IdentityUIViewController {
             backgroundView.backgroundColor = .schibstedLightGray
         }
     }
-    @IBAction func didClickWhatsThis(_: Any) {
+    @IBAction func didTapWhatsThis(_: UIButton) {
         configuration.tracker?.engagement(.click(on: .whatsSchibstedAccount), in: trackerScreenID)
         didRequestAction?(.showHelp(url: viewModel.helpURL))
     }
@@ -107,7 +107,7 @@ class IdentifierViewController: IdentityUIViewController {
         }
     }
 
-    @IBAction func didClickSubmitButton(_: Any) {
+    @IBAction func didTapSubmitButton(_: UIButton) {
         didRequestAction?(.skip)
     }
 
@@ -139,7 +139,7 @@ class IdentifierViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let toolbar = UIToolbar.forKeyboard(target: self, doneString: self.viewModel.done, doneSelector: #selector(didClickContinue))
+        let toolbar = UIToolbar.forKeyboard(target: self, doneString: viewModel.done, doneSelector: #selector(didTapContinue))
 
         func showEmailAddress() {
             emailAddress.isHidden = false
@@ -174,7 +174,11 @@ class IdentifierViewController: IdentityUIViewController {
         skipButton.isHidden = !self.configuration.isSkippable
     }
 
-    @IBAction func didClickContinue(_: Any) {
+    @IBAction func didTapContinue(_: UIButton) {
+        self.continueToNextPage()
+    }
+
+    @objc private func continueToNextPage() {
         self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID)
 
         let identifier: Identifier
@@ -251,8 +255,8 @@ class IdentifierViewController: IdentityUIViewController {
 }
 
 extension IdentifierViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        didClickContinue(textField)
+    func textFieldShouldReturn(_: UITextField) -> Bool {
+        continueToNextPage()
         return true
     }
 }

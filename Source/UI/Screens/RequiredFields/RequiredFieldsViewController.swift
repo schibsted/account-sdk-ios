@@ -154,7 +154,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
         return viewModel.title
     }
 
-    @IBAction func didClickContinue(_: Any) {
+    @IBAction func didTapContinue(_: UIButton) {
         configuration.tracker?.interaction(.submit, with: trackerScreenID)
 
         guard let valuesToUpdate = self.valuesToUpdate() else {

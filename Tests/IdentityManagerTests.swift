@@ -116,7 +116,7 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.sendCode(to: self.testNumber, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["email"]).to(beNil())
                 expect(callData.passedFormData?["phone_number"]) == self.testNumber.normalizedString
@@ -132,7 +132,7 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.sendCode(to: self.testEmail, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["phone_number"]).to(beNil())
                 expect(callData.passedFormData?["email"]) == self.testEmail.normalizedString
@@ -429,7 +429,7 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.validate(oneTimeCode: self.testAuthCode, for: self.testNumber, scopes: ["random"], persistUser: false, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
                 expect(callData.passedFormData?["identifier"]) == self.testNumber.normalizedString
@@ -624,7 +624,7 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.resendCode(to: self.testNumber, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["client_id"]).to(equal(ClientConfiguration.testing.clientID))
                 expect(callData.passedFormData?["passwordless_token"]).to(equal(self.passwordlessToken.description))
@@ -727,7 +727,7 @@ class IdentityManagerTests: QuickSpec {
 
                 identityManager.login(username: self.testEmail, password: self.testPassword, scopes: ["random"], persistUser: false, completion: { _ in })
 
-                expect(Networking.testingProxy.calledOnce).to(beTrue())
+                expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
                 expect(callData.passedFormData?["username"]) == self.testEmail.normalizedString
                 expect(callData.passedFormData?["password"]).to(equal(self.testPassword))

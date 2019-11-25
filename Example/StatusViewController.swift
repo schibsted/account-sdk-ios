@@ -89,24 +89,23 @@ class StatusViewController: UIViewController {
 
     @IBOutlet var userStateLabel: UILabel!
     @IBOutlet var userIDLabel: UILabel!
-    @IBOutlet var offlineModeSwitch: UISwitch!
     @IBOutlet var loginOnlySwitch: UISwitch!
     @IBOutlet var postOauthFailSwitch: UISwitch!
     @IBOutlet var touchIDSwitch: UISwitch!
 
-    @IBAction func offlineModeValueChanged(_: UISwitch) {
-        UIApplication.offlineMode = offlineModeSwitch.isOn
+    @IBAction func offlineModeValueChanged(_ sender: UISwitch) {
+        UIApplication.offlineMode = sender.isOn
     }
 
-    @IBAction func didClickPasswordlessEmailLogin(_: Any) {
+    @IBAction func didTapPasswordlessEmailLogin(_: UIButton) {
         UIApplication.identityUI.presentIdentityProcess(from: self, loginMethod: .email)
     }
 
-    @IBAction func didClickPasswordlessPhoneLogin(_: Any) {
+    @IBAction func didTapPasswordlessPhoneLogin(_: UIButton) {
         UIApplication.identityUI.presentIdentityProcess(from: self, loginMethod: .phone, scopes: ClientConfiguration.current.scopes)
     }
 
-    @IBAction func didClickPasswordLogin(_: Any) {
+    @IBAction func didTapPasswordLogin(_: UIButton) {
         if touchIDSwitch.isOn {
             UIApplication.identityUI.configuration.useBiometrics(true)
         } else {
@@ -120,7 +119,7 @@ class StatusViewController: UIViewController {
         )
     }
 
-    @IBAction func didClickOpenProfile(_: Any) {
+    @IBAction func didTapOpenProfile(_: UIButton) {
         let accountURL = UIApplication.identityManager.routes.accountSummaryURL
 
         let alert = UIAlertController(title: "Mood", message: "Would you like to go through SPiD or the BFF?", preferredStyle: .alert)
@@ -154,7 +153,7 @@ class StatusViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    @IBAction func didClickScopes(_: Any) {
+    @IBAction func didTapScopes(_: UIButton) {
         var message: String = "n/a"
         if let scopes = UIApplication.currentUser.tokens?.accessToken {
             if let jwt = try? JWTHelper.toJSON(string: scopes) {
@@ -170,7 +169,7 @@ class StatusViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    @IBAction func didClickRefresh(_: Any) {
+    @IBAction func didTapRefresh(_: UIButton) {
         UIApplication.currentUser.refresh { result in
             switch result {
             case .success:

@@ -58,11 +58,11 @@ class ResendViewController: IdentityUIViewController {
         stackBackground.clipsToBounds = true
     }
 
-    @IBAction func didClickContinue(_: Any) {
+    @IBAction func didTapContinue(_: UIButton) {
         dismiss(animated: true)
     }
 
-    @IBAction func didClickEdit(_: Any) {
+    @IBAction func didTapEdit(_: UIButton) {
         dismiss(animated: true)
         didRequestAction?(.changeIdentifier)
     }

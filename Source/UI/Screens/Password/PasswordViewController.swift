@@ -22,7 +22,7 @@ class PasswordViewController: IdentityUIViewController {
             whatsThisButton.contentEdgeInsets.top = 1
         }
     }
-    @IBAction func didClickWhatLink(_: Any) {
+    @IBAction func didTapWhatLink(_: UIButton) {
         configuration.tracker?.engagement(.click(on: .learnMoreAboutSchibsted), in: trackerScreenID)
         didRequestAction?(.info(
             title: viewModel.persistentLogin,
@@ -61,7 +61,7 @@ class PasswordViewController: IdentityUIViewController {
         }
     }
 
-    @IBAction func didClickForgotPassword(_: Any) {
+    @IBAction func didTapForgotPassword(_: UIButton) {
         configuration.tracker?.engagement(.click(on: .forgotPassword), in: trackerScreenID)
         didRequestAction?(.forgotPassword)
     }
@@ -153,7 +153,7 @@ class PasswordViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let toolbar = UIToolbar.forKeyboard(target: self, doneString: viewModel.done, doneSelector: #selector(didClickContinue))
+        let toolbar = UIToolbar.forKeyboard(target: self, doneString: viewModel.done, doneSelector: #selector(didTapContinue))
 
         password.inputAccessoryView = toolbar
         viewToEnsureVisibilityOfAfterKeyboardAppearance = password
@@ -174,7 +174,11 @@ class PasswordViewController: IdentityUIViewController {
         }
     }
 
-    @IBAction func didClickContinue(_: Any) {
+    @IBAction func didTapContinue(_: UIButton) {
+        self.continueToNextPage()
+    }
+
+    @objc private func continueToNextPage() {
         self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])
         guard let password = self.password.text, (self.viewModel.loginFlowVariant == .signin && password.count >= 1) || password.count >= 8 else {
             self.showInlineError(.passwordTooShort)
@@ -225,8 +229,8 @@ class PasswordViewController: IdentityUIViewController {
 }
 
 extension PasswordViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        didClickContinue(textField)
+    func textFieldShouldReturn(_: UITextField) -> Bool {
+        continueToNextPage()
         return true
     }
 }

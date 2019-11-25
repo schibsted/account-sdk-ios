@@ -65,7 +65,7 @@
                                                                 <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="didClickChangeIdentifier:" destination="-1" eventType="touchUpInside" id="Bpo-cP-Dnk"/>
+                                                                <action selector="didTapChangeIdentifier:" destination="-1" eventType="touchUpInside" id="Bpo-cP-Dnk"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -92,7 +92,7 @@
                                                         <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="didClickResend:" destination="-1" eventType="touchUpInside" id="gqL-v1-wwP"/>
+                                                        <action selector="didTapResend:" destination="-1" eventType="touchUpInside" id="gqL-v1-wwP"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -198,7 +198,7 @@
                                                     <rect key="frame" x="0.0" y="20.5" width="77" height="30"/>
                                                     <state key="normal" title="What's this"/>
                                                     <connections>
-                                                        <action selector="didClickWhatLink:" destination="-1" eventType="touchUpInside" id="rQh-2Z-rlt"/>
+                                                        <action selector="didTapWhatLink:" destination="-1" eventType="touchUpInside" id="rQh-2Z-rlt"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -237,7 +237,7 @@
                     <color key="backgroundColor" red="0.23529411759999999" green="0.4823529412" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" title="Verify"/>
                     <connections>
-                        <action selector="didClickVerify:" destination="-1" eventType="touchUpInside" id="WGR-Vu-mpB"/>
+                        <action selector="didTapVerify:" destination="-1" eventType="touchUpInside" id="WGR-Vu-mpB"/>
                     </connections>
                 </button>
             </subviews>

@@ -21,7 +21,7 @@ class VerifyViewController: IdentityUIViewController {
             whatsThisButton.contentEdgeInsets.top = 1
         }
     }
-    @IBAction func didClickWhatLink(_: Any) {
+    @IBAction func didTapWhatLink(_: UIButton) {
         configuration.tracker?.engagement(.click(on: .rememberMeInfo), in: trackerScreenID)
         didRequestAction?(.info(
             title: viewModel.persistentLogin,
@@ -81,7 +81,7 @@ class VerifyViewController: IdentityUIViewController {
     @IBOutlet var verifyButtonLayoutGuide: NSLayoutConstraint!
     @IBOutlet var textFieldStackView: UIStackView! {
         didSet {
-            let toolbar = UIToolbar.forKeyboard(target: self, doneString: viewModel.done, doneSelector: #selector(didClickVerify))
+            let toolbar = UIToolbar.forKeyboard(target: self, doneString: viewModel.done, doneSelector: #selector(didTapVerify))
             maxIndex = textFieldStackView.arrangedSubviews.count
             textFieldStackView.arrangedSubviews.enumerated().forEach {
                 guard let codeBox = $1 as? ValidateTextField else {
@@ -136,13 +136,17 @@ class VerifyViewController: IdentityUIViewController {
         return viewModel.title
     }
 
-    @IBAction func didClickResend(_: Any) {
+    @IBAction func didTapResend(_: UIButton) {
         configuration.tracker?.engagement(.click(on: .resend), in: trackerScreenID)
         didRequestAction?(.resendCode)
     }
 
-    @IBAction func didClickVerify(_: Any) {
-        configuration.tracker?.interaction(.submit, with: trackerScreenID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])
+    @IBAction func didTapVerify(_: UIButton) {
+        verifyCode()
+    }
+
+    @objc func verifyCode() {
+        configuration.tracker?.interaction(.submit, with: trackerScreenID, additionalFields: [.keepLoggedIn(shouldPersistUserCheck.isChecked)])
         guard enteredCode.count == VerifyViewModel.numberOfCodeDigits else {
             showInlineError(.invalidCode)
             return
@@ -151,7 +155,7 @@ class VerifyViewController: IdentityUIViewController {
         didRequestAction?(.enter(code: enteredCode, shouldPersistUser: shouldPersistUserCheck.isChecked))
     }
 
-    @IBAction func didClickChangeIdentifier(_: Any) {
+    @IBAction func didTapChangeIdentifier(_: UIButton) {
         didRequestAction?(.changeIdentifier)
     }
 
@@ -204,8 +208,8 @@ class VerifyViewController: IdentityUIViewController {
 }
 
 extension VerifyViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        didClickVerify(textField)
+    func textFieldShouldReturn(_: UITextField) -> Bool {
+        verifyCode()
         return true
     }
 

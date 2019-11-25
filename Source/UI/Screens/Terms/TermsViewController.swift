@@ -72,7 +72,7 @@ class TermsViewController: IdentityUIViewController {
         return viewModel.title
     }
 
-    @IBAction func didClickContinue(_: Any) {
+    @IBAction func didTapContinue(_: UIButton) {
         let termOneAccepted = termOneCheck.isChecked
         let termTwoAccepted = termTwoCheck.isChecked
 
