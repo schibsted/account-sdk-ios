@@ -38,7 +38,7 @@
                     <rect key="frame" x="164.5" y="281" width="46" height="30"/>
                     <state key="normal" title="Button"/>
                     <connections>
-                        <action selector="didClickChangeButton:" destination="-1" eventType="touchUpInside" id="PES-yt-MCn"/>
+                        <action selector="didTapChangeButton:" destination="-1" eventType="touchUpInside" id="PES-yt-MCn"/>
                     </connections>
                 </button>
             </subviews>

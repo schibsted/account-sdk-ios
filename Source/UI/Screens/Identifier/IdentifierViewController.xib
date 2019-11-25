@@ -135,7 +135,7 @@
                                                                     <rect key="frame" x="0.0" y="27.5" width="52" height="30"/>
                                                                     <state key="normal" title="What is"/>
                                                                     <connections>
-                                                                        <action selector="didClickWhatsThis:" destination="-1" eventType="touchUpInside" id="pd9-n7-c4v"/>
+                                                                        <action selector="didTapWhatsThis:" destination="-1" eventType="touchUpInside" id="pd9-n7-c4v"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
@@ -189,7 +189,7 @@
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
-                                <action selector="didClickContinue:" destination="-1" eventType="touchUpInside" id="2BA-JA-BIn"/>
+                                <action selector="didTapContinue:" destination="-1" eventType="touchUpInside" id="2BA-JA-BIn"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgv-mx-Qwz" userLabel="SkipButton" customClass="SecondaryButton" customModule="SchibstedAccount" customModuleProvider="target">
@@ -199,7 +199,7 @@
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
-                                <action selector="didClickSubmitButton:" destination="-1" eventType="touchUpInside" id="Qwz-dV-Ao5"/>
+                                <action selector="didTapSubmitButton:" destination="-1" eventType="touchUpInside" id="Qwz-dV-Ao5"/>
                             </connections>
                         </button>
                     </subviews>

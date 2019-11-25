@@ -22,7 +22,7 @@ class PasswordViewController: IdentityUIViewController {
             self.whatsThisButton.contentEdgeInsets.top = 1
         }
     }
-    @IBAction func didClickWhatLink(_: Any) {
+    @IBAction func didTapWhatLink(_: UIButton) {
         self.configuration.tracker?.engagement(.click(on: .learnMoreAboutSchibsted), in: self.trackerScreenID)
         self.didRequestAction?(.info(
             title: self.viewModel.persistentLogin,
@@ -61,7 +61,7 @@ class PasswordViewController: IdentityUIViewController {
         }
     }
 
-    @IBAction func didClickForgotPassword(_: Any) {
+    @IBAction func didTapForgotPassword(_: UIButton) {
         self.configuration.tracker?.engagement(.click(on: .forgotPassword), in: self.trackerScreenID)
         self.didRequestAction?(.forgotPassword)
     }
@@ -153,7 +153,7 @@ class PasswordViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let toolbar = UIToolbar.forKeyboard(target: self, doneString: self.viewModel.done, doneSelector: #selector(self.didClickContinue))
+        let toolbar = UIToolbar.forKeyboard(target: self, doneString: self.viewModel.done, doneSelector: #selector(self.didTapContinue))
 
         self.password.inputAccessoryView = toolbar
         self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.password
@@ -174,7 +174,11 @@ class PasswordViewController: IdentityUIViewController {
         }
     }
 
-    @IBAction func didClickContinue(_: Any) {
+    @IBAction func didTapContinue(_: UIButton) {
+        self.continueToNextPage()
+    }
+
+    @objc private func continueToNextPage() {
         self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID, additionalFields: [.keepLoggedIn(self.shouldPersistUserCheck.isChecked)])
         guard let password = self.password.text, (self.viewModel.loginFlowVariant == .signin && password.count >= 1) || password.count >= 8 else {
             self.showInlineError(.passwordTooShort)
@@ -225,8 +229,8 @@ class PasswordViewController: IdentityUIViewController {
 }
 
 extension PasswordViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.didClickContinue(textField)
+    func textFieldShouldReturn(_: UITextField) -> Bool {
+        self.continueToNextPage()
         return true
     }
 }

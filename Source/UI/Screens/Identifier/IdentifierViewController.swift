@@ -31,7 +31,7 @@ class IdentifierViewController: IdentityUIViewController {
             self.backgroundView.backgroundColor = .schibstedLightGray
         }
     }
-    @IBAction func didClickWhatsThis(_: Any) {
+    @IBAction func didTapWhatsThis(_: UIButton) {
         self.configuration.tracker?.engagement(.click(on: .whatsSchibstedAccount), in: self.trackerScreenID)
         self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
     }
@@ -107,7 +107,7 @@ class IdentifierViewController: IdentityUIViewController {
         }
     }
 
-    @IBAction func didClickSubmitButton(_: Any) {
+    @IBAction func didTapSubmitButton(_: UIButton) {
         self.didRequestAction?(.skip)
     }
 
@@ -139,7 +139,7 @@ class IdentifierViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let toolbar = UIToolbar.forKeyboard(target: self, doneString: self.viewModel.done, doneSelector: #selector(self.didClickContinue))
+        let toolbar = UIToolbar.forKeyboard(target: self, doneString: self.viewModel.done, doneSelector: #selector(self.didTapContinue))
 
         func showEmailAddress() {
             self.emailAddress.isHidden = false
@@ -174,7 +174,11 @@ class IdentifierViewController: IdentityUIViewController {
         self.skipButton.isHidden = !self.configuration.isSkippable
     }
 
-    @IBAction func didClickContinue(_: Any) {
+    @IBAction func didTapContinue(_: UIButton) {
+        self.continueToNextPage()
+    }
+
+    @objc private func continueToNextPage() {
         self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID)
 
         let identifier: Identifier
@@ -251,8 +255,8 @@ class IdentifierViewController: IdentityUIViewController {
 }
 
 extension IdentifierViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.didClickContinue(textField)
+    func textFieldShouldReturn(_: UITextField) -> Bool {
+        self.continueToNextPage()
         return true
     }
 }
