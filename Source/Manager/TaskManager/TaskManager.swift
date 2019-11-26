@@ -21,7 +21,7 @@ class TaskManager {
     private var operationsToReAdd: [TaskOperation] = []
 
     func waitForRequestsToFinish() {
-        self.operationQueue.waitUntilAllOperationsAreFinished()
+        operationQueue.waitUntilAllOperationsAreFinished()
     }
 
     var willStartRefresh = EventEmitter<TaskHandle>(description: "TaskManager.willStartRefresh")
@@ -127,7 +127,7 @@ class TaskManager {
             taskReference: task
         )
 
-        self.lock.scope {
+        lock.scope {
             self.operationQueue.addOperation(taskData.operation)
             self.pendingTasks[handle] = taskData
             log(level: .verbose, from: self, "added \(handle) (\(T.self))")
@@ -143,7 +143,7 @@ class TaskManager {
         }
 
         do {
-            self.lock.lock()
+            lock.lock()
             defer { self.lock.unlock() }
 
             // If it was cancelled and removed there's no need to refresh
@@ -171,9 +171,9 @@ class TaskManager {
                 return
             }
 
-            let refreshInProgress = self.operationQueue.isSuspended
+            let refreshInProgress = operationQueue.isSuspended
             log(level: .debug, from: self, refreshInProgress ? "refresh already in progress" : "suspending queue")
-            self.operationQueue.isSuspended = true
+            operationQueue.isSuspended = true
 
             log(level: .debug, from: self, "re-adding \(handle)")
             let newOperation = TaskOperation(executor: taskData.operation.executor)
@@ -186,8 +186,8 @@ class TaskManager {
                 taskReference: taskData.taskReference
             )
 
-            self.pendingTasks[handle] = newData
-            self.operationsToReAdd.append(newOperation)
+            pendingTasks[handle] = newData
+            operationsToReAdd.append(newOperation)
 
             guard !refreshInProgress else {
                 return
@@ -196,7 +196,7 @@ class TaskManager {
 
         #if DEBUG
             // This is just used for running tests, lets not call it in release code
-            self.willStartRefresh.emitSync(handle)
+            willStartRefresh.emitSync(handle)
         #endif
 
         log(from: self, "refreshing tokens for for user \(user)")
@@ -266,7 +266,7 @@ class TaskManager {
     }
 
     func cancel(handle handleToCancel: OwnedTaskHandle) {
-        let maybeData = self.lock.scope {
+        let maybeData = lock.scope {
             self.pendingTasks.removeValue(forKey: handleToCancel)
         }
         guard let taskData = maybeData else {

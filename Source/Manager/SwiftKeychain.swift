@@ -62,7 +62,7 @@ extension KeychainItemType {
         let archivedData = NSKeyedArchiver.archivedData(withRootObject: dataToStore)
 
         itemAttributes[String(kSecValueData)] = archivedData
-        itemAttributes[String(kSecAttrAccessible)] = self.accessMode
+        itemAttributes[String(kSecAttrAccessible)] = accessMode
 
         if let group = accessGroup {
             itemAttributes[String(kSecAttrAccessGroup)] = group
@@ -115,7 +115,7 @@ extension KeychainGenericPasswordType {
         var attributes = [String: Any]()
 
         attributes[String(kSecClass)] = kSecClassGenericPassword
-        attributes[String(kSecAttrService)] = self.serviceName
+        attributes[String(kSecAttrService)] = serviceName
         attributes[String(kSecAttrAccount)] = accountName
 
         return attributes
@@ -141,7 +141,7 @@ struct Keychain: KeychainServiceType {
         let statusCode = SecItemAdd(attributes as CFDictionary, nil)
 
         if statusCode != errSecSuccess {
-            throw self.errorForStatusCode(statusCode)
+            throw errorForStatusCode(statusCode)
         }
     }
 
@@ -149,7 +149,7 @@ struct Keychain: KeychainServiceType {
         let statusCode = SecItemDelete(attributes as CFDictionary)
 
         if statusCode != errSecSuccess {
-            throw self.errorForStatusCode(statusCode)
+            throw errorForStatusCode(statusCode)
         }
     }
 
@@ -159,7 +159,7 @@ struct Keychain: KeychainServiceType {
         let statusCode = SecItemCopyMatching(attributes as CFDictionary, &result)
 
         if statusCode != errSecSuccess {
-            throw self.errorForStatusCode(statusCode)
+            throw errorForStatusCode(statusCode)
         }
 
         if let result = result as? [String: Any] {
@@ -175,12 +175,12 @@ struct Keychain: KeychainServiceType {
 extension KeychainItemType {
     func saveInKeychain(_ keychain: KeychainServiceType = Keychain()) throws {
         // Remove any old value before inserting
-        try? self.removeFromKeychain(keychain)
-        try keychain.insertItemWithAttributes(self.attributesToSave)
+        try? removeFromKeychain(keychain)
+        try keychain.insertItemWithAttributes(attributesToSave)
     }
 
     func removeFromKeychain(_ keychain: KeychainServiceType = Keychain()) throws {
-        try keychain.removeItemWithAttributes(self.attributesForDelete)
+        try keychain.removeItemWithAttributes(attributesForDelete)
     }
 
     mutating func fetchFromKeychain(_ keychain: KeychainServiceType = Keychain()) throws -> Self {

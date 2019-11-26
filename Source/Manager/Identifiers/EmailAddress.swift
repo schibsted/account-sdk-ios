@@ -11,12 +11,12 @@ public struct EmailAddress: IdentifierProtocol, Equatable {
 
     /// The string that is provided during initialization
     public var originalString: String {
-        return self.emailAddress
+        return emailAddress
     }
 
     /// The normalized form used internally (may or may not be different)
     public var normalizedString: String {
-        return self.emailAddress
+        return emailAddress
     }
 
     /**
@@ -32,7 +32,7 @@ public struct EmailAddress: IdentifierProtocol, Equatable {
         guard let identifier = EmailAddress.normalize(string) else {
             return nil
         }
-        self.emailAddress = identifier
+        emailAddress = identifier
     }
 
     static func normalize(_ identifier: String) -> String? {

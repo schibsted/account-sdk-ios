@@ -23,12 +23,12 @@ class TaskOperation: Operation {
     private var _state: State = .ready
     var state: State {
         get {
-            return self.lock.scope {
+            return lock.scope {
                 self._state
             }
         }
         set {
-            self.lock.scope {
+            lock.scope {
                 self._state = newValue
             }
         }
@@ -59,32 +59,32 @@ class TaskOperation: Operation {
 
     public private(set) override var isExecuting: Bool {
         get {
-            return self.state == .executing
+            return state == .executing
         }
         set { // swiftlint:disable:this unused_setter_value
             willChangeValue(forKey: KVOKey.isExecuting.rawValue)
-            self.state = .executing
+            state = .executing
             didChangeValue(forKey: KVOKey.isExecuting.rawValue)
         }
     }
 
     public private(set) override var isFinished: Bool {
         get {
-            return self.state == .finished
+            return state == .finished
         }
         set { // swiftlint:disable:this unused_setter_value
             willChangeValue(forKey: KVOKey.isFinished.rawValue)
-            self.state = .finished
+            state = .finished
             didChangeValue(forKey: KVOKey.isFinished.rawValue)
         }
     }
 
     public override func start() {
-        guard !self.isCancelled else {
-            self.isFinished = true
+        guard !isCancelled else {
+            isFinished = true
             return
         }
-        self.isExecuting = true
+        isExecuting = true
         TaskOperation.sharedQueue.async { [weak self] in
             guard let strongSelf = self else {
                 return
@@ -96,7 +96,7 @@ class TaskOperation: Operation {
     func finish() {
         willChangeValue(forKey: KVOKey.isExecuting.rawValue)
         willChangeValue(forKey: KVOKey.isFinished.rawValue)
-        self.isFinished = true
+        isFinished = true
         didChangeValue(forKey: KVOKey.isExecuting.rawValue)
         didChangeValue(forKey: KVOKey.isFinished.rawValue)
     }

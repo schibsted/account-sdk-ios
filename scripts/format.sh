@@ -11,7 +11,6 @@ common_args=("Source/" "Example/"
         "--comments" "ignore"
         "--ranges" "nospace"
         "--disable" "blankLinesBetweenScopes"
-        "--self" "insert"
         "--header" "$copyright")
 
 if [[ -z "${TRAVIS}" ]]; then

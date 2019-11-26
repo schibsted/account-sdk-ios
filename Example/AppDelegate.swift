@@ -34,8 +34,8 @@ struct ConfigurationLoader {
             preconditionFailure("Failed to get json data out of ClientConfiguration.json")
         }
 
-        self.fill(data: data, env: .preproduction)
-        self.fill(data: data, env: .development)
+        fill(data: data, env: .preproduction)
+        fill(data: data, env: .development)
     }
 
     struct EnvData {
@@ -47,7 +47,7 @@ struct ConfigurationLoader {
     }
 
     subscript(env: ClientConfiguration.Environment) -> EnvData {
-        return self.data[env] ?? EnvData()
+        return data[env] ?? EnvData()
     }
 }
 
@@ -80,10 +80,10 @@ extension SchibstedAccount.ClientConfiguration {
     }
 
     var sdkExampleRedirectURL: URL? {
-        if self.clientID == ClientConfiguration.config[.preproduction].clientID {
+        if clientID == ClientConfiguration.config[.preproduction].clientID {
             return URL(string: "https://pre.sdk-example.com/")
         }
-        if self.clientID == ClientConfiguration.config[.development].clientID {
+        if clientID == ClientConfiguration.config[.development].clientID {
             return URL(string: "https://dev.sdk-example.com/session-exchange-safepage")
         }
         return nil
@@ -158,7 +158,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var passwordFlowViewController: PasswordFlowViewController? {
         // swiftlint:disable:next force_cast
-        let tabVC = self.window?.rootViewController! as! UITabBarController
+        let tabVC = window?.rootViewController! as! UITabBarController
         for case let vc as PasswordFlowViewController in tabVC.children {
             return vc
         }
@@ -167,7 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var statusViewController: StatusViewController? {
         // swiftlint:disable:next force_cast
-        let tabVC = self.window?.rootViewController! as! UITabBarController
+        let tabVC = window?.rootViewController! as! UITabBarController
         for case let vc as StatusViewController in tabVC.children {
             return vc
         }
@@ -183,8 +183,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         let doesLaunchOptionsContainRecognizedURL = AppLaunchData(launchOptions: options, clientConfiguration: .current) != nil
-        if !doesLaunchOptionsContainRecognizedURL, self.currentUser.state == .loggedIn {
-            self.ensureAcceptanceOfNewTerms()
+        if !doesLaunchOptionsContainRecognizedURL, currentUser.state == .loggedIn {
+            ensureAcceptanceOfNewTerms()
             return true
         }
 
@@ -192,7 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func ensureAcceptanceOfNewTerms() {
-        self.currentUser.agreements.status { [weak self] result in
+        currentUser.agreements.status { [weak self] result in
             switch result {
             case let .success(hasAcceptedLatestTerms):
                 if hasAcceptedLatestTerms {
@@ -236,7 +236,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if let vc = self.window?.rootViewController, let route = IdentityUI.Route(payload: payload) {
-            self.identityUI.presentIdentityProcess(from: vc, route: route)
+            identityUI.presentIdentityProcess(from: vc, route: route)
             return true
         }
 
@@ -247,11 +247,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .afterForgotPassword:
             print("enter password now")
         case let .codeAfterSignup(code, shouldPersistUser):
-            self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: shouldPersistUser)
+            passwordFlowViewController?.validateDeepLinkCode(code, persistUser: shouldPersistUser)
         case let .codeAfterUnvalidatedLogin(code):
-            self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
+            passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
         case let .codeAfterAccountSummary(code):
-            self.passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
+            passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
         }
         return true
     }

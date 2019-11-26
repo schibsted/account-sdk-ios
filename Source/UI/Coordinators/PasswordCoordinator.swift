@@ -23,7 +23,7 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     }
 
     override init(navigationController: UINavigationController, identityManager: IdentityManager, configuration: IdentityUIConfiguration) {
-        self.signinInteractor = SigninInteractor(identityManager: identityManager)
+        signinInteractor = SigninInteractor(identityManager: identityManager)
         super.init(navigationController: navigationController, identityManager: identityManager, configuration: configuration)
     }
 
@@ -31,20 +31,20 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
         let viewModel = PasswordViewModel(
             identifier: input.identifier,
             loginFlowVariant: input.loginFlowVariant,
-            localizationBundle: self.configuration.localizationBundle
+            localizationBundle: configuration.localizationBundle
         )
-        if !self.canUseBiometrics() || !configuration.useBiometrics {
-            self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
+        if !canUseBiometrics() || !configuration.useBiometrics {
+            showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
             return
         }
 
         let localizedReasonString = viewModel.biometricsPrompt.replacingOccurrences(of: "$0", with: input.identifier.normalizedString)
 
         guard let password = self.getPasswordFromKeychain(for: input.identifier, localizedReasonString) else {
-            self.showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
+            showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
             return
         }
-        self.submit(
+        submit(
             password: password,
             for: input.identifier,
             on: input.loginFlowVariant,
@@ -57,18 +57,18 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
     func handle(route: IdentityUI.Route) -> RouteHandlerResult {
         switch route {
         case .login:
-            if self.presentedViewController is CheckInboxViewController {
+            if presentedViewController is CheckInboxViewController {
                 // If the user confirmed the email after a login attempt, we take her back to the first screen of the flow where she can log in.
                 return .resetRequest
             }
         case .enterPassword:
             let path = ClientConfiguration.RedirectInfo.ForgotPassword.path
-            if self.isPresentingURL(containing: path) {
+            if isPresentingURL(containing: path) {
                 // If the user changed her password after requesting a password change from the safari view, we close that view so that she can continue
                 // with the login.
 
                 // Dismiss the presented safari view (if any).
-                self.dismissURLPresenting()
+                dismissURLPresenting()
             }
             return .handled
         case .validateAuthCode:
@@ -93,9 +93,9 @@ extension PasswordCoordinator {
         let viewModel = PasswordViewModel(
             identifier: identifier,
             loginFlowVariant: loginFlowVariant,
-            localizationBundle: self.configuration.localizationBundle
+            localizationBundle: configuration.localizationBundle
         )
-        let viewController = PasswordViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
+        let viewController = PasswordViewController(configuration: configuration, navigationSettings: navigationSettings, viewModel: viewModel)
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(password, shouldPersistUser):
@@ -113,19 +113,19 @@ extension PasswordCoordinator {
             }
         }
 
-        self.navigationController.pushViewController(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
 
     private func forgotPassword(for identifier: Identifier, scopes: [String]) {
         let localID = identifier.localID()
-        let url = self.identityManager.routes.forgotPasswordURL(
+        let url = identityManager.routes.forgotPasswordURL(
             withRedirectPath: ClientConfiguration.RedirectInfo.ForgotPassword.path,
             redirectQueryItems: [
                 URLQueryItem(name: "local_id", value: localID),
                 URLQueryItem(name: "scopes", value: scopes.joined(separator: " ")),
             ]
         )
-        self.present(url: url)
+        present(url: url)
     }
 
     private func submit(
@@ -137,12 +137,12 @@ extension PasswordCoordinator {
         completion: @escaping (Output) -> Void
     ) {
         if loginFlowVariant == .signup {
-            self.spawnCompleteProfileCoordinator(for: .signup(identifier, password: password), persistUser: persistUser, completion: completion)
+            spawnCompleteProfileCoordinator(for: .signup(identifier, password: password), persistUser: persistUser, completion: completion)
             return
         }
 
-        self.presentedViewController?.startLoading()
-        self.signinInteractor.login(username: identifier, password: password, scopes: scopes) { [weak self] result in
+        presentedViewController?.startLoading()
+        signinInteractor.login(username: identifier, password: password, scopes: scopes) { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
@@ -187,23 +187,23 @@ extension PasswordCoordinator {
 
         switch variant {
         case let .signin(currentUser):
-            completeProfileInteractor = UpdateProfileInteractor(currentUser: currentUser, loginFlowVariant: .signin, tracker: self.configuration.tracker)
+            completeProfileInteractor = UpdateProfileInteractor(currentUser: currentUser, loginFlowVariant: .signin, tracker: configuration.tracker)
         case let .signup(identifier, password):
             completeProfileInteractor = SignupInteractor(
                 identifier: identifier,
                 password: password,
                 persistUser: persistUser,
-                identityManager: self.identityManager
+                identityManager: identityManager
             )
         }
 
         let completeProfileCoordinator = CompleteProfileCoordinator(
-            navigationController: self.navigationController,
-            identityManager: self.identityManager,
-            configuration: self.configuration
+            navigationController: navigationController,
+            identityManager: identityManager,
+            configuration: configuration
         )
 
-        self.spawnChild(completeProfileCoordinator, input: completeProfileInteractor) { [weak self] output in
+        spawnChild(completeProfileCoordinator, input: completeProfileInteractor) { [weak self] output in
             switch output {
             case let .success(currentUser):
                 switch variant {
@@ -230,8 +230,8 @@ extension PasswordCoordinator {
         let navigationSettings = NavigationSettings(
             cancel: configuration.isCancelable ? { completion(.cancel) } : nil
         )
-        let viewModel = CheckInboxViewModel(identifier: identifier, localizationBundle: self.configuration.localizationBundle)
-        let viewController = CheckInboxViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
+        let viewModel = CheckInboxViewModel(identifier: identifier, localizationBundle: configuration.localizationBundle)
+        let viewController = CheckInboxViewController(configuration: configuration, navigationSettings: navigationSettings, viewModel: viewModel)
         viewController.didRequestAction = { action in
             switch action {
             case .changeIdentifier:
@@ -240,7 +240,7 @@ extension PasswordCoordinator {
                 completion(.cancel)
             }
         }
-        self.navigationController.pushViewController(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
     private func getPasswordFromKeychain(for identifier: Identifier, _ localizedReasonString: String) -> String? {
         guard #available(iOS 11.3, *) else {
@@ -277,7 +277,7 @@ extension PasswordCoordinator {
     }
 
     private func clearKeyChain(for identifier: Identifier) {
-        if self.canUseBiometrics() {
+        if canUseBiometrics() {
             var query = [String: Any]()
             query[kSecClass as String] = kSecClassGenericPassword
             query[kSecReturnData as String] = kCFBooleanFalse
@@ -295,7 +295,7 @@ extension PasswordCoordinator {
         password: String,
         completion: @escaping () -> Void
     ) {
-        if !self.canUseBiometrics() {
+        if !canUseBiometrics() {
             completion()
             return
         }
@@ -317,17 +317,17 @@ extension PasswordCoordinator {
 
         let hasLoggedInBeforeSettingsKey = "hasLoggedInBefore"
         if let hasLoggedInBefore = Settings.value(forKey: hasLoggedInBeforeSettingsKey) as? Bool, hasLoggedInBefore {
-            if self.configuration.useBiometrics {
+            if configuration.useBiometrics {
                 SecItemAdd(dictionary as CFDictionary, nil)
             }
             completion()
         } else {
             Settings.setValue(true, forKey: hasLoggedInBeforeSettingsKey)
-            if self.biometryType == .touchID {
+            if biometryType == .touchID {
                 let viewModel = PasswordViewModel(
                     identifier: identifier,
                     loginFlowVariant: loginFlowVariant,
-                    localizationBundle: self.configuration.localizationBundle
+                    localizationBundle: configuration.localizationBundle
                 )
                 let message = viewModel.touchIdOnboardingMessage
                     .replacingOccurrences(of: "$0", with: configuration.appName)
@@ -344,9 +344,9 @@ extension PasswordCoordinator {
                     completion()
                 })
 
-                self.navigationController.present(alert, animated: false)
+                navigationController.present(alert, animated: false)
             } else {
-                self.configuration.useBiometrics(true)
+                configuration.useBiometrics(true)
                 SecItemAdd(dictionary as CFDictionary, nil)
                 completion()
             }

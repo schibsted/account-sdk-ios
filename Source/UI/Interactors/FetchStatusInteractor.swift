@@ -11,6 +11,6 @@ class FetchStatusInteractor {
     }
 
     func fetchStatus(for identifier: Identifier, completion: @escaping IdentifierStatusResultCallback) {
-        self.identityManager.fetchStatus(for: identifier, completion: completion)
+        identityManager.fetchStatus(for: identifier, completion: completion)
     }
 }

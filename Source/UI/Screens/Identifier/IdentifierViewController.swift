@@ -21,45 +21,45 @@ class IdentifierViewController: IdentityUIViewController {
 
     @IBOutlet var whastThisButton: UIButton! {
         didSet {
-            self.whastThisButton.setTitle(self.viewModel.whatsThis, for: .normal)
-            self.whastThisButton.titleLabel?.font = self.theme.fonts.info
-            self.whastThisButton.contentEdgeInsets.top = 1
+            whastThisButton.setTitle(viewModel.whatsThis, for: .normal)
+            whastThisButton.titleLabel?.font = theme.fonts.info
+            whastThisButton.contentEdgeInsets.top = 1
         }
     }
     @IBOutlet var backgroundView: UIView! {
         didSet {
-            self.backgroundView.backgroundColor = .schibstedLightGray
+            backgroundView.backgroundColor = .schibstedLightGray
         }
     }
     @IBAction func didTapWhatsThis(_: UIButton) {
-        self.configuration.tracker?.engagement(.click(on: .whatsSchibstedAccount), in: self.trackerScreenID)
-        self.didRequestAction?(.showHelp(url: self.viewModel.helpURL))
+        configuration.tracker?.engagement(.click(on: .whatsSchibstedAccount), in: trackerScreenID)
+        didRequestAction?(.showHelp(url: viewModel.helpURL))
     }
 
     @IBOutlet var teaserView: UIView! {
         didSet {
-            self.teaserView.isHidden = self.teaser.text?.isEmpty != false
+            teaserView.isHidden = teaser.text?.isEmpty != false
         }
     }
     @IBOutlet var teaser: NormalLabel! {
         didSet {
-            self.teaser.text = self.viewModel.localizedTeaserText
+            teaser.text = viewModel.localizedTeaserText
         }
     }
     @IBOutlet var countryCode: TextField! {
         didSet {
-            self.countryCode.text = "\(CountryDialingCodeHelper.currentDialingCode())"
-            self.countryCode.keyboardType = .phonePad
-            self.countryCode.delegate = self
+            countryCode.text = "\(CountryDialingCodeHelper.currentDialingCode())"
+            countryCode.keyboardType = .phonePad
+            countryCode.delegate = self
         }
     }
     @IBOutlet var emailAddress: TextField! {
         didSet {
-            self.emailAddress.keyboardType = .emailAddress
-            self.emailAddress.autocorrectionType = .no
-            self.emailAddress.delegate = self
-            self.emailAddress.isHidden = true
-            self.emailAddress.clearButtonMode = .whileEditing
+            emailAddress.keyboardType = .emailAddress
+            emailAddress.autocorrectionType = .no
+            emailAddress.delegate = self
+            emailAddress.isHidden = true
+            emailAddress.clearButtonMode = .whileEditing
 
             if #available(iOS 11.0, *) {
                 self.emailAddress.textContentType = .username
@@ -68,47 +68,47 @@ class IdentifierViewController: IdentityUIViewController {
     }
     @IBOutlet var phoneNumber: TextField! {
         didSet {
-            self.phoneNumber.keyboardType = .phonePad
-            self.phoneNumber.delegate = self
-            self.phoneNumber.clearButtonMode = .whileEditing
+            phoneNumber.keyboardType = .phonePad
+            phoneNumber.delegate = self
+            phoneNumber.clearButtonMode = .whileEditing
         }
     }
     @IBOutlet var numberStackView: UIStackView! {
         didSet {
-            self.numberStackView.isHidden = true
+            numberStackView.isHidden = true
         }
     }
     @IBOutlet var inputTitle: NormalLabel! {
         didSet {
-            self.inputTitle.text = self.viewModel.inputTitle
+            inputTitle.text = viewModel.inputTitle
         }
     }
     @IBOutlet var infoText: UILabel! {
         didSet {
-            self.infoText.attributedText = NSAttributedString(
-                string: self.viewModel.infoText,
-                attributes: self.theme.textAttributes.smallParagraph
+            infoText.attributedText = NSAttributedString(
+                string: viewModel.infoText,
+                attributes: theme.textAttributes.smallParagraph
             )
         }
     }
     @IBOutlet var continueButton: PrimaryButton! {
         didSet {
-            self.continueButton.setTitle(self.viewModel.proceed, for: .normal)
+            continueButton.setTitle(viewModel.proceed, for: .normal)
         }
     }
     @IBOutlet var inputError: ErrorLabel! {
         didSet {
-            self.inputError.isHidden = true
+            inputError.isHidden = true
         }
     }
     @IBOutlet var skipButton: SecondaryButton! {
         didSet {
-            self.skipButton.setTitle(self.viewModel.skip, for: .normal)
+            skipButton.setTitle(viewModel.skip, for: .normal)
         }
     }
 
     @IBAction func didTapSubmitButton(_: UIButton) {
-        self.didRequestAction?(.skip)
+        didRequestAction?(.skip)
     }
 
     let viewModel: IdentifierViewModel
@@ -139,39 +139,39 @@ class IdentifierViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let toolbar = UIToolbar.forKeyboard(target: self, doneString: self.viewModel.done, doneSelector: #selector(self.didTapContinue))
+        let toolbar = UIToolbar.forKeyboard(target: self, doneString: viewModel.done, doneSelector: #selector(didTapContinue))
 
         func showEmailAddress() {
-            self.emailAddress.isHidden = false
-            self.emailAddress.inputAccessoryView = toolbar
+            emailAddress.isHidden = false
+            emailAddress.inputAccessoryView = toolbar
         }
 
         func showPhoneNumber() {
-            self.numberStackView.isHidden = false
-            self.countryCode.inputAccessoryView = toolbar
-            self.phoneNumber.inputAccessoryView = toolbar
+            numberStackView.isHidden = false
+            countryCode.inputAccessoryView = toolbar
+            phoneNumber.inputAccessoryView = toolbar
         }
 
         switch self.viewModel.loginMethod {
         case .email, .password:
             showEmailAddress()
-            self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.emailAddress
+            viewToEnsureVisibilityOfAfterKeyboardAppearance = emailAddress
             if let savedEmail = Settings.value(forKey: Constants.EmailStorageLabel) {
-                self.emailAddress.text = savedEmail as? String
+                emailAddress.text = savedEmail as? String
             }
         case let .emailWithPrefilledValue(prefilledEmail), let .passwordWithPrefilledEmail(prefilledEmail):
             showEmailAddress()
-            self.emailAddress.text = prefilledEmail.normalizedString
+            emailAddress.text = prefilledEmail.normalizedString
         case .phone:
             showPhoneNumber()
-            self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.phoneNumber
+            viewToEnsureVisibilityOfAfterKeyboardAppearance = phoneNumber
         case let .phoneWithPrefilledValue(prefilledPhoneComponents):
             showPhoneNumber()
-            self.countryCode.text = prefilledPhoneComponents.countryCode
-            self.phoneNumber.text = prefilledPhoneComponents.number
+            countryCode.text = prefilledPhoneComponents.countryCode
+            phoneNumber.text = prefilledPhoneComponents.number
         }
 
-        self.skipButton.isHidden = !self.configuration.isSkippable
+        skipButton.isHidden = !self.configuration.isSkippable
     }
 
     @IBAction func didTapContinue(_: UIButton) {
@@ -189,21 +189,21 @@ class IdentifierViewController: IdentityUIViewController {
                 return
             }
             guard let email = EmailAddress(text) else {
-                self.showInlineError(.invalidEmail)
+                showInlineError(.invalidEmail)
                 return
             }
             identifier = Identifier(email)
         case .phone:
-            let countryCodeText = (self.countryCode.text ?? "").trimmingCharacters(in: .whitespaces)
-            let numberText = (self.phoneNumber.text ?? "").trimmingCharacters(in: .whitespaces)
+            let countryCodeText = (countryCode.text ?? "").trimmingCharacters(in: .whitespaces)
+            let numberText = (phoneNumber.text ?? "").trimmingCharacters(in: .whitespaces)
             guard let phone = PhoneNumber(countryCode: countryCodeText, number: numberText) else {
-                self.showInlineError(.invalidPhoneNumber)
+                showInlineError(.invalidPhoneNumber)
                 return
             }
             identifier = Identifier(phone)
         }
 
-        self.didRequestAction?(.enter(identifier: identifier))
+        didRequestAction?(.enter(identifier: identifier))
     }
 
     override var navigationTitle: String {
@@ -212,20 +212,20 @@ class IdentifierViewController: IdentityUIViewController {
 
     override func startLoading() {
         super.startLoading()
-        self.inputError.isHidden = true
+        inputError.isHidden = true
         switch self.viewModel.loginMethod.identifierType {
         case .phone:
-            self.countryCode.applyUnfocusedStyle()
-            self.phoneNumber.applyUnfocusedStyle()
+            countryCode.applyUnfocusedStyle()
+            phoneNumber.applyUnfocusedStyle()
         case .email:
-            self.emailAddress.applyUnfocusedStyle()
+            emailAddress.applyUnfocusedStyle()
         }
-        self.continueButton.isAnimating = true
+        continueButton.isAnimating = true
     }
 
     override func endLoading() {
         super.endLoading()
-        self.continueButton.isAnimating = false
+        continueButton.isAnimating = false
     }
 
     @discardableResult override func showInlineError(_ error: ClientError) -> Bool {
@@ -240,14 +240,14 @@ class IdentifierViewController: IdentityUIViewController {
         }
 
         self.configuration.tracker?.error(.validation(error), in: self.trackerScreenID)
-        self.inputError.text = message
-        self.inputError.isHidden = false
+        inputError.text = message
+        inputError.isHidden = false
         switch self.viewModel.loginMethod.identifierType {
         case .email:
-            self.emailAddress.layer.borderColor = self.theme.colors.errorBorder.cgColor
+            emailAddress.layer.borderColor = theme.colors.errorBorder.cgColor
         case .phone:
-            self.countryCode.layer.borderColor = self.theme.colors.errorBorder.cgColor
-            self.phoneNumber.layer.borderColor = self.theme.colors.errorBorder.cgColor
+            countryCode.layer.borderColor = theme.colors.errorBorder.cgColor
+            phoneNumber.layer.borderColor = theme.colors.errorBorder.cgColor
         }
 
         return true
@@ -256,7 +256,7 @@ class IdentifierViewController: IdentityUIViewController {
 
 extension IdentifierViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_: UITextField) -> Bool {
-        self.continueToNextPage()
+        continueToNextPage()
         return true
     }
 }

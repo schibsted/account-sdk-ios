@@ -21,7 +21,7 @@ class UpdateUserProfileTask: TaskProtocol {
         user.api.updateUserProfile(
             userID: userID,
             oauthToken: tokens.accessToken,
-            profile: self.profile
+            profile: profile
         ) { [weak self] result in
             guard self?.user != nil else {
                 completion(.failure(.invalidUser))

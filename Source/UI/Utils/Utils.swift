@@ -13,7 +13,7 @@ extension UIColor {
             return UIImage()
         }
 
-        context.setFillColor(self.cgColor)
+        context.setFillColor(cgColor)
         context.fill(rect)
 
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
@@ -27,7 +27,7 @@ extension UIColor {
         var blue: CGFloat = 0
         var alpha: CGFloat = 0
 
-        if self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+        if getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
             let rgb: Int = Int(red * 255) << 16 | Int(green * 255) << 8 | Int(blue * 255) << 0
             return String(format: "#%06x", rgb)
         }
@@ -64,7 +64,7 @@ extension String {
     }
 
     func localized(from bundle: Bundle, _ vars: CVarArg...) -> String {
-        let localizedString = self.localized(from: bundle)
+        let localizedString = localized(from: bundle)
         return String(format: localizedString, arguments: vars)
     }
 }

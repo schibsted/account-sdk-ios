@@ -31,16 +31,16 @@ class UpdatedTermsCoordinator: FlowCoordinator {
     func start(input: Input, completion: @escaping (Output) -> Void) {
         let userTermsInteractor = UserTermsInteractor(user: input.currentUser)
         self.userTermsInteractor = userTermsInteractor
-        self.spawnShowTermsCoordinator(with: input.terms, userTermsInteractor: userTermsInteractor, completion: completion)
+        spawnShowTermsCoordinator(with: input.terms, userTermsInteractor: userTermsInteractor, completion: completion)
     }
 }
 
 extension UpdatedTermsCoordinator {
     private func spawnShowTermsCoordinator(with terms: Terms, userTermsInteractor: UserTermsInteractor, completion: @escaping (Output) -> Void) {
-        let showTermsCoordinator = ShowTermsCoordinator(navigationController: self.navigationController, configuration: self.configuration)
+        let showTermsCoordinator = ShowTermsCoordinator(navigationController: navigationController, configuration: configuration)
         let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: .signin)
 
-        self.spawnChild(showTermsCoordinator, input: input) { [weak self] output in
+        spawnChild(showTermsCoordinator, input: input) { [weak self] output in
             switch output {
             case .success:
                 userTermsInteractor.acceptTerms { [weak self] result in

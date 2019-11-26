@@ -5,7 +5,7 @@
 
 class Heading: UILabel, Themeable {
     func applyTheme(theme: IdentityUITheme) {
-        self.font = theme.fonts.heading
-        self.numberOfLines = 2
+        font = theme.fonts.heading
+        numberOfLines = 2
     }
 }

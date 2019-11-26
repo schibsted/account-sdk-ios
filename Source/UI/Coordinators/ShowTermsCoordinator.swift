@@ -28,7 +28,7 @@ class ShowTermsCoordinator: FlowCoordinator {
     }
 
     func start(input: Input, completion: @escaping (Output) -> Void) {
-        self.showAcceptTermsView(
+        showAcceptTermsView(
             for: input.terms,
             loginFlowVariant: input.loginFlowVariant,
             completion: completion
@@ -42,7 +42,7 @@ extension ShowTermsCoordinator {
         loginFlowVariant: LoginMethod.FlowVariant,
         completion: @escaping (Output) -> Void
     ) {
-        let isFirstViewController = self.navigationController.viewControllers.count == 0
+        let isFirstViewController = navigationController.viewControllers.count == 0
 
         let navigationSettings = NavigationSettings(
             cancel: { completion(.cancel) },
@@ -51,11 +51,11 @@ extension ShowTermsCoordinator {
         let viewModel = TermsViewModel(
             terms: terms,
             loginFlowVariant: loginFlowVariant,
-            appName: self.configuration.appName,
-            localizationBundle: self.configuration.localizationBundle
+            appName: configuration.appName,
+            localizationBundle: configuration.localizationBundle
         )
 
-        let viewController = TermsViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
+        let viewController = TermsViewController(configuration: configuration, navigationSettings: navigationSettings, viewModel: viewModel)
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case .acceptTerms:
@@ -70,9 +70,9 @@ extension ShowTermsCoordinator {
         }
 
         if isFirstViewController {
-            self.navigationController.viewControllers = [viewController]
+            navigationController.viewControllers = [viewController]
         } else {
-            self.navigationController.pushViewController(viewController, animated: true)
+            navigationController.pushViewController(viewController, animated: true)
         }
     }
 }

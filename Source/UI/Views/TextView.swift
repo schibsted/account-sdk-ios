@@ -6,21 +6,21 @@
 class TextView: UITextView, Themeable {
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        self.commonInit()
+        commonInit()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.commonInit()
+        commonInit()
     }
 
     private func commonInit() {
-        self.textContainerInset = .zero
-        self.textContainer.lineFragmentPadding = 0
+        textContainerInset = .zero
+        textContainer.lineFragmentPadding = 0
     }
 
     func applyTheme(theme: IdentityUITheme) {
-        self.font = theme.fonts.normal
-        self.textColor = theme.colors.normalText
+        font = theme.fonts.normal
+        textColor = theme.colors.normalText
     }
 }

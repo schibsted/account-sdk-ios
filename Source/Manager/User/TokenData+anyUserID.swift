@@ -8,6 +8,6 @@ import Foundation
 extension TokenData {
     var anyUserID: String? {
         // Prioritize the subject ID in the idtoken
-        return self.idToken?.subjectID ?? self.userID
+        return idToken?.subjectID ?? userID
     }
 }

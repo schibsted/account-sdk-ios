@@ -117,15 +117,15 @@ public class IdentityManager: IdentityManagerProtocol {
      */
     public required init(clientConfiguration: ClientConfiguration) {
         self.clientConfiguration = clientConfiguration
-        self.api = IdentityAPI(basePath: clientConfiguration.serverURL)
-        self.routes = WebSessionRoutes(clientConfiguration: clientConfiguration)
+        api = IdentityAPI(basePath: clientConfiguration.serverURL)
+        routes = WebSessionRoutes(clientConfiguration: clientConfiguration)
 
-        self.currentUser = User(clientConfiguration: clientConfiguration)
-        self.currentUser.delegate = self
+        currentUser = User(clientConfiguration: clientConfiguration)
+        currentUser.delegate = self
 
-        try? self.currentUser.loadStoredTokens()
+        try? currentUser.loadStoredTokens()
 
-        log(from: self, "config: \(clientConfiguration), user: \(self.currentUser)")
+        log(from: self, "config: \(clientConfiguration), user: \(currentUser)")
     }
 
     private func dispatchIfSelf(_ block: @escaping () -> Void) {
@@ -147,7 +147,7 @@ public class IdentityManager: IdentityManagerProtocol {
      */
     public func sendCode(to identifier: Identifier, completion: @escaping NoValueCallback) {
         log(from: self, "sending code to \(identifier)")
-        let locale = self.clientConfiguration.locale
+        let locale = clientConfiguration.locale
         let localeID = Locale.canonicalLanguageIdentifier(from: locale.identifier)
 
         let completion = { [weak self] (result: Result<PasswordlessToken, ClientError>) in
@@ -172,9 +172,9 @@ public class IdentityManager: IdentityManagerProtocol {
             }
         }
 
-        self.api.startPasswordless(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret,
+        api.startPasswordless(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret,
             locale: localeID,
             identifier: identifier.normalizedString,
             connection: identifier.connection,
@@ -201,17 +201,17 @@ public class IdentityManager: IdentityManagerProtocol {
             passwordlessToken = data.token
         } catch {
             log(level: .error, from: self, "failed to resend code to \(identifier) - \(error)")
-            return self.dispatchIfSelf {
+            return dispatchIfSelf {
                 completion(.failure(ClientError(error)))
             }
         }
 
-        let locale = self.clientConfiguration.locale
+        let locale = clientConfiguration.locale
         let localeID = Locale.canonicalLanguageIdentifier(from: locale.identifier)
 
-        self.api.resendCode(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret,
+        api.resendCode(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret,
             passwordlessToken: passwordlessToken,
             locale: localeID
         ) { [weak self] result in
@@ -253,7 +253,7 @@ public class IdentityManager: IdentityManagerProtocol {
             passwordlessToken = data.token
         } catch {
             log(level: .error, from: self, "failed to validate code \(oneTimeCode) for \(identifier)")
-            return self.dispatchIfSelf {
+            return dispatchIfSelf {
                 completion(.failure(ClientError(error)))
             }
         }
@@ -269,9 +269,9 @@ public class IdentityManager: IdentityManagerProtocol {
             completion(result)
         }
 
-        self.api.validateCode(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret,
+        api.validateCode(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret,
             identifier: identifier.normalizedString,
             connection: identifier.connection,
             code: oneTimeCode,
@@ -346,14 +346,14 @@ public class IdentityManager: IdentityManagerProtocol {
         }
 
         if let email = maybeEmail {
-            self.validate(oneTimeCode: oneTimeCode, for: email, scopes: scopes, persistUser: persistUser, completion: createCallback(
+            validate(oneTimeCode: oneTimeCode, for: email, scopes: scopes, persistUser: persistUser, completion: createCallback(
                 thisCallbackStatusIndex: validateEmailCallbackStatusIndex,
                 otherCallbackStatusIndex: validatePhoneCallbackStatusIndex
             ))
         }
 
         if let phone = maybePhone {
-            self.validate(oneTimeCode: oneTimeCode, for: phone, scopes: scopes, persistUser: persistUser, completion: createCallback(
+            validate(oneTimeCode: oneTimeCode, for: phone, scopes: scopes, persistUser: persistUser, completion: createCallback(
                 thisCallbackStatusIndex: validatePhoneCallbackStatusIndex,
                 otherCallbackStatusIndex: validateEmailCallbackStatusIndex
             ))
@@ -386,9 +386,9 @@ public class IdentityManager: IdentityManagerProtocol {
             return
         }
 
-        self.api.requestAccessToken(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret,
+        api.requestAccessToken(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret,
             grantType: .password,
             refreshToken: nil,
             username: username.normalizedString,
@@ -466,9 +466,9 @@ public class IdentityManager: IdentityManagerProtocol {
         }
 
         let redirectPath = redirectPath ?? ClientConfiguration.RedirectInfo.Signup.path
-        self.api.fetchClientAccessToken(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret
+        api.fetchClientAccessToken(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret
         ) { [weak self] result in
             let clientTokenData: TokenData
             switch result {
@@ -528,13 +528,13 @@ public class IdentityManager: IdentityManagerProtocol {
      - SeeAlso: `AppLaunchData`
      */
     public func validate(authCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
-        self.api.requestAccessToken(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret,
+        api.requestAccessToken(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret,
             grantType: .authorizationCode,
             code: authCode,
             // this parameter is useless, but required, otherwise you get "invalid_request" error
-            redirectURI: self.clientConfiguration.redirectBaseURL(withPathComponent: nil).absoluteString
+            redirectURI: clientConfiguration.redirectBaseURL(withPathComponent: nil).absoluteString
         ) { [weak self] result in
             self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }
@@ -544,7 +544,7 @@ public class IdentityManager: IdentityManagerProtocol {
         log(level: .verbose, from: self, result)
         do {
             let tokens = try result.materialize()
-            try self.currentUser.set(
+            try currentUser.set(
                 accessToken: tokens.accessToken,
                 refreshToken: tokens.refreshToken,
                 idToken: tokens.idToken,
@@ -553,16 +553,16 @@ public class IdentityManager: IdentityManagerProtocol {
             )
             let device = UserDevice(
                 applicationName: clientConfiguration.appName,
-                applicationVersion: self.clientConfiguration.appVersion
+                applicationVersion: clientConfiguration.appVersion
             )
 
-            self.currentUser.device.update(device, completion: { _ in })
+            currentUser.device.update(device, completion: { _ in })
             PasswordlessTokenStore.clear()
-            self.dispatchIfSelf {
+            dispatchIfSelf {
                 completion?(.success(()))
             }
         } catch {
-            self.dispatchIfSelf {
+            dispatchIfSelf {
                 completion?(.failure(ClientError(error)))
             }
         }
@@ -575,9 +575,9 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter completion: contains an `IdentifierStatus` object on success
      */
     public func fetchStatus(for identifier: Identifier, completion: @escaping IdentifierStatusResultCallback) {
-        self.api.fetchClientAccessToken(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret
+        api.fetchClientAccessToken(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret
         ) { [weak self] result in
 
             log(level: .verbose, from: self, "fetched client token with result: \(result)")
@@ -632,8 +632,8 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter completion: a callback that receives the `Terms` model.
      */
     public func fetchTerms(completion: @escaping TermsResultCallback) {
-        self.api.fetchTerms(
-            clientID: self.clientConfiguration.clientID
+        api.fetchTerms(
+            clientID: clientConfiguration.clientID
         ) { [weak self] result in
 
             log(from: self, result)
@@ -663,9 +663,9 @@ public class IdentityManager: IdentityManagerProtocol {
     public func requiredFields(completion: @escaping RequiredFieldsResultCallback) {
         log(from: self, "fetching client required fields")
 
-        self.api.fetchClientAccessToken(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret
+        api.fetchClientAccessToken(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret
         ) { [weak self] result in
 
             guard let strongSelf = self else { return }
@@ -712,9 +712,9 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter completion: a callback that receives the `Client` model.
      */
     public func fetchClient(completion: @escaping ClientResultCallback) {
-        self.api.fetchClientAccessToken(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret
+        api.fetchClientAccessToken(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret
         ) { [weak self] result in
 
             log(level: .verbose, from: self, "fetched client token with result: \(result)")
@@ -756,7 +756,7 @@ public class IdentityManager: IdentityManagerProtocol {
 
 extension IdentityManager: UserDelegate {
     public func user(_: User, didChangeStateTo newState: UserState) {
-        guard self.delegate != nil else {
+        guard delegate != nil else {
             return
         }
         DispatchQueue.main.async { [weak self] in

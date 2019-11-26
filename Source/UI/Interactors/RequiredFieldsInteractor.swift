@@ -15,6 +15,6 @@ class RequiredFieldsInteractor {
     }
 
     func fetchClientRequiredFields(completion: @escaping RequiredFieldsResultCallback) {
-        self.identityManager.requiredFields(completion: completion)
+        identityManager.requiredFields(completion: completion)
     }
 }

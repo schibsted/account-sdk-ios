@@ -20,6 +20,6 @@ extension NetworkingProxy {
         for session: URLSession,
         request: URLRequest
     ) -> URLSessionDataTask {
-        return self.dataTask(for: session, request: request, completion: nil)
+        return dataTask(for: session, request: request, completion: nil)
     }
 }

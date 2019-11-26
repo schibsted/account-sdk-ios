@@ -11,13 +11,13 @@ class SynchronizedDictionary<K: Hashable, V> {
 
     subscript(key: K) -> V? {
         set {
-            self.dispatchQueue.async(flags: .barrier) {
+            dispatchQueue.async(flags: .barrier) {
                 self.dictionary[key] = newValue
             }
         }
         get {
             var value: V?
-            self.dispatchQueue.sync {
+            dispatchQueue.sync {
                 value = self.dictionary[key]
             }
             return value
@@ -40,7 +40,7 @@ class SynchronizedDictionary<K: Hashable, V> {
      */
     func removeValue(forKey key: K, if predicate: (V) -> Bool) -> V? {
         var maybeValue: V?
-        self.dispatchQueue.sync {
+        dispatchQueue.sync {
             guard let value = self.dictionary[key] else {
                 return
             }
@@ -53,7 +53,7 @@ class SynchronizedDictionary<K: Hashable, V> {
     }
 
     func forEach(_ callback: @escaping (K, V) -> Void) {
-        self.dispatchQueue.async(flags: .barrier) {
+        dispatchQueue.async(flags: .barrier) {
             for (key, val) in self.dictionary {
                 callback(key, val)
             }
@@ -62,20 +62,20 @@ class SynchronizedDictionary<K: Hashable, V> {
 
     var count: Int {
         var count = 0
-        self.dispatchQueue.sync {
+        dispatchQueue.sync {
             count = self.dictionary.count
         }
         return count
     }
 
     func removeAll(keepingCapacity keepCapacity: Bool = false) {
-        self.dispatchQueue.async(flags: .barrier) {
+        dispatchQueue.async(flags: .barrier) {
             self.dictionary.removeAll(keepingCapacity: keepCapacity)
         }
     }
 
     func take() -> [K: V] {
-        return self.dispatchQueue.sync {
+        return dispatchQueue.sync {
             self.dictionary
         }
     }

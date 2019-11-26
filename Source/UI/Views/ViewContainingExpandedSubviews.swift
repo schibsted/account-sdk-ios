@@ -10,10 +10,10 @@ class ViewContainingExtendedSubviews: UIView {
     var minExtendedSideLength: CGFloat = 44
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        for extendedSubview in self.extendedSubviews {
+        for extendedSubview in extendedSubviews {
             let pointForExtendedSubview = extendedSubview.convert(point, from: self)
-            let dx = -ceil(max(0, self.minExtendedSideLength - extendedSubview.bounds.width) / 2.0)
-            let dy = -ceil(max(0, self.minExtendedSideLength - extendedSubview.bounds.height) / 2.0)
+            let dx = -ceil(max(0, minExtendedSideLength - extendedSubview.bounds.width) / 2.0)
+            let dy = -ceil(max(0, minExtendedSideLength - extendedSubview.bounds.height) / 2.0)
             let extendedSubviewBounds = extendedSubview.bounds.insetBy(dx: dx, dy: dy)
 
             if extendedSubviewBounds.contains(pointForExtendedSubview) {
