@@ -1,3 +1,8 @@
+//
+// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Licensed under the terms of the MIT license. See LICENSE in the project root.
+//
+
 import Foundation
 
 class PasswordTextField: TextField {
@@ -7,15 +12,15 @@ class PasswordTextField: TextField {
         let passwordVisibilityView = UIButton(type: .custom)
         passwordVisibilityView.setImage(UIImage.schibstedPasswordShow.resize(targetSize: CGSize(width: 25, height: 25)), for: .normal)
         passwordVisibilityView.frame = CGRect(x: 0, y: 0, width: UIImage.schibstedPasswordShow.size.width + theme.geometry.groupedViewSpacing, height: UIImage.schibstedPasswordShow.size.height)
-        passwordVisibilityView.addTarget(self, action: #selector(self.togglePasswordVisibility), for: .touchUpInside)
+        passwordVisibilityView.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
 
-        self.keyboardType = .default
-        self.autocorrectionType = .no
+        keyboardType = .default
+        autocorrectionType = .no
 
-        self.rightView = passwordVisibilityView
-        self.rightViewMode = .always
+        rightView = passwordVisibilityView
+        rightViewMode = .always
 
-        self.isSecureTextEntry = true
+        isSecureTextEntry = true
 
         if #available(iOS 11.0, *) {
             self.textContentType = .password
@@ -23,12 +28,12 @@ class PasswordTextField: TextField {
     }
 
     @IBAction private func togglePasswordVisibility(passwordVisibility: UIButton) {
-        if (self.isSecureTextEntry) {
-            passwordVisibility.setImage(UIImage.schibstedPasswordHide, for:.normal)
-            self.isSecureTextEntry = false
+        if isSecureTextEntry {
+            passwordVisibility.setImage(UIImage.schibstedPasswordHide, for: .normal)
+            isSecureTextEntry = false
         } else {
-            passwordVisibility.setImage(UIImage.schibstedPasswordShow, for:.normal)
-            self.isSecureTextEntry = true
+            passwordVisibility.setImage(UIImage.schibstedPasswordShow, for: .normal)
+            isSecureTextEntry = true
         }
     }
 
@@ -49,5 +54,5 @@ class PasswordTextField: TextField {
         }
 
         return success
-   }
+    }
 }

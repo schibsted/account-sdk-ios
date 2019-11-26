@@ -32,9 +32,9 @@ class MockURLSessionDataTask: URLSessionDataTask {
         guard let stringValue = maxAge.split(separator: "=").dropFirst().first, let age = Int(String(describing: stringValue)), age > 0 else {
             return
         }
-        let data = self._data ?? Data()
+        let data = _data ?? Data()
         let cachedResponse = CachedURLResponse(response: response, data: data, userInfo: nil, storagePolicy: .allowedInMemoryOnly)
-        self._session?.configuration.urlCache?.storeCachedResponse(cachedResponse, for: self._request)
+        _session?.configuration.urlCache?.storeCachedResponse(cachedResponse, for: _request)
     }
 
     init(session: URLSession, request: URLRequest, callback: @escaping URLSessionTaskCallback, stub: NetworkStub) {
@@ -43,48 +43,48 @@ class MockURLSessionDataTask: URLSessionDataTask {
             switch responseData {
             // If it's just a JSON object, we serialize it to a Data and just set that and we're done
             case let .jsonObject(json):
-                self._data = try? JSONSerialization.data(withJSONObject: json, options: [])
+                _data = try? JSONSerialization.data(withJSONObject: json, options: [])
 
             case let .string(string):
-                self._data = string.data(using: .utf8)
+                _data = string.data(using: .utf8)
 
             // If it's an array of datas, we just take the first data and the first status code and set the data and response to that
             case let .arrayOfData(datas):
-                self._data = datas.first?.data
+                _data = datas.first?.data
                 if let statusCode = datas.first?.statusCode {
                     let url = request.url ?? URL(string: "unknown")!
-                    self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
+                    _response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
                 }
             }
         } else {
-            self._data = nil
+            _data = nil
         }
 
         // Only if the response object was not set before, and if we have a status code do we set the response object here
         // This means that if we have an arrayOfData then that response overrides this one
-        if self._response == nil, let statusCode = stub.statusCode, let url = request.url {
-            self._response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
+        if _response == nil, let statusCode = stub.statusCode, let url = request.url {
+            _response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: stub.responseHeaders)
         }
-        self._error = stub.error
-        self._session = session
-        self._request = request
+        _error = stub.error
+        _session = session
+        _request = request
 
         super.init()
 
         log(level: .verbose, from: self, "created mock for \(request)")
     }
     override func resume() {
-        log(level: .verbose, from: self, "resuming mock for \(self._request)")
-        self.handleCacheControl()
-        self.callback?(self._data, self._response, self._error)
-        self.callback = nil // just in case someone decides to call resume again
+        log(level: .verbose, from: self, "resuming mock for \(_request)")
+        handleCacheControl()
+        callback?(_data, _response, _error)
+        callback = nil // just in case someone decides to call resume again
     }
     override func cancel() {
-        log(level: .verbose, from: self, "cancelling mock for \(self._request)")
+        log(level: .verbose, from: self, "cancelling mock for \(_request)")
         let error = NSError(domain: "MockURLSessionDataTask", code: NSURLErrorCancelled, userInfo: nil)
-        self.callback?(nil, nil, error)
-        self._error = error as Error
-        self.callback = nil // just in case someone decides to call resume again
+        callback?(nil, nil, error)
+        _error = error as Error
+        callback = nil // just in case someone decides to call resume again
     }
     override var response: URLResponse? {
         return self._response
@@ -204,15 +204,15 @@ struct NetworkStub: Equatable, Comparable {
     }
 
     mutating func returnData(json: JSONObject) {
-        self.responseData = .jsonObject(json)
+        responseData = .jsonObject(json)
     }
 
     mutating func returnData(string: String) {
-        self.responseData = .string(string)
+        responseData = .string(string)
     }
 
     mutating func returnData(_ data: [(data: Data, statusCode: Int)]) {
-        self.responseData = .arrayOfData(data)
+        responseData = .arrayOfData(data)
     }
 
     mutating func returnError(error: Error) {
@@ -220,8 +220,8 @@ struct NetworkStub: Equatable, Comparable {
     }
 
     mutating func returnResponse(status: Int, headers: [String: String]? = nil) {
-        self.statusCode = status
-        self.responseHeaders = headers
+        statusCode = status
+        responseHeaders = headers
     }
 
     fileprivate static func unstubbed(path: NetworkStubPath) -> NetworkStub {
@@ -238,7 +238,7 @@ struct NetworkStub: Equatable, Comparable {
     }
 
     fileprivate func proceed(with request: URLRequest) -> Bool {
-        return self.predicate?(request) ?? true
+        return predicate?(request) ?? true
     }
 
     static func == (lhs: NetworkStub, rhs: NetworkStub) -> Bool {
@@ -258,11 +258,11 @@ struct NetworkStub: Equatable, Comparable {
 
 extension NetworkStub: CustomStringConvertible {
     var description: String {
-        return "  path: \(self.path)"
-            + "\n    - data: \(self.responseData as Any)"
-            + "\n    - headers: \(self.responseHeaders as Any)"
-            + "\n    - status code: \(self.statusCode as Any)"
-            + "\n    - error: \(self.error as Any)"
+        return "  path: \(path)"
+            + "\n    - data: \(responseData as Any)"
+            + "\n    - headers: \(responseHeaders as Any)"
+            + "\n    - status code: \(statusCode as Any)"
+            + "\n    - error: \(error as Any)"
     }
 }
 
@@ -315,17 +315,17 @@ class StubbedNetworkingProxy: NetworkingProxy {
 
         switch stub.path {
         case let .url(url):
-            self.insert(in: &self.urls, key: url, stub: stub)
+            insert(in: &urls, key: url, stub: stub)
         case let .path(path):
             let parts = path.components(separatedBy: "*")
             let path = parts.joined(separator: "(.*)")
-            self.insert(in: &self.paths, key: path, stub: stub)
+            insert(in: &paths, key: path, stub: stub)
         }
     }
 
     static func removeStubs() {
-        self.urls.removeAll(keepingCapacity: false)
-        self.paths.removeAll(keepingCapacity: false)
+        urls.removeAll(keepingCapacity: false)
+        paths.removeAll(keepingCapacity: false)
     }
 
     static var urls: [URL: [NetworkStub]] = [:]

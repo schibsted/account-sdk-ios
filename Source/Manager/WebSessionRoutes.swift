@@ -12,9 +12,9 @@ public class WebSessionRoutes {
     private let clientConfiguration: ClientConfiguration
 
     func makeURLFromPath(_ path: String, redirectPath: String?, queryItems: [URLQueryItem], redirectQueryItems: [URLQueryItem]?) -> URL {
-        let redirectURL = self.clientConfiguration.redirectBaseURL(withPathComponent: redirectPath, additionalQueryItems: redirectQueryItems)
+        let redirectURL = clientConfiguration.redirectBaseURL(withPathComponent: redirectPath, additionalQueryItems: redirectQueryItems)
         guard var urlComponents = URLComponents(url: self.clientConfiguration.serverURL, resolvingAgainstBaseURL: true) else {
-            preconditionFailure("Failed to create URLComponents from \(self.clientConfiguration.serverURL)")
+            preconditionFailure("Failed to create URLComponents from \(clientConfiguration.serverURL)")
         }
         urlComponents.path = path
         urlComponents.queryItems = [
@@ -44,7 +44,7 @@ public class WebSessionRoutes {
     }
     /// Allows to customize redirectPath
     public func logoutURL(withRedirectPath path: String? = nil) -> URL {
-        return self.makeURLFromPath("/logout", redirectPath: path, queryItems: [], redirectQueryItems: nil)
+        return makeURLFromPath("/logout", redirectPath: path, queryItems: [], redirectQueryItems: nil)
     }
 
     /**
@@ -64,7 +64,7 @@ public class WebSessionRoutes {
      */
     public func forgotPasswordURL(withRedirectPath path: String? = nil, redirectQueryItems: [URLQueryItem]? = nil) -> URL {
         Settings.setValue(path, forKey: ClientConfiguration.RedirectInfo.ForgotPassword.settingsKey)
-        return self.makeURLFromPath("/flow/password", redirectPath: path, queryItems: [], redirectQueryItems: redirectQueryItems)
+        return makeURLFromPath("/flow/password", redirectPath: path, queryItems: [], redirectQueryItems: redirectQueryItems)
     }
 
     /**
@@ -84,7 +84,7 @@ public class WebSessionRoutes {
      */
     public func accountSummaryURL(withRedirectPath path: String? = nil, redirectQueryItems: [URLQueryItem]? = nil) -> URL {
         Settings.setValue(path, forKey: ClientConfiguration.RedirectInfo.AccountSummary.settingsKey)
-        return self.makeURLFromPath(
+        return makeURLFromPath(
             "/account/summary",
             redirectPath: path,
             queryItems: [URLQueryItem(name: "response_type", value: "code")],

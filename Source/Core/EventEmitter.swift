@@ -19,13 +19,13 @@ class ReceiverHandle<Parameters>: Hashable {
 
     fileprivate init(object: AnyObject, handler: @escaping (AnyObject) -> (Parameters) -> Void) {
         self.object = object
-        self.objectHandler = handler
-        self.descriptionText = "AnyObject"
+        objectHandler = handler
+        descriptionText = "AnyObject"
     }
 
     fileprivate init(block: @escaping (Parameters) -> Void) {
         self.block = block
-        self.descriptionText = "block"
+        descriptionText = "block"
     }
 
     func hash(into hasher: inout Hasher) {
@@ -43,17 +43,17 @@ class EventEmitter<Parameters> {
     private var descriptionText: String
 
     init(description: String) {
-        self.descriptionText = description
+        descriptionText = description
     }
 
     init() {
-        self.descriptionText = "\(EventEmitter<Parameters>.self)"
+        descriptionText = "\(EventEmitter<Parameters>.self)"
     }
 
     @discardableResult
     func register(_ block: @escaping (Parameters) -> Void) -> ReceiverHandle<Parameters> {
         let handle = ReceiverHandle<Parameters>(block: block)
-        _ = self.dispatchQueue.sync {
+        _ = dispatchQueue.sync {
             self.handles.insert(handle)
         }
         return handle
@@ -69,21 +69,21 @@ class EventEmitter<Parameters> {
             handler(any as! T) // swiftlint:disable:this force_cast
         }
         let handle = ReceiverHandle<Parameters>(object: object, handler: typeErasedHandler)
-        _ = self.dispatchQueue.sync {
+        _ = dispatchQueue.sync {
             self.handles.insert(handle)
         }
         return handle
     }
 
     func unregister(_ handle: ReceiverHandle<Parameters>) {
-        _ = self.dispatchQueue.sync {
+        _ = dispatchQueue.sync {
             self.handles.remove(handle)
         }
     }
 
     func compactAndTakeHandles() -> [ReceiverHandle<Parameters>] {
         var validHandles: [ReceiverHandle<Parameters>] = []
-        self.dispatchQueue.sync {
+        dispatchQueue.sync {
             for handle in self.handles {
                 if handle.block != nil || handle.object != nil {
                     validHandles.append(handle)
@@ -111,19 +111,19 @@ class EventEmitter<Parameters> {
     }
 
     func emitSync(_ parameters: Parameters) {
-        log(level: .verbose, from: self, "\(self.descriptionText) on \(self.handles.count) handles")
-        let handles = self.compactAndTakeHandles()
-        self.normalizeHandlers(in: handles).forEach { handle, handler in
+        log(level: .verbose, from: self, "\(descriptionText) on \(self.handles.count) handles")
+        let handles = compactAndTakeHandles()
+        normalizeHandlers(in: handles).forEach { handle, handler in
             log(level: .debug, from: self, "\(self.descriptionText) -> \(handle.descriptionText)")
             handler(parameters)
         }
     }
 
     func emitAsync(_ parameters: Parameters) {
-        log(level: .verbose, from: self, "\(self.descriptionText) on \(self.handles.count) handles")
-        let handles = self.compactAndTakeHandles()
-        let normalizedHandlers = self.normalizeHandlers(in: handles)
-        self.dispatchQueue.async { [weak self] in
+        log(level: .verbose, from: self, "\(descriptionText) on \(self.handles.count) handles")
+        let handles = compactAndTakeHandles()
+        let normalizedHandlers = normalizeHandlers(in: handles)
+        dispatchQueue.async { [weak self] in
             normalizedHandlers.forEach { handle, handler in
                 log(level: .debug, from: self, "\(self?.descriptionText as Any) -> \(handle.descriptionText)")
                 handler(parameters)

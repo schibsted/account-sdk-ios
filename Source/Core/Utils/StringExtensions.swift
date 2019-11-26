@@ -11,7 +11,7 @@ extension String {
         let charsOnEachSide = 3
         let inbetweenChar: Character = "."
 
-        if self.count <= charsOnEachSide * 2 {
+        if count <= charsOnEachSide * 2 {
             return self
         }
 

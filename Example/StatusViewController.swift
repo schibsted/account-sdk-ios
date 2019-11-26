@@ -34,7 +34,7 @@ extension StatusViewController: IdentityManagerDelegate {
         // Hijack internal IdentityManager user and set our own delegate
         UIApplication.currentUser = UIApplication.identityManager.currentUser
         UIApplication.currentUser.delegate = self
-        self.updateFromCurrentUser()
+        updateFromCurrentUser()
     }
 }
 
@@ -54,7 +54,7 @@ extension StatusViewController: IdentityUIDelegate {
     }
 
     func willPresent(flow: LoginMethod.FlowVariant) -> LoginFlowDisposition {
-        if self.loginOnlySwitch.isOn, flow == .signup {
+        if loginOnlySwitch.isOn, flow == .signup {
             return .showError(
                 title: "Custom error",
                 description: "It's my desc and I'll do what I want"
@@ -76,7 +76,7 @@ extension StatusViewController: IdentityUIDelegate {
     }
 
     func willSucceed(with _: User, done: @escaping (LoginWillSucceedDisposition) -> Void) {
-        if self.postOauthFailSwitch.isOn {
+        if postOauthFailSwitch.isOn {
             done(.failed(title: "Failure", message: "Simulated post oauth failure with message"))
         } else {
             done(.continue)
@@ -106,7 +106,7 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didTapPasswordLogin(_: UIButton) {
-        if self.touchIDSwitch.isOn {
+        if touchIDSwitch.isOn {
             UIApplication.identityUI.configuration.useBiometrics(true)
         } else {
             UIApplication.identityUI.configuration.useBiometrics(false)
@@ -150,7 +150,7 @@ class StatusViewController: UIViewController {
             UIApplication.shared.openURL(url)
         })
 
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 
     @IBAction func didTapScopes(_: UIButton) {
@@ -166,7 +166,7 @@ class StatusViewController: UIViewController {
         }
         let alert = UIAlertController(title: "Scopes", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 
     @IBAction func didTapRefresh(_: UIButton) {
@@ -187,7 +187,7 @@ class StatusViewController: UIViewController {
         UIApplication.currentUser.delegate = self
         UIApplication.identityManager.delegate = self
 
-        self.updateFromCurrentUser()
+        updateFromCurrentUser()
     }
 
     var isUserLoggedIn: Bool {
@@ -195,10 +195,10 @@ class StatusViewController: UIViewController {
     }
 
     func updateFromCurrentUser() {
-        self.userStateLabel.text = self.isUserLoggedIn ? "yes" : "no"
-        self.userIDLabel.text = String(describing: UIApplication.currentUser)
-        self.touchIDSwitch.setOn(UIApplication.identityUI.configuration.useBiometrics, animated: true)
-        self.session = URLSession(user: UIApplication.currentUser, configuration: URLSessionConfiguration.default)
+        userStateLabel.text = isUserLoggedIn ? "yes" : "no"
+        userIDLabel.text = String(describing: UIApplication.currentUser)
+        touchIDSwitch.setOn(UIApplication.identityUI.configuration.useBiometrics, animated: true)
+        session = URLSession(user: UIApplication.currentUser, configuration: URLSessionConfiguration.default)
     }
 
     @IBAction func logOut(_: UIButton) {

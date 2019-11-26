@@ -15,25 +15,25 @@ extension SettingsProxy {
         return Foundation.UserDefaults.standard
     }
     func setValue(_ value: Any?, forKey key: String) {
-        self.storage.setValue(value, forKey: [type(of: self).keyPrefix, key].joined(separator: "."))
+        storage.setValue(value, forKey: [type(of: self).keyPrefix, key].joined(separator: "."))
     }
     func value(forKey key: String) -> Any? {
-        return self.storage.value(forKey: [type(of: self).keyPrefix, key].joined(separator: "."))
+        return storage.value(forKey: [type(of: self).keyPrefix, key].joined(separator: "."))
     }
     func clearAll() {
-        for key in self.storage.keys where key.hasPrefix(type(of: self).keyPrefix) {
+        for key in storage.keys where key.hasPrefix(type(of: self).keyPrefix) {
             self.storage.removeObject(forKey: key)
         }
     }
     func clearWhere(prefix subprefix: String) {
         let topLevelPrefixCount = type(of: self).keyPrefix.count
-        for key in self.storage.keys {
+        for key in storage.keys {
             guard key.count >= topLevelPrefixCount + subprefix.count + 1 else {
                 continue
             }
             let topLevelPrefixEndIndex = key.index(key.startIndex, offsetBy: topLevelPrefixCount + 1)
             if key[topLevelPrefixEndIndex...].hasPrefix(subprefix) {
-                self.storage.removeObject(forKey: key)
+                storage.removeObject(forKey: key)
             }
         }
     }

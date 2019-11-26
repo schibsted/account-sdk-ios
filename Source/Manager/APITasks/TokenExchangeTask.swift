@@ -26,9 +26,9 @@ class TokenExchangeTask: TaskProtocol {
 
         user.api.tokenExchange(
             oauthToken: tokens.accessToken,
-            clientID: self.clientID,
-            type: self.type,
-            redirectURI: self.redirectURL?.absoluteString
+            clientID: clientID,
+            type: type,
+            redirectURI: redirectURL?.absoluteString
         ) { [weak self] result in
             guard let strongSelf = self else { return }
 

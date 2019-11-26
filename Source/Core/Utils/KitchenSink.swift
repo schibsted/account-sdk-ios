@@ -18,16 +18,16 @@ extension Dictionary {
 extension Sequence {
     func compactOrFlatMap<ElementOfResult>(_ transform: (Self.Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
         #if swift(>=4.1)
-            return try self.compactMap(transform)
+            return try compactMap(transform)
         #else
-            return try self.flatMap(transform)
+            return try flatMap(transform)
         #endif
     }
 }
 
 extension Collection where Iterator.Element == String {
     func trimmed() -> [String] {
-        return self.map {
+        return map {
             $0.trimmingCharacters(in: CharacterSet.whitespaces)
         }.filter {
             $0.count > 0
@@ -37,7 +37,7 @@ extension Collection where Iterator.Element == String {
 
 extension NSLocking {
     func scope<T>(_ block: () -> T) -> T {
-        self.lock()
+        lock()
         defer { self.unlock() }
         return block()
     }

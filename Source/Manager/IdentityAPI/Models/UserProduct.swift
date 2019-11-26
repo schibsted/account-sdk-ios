@@ -19,8 +19,8 @@ public struct UserProduct: JSONParsable {
     init(from json: JSONObject) throws {
         let data = try json.jsonObject(for: "data")
 
-        self.productID = try? data.string(for: "productId")
-        self.result = try? data.boolean(for: "result")
+        productID = try? data.string(for: "productId")
+        result = try? data.boolean(for: "result")
     }
 }
 
@@ -28,8 +28,8 @@ extension UserProduct: CustomStringConvertible {
     /// human-readable string representation (YAML)
     public var description: String {
         var desc = "UserProduct:\n"
-        desc = desc.appendingFormat("  productID: %@\n", self.productID ?? "null")
-        desc = desc.appendingFormat("  result: %@\n", self.result?.description ?? "null")
+        desc = desc.appendingFormat("  productID: %@\n", productID ?? "null")
+        desc = desc.appendingFormat("  result: %@\n", result?.description ?? "null")
         return desc
     }
 }

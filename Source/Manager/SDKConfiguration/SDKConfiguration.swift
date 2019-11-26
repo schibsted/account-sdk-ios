@@ -21,12 +21,12 @@ public class SDKConfiguration {
     /// Set or get `UserSettings.AgreementsCache` related settings data
     public var agreementsCache: AgreementsCache {
         get {
-            return self.queue.sync {
+            return queue.sync {
                 self._agreementsCache
             }
         }
         set(newValue) {
-            self.queue.sync {
+            queue.sync {
                 self._agreementsCache = newValue
             }
         }
@@ -34,7 +34,7 @@ public class SDKConfiguration {
     private var _agreementsCache = AgreementsCache.default
 
     func reset() {
-        self.agreementsCache = .default
+        agreementsCache = .default
     }
 
     /**
@@ -49,11 +49,11 @@ public class SDKConfiguration {
      */
     public var refreshRetryCount: Int? {
         get {
-            let value = self._refreshRetryCount.value
+            let value = _refreshRetryCount.value
             return value == 0 ? nil : value
         }
         set(newValue) {
-            self._refreshRetryCount.value = newValue ?? 0
+            _refreshRetryCount.value = newValue ?? 0
         }
     }
     private var _refreshRetryCount = AtomicInt(1)

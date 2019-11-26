@@ -170,11 +170,11 @@ public struct ClientConfiguration {
         guard let name = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String else {
             preconditionFailure("Could not fetch bundle name.")
         }
-        self.appName = name
+        appName = name
         guard let version = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String else {
             preconditionFailure("Could not fetch bundle version.")
         }
-        self.appVersion = version
+        appVersion = version
         precondition(self.appURLScheme.contains(self.clientID), "Valid appURLSchemes must contain the clientID in it")
     }
 
@@ -246,11 +246,11 @@ public struct ClientConfiguration {
      */
     public func redirectBaseURL(withPathComponent path: String?, additionalQueryItems: [URLQueryItem]? = nil) -> URL {
         var components = URLComponents()
-        components.scheme = self.appURLScheme
-        if self.appURLScheme == self.defaultAppURLScheme {
-            components.host = self.redirectURLRoot
+        components.scheme = appURLScheme
+        if appURLScheme == defaultAppURLScheme {
+            components.host = redirectURLRoot
         } else {
-            components.path = "/" + self.redirectURLRoot
+            components.path = "/" + redirectURLRoot
         }
         if let path = path {
             components.queryItems = (additionalQueryItems ?? []) + [URLQueryItem(name: RedirectInfo.pathKey, value: path)]
@@ -278,13 +278,13 @@ public struct ClientConfiguration {
      - returns: A tuple of path and queryComponents if the URL was a valid redirectURL
      */
     public func parseRedirectURL(_ redirectURL: URL) -> RedirectPayload? {
-        guard redirectURL.scheme?.contains(self.clientID) ?? false else {
+        guard redirectURL.scheme?.contains(clientID) ?? false else {
             return nil
         }
 
         // old style scheme has a host, which is the "root"
         // new style scheme with no host, where path is "/<root>"
-        guard redirectURL.host == self.redirectURLRoot || redirectURL.pathComponents == ["/", self.redirectURLRoot] else {
+        guard redirectURL.host == redirectURLRoot || redirectURL.pathComponents == ["/", self.redirectURLRoot] else {
             return nil
         }
 
@@ -346,8 +346,8 @@ extension ClientConfiguration: CustomStringConvertible {
         if let env = self.environment {
             envString = String(describing: env)
         } else {
-            envString = self.serverURL.absoluteString
+            envString = serverURL.absoluteString
         }
-        return "(clientID: \(self.clientID), env: \(envString), scheme: \(self.appURLScheme.shortened)"
+        return "(clientID: \(clientID), env: \(envString), scheme: \(appURLScheme.shortened)"
     }
 }

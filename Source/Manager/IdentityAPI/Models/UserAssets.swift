@@ -14,7 +14,7 @@ struct UserAssets: JSONParsable {
 
     init(from json: JSONObject) throws {
         let assetArray = try json.jsonArray(of: JSONObject.self, for: "data")
-        self.assets = assetArray.compactOrFlatMap { try? UserAsset(from: $0) }
+        assets = assetArray.compactOrFlatMap { try? UserAsset(from: $0) }
     }
 }
 
@@ -22,7 +22,7 @@ extension UserAssets: CustomStringConvertible {
     /// human-readable string representation (YAML)
     public var description: String {
         var desc = "UserAssets:\n"
-        desc = desc.appendingFormat("  assets: %@\n", self.assets)
+        desc = desc.appendingFormat("  assets: %@\n", assets)
         return desc
     }
 }

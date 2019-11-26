@@ -9,12 +9,12 @@ class PasswordlessCoordinator: AuthenticationCoordinator {
     private let oneTimeCodeInteractor: OneTimeCodeInteractor
 
     override init(navigationController: UINavigationController, identityManager: IdentityManager, configuration: IdentityUIConfiguration) {
-        self.oneTimeCodeInteractor = OneTimeCodeInteractor(identityManager: identityManager)
+        oneTimeCodeInteractor = OneTimeCodeInteractor(identityManager: identityManager)
         super.init(navigationController: navigationController, identityManager: identityManager, configuration: configuration)
     }
 
     override func start(input: Input, completion: @escaping (Output) -> Void) {
-        self.sendCode(to: input.identifier) { [weak self] succeeded, error in
+        sendCode(to: input.identifier) { [weak self] succeeded, error in
             guard succeeded else {
                 completion(.error(error))
                 return
@@ -24,9 +24,9 @@ class PasswordlessCoordinator: AuthenticationCoordinator {
     }
 
     private func sendCode(to identifier: Identifier, completion: @escaping (_ succeeded: Bool, _ error: ClientError?) -> Void) {
-        self.presentedViewController?.startLoading()
+        presentedViewController?.startLoading()
 
-        self.oneTimeCodeInteractor.sendCode(to: identifier, completion: { [weak self] result in
+        oneTimeCodeInteractor.sendCode(to: identifier, completion: { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
@@ -50,8 +50,8 @@ extension PasswordlessCoordinator {
             cancel: configuration.isCancelable ? { completion(.cancel) } : nil,
             back: { completion(.changeIdentifier) }
         )
-        let viewModel = VerifyViewModel(identifier: identifier, localizationBundle: self.configuration.localizationBundle)
-        let viewController = VerifyViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
+        let viewModel = VerifyViewModel(identifier: identifier, localizationBundle: configuration.localizationBundle)
+        let viewController = VerifyViewController(configuration: configuration, navigationSettings: navigationSettings, viewModel: viewModel)
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(code, shouldPersistUser):
@@ -66,7 +66,7 @@ extension PasswordlessCoordinator {
                 self?.presentInfo(title: title, text: text, titleImage: .schibstedRememberMeInfo)
             }
         }
-        self.navigationController.pushViewController(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }
 
@@ -79,8 +79,8 @@ extension PasswordlessCoordinator {
         persistUser: Bool,
         completion: @escaping (Output) -> Void
     ) {
-        self.presentedViewController?.startLoading()
-        self.oneTimeCodeInteractor.validate(oneTimeCode: code, for: identifier, scopes: scopes) { [weak self] result in
+        presentedViewController?.startLoading()
+        oneTimeCodeInteractor.validate(oneTimeCode: code, for: identifier, scopes: scopes) { [weak self] result in
             self?.presentedViewController?.endLoading()
             switch result {
             case let .success(currentUser):
@@ -102,13 +102,13 @@ extension PasswordlessCoordinator {
         completion: @escaping (Output) -> Void
     ) {
         let ensureProfileDataCoordinator = CompleteProfileCoordinator(
-            navigationController: self.navigationController,
-            identityManager: self.identityManager,
-            configuration: self.configuration
+            navigationController: navigationController,
+            identityManager: identityManager,
+            configuration: configuration
         )
 
-        let updateProfileInteractor = UpdateProfileInteractor(currentUser: currentUser, loginFlowVariant: loginFlowVariant, tracker: self.configuration.tracker)
-        self.spawnChild(ensureProfileDataCoordinator, input: updateProfileInteractor) { output in
+        let updateProfileInteractor = UpdateProfileInteractor(currentUser: currentUser, loginFlowVariant: loginFlowVariant, tracker: configuration.tracker)
+        spawnChild(ensureProfileDataCoordinator, input: updateProfileInteractor) { output in
             switch output {
             case let .success(currentUser):
                 completion(.success(user: currentUser, persistUser: persistUser))
@@ -127,8 +127,8 @@ extension PasswordlessCoordinator {
 
 extension PasswordlessCoordinator {
     private func resendCode(for identifier: Identifier, completion: @escaping (Output) -> Void) {
-        self.presentedViewController?.startLoading()
-        self.oneTimeCodeInteractor.resendCode(to: identifier) { [weak self] result in
+        presentedViewController?.startLoading()
+        oneTimeCodeInteractor.resendCode(to: identifier) { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
@@ -141,14 +141,14 @@ extension PasswordlessCoordinator {
     }
 
     private func showResendView(with identifier: Identifier, completion: @escaping (Output) -> Void) {
-        let viewModel = ResendViewModel(identifier: identifier, localizationBundle: self.configuration.localizationBundle)
-        let viewController = ResendViewController(configuration: self.configuration, viewModel: viewModel)
+        let viewModel = ResendViewModel(identifier: identifier, localizationBundle: configuration.localizationBundle)
+        let viewController = ResendViewController(configuration: configuration, viewModel: viewModel)
         viewController.didRequestAction = { action in
             switch action {
             case .changeIdentifier:
                 completion(.changeIdentifier)
             }
         }
-        self.presentAsPopup(viewController)
+        presentAsPopup(viewController)
     }
 }

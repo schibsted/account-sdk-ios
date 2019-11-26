@@ -8,34 +8,34 @@ class Checkbox: UIButton, Themeable {
 
     private var stateColor: UIColor {
         guard let theme = self.theme else { return UIColor.red }
-        return self.isChecked ? theme.colors.checkedBox : theme.colors.uncheckedBox
+        return isChecked ? theme.colors.checkedBox : theme.colors.uncheckedBox
     }
 
     func applyTheme(theme: IdentityUITheme) {
         self.theme = theme
-        self.heightAnchor.constraint(equalToConstant: 26).isActive = true
-        self.widthAnchor.constraint(equalToConstant: 26).isActive = true
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.setImage(theme.icons.checkedBox, for: .selected)
-        self.setImage(theme.icons.uncheckedBox, for: .normal)
-        self.setTitle(nil, for: UIControl.State.normal)
-        self.tintColor = self.stateColor
-        self.imageView?.contentMode = .scaleAspectFit
-        self.addTarget(self, action: #selector(self.tap), for: .touchUpInside)
+        heightAnchor.constraint(equalToConstant: 26).isActive = true
+        widthAnchor.constraint(equalToConstant: 26).isActive = true
+        translatesAutoresizingMaskIntoConstraints = false
+        setImage(theme.icons.checkedBox, for: .selected)
+        setImage(theme.icons.uncheckedBox, for: .normal)
+        setTitle(nil, for: UIControl.State.normal)
+        tintColor = stateColor
+        imageView?.contentMode = .scaleAspectFit
+        addTarget(self, action: #selector(tap), for: .touchUpInside)
     }
 
     @objc func tap() {
-        self.isSelected = !self.isSelected
-        self.tintColor = self.stateColor
-        self.sendActions(for: .valueChanged)
+        isSelected = !isSelected
+        tintColor = stateColor
+        sendActions(for: .valueChanged)
     }
 
     var isChecked: Bool {
         get {
-            return self.isSelected
+            return isSelected
         }
         set {
-            self.isSelected = newValue
+            isSelected = newValue
         }
     }
 }

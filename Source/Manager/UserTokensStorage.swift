@@ -23,7 +23,7 @@ struct UserTokensStorage {
         if areOldTokens {
             do {
                 // Store in new format
-                try self.store(tokens)
+                try store(tokens)
                 SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
             } catch {
                 log(level: .error, from: self, "failed to migrate \(tokens)", force: true)

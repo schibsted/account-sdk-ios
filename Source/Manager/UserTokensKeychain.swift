@@ -41,13 +41,13 @@ class UserTokensKeychain: KeychainGenericPasswordType {
 
     var fetchedData = [String: Any]()
     var dataToStore: [String: Any] {
-        return self.fetchedData
+        return fetchedData
     }
     let accountName = "SchibstedID"
 
     func data() -> [TokenData] {
         guard let loggedInUsers = (try? self.fetchedData.jsonObject(for: Keys.loggedInUsers)) as? [String: JSONObject] else {
-            log(level: .debug, from: self, "no logged in users in \(self.fetchedData)")
+            log(level: .debug, from: self, "no logged in users in \(fetchedData)")
             return []
         }
         let data = loggedInUsers.map { (arg) -> TokenData in
@@ -67,14 +67,14 @@ class UserTokensKeychain: KeychainGenericPasswordType {
     }
 
     func addTokens(_ tokens: TokenData) {
-        var loggedInUsers = (try? self.fetchedData.jsonObject(for: Keys.loggedInUsers)) ?? [:]
+        var loggedInUsers = (try? fetchedData.jsonObject(for: Keys.loggedInUsers)) ?? [:]
         loggedInUsers[tokens.accessToken] = [
             Keys.refreshToken: tokens.refreshToken,
             Keys.idToken: tokens.idToken?.string ?? nil,
             Keys.userID: tokens.userID,
         ].compactedValues()
 
-        self.fetchedData[Keys.loggedInUsers] = loggedInUsers
+        fetchedData[Keys.loggedInUsers] = loggedInUsers
     }
 
     func removeTokens(forAccessToken accessToken: String) {
@@ -82,20 +82,20 @@ class UserTokensKeychain: KeychainGenericPasswordType {
             return
         }
         loggedInUsers[accessToken] = nil
-        self.fetchedData[Keys.loggedInUsers] = loggedInUsers
+        fetchedData[Keys.loggedInUsers] = loggedInUsers
     }
 
     func removeAllTokens() {
-        self.fetchedData[Keys.loggedInUsers] = nil
+        fetchedData[Keys.loggedInUsers] = nil
     }
 
     private func migrate() throws {
         guard let accessToken = try? self.fetchedData.string(for: Keys.accessToken) else {
             return
         }
-        let refreshToken = try? self.fetchedData.string(for: Keys.refreshToken)
-        let idToken = try? self.fetchedData.string(for: Keys.idToken)
-        let userID = try? self.fetchedData.string(for: Keys.legacyUserID) // key deliberately different here for backwards compat
+        let refreshToken = try? fetchedData.string(for: Keys.refreshToken)
+        let idToken = try? fetchedData.string(for: Keys.idToken)
+        let userID = try? fetchedData.string(for: Keys.legacyUserID) // key deliberately different here for backwards compat
         let tokens = TokenData(
             accessToken: accessToken,
             refreshToken: refreshToken,
@@ -103,20 +103,20 @@ class UserTokensKeychain: KeychainGenericPasswordType {
             userID: userID
         )
 
-        self.fetchedData[Keys.accessToken] = nil
-        self.fetchedData[Keys.refreshToken] = nil
-        self.fetchedData[Keys.idToken] = nil
-        self.fetchedData[Keys.legacyUserID] = nil
+        fetchedData[Keys.accessToken] = nil
+        fetchedData[Keys.refreshToken] = nil
+        fetchedData[Keys.idToken] = nil
+        fetchedData[Keys.legacyUserID] = nil
 
-        self.addTokens(tokens)
-        try self.saveInKeychain()
+        addTokens(tokens)
+        try saveInKeychain()
     }
 
     init() {
         var downcastedSelf = self
         if (try? downcastedSelf.fetchFromKeychain()) != nil {
-            self.fetchedData = downcastedSelf.fetchedData
-            try? self.migrate()
+            fetchedData = downcastedSelf.fetchedData
+            try? migrate()
         }
     }
 }

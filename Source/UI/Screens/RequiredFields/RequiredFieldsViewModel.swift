@@ -9,7 +9,7 @@ private extension NSMutableString {
     func replace(string target: String, with value: String) -> NSRange? {
         let range = self.range(of: target)
         if range.location != NSNotFound {
-            self.replaceCharacters(in: range, with: value)
+            replaceCharacters(in: range, with: value)
             return NSRange(location: range.location, length: value.count)
         }
         return nil
@@ -23,7 +23,7 @@ class RequiredFieldsViewModel {
     let locale: Locale
 
     init(requiredFields: [RequiredField], localizationBundle: Bundle, locale: Locale) {
-        self.supportedRequiredFields = SupportedRequiredField.from(requiredFields)
+        supportedRequiredFields = SupportedRequiredField.from(requiredFields)
         self.localizationBundle = localizationBundle
         self.locale = locale
     }
@@ -31,7 +31,7 @@ class RequiredFieldsViewModel {
 
 extension RequiredFieldsViewModel {
     var done: String {
-        return "GlobalString.done".localized(from: self.localizationBundle)
+        return "GlobalString.done".localized(from: localizationBundle)
     }
 
     func titleForField(_ field: SupportedRequiredField) -> String {
@@ -44,11 +44,11 @@ extension RequiredFieldsViewModel {
         case .birthday:
             localizedKey = "RequiredField.birthday.title"
         }
-        return localizedKey.localized(from: self.localizationBundle)
+        return localizedKey.localized(from: localizationBundle)
     }
 
     func requiredFieldID(at index: Int) -> String {
-        return self.supportedRequiredFields[index].rawValue
+        return supportedRequiredFields[index].rawValue
     }
 
     func placeholderForField(_ field: SupportedRequiredField) -> String? {
@@ -59,21 +59,21 @@ extension RequiredFieldsViewModel {
         case .givenName, .familyName:
             localizedKey = nil
         }
-        return localizedKey?.localized(from: self.localizationBundle)
+        return localizedKey?.localized(from: localizationBundle)
     }
 
     var proceed: String {
-        return "RequiredFieldsScreenString.proceed".localized(from: self.localizationBundle)
+        return "RequiredFieldsScreenString.proceed".localized(from: localizationBundle)
     }
 
     var title: String {
-        return "RequiredFieldsScreenString.title".localized(from: self.localizationBundle)
+        return "RequiredFieldsScreenString.title".localized(from: localizationBundle)
     }
 
     var subtext: NSAttributedString {
-        let text = "RequiredFieldsScreenString.subtext".localized(from: self.localizationBundle)
-        let link0 = "RequiredFieldsScreenString.subtext.link0".localized(from: self.localizationBundle)
-        let link1 = "RequiredFieldsScreenString.subtext.link1".localized(from: self.localizationBundle)
+        let text = "RequiredFieldsScreenString.subtext".localized(from: localizationBundle)
+        let link0 = "RequiredFieldsScreenString.subtext.link0".localized(from: localizationBundle)
+        let link1 = "RequiredFieldsScreenString.subtext.link1".localized(from: localizationBundle)
 
         guard let controlYouPrivacyURL = self.controlYouPrivacyURL else {
             return NSAttributedString(string: text)
@@ -98,25 +98,25 @@ extension RequiredFieldsViewModel {
     }
 
     var controlYouPrivacyURL: URL? {
-        return URL(string: "https://info.privacy.schibsted.com/" + self.locale.gdprLanguageCode + "/S007")
+        return URL(string: "https://info.privacy.schibsted.com/" + locale.gdprLanguageCode + "/S007")
     }
 
     var dataAndYouURL: URL? {
-        return URL(string: "https://info.privacy.schibsted.com/" + self.locale.gdprLanguageCode + "/S012")
+        return URL(string: "https://info.privacy.schibsted.com/" + locale.gdprLanguageCode + "/S012")
     }
 
     func string(for error: SupportedRequiredField.ValidationError) -> String {
         switch error {
         case .missing:
-            return "RequiredField.error.missing".localized(from: self.localizationBundle)
+            return "RequiredField.error.missing".localized(from: localizationBundle)
         case .lessThanThree:
-            return "RequiredField.error.lessThanThree".localized(from: self.localizationBundle)
+            return "RequiredField.error.lessThanThree".localized(from: localizationBundle)
         case .dateInvalid:
-            return "RequiredField.error.birthdateInvalid".localized(from: self.localizationBundle)
+            return "RequiredField.error.birthdateInvalid".localized(from: localizationBundle)
         case .numberInvalid:
-            return "RequiredField.error.numberInvalid".localized(from: self.localizationBundle)
+            return "RequiredField.error.numberInvalid".localized(from: localizationBundle)
         case .tooYoung:
-            return "PasswordScreenString.ageLimit".localized(from: self.localizationBundle)
+            return "PasswordScreenString.ageLimit".localized(from: localizationBundle)
         }
     }
 }

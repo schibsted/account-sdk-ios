@@ -132,11 +132,11 @@ extension UserProfile {
     mutating func set(field: SupportedRequiredField, value: String) {
         switch field {
         case .givenName:
-            self.givenName = value
+            givenName = value
         case .familyName:
-            self.familyName = value
+            familyName = value
         case .birthday:
-            self.birthday = Birthdate(string: value)
+            birthday = Birthdate(string: value)
         }
     }
 }

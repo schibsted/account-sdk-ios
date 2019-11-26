@@ -11,7 +11,7 @@ class SigninInteractor {
     }
 
     func login(username: Identifier, password: String, scopes: [String], completion: @escaping (Result<User, ClientError>) -> Void) {
-        self.identityManager.login(username: username, password: password, scopes: scopes, persistUser: false) { [weak self] result in
+        identityManager.login(username: username, password: password, scopes: scopes, persistUser: false) { [weak self] result in
             guard let strongSelf = self else { return }
             switch result {
             case .success:

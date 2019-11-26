@@ -9,7 +9,7 @@ private extension NSMutableString {
     func replace(string target: String, with value: String) -> NSRange? {
         let range = self.range(of: target)
         if range.location != NSNotFound {
-            self.replaceCharacters(in: range, with: value)
+            replaceCharacters(in: range, with: value)
             return NSRange(location: range.location, length: value.count)
         }
         return nil
@@ -89,50 +89,50 @@ class TermsViewModel {
 
 extension TermsViewModel {
     var subtextCreate: String {
-        return "TermsScreenString.subtext.create".localized(from: self.localizationBundle)
+        return "TermsScreenString.subtext.create".localized(from: localizationBundle)
     }
 
     var subtextLogin: String {
-        return "TermsScreenString.subtext.login".localized(from: self.localizationBundle)
+        return "TermsScreenString.subtext.login".localized(from: localizationBundle)
     }
 
     var proceed: String {
-        return "TermsScreenString.proceed".localized(from: self.localizationBundle)
+        return "TermsScreenString.proceed".localized(from: localizationBundle)
     }
 
     var acceptTermError: String {
-        return "TermsScreenString.acceptTermError".localized(from: self.localizationBundle)
+        return "TermsScreenString.acceptTermError".localized(from: localizationBundle)
     }
 
     var acceptPrivacyError: String {
-        return "TermsScreenString.acceptPrivacyError".localized(from: self.localizationBundle)
+        return "TermsScreenString.acceptPrivacyError".localized(from: localizationBundle)
     }
 
     var title: String {
-        return "TermsScreenString.title".localized(from: self.localizationBundle)
+        return "TermsScreenString.title".localized(from: localizationBundle)
     }
 
     var platformTerms: String {
-        return "TermsScreenString.platform.terms".localized(from: self.localizationBundle)
+        return "TermsScreenString.platform.terms".localized(from: localizationBundle)
     }
 
     var platformPrivacy: String {
-        return "TermsScreenString.platform.privacy".localized(from: self.localizationBundle)
+        return "TermsScreenString.platform.privacy".localized(from: localizationBundle)
     }
 
     var clientTerms: String {
-        return "TermsScreenString.client.terms".localized(from: self.localizationBundle)
+        return "TermsScreenString.client.terms".localized(from: localizationBundle)
     }
 
     var clientPrivacy: String {
-        return "TermsScreenString.client.privacy".localized(from: self.localizationBundle)
+        return "TermsScreenString.client.privacy".localized(from: localizationBundle)
     }
 
     var platformName: String {
-        return "GlobalString.platformName".localized(from: self.localizationBundle)
+        return "GlobalString.platformName".localized(from: localizationBundle)
     }
 
     var learnMore: String {
-        return "TermsScreenString.learnMore".localized(from: self.localizationBundle)
+        return "TermsScreenString.learnMore".localized(from: localizationBundle)
     }
 }

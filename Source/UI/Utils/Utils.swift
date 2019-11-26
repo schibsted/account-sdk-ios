@@ -13,7 +13,7 @@ extension UIColor {
             return UIImage()
         }
 
-        context.setFillColor(self.cgColor)
+        context.setFillColor(cgColor)
         context.fill(rect)
 
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
@@ -27,7 +27,7 @@ extension UIColor {
         var blue: CGFloat = 0
         var alpha: CGFloat = 0
 
-        if self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+        if getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
             let rgb: Int = Int(red * 255) << 16 | Int(green * 255) << 8 | Int(blue * 255) << 0
             return String(format: "#%06x", rgb)
         }
@@ -64,24 +64,24 @@ extension String {
     }
 
     func localized(from bundle: Bundle, _ vars: CVarArg...) -> String {
-        let localizedString = self.localized(from: bundle)
+        let localizedString = localized(from: bundle)
         return String(format: localizedString, arguments: vars)
     }
 }
 
 extension UIImage {
-  func resize(targetSize: CGSize) -> UIImage {
-    let size = self.size
-    let widthRatio  = targetSize.width  / size.width
-    let heightRatio = targetSize.height / size.height
-    let newSize = widthRatio > heightRatio ?  CGSize(width: size.width * heightRatio, height: size.height * heightRatio) : CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-    let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+    func resize(targetSize: CGSize) -> UIImage {
+        let size = self.size
+        let widthRatio = targetSize.width / size.width
+        let heightRatio = targetSize.height / size.height
+        let newSize = widthRatio > heightRatio ? CGSize(width: size.width * heightRatio, height: size.height * heightRatio) : CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
 
-    UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-    self.draw(in: rect)
-    let newImage = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
 
-    return newImage!
-  }
+        return newImage!
+    }
 }

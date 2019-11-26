@@ -32,15 +32,15 @@ class CompleteProfileCoordinator: FlowCoordinator {
         self.navigationController = navigationController
         self.identityManager = identityManager
         self.configuration = configuration
-        self.termsInteractor = TermsInteractor(identityManager: identityManager)
-        self.requiredFieldsInteractor = RequiredFieldsInteractor(identityManager: identityManager)
+        termsInteractor = TermsInteractor(identityManager: identityManager)
+        requiredFieldsInteractor = RequiredFieldsInteractor(identityManager: identityManager)
     }
 
     func start(input completeProfileInteractor: CompleteProfileInteractor, completion: @escaping (Output) -> Void) {
         let currentUser = completeProfileInteractor.currentUser
         let loginFlowVariant = completeProfileInteractor.loginFlowVariant
 
-        self.ensureAgreementsAccepted(for: currentUser, on: loginFlowVariant) { [weak self] result in
+        ensureAgreementsAccepted(for: currentUser, on: loginFlowVariant) { [weak self] result in
             switch result {
             case .wereAlreadyAccepted:
                 self?.ensureRequiredFieldsEntered(for: currentUser, on: loginFlowVariant) { [weak self] result in
@@ -80,7 +80,7 @@ class CompleteProfileCoordinator: FlowCoordinator {
     ) {
         switch requiredFieldEnteringResult {
         case let .updatedRequiredFields(fields):
-            self.presentedViewController?.startLoading()
+            presentedViewController?.startLoading()
             completeProfileInteractor.completeProfile(acceptingTerms: wereAgreementsJustAccepted, requiredFieldsToUpdate: fields) { [weak self] result in
                 self?.presentedViewController?.endLoading()
                 switch result {
@@ -93,7 +93,7 @@ class CompleteProfileCoordinator: FlowCoordinator {
         case .cancel:
             completion(.cancel)
         case let .error(error):
-            if !self.handle(error: error) { completion(.error(error)) }
+            if !handle(error: error) { completion(.error(error)) }
         }
     }
 }
@@ -113,7 +113,7 @@ extension CompleteProfileCoordinator {
         on loginFlowVariant: LoginMethod.FlowVariant,
         completion: @escaping (AgreementsAcceptanceResult) -> Void
     ) {
-        self.fetchAgreementsAcceptanceStatus(for: currentUser, on: loginFlowVariant) { [weak self] result in
+        fetchAgreementsAcceptanceStatus(for: currentUser, on: loginFlowVariant) { [weak self] result in
             switch result {
             case .alreadyAccepted:
                 // Agreements were already accepted, so there is no change in status.
@@ -139,10 +139,10 @@ extension CompleteProfileCoordinator {
         completion: @escaping (AgreementsAcceptanceStatus) -> Void
     ) {
         if loginFlowVariant == .signin, let currentUser = currentUser {
-            self.presentedViewController?.startLoading()
+            presentedViewController?.startLoading()
 
-            self.userTermsInteractor = UserTermsInteractor(user: currentUser)
-            self.userTermsInteractor?.fetchStatus { [weak self] result in
+            userTermsInteractor = UserTermsInteractor(user: currentUser)
+            userTermsInteractor?.fetchStatus { [weak self] result in
                 self?.presentedViewController?.endLoading()
 
                 switch result {
@@ -159,9 +159,9 @@ extension CompleteProfileCoordinator {
     }
 
     private func acceptAgreements(on loginFlowVariant: LoginMethod.FlowVariant, completion: @escaping (AgreementsAcceptanceResult) -> Void) {
-        self.presentedViewController?.startLoading()
+        presentedViewController?.startLoading()
 
-        self.termsInteractor.fetchTerms { [weak self] result in
+        termsInteractor.fetchTerms { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
@@ -178,10 +178,10 @@ extension CompleteProfileCoordinator {
         on loginFlowVariant: LoginMethod.FlowVariant,
         completion: @escaping (AgreementsAcceptanceResult) -> Void
     ) {
-        let showTermsCoordinator = ShowTermsCoordinator(navigationController: self.navigationController, configuration: self.configuration)
+        let showTermsCoordinator = ShowTermsCoordinator(navigationController: navigationController, configuration: configuration)
         let input = ShowTermsCoordinator.Input(terms: terms, loginFlowVariant: loginFlowVariant)
 
-        self.spawnChild(showTermsCoordinator, input: input) { output in
+        spawnChild(showTermsCoordinator, input: input) { output in
             switch output {
             case .success:
                 completion(.wereJustAccepted)
@@ -206,15 +206,15 @@ extension CompleteProfileCoordinator {
         on loginFlowVariant: LoginMethod.FlowVariant,
         completion: @escaping (RequiredFieldEnteringResult) -> Void
     ) {
-        self.presentedViewController?.startLoading()
+        presentedViewController?.startLoading()
 
         if loginFlowVariant == .signin, let currentUser = currentUser {
-            self.requiredFieldsInteractor.fetchRequiredFields(for: currentUser) { [weak self] result in
+            requiredFieldsInteractor.fetchRequiredFields(for: currentUser) { [weak self] result in
                 self?.presentedViewController?.endLoading()
                 self?.handleFetchRequiredFieldsResult(result, completion: completion)
             }
         } else {
-            self.requiredFieldsInteractor.fetchClientRequiredFields { [weak self] result in
+            requiredFieldsInteractor.fetchClientRequiredFields { [weak self] result in
                 self?.presentedViewController?.endLoading()
                 self?.handleFetchRequiredFieldsResult(result, completion: completion)
             }
@@ -230,13 +230,13 @@ extension CompleteProfileCoordinator {
             let userMissesRequiredFields = SupportedRequiredField.from(requiredFields).count > 0
             if userMissesRequiredFields {
                 // Let the user enter required fields.
-                self.showEnterRequiredFieldsView(requiredFields, completion: completion)
+                showEnterRequiredFieldsView(requiredFields, completion: completion)
             } else {
                 // No required field was missing, thus no one was updated.
                 completion(.updatedRequiredFields([:]))
             }
         case let .failure(error):
-            if !self.handle(error: error) { completion(.error(error)) }
+            if !handle(error: error) { completion(.error(error)) }
         }
     }
 
@@ -246,10 +246,10 @@ extension CompleteProfileCoordinator {
         )
         let viewModel = RequiredFieldsViewModel(
             requiredFields: requiredFields,
-            localizationBundle: self.configuration.localizationBundle,
-            locale: self.identityManager.clientConfiguration.locale
+            localizationBundle: configuration.localizationBundle,
+            locale: identityManager.clientConfiguration.locale
         )
-        let viewController = RequiredFieldsViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
+        let viewController = RequiredFieldsViewController(configuration: configuration, navigationSettings: navigationSettings, viewModel: viewModel)
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .update(fields):
@@ -260,13 +260,13 @@ extension CompleteProfileCoordinator {
                 self?.present(url: url)
             }
         }
-        self.navigationController.pushViewController(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }
 
 extension CompleteProfileCoordinator {
     private func handle(error: ClientError) -> Bool {
-        if self.presentedViewController is TermsViewController || self.presentedViewController is RequiredFieldsViewController {
+        if presentedViewController is TermsViewController || presentedViewController is RequiredFieldsViewController {
             /*
              So when you use a phone number in a required field, the error Schibsted account returns is
 
@@ -285,9 +285,9 @@ extension CompleteProfileCoordinator {
              someone tried to use a phone number in a required field that has already been used as an identifier in Schibsted account.
              */
             if let vc = self.presentedViewController as? RequiredFieldsViewController, case .alreadyRegistered = error {
-                self.presentError(description: vc.viewModel.string(for: .numberInvalid))
+                presentError(description: vc.viewModel.string(for: .numberInvalid))
             } else {
-                self.present(error: error)
+                present(error: error)
             }
             return true
         }

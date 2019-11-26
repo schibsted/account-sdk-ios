@@ -12,29 +12,29 @@ class ErrorViewController: IdentityUIViewController {
 
     @IBOutlet var headingLabel: Heading! {
         didSet {
-            switch self.dataSource {
+            switch dataSource {
             case .clientError:
-                self.headingLabel.text = self.strings.heading
+                headingLabel.text = strings.heading
             case let .customText(title, _):
-                self.headingLabel.text = title
+                headingLabel.text = title
             }
         }
     }
 
     @IBOutlet var descriptionLabel: NormalLabel! {
         didSet {
-            switch self.dataSource {
+            switch dataSource {
             case let .clientError(error):
-                self.descriptionLabel.text = error.localized(from: self.configuration.localizationBundle)
+                descriptionLabel.text = error.localized(from: configuration.localizationBundle)
             case let .customText(_, description):
-                self.descriptionLabel.text = description
+                descriptionLabel.text = description
             }
         }
     }
 
     @IBOutlet var okButton: PrimaryButton! {
         didSet {
-            self.okButton.setTitle(self.strings.proceed, for: .normal)
+            okButton.setTitle(strings.proceed, for: .normal)
         }
     }
     @IBOutlet var sheetBackgroundView: UIView!
@@ -93,22 +93,22 @@ class ErrorViewController: IdentityUIViewController {
     }
 
     @IBAction func didTapOKButton(_: UIButton) {
-        self.dismiss(animated: true) { [weak self] in
+        dismiss(animated: true) { [weak self] in
             self?.didRequestAction?(.dismiss)
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sheetBackgroundView.layer.cornerRadius = self.theme.geometry.cornerRadius
-        self.sheetBackgroundView.clipsToBounds = true
+        sheetBackgroundView.layer.cornerRadius = theme.geometry.cornerRadius
+        sheetBackgroundView.clipsToBounds = true
 
         guard let originViewController = self.originViewController else {
             return
         }
 
         let errorType: TrackingEvent.ErrorType
-        switch self.dataSource {
+        switch dataSource {
         case let .clientError(error):
             if case .networkingError = error {
                 errorType = .network(error)
@@ -122,6 +122,6 @@ class ErrorViewController: IdentityUIViewController {
             errorType = .generic(nsError)
         }
 
-        self.configuration.tracker?.error(errorType, in: originViewController.trackerScreenID)
+        configuration.tracker?.error(errorType, in: originViewController.trackerScreenID)
     }
 }

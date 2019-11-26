@@ -29,12 +29,12 @@ class SignupInteractor: CompleteProfileInteractor {
             profile.set(field: field, value: value)
         }
 
-        self.identityManager.signup(
-            username: self.identifier,
-            password: self.password,
+        identityManager.signup(
+            username: identifier,
+            password: password,
             profile: profile,
             acceptTerms: acceptingTerms,
-            persistUser: self.persistUser
+            persistUser: persistUser
         ) { [weak self] result in
             guard let strongSelf = self else { return }
             switch result {

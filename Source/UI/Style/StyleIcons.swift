@@ -29,7 +29,6 @@ public enum StyleIconKind: String {
     case passwordShow = "password-show"
     ///
     case passwordHide = "password-hide"
-
 }
 
 extension UIImage {
