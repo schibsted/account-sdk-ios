@@ -5,7 +5,7 @@ class PasswordTextField: TextField {
         super.applyTheme(theme: theme)
 
         let passwordVisibilityView = UIButton(type: .custom)
-        passwordVisibilityView.setImage(UIImage.schibstedPasswordShow, for: .normal)
+        passwordVisibilityView.setImage(UIImage.schibstedPasswordShow.resize(targetSize: CGSize(width: 25, height: 25)), for: .normal)
         passwordVisibilityView.frame = CGRect(x: 0, y: 0, width: UIImage.schibstedPasswordShow.size.width + theme.geometry.groupedViewSpacing, height: UIImage.schibstedPasswordShow.size.height)
         passwordVisibilityView.addTarget(self, action: #selector(self.togglePasswordVisibility), for: .touchUpInside)
 
