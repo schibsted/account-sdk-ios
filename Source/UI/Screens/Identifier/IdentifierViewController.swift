@@ -175,7 +175,7 @@ class IdentifierViewController: IdentityUIViewController {
     }
 
     @IBAction func didTapContinue(_: UIButton) {
-        self.continueToNextPage()
+        continueToNextPage()
     }
 
     @objc private func continueToNextPage() {

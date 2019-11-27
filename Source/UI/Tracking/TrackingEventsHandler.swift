@@ -3,8 +3,8 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import LocalAuthentication
 import Foundation
+import LocalAuthentication
 
 /**
  The TrackingEventsHandler can inform of certain events. These are sent
