@@ -10,10 +10,10 @@ struct ErrorScreenStrings {
     }
 
     var heading: String {
-        return "ErrorScreenString.heading".localized(from: self.localizationBundle)
+        return "ErrorScreenString.heading".localized(from: localizationBundle)
     }
 
     var proceed: String {
-        return "ErrorScreenString.proceed".localized(from: self.localizationBundle)
+        return "ErrorScreenString.proceed".localized(from: localizationBundle)
     }
 }

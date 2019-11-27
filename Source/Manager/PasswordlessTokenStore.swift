@@ -35,14 +35,14 @@ struct PasswordlessTokenStore {
         fileprivate static let prefix = "passwordless-token"
         let key: String
         init(_ value: String) {
-            self.key = [Key.prefix, value].joined(separator: ".")
+            key = [Key.prefix, value].joined(separator: ".")
         }
         init(_ connection: Connection) {
             self.init(String(describing: connection))
         }
 
         var description: String {
-            return self.key
+            return key
         }
     }
 

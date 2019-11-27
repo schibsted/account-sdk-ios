@@ -15,12 +15,12 @@ struct UserAgent {
     let value: String
 
     init(sdkVersion: String = sdkVersion, deviceInfo: DeviceInfo = UIDevice.current) {
-        self.value = "SchibstedAccountSDK/\(sdkVersion) (\(deviceInfo.deviceModel); \(deviceInfo.systemName) \(deviceInfo.systemVersion))"
+        value = "SchibstedAccountSDK/\(sdkVersion) (\(deviceInfo.deviceModel); \(deviceInfo.systemName) \(deviceInfo.systemVersion))"
     }
 }
 
 extension UIDevice: DeviceInfo {
     var deviceModel: String {
-        return self.model
+        return model
     }
 }

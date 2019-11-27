@@ -99,12 +99,12 @@ private extension UIViewController {
         loadingIndicator.startAnimating()
 
         alert.view.addSubview(loadingIndicator)
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 
     func dismissLoadingIndicator(animated _: Bool = true, completion: (() -> Void)?) {
-        if self.self.presentedViewController is InternalLoadingAlertController? {
-            self.dismiss(animated: true) {
+        if `self`.presentedViewController is InternalLoadingAlertController? {
+            dismiss(animated: true) {
                 completion?()
             }
         }
@@ -132,7 +132,7 @@ public class IdentityUI {
     ///
     @available(*, deprecated, message: "This is going to be removed in the next version. Using it encourages bugs. It is advised to not mix headless and visual login") // swiftlint:disable:this line_length
     public var identityManager: IdentityManager {
-        return self._identityManager
+        return _identityManager
     }
     private let _identityManager: IdentityManager
 
@@ -181,7 +181,7 @@ public class IdentityUI {
             throw Error.mismatchingClientConfiguration
         }
 
-        if self.presentedIdentityUI != nil || self.updatedTermsCoordinator != nil {
+        if presentedIdentityUI != nil || updatedTermsCoordinator != nil {
             // Another screen of the Identity UI is already presented.
 
             guard user.state == .loggedIn else {
@@ -199,8 +199,8 @@ public class IdentityUI {
         }
         let input = UpdatedTermsCoordinator.Input(currentUser: user, terms: terms)
 
-        self.updatedTermsCoordinator = UpdatedTermsCoordinator(navigationController: navigationController, configuration: configuration)
-        self.updatedTermsCoordinator?.start(input: input) { _ in
+        updatedTermsCoordinator = UpdatedTermsCoordinator(navigationController: navigationController, configuration: configuration)
+        updatedTermsCoordinator?.start(input: input) { _ in
             self.updatedTermsCoordinator = nil
             navigationController.dismiss(animated: true, completion: nil)
         }
@@ -213,10 +213,10 @@ public class IdentityUI {
      */
     public init(configuration: IdentityUIConfiguration) {
         self.configuration = configuration
-        self._identityManager = IdentityManager(clientConfiguration: configuration.clientConfiguration)
-        self.fetchStatusInteractor = FetchStatusInteractor(identityManager: self._identityManager)
-        self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: self._identityManager)
-        self.clientInfoInteractor = ClientInfoInteractor(identityManager: self._identityManager)
+        _identityManager = IdentityManager(clientConfiguration: configuration.clientConfiguration)
+        fetchStatusInteractor = FetchStatusInteractor(identityManager: _identityManager)
+        authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: _identityManager)
+        clientInfoInteractor = ClientInfoInteractor(identityManager: _identityManager)
         self.configuration.tracker?.clientConfiguration = self.configuration.clientConfiguration
         self.configuration.tracker?.delegate = self
     }
@@ -227,10 +227,10 @@ public class IdentityUI {
     @available(*, deprecated, message: "Passing in an identityManager to identityUI is not recommended as the IdentityUI does not control delegate calls to IdentityManager or it's internal User. This results in state overlap between the external IdentityManager and the IdentityUI") // swiftlint:disable:this line_length
     public init(configuration: IdentityUIConfiguration, identityManager: IdentityManager) {
         self.configuration = configuration
-        self._identityManager = identityManager
-        self.fetchStatusInteractor = FetchStatusInteractor(identityManager: identityManager)
-        self.authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: identityManager)
-        self.clientInfoInteractor = ClientInfoInteractor(identityManager: identityManager)
+        _identityManager = identityManager
+        fetchStatusInteractor = FetchStatusInteractor(identityManager: identityManager)
+        authenticationCodeInteractor = AuthenticationCodeInteractor(identityManager: identityManager)
+        clientInfoInteractor = ClientInfoInteractor(identityManager: identityManager)
         self.configuration.tracker?.clientConfiguration = self.configuration.clientConfiguration
         self.configuration.tracker?.delegate = self
     }
@@ -256,9 +256,9 @@ public class IdentityUI {
         localizedTeaserText: String? = nil,
         scopes: [String] = []
     ) {
-        self.configuration.tracker?.loginMethod = loginMethod
-        log(from: self, "starting \(loginMethod) login flow, internal user: \(self._identityManager.currentUser), config: \(self.configuration)")
-        self.start(
+        configuration.tracker?.loginMethod = loginMethod
+        log(from: self, "starting \(loginMethod) login flow, internal user: \(_identityManager.currentUser), config: \(configuration)")
+        start(
             input: .byLoginMethod(
                 loginMethod,
                 presentingViewController: viewController,
@@ -285,8 +285,8 @@ public class IdentityUI {
      - SeeAlso: `init(configuration:route:)`
      */
     public func presentIdentityProcess(from viewController: UIViewController, route: Route) {
-        self.configuration.tracker?.loginMethod = route.loginMethod
-        self.start(input: .byRoute(route, presentingViewController: viewController)) { [weak self] output in
+        configuration.tracker?.loginMethod = route.loginMethod
+        start(input: .byRoute(route, presentingViewController: viewController)) { [weak self] output in
             self?.complete(with: output, presentingViewController: viewController)
         }
     }
@@ -307,7 +307,7 @@ public class IdentityUI {
             uiResult = .completed(user)
             shouldPersistUser = persistUser
         case .cancel:
-            self.configuration.tracker?.loginID = nil
+            configuration.tracker?.loginID = nil
             uiResult = .canceled
         case .skip:
             uiResult = .skipped
@@ -425,7 +425,7 @@ extension IdentityUI: FlowCoordinator {
         // This is now the currently presented login flow.
         IdentityUI.presentedIdentityUI = self
         // Show the first screen in the flow.
-        self.initializeAndShow(input: input, completion: completion)
+        initializeAndShow(input: input, completion: completion)
     }
 }
 
@@ -438,12 +438,12 @@ extension IdentityUI {
         }
 
         presentingViewController.showLoadingIndicator(
-            message: "GlobalString.loading".localized(from: self.configuration.localizationBundle),
-            leftSpacting: self.configuration.theme.geometry.groupedViewSpacing,
-            topSpacing: self.configuration.theme.geometry.groupedViewSpacing
+            message: "GlobalString.loading".localized(from: configuration.localizationBundle),
+            leftSpacting: configuration.theme.geometry.groupedViewSpacing,
+            topSpacing: configuration.theme.geometry.groupedViewSpacing
         )
 
-        self.clientInfoInteractor.fetchClient { [weak self, weak presentingViewController] result in
+        clientInfoInteractor.fetchClient { [weak self, weak presentingViewController] result in
             presentingViewController?.dismissLoadingIndicator {
                 guard let strongSelf = self else { return }
                 switch result {
@@ -460,9 +460,9 @@ extension IdentityUI {
     private func show(input: Input, client: Client, completion: @escaping (Output) -> Void) {
         switch input {
         case let .byRoute(route, vc):
-            self.handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, client: client, completion: completion)
+            handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, client: client, completion: completion)
         case let .byLoginMethod(loginMethod, vc, localizedTeaserText, scopes):
-            let identifierViewController = self.makeIdentifierViewController(
+            let identifierViewController = makeIdentifierViewController(
                 loginMethod: loginMethod,
                 localizedTeaserText: localizedTeaserText,
                 scopes: scopes,
@@ -471,9 +471,9 @@ extension IdentityUI {
                 completion: completion
             )
 
-            self.navigationController.viewControllers = [identifierViewController]
-            self.configuration.presentationHook?(self.navigationController)
-            vc.present(self.navigationController, animated: true)
+            navigationController.viewControllers = [identifierViewController]
+            configuration.presentationHook?(navigationController)
+            vc.present(navigationController, animated: true)
         }
     }
 
@@ -493,10 +493,10 @@ extension IdentityUI {
             kind: kind,
             merchantName: merchantName,
             localizedTeaserText: localizedTeaserText,
-            localizationBundle: self.configuration.localizationBundle,
-            locale: self._identityManager.clientConfiguration.locale
+            localizationBundle: configuration.localizationBundle,
+            locale: _identityManager.clientConfiguration.locale
         )
-        let viewController = IdentifierViewController(configuration: self.configuration, navigationSettings: navigationSettings, viewModel: viewModel)
+        let viewController = IdentifierViewController(configuration: configuration, navigationSettings: navigationSettings, viewModel: viewModel)
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(identifier):
@@ -551,9 +551,9 @@ extension IdentityUI {
     }
 
     private func fetchFlowVariant(for identifier: Identifier, completion: @escaping (_ loginFlowVariant: LoginMethod.FlowVariant) -> Void) {
-        self.presentedViewController?.startLoading()
+        presentedViewController?.startLoading()
 
-        self.fetchStatusInteractor.fetchStatus(for: identifier) { [weak self] result in
+        fetchStatusInteractor.fetchStatus(for: identifier) { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
@@ -581,20 +581,20 @@ extension IdentityUI {
         switch authenticationType {
         case .password:
             coordinator = PasswordCoordinator(
-                navigationController: self.navigationController,
-                identityManager: self._identityManager,
-                configuration: self.configuration
+                navigationController: navigationController,
+                identityManager: _identityManager,
+                configuration: configuration
             )
         case .passwordless:
             coordinator = PasswordlessCoordinator(
-                navigationController: self.navigationController,
-                identityManager: self._identityManager,
-                configuration: self.configuration
+                navigationController: navigationController,
+                identityManager: _identityManager,
+                configuration: configuration
             )
         }
 
         let input = AuthenticationCoordinator.Input(identifier: identifier, loginFlowVariant: loginFlowVariant, scopes: scopes)
-        self.spawnChild(coordinator, input: input) { [weak self] output in
+        spawnChild(coordinator, input: input) { [weak self] output in
             switch output {
             case let .success(user, persistUser):
                 completion(.success(user: user, persistUser: persistUser))
@@ -626,21 +626,21 @@ extension IdentityUI {
         switch route {
         case .login:
             // Either we have a child that can handle the route or we have nothing else to do (since we are already in the root, a.k.a. login screen).
-            self.attemptToPropagateRouteToChild(route)
+            attemptToPropagateRouteToChild(route)
         case let .enterPassword(for: email, scopes: scopes):
 
-            if !self.attemptToPropagateRouteToChild(route) {
+            if !attemptToPropagateRouteToChild(route) {
                 // If no child handled the route, we need to present the password screen.
 
                 // The user changed her password after requesting a password change: we present a new login flow with the email prefilled (since we previously
                 // saved it on password change request).
-                self.spawnCoordinator(.password, for: Identifier(email), on: .signin, scopes: scopes) { [weak self] output in
+                spawnCoordinator(.password, for: Identifier(email), on: .signin, scopes: scopes) { [weak self] output in
                     self?.complete(with: output, presentingViewController: presentingViewController)
                 }
             }
         case let .validateAuthCode(code, shouldPersistUser):
             // Let's check if the code validates.
-            self.authenticationCodeInteractor.validate(authCode: code) { [weak self] result in
+            authenticationCodeInteractor.validate(authCode: code) { [weak self] result in
                 switch result {
                 case let .success(user):
                     self?.configuration.tracker?.loginID = self?._identityManager.currentUser.legacyID
@@ -659,9 +659,9 @@ extension IdentityUI {
             return
         }
 
-        if self.navigationController.presentingViewController == nil, let presentingViewController = presentingViewController {
+        if navigationController.presentingViewController == nil, let presentingViewController = presentingViewController {
             // We don't have a presented flow already, so we go on presenting a new flow after having handled the route.
-            presentingViewController.present(self.navigationController, animated: true)
+            presentingViewController.present(navigationController, animated: true)
         }
     }
 
@@ -679,7 +679,7 @@ extension IdentityUI {
             scopes = []
         }
 
-        let viewController = self.makeIdentifierViewController(
+        let viewController = makeIdentifierViewController(
             loginMethod: route.loginMethod,
             localizedTeaserText: nil,
             scopes: scopes,
@@ -687,13 +687,13 @@ extension IdentityUI {
             merchantName: client.merchantName ?? "unknown",
             completion: completion
         )
-        self.navigationController.viewControllers = [viewController]
-        self.configuration.presentationHook?(self.navigationController)
-        self.handle(route: route, byPresentingIn: presentingViewController)
+        navigationController.viewControllers = [viewController]
+        configuration.presentationHook?(navigationController)
+        handle(route: route, byPresentingIn: presentingViewController)
     }
 
     private func handleRouteForPresentingUI(route: IdentityUI.Route) {
-        self.handle(route: route, byPresentingIn: nil)
+        handle(route: route, byPresentingIn: nil)
     }
 
     @discardableResult
@@ -706,7 +706,7 @@ extension IdentityUI {
             return true
         case .resetRequest:
             self.child = nil
-            self.navigationController.popToRootViewController(animated: true)
+            navigationController.popToRootViewController(animated: true)
             return true
         case .cannotHandle:
             return false
@@ -734,7 +734,7 @@ private final class DismissableNavigationController: UINavigationController {
         super.viewDidDisappear(animated)
 
         if isBeingDismissed {
-            self.didDismiss()
+            didDismiss()
         }
     }
 

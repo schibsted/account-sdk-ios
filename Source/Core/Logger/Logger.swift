@@ -7,7 +7,7 @@ import Foundation
 
 private extension DispatchTime {
     var elapsed: Double {
-        let nanoTime = DispatchTime.now().uptimeNanoseconds - self.uptimeNanoseconds
+        let nanoTime = DispatchTime.now().uptimeNanoseconds - uptimeNanoseconds
         return Double(nanoTime) / 1_000_000
     }
 }
@@ -56,18 +56,18 @@ public class Logger {
      all transports then this function blocks until that happens
      */
     public func waitTillAllLogsTransported() {
-        self.dispatchGroup.wait()
+        dispatchGroup.wait()
     }
 
     /// Set to true if you want the tags to be printed as well
     public var outputTags: Bool {
         get {
-            return self.queue.sync {
+            return queue.sync {
                 self._outputTags
             }
         }
         set {
-            self.queue.async { [weak self] in
+            queue.async { [weak self] in
                 self?._outputTags = newValue
             }
         }
@@ -76,12 +76,12 @@ public class Logger {
     /// If this is false then it ignores all logs
     public var enabled: Bool {
         get {
-            return self.queue.sync {
+            return queue.sync {
                 self._enabled
             }
         }
         set {
-            self.queue.async { [weak self] in
+            queue.async { [weak self] in
                 self?._enabled = newValue
             }
         }
@@ -94,28 +94,28 @@ public class Logger {
      - parameter transport: function that is called with each log invocaton
      */
     public func addTransport(_ transport: @escaping (String) -> Void) {
-        self.queue.async { [weak self] in
+        queue.async { [weak self] in
             self?.transports.append(transport)
         }
     }
 
     /// Removes all transports
     public func removeTransports() {
-        self.queue.async { [weak self] in
+        queue.async { [weak self] in
             self?.transports.removeAll()
         }
     }
 
     /// Filters log messages unless they are tagged with `tag`
     public func filterUnless(tag: String) {
-        self.queue.async { [weak self] in
+        queue.async { [weak self] in
             self?.allowedTags.insert(tag)
         }
     }
 
     /// Filters log messages unless they are tagged with any of `tags`
     public func filterUnless(tags: [String]) {
-        self.queue.async { [weak self] in
+        queue.async { [weak self] in
             if let union = self?.allowedTags.union(tags) {
                 self?.allowedTags = union
             }
@@ -124,14 +124,14 @@ public class Logger {
 
     /// Filters log messages if they are tagged with `tag`
     public func filterIf(tag: String) {
-        self.queue.async { [weak self] in
+        queue.async { [weak self] in
             self?.ignoredTags.insert(tag)
         }
     }
 
     /// Filters log messages if they are tagged with any of `tags`
     public func filterIf(tags: [String]) {
-        self.queue.async { [weak self] in
+        queue.async { [weak self] in
             if let union = self?.ignoredTags.union(tags) {
                 self?.ignoredTags = union
             }
@@ -147,7 +147,7 @@ public class Logger {
         _ function: String = #function,
         _ line: Int = #line
     ) {
-        self.log(level: level, object, tags: [tag], force: force, file, function, line)
+        log(level: level, object, tags: [tag], force: force, file, function, line)
     }
 
     func log<T, S>(
@@ -160,7 +160,7 @@ public class Logger {
         _ function: String = #function,
         _ line: Int = #line
     ) {
-        self.log(
+        log(
             level: level,
             object: object,
             tags: tags,
@@ -181,7 +181,7 @@ public class Logger {
         _ function: String = #function,
         _ line: Int = #line
     ) {
-        self.log(
+        log(
             level: level,
             object: object,
             tags: tags,
@@ -211,11 +211,11 @@ public class Logger {
 
         let thread = Thread.isMainThread ? "UI" : "BG"
         let threadID = pthread_mach_thread_np(pthread_self())
-        let timestamp = self.startTime.elapsed
+        let timestamp = startTime.elapsed
         let string = "\(object())"
 
-        self.dispatchGroup.enter()
-        self.queue.async {
+        dispatchGroup.enter()
+        queue.async {
             self.synclog(
                 thread: thread,
                 threadID: threadID,
@@ -246,7 +246,7 @@ public class Logger {
         line: Int = #line,
         context: String?
     ) {
-        guard (self._enabled && self.transports.count > 0) || force else {
+        guard (_enabled && transports.count > 0) || force else {
             return
         }
 
@@ -265,11 +265,11 @@ public class Logger {
         }
 
         var shouldOutputToTransports = true
-        if self.ignoredTags.count > 0 && self.ignoredTags.intersection(allTags).count > 0 {
+        if ignoredTags.count > 0 && ignoredTags.intersection(allTags).count > 0 {
             shouldOutputToTransports = false
         }
 
-        if self.allowedTags.count > 0 && self.allowedTags.intersection(allTags).count == 0 {
+        if allowedTags.count > 0 && allowedTags.intersection(allTags).count == 0 {
             shouldOutputToTransports = false
         }
 
@@ -278,16 +278,16 @@ public class Logger {
         }
 
         var tagsString = ""
-        if explicitTags.count > 0, self._outputTags {
+        if explicitTags.count > 0, _outputTags {
             tagsString = ",\(explicitTags.joined(separator: ","))"
         }
 
-        let output = "\(self.label)[\(level.rawValue):\(String(format: "%.2f", timestamp))]"
+        let output = "\(label)[\(level.rawValue):\(String(format: "%.2f", timestamp))]"
             + "[\(thread):\(threadID),\(fileName):\(line),\(functionName)\(tagsString)]"
             + " => \(string)"
 
         if shouldOutputToTransports {
-            for transport in self.transports {
+            for transport in transports {
                 transport(output)
             }
         }

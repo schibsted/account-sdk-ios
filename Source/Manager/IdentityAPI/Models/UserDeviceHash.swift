@@ -21,7 +21,7 @@ public struct UserDeviceHash: JSONParsable {
 
     init(from json: JSONObject) throws {
         let data = try json.jsonObject(for: "data")
-        self.hash = try data.string(for: "hash")
+        hash = try data.string(for: "hash")
     }
 }
 
@@ -29,7 +29,7 @@ extension UserDeviceHash: CustomStringConvertible {
     /// human-readable string representation (YAML)
     public var description: String {
         var desc = "UserDeviceHash:\n"
-        desc = desc.appendingFormat("  hash: %@\n", self.hash ?? "null")
+        desc = desc.appendingFormat("  hash: %@\n", hash ?? "null")
 
         return desc
     }

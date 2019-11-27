@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import LocalAuthentication
 
 /**
  The TrackingEventsHandler can inform of certain events. These are sent
@@ -145,5 +146,8 @@ public enum TrackingEvent {
         case keepLoggedIn(Bool)
         /// if there's a teaser or not
         case teaser(Bool)
+        /// Which biometric authentication method the user used
+        @available(iOS 11.0, *)
+        case customLoginType(LABiometryType)
     }
 }

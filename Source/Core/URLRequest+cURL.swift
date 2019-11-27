@@ -17,7 +17,7 @@ extension URLRequest {
             components.append("-X \(httpMethod)")
         }
 
-        for (key, value) in self.allHTTPHeaderFields ?? [:] {
+        for (key, value) in allHTTPHeaderFields ?? [:] {
             switch key.uppercased() {
             case "COOKIE":
                 continue

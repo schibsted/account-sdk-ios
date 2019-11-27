@@ -20,19 +20,19 @@ struct IDToken: Equatable {
     init(string: String) throws {
         self.string = string
         let json = try JWTHelper.toJSON(string: string)
-        self.subjectID = try json.string(for: "sub")
-        self.legacyUserID = try? json.string(for: "legacyUserId")
+        subjectID = try json.string(for: "sub")
+        legacyUserID = try? json.string(for: "legacyUserId")
     }
 }
 
 extension IDToken {
     var data: Data? {
-        return self.string.data(using: .utf8)
+        return string.data(using: .utf8)
     }
 }
 
 extension IDToken: CustomStringConvertible {
     var description: String {
-        return self.string
+        return string
     }
 }

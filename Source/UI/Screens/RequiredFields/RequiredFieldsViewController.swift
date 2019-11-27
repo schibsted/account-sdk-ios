@@ -21,9 +21,9 @@ class RequiredFieldsViewController: IdentityUIViewController {
 
     @IBOutlet var subtext: TextView! {
         didSet {
-            self.subtext.isEditable = false
-            self.subtext.delegate = self
-            self.subtext.attributedText = self.viewModel.subtext
+            subtext.isEditable = false
+            subtext.delegate = self
+            subtext.attributedText = viewModel.subtext
         }
     }
 
@@ -32,28 +32,28 @@ class RequiredFieldsViewController: IdentityUIViewController {
         didSet {
             let toolbar = UIToolbar.forKeyboard(
                 target: self,
-                doneString: self.viewModel.done,
-                doneSelector: #selector(self.didTapDone),
-                previousSelector: #selector(self.didTapPrevious),
-                nextSelector: #selector(self.didTapNext),
-                leftChevronImage: self.theme.icons.chevronLeft
+                doneString: viewModel.done,
+                doneSelector: #selector(didTapDone),
+                previousSelector: #selector(didTapPrevious),
+                nextSelector: #selector(didTapNext),
+                leftChevronImage: theme.icons.chevronLeft
             )
 
-            self.requiredFieldsStackView.spacing = 24
-            let count = self.fieldsCount
+            requiredFieldsStackView.spacing = 24
+            let count = fieldsCount
             for index in 0..<count {
                 //
                 // These views are arranged in a way that matches the indices in ViewIndex enum above.
                 // If you change order make sure to change those as well
                 //
 
-                let field = self.viewModel.supportedRequiredFields[index]
+                let field = viewModel.supportedRequiredFields[index]
 
                 let title = NormalLabel()
-                title.text = self.viewModel.titleForField(field)
+                title.text = viewModel.titleForField(field)
 
                 let input = TextField()
-                input.placeholder = self.viewModel.placeholderForField(field)
+                input.placeholder = viewModel.placeholderForField(field)
                 input.enableCursorMotion = field.allowsCursorMotion
                 input.keyboardType = field.keyboardType
                 input.clearButtonMode = .whileEditing
@@ -67,20 +67,20 @@ class RequiredFieldsViewController: IdentityUIViewController {
 
                 let error = ErrorLabel()
                 error.isHidden = true
-                self.errorLabels.append(error)
+                errorLabels.append(error)
 
                 let subStack = UIStackView(arrangedSubviews: [title, input, error])
                 subStack.axis = .vertical
-                subStack.spacing = self.theme.geometry.titleViewSpacing
+                subStack.spacing = theme.geometry.titleViewSpacing
 
-                self.requiredFieldsStackView.addArrangedSubview(subStack)
+                requiredFieldsStackView.addArrangedSubview(subStack)
             }
         }
     }
 
     @IBOutlet var continueButton: PrimaryButton! {
         didSet {
-            self.continueButton.setTitle(self.viewModel.proceed, for: .normal)
+            continueButton.setTitle(viewModel.proceed, for: .normal)
         }
     }
 
@@ -95,7 +95,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
 
     init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, viewModel: RequiredFieldsViewModel) {
         self.viewModel = viewModel
-        self.values = [String?](repeating: nil, count: self.viewModel.supportedRequiredFields.count)
+        values = [String?](repeating: nil, count: self.viewModel.supportedRequiredFields.count)
         super.init(configuration: configuration, navigationSettings: navigationSettings, trackerScreenID: .requiredFieldsForm)
     }
 
@@ -104,20 +104,20 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     @objc func didTapDone() {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 
     @objc func didTapNext() {
-        self.gotoInput(at: self.currentInputIndex.addingReportingOverflow(1).partialValue % UInt(self.viewModel.supportedRequiredFields.count))
+        gotoInput(at: currentInputIndex.addingReportingOverflow(1).partialValue % UInt(viewModel.supportedRequiredFields.count))
     }
 
     @objc func didTapPrevious() {
-        self.gotoInput(at: self.currentInputIndex.subtractingReportingOverflow(1).partialValue % UInt(self.viewModel.supportedRequiredFields.count))
+        gotoInput(at: currentInputIndex.subtractingReportingOverflow(1).partialValue % UInt(viewModel.supportedRequiredFields.count))
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.updateScrollViewContentInset()
+        updateScrollViewContentInset()
     }
 
     private func updateScrollViewContentInset() {
@@ -127,21 +127,21 @@ class RequiredFieldsViewController: IdentityUIViewController {
             bottom = override
         } else {
             let padding: CGFloat = 8
-            let buttonY = self.view.convert(self.continueButton.frame, from: self.continueButton.superview).minY
-            let buttonAreaHeight = self.view.bounds.height - buttonY + padding
+            let buttonY = view.convert(continueButton.frame, from: continueButton.superview).minY
+            let buttonAreaHeight = view.bounds.height - buttonY + padding
             bottom = max(buttonAreaHeight, 0)
         }
 
-        self.scrollView.contentInset.bottom = bottom
-        self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
+        scrollView.contentInset.bottom = bottom
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
 
     override func viewDidAppear(_: Bool) {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil
+            self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil
         )
         NotificationCenter.default.addObserver(
-            self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil
+            self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil
         )
     }
 
@@ -151,37 +151,37 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     override var navigationTitle: String {
-        return self.viewModel.title
+        return viewModel.title
     }
 
     @IBAction func didTapContinue(_: UIButton) {
-        self.configuration.tracker?.interaction(.submit, with: self.trackerScreenID)
+        configuration.tracker?.interaction(.submit, with: trackerScreenID)
 
         guard let valuesToUpdate = self.valuesToUpdate() else {
             return
         }
-        self.didRequestAction?(.update(fields: valuesToUpdate))
+        didRequestAction?(.update(fields: valuesToUpdate))
     }
 
     private func valuesToUpdate() -> [SupportedRequiredField: String]? {
         var invalidIndices: [(Int, String)] = []
-        for (index, field) in self.viewModel.supportedRequiredFields.enumerated() {
+        for (index, field) in viewModel.supportedRequiredFields.enumerated() {
             guard let value = self.values[index] else {
-                invalidIndices.append((index, self.viewModel.string(for: .missing)))
+                invalidIndices.append((index, viewModel.string(for: .missing)))
                 continue
             }
             if let error = field.validate(value: value) {
-                invalidIndices.append((index, self.viewModel.string(for: error)))
+                invalidIndices.append((index, viewModel.string(for: error)))
             }
         }
         guard invalidIndices.count == 0 else {
-            self.handleUnfilledFields(ascendingIndices: invalidIndices)
+            handleUnfilledFields(ascendingIndices: invalidIndices)
             return nil
         }
 
         var valuesToUpdate: [SupportedRequiredField: String] = [:]
 
-        for (index, field) in self.viewModel.supportedRequiredFields.enumerated() {
+        for (index, field) in viewModel.supportedRequiredFields.enumerated() {
             guard let value = self.values[index] else {
                 continue
             }
@@ -205,54 +205,54 @@ class RequiredFieldsViewController: IdentityUIViewController {
             return
         }
 
-        self.overrideScrollViewBottomContentInset = keyboardSize.height
-        self.updateScrollViewContentInset()
+        overrideScrollViewBottomContentInset = keyboardSize.height
+        updateScrollViewContentInset()
 
-        var visibleFrame = self.view.frame
+        var visibleFrame = view.frame
         visibleFrame.size.height -= keyboardSize.height
 
         if !visibleFrame.contains(activeInput.frame.origin) {
-            self.scrollView.scrollRectToVisible(activeInput.frame, animated: true)
+            scrollView.scrollRectToVisible(activeInput.frame, animated: true)
         }
     }
 
     @objc func keyboardWillHide(notification _: NSNotification) {
-        self.overrideScrollViewBottomContentInset = nil
-        self.updateScrollViewContentInset()
+        overrideScrollViewBottomContentInset = nil
+        updateScrollViewContentInset()
     }
 
     override func startLoading() {
         super.startLoading()
-        self.continueButton.isAnimating = true
+        continueButton.isAnimating = true
     }
 
     override func endLoading() {
         super.endLoading()
-        self.continueButton.isAnimating = false
+        continueButton.isAnimating = false
     }
 }
 
 extension RequiredFieldsViewController: UITextViewDelegate {
     func textView(_: UITextView, shouldInteractWith url: URL, in _: NSRange) -> Bool {
-        if self.viewModel.controlYouPrivacyURL == url {
-            self.configuration.tracker?.engagement(.click(on: .adjustPrivacyChoices), in: self.trackerScreenID)
-        } else if self.viewModel.dataAndYouURL == url {
-            self.configuration.tracker?.engagement(.click(on: .learnMoreAboutSchibsted), in: self.trackerScreenID)
+        if viewModel.controlYouPrivacyURL == url {
+            configuration.tracker?.engagement(.click(on: .adjustPrivacyChoices), in: trackerScreenID)
+        } else if viewModel.dataAndYouURL == url {
+            configuration.tracker?.engagement(.click(on: .learnMoreAboutSchibsted), in: trackerScreenID)
         }
 
-        self.didRequestAction?(.open(url: url))
+        didRequestAction?(.open(url: url))
         return false
     }
 }
 
 extension RequiredFieldsViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        self.currentInputIndex = UInt(textField.tag)
+        currentInputIndex = UInt(textField.tag)
         return true
     }
 
     func textFieldShouldReturn(_: UITextField) -> Bool {
-        self.view.endEditing(true)
+        view.endEditing(true)
         return false
     }
 
@@ -286,21 +286,21 @@ extension RequiredFieldsViewController: UITextFieldDelegate {
     }
 
     private func processValueForField(at index: Int, from oldValue: String, to newValue: String) -> String? {
-        guard index < self.viewModel.supportedRequiredFields.count else {
+        guard index < viewModel.supportedRequiredFields.count else {
             return nil
         }
         guard let formattedString = self.viewModel.supportedRequiredFields[index].format(oldValue: oldValue, with: newValue) else {
-            self.values[index] = newValue
+            values[index] = newValue
             return nil
         }
-        self.values[index] = formattedString
+        values[index] = formattedString
         return formattedString
     }
 }
 
 extension RequiredFieldsViewController {
     var fieldsCount: Int {
-        return self.viewModel.supportedRequiredFields.count
+        return viewModel.supportedRequiredFields.count
     }
 
     func gotoInput(at index: UInt) {
@@ -316,21 +316,21 @@ extension RequiredFieldsViewController {
         var currentIndex = 0
         for (invalidIndex, message) in ascendingIndices {
             while currentIndex < invalidIndex {
-                self.errorLabels[currentIndex].isHidden = true
+                errorLabels[currentIndex].isHidden = true
                 currentIndex += 1
             }
-            self.errorLabels[invalidIndex].isHidden = false
-            self.errorLabels[invalidIndex].text = message
+            errorLabels[invalidIndex].isHidden = false
+            errorLabels[invalidIndex].text = message
             currentIndex += 1
         }
         // And if there're any indices that we haven't gone through then
         // set those to hidden as well
-        for index in currentIndex..<self.fieldsCount {
-            self.errorLabels[index].isHidden = true
+        for index in currentIndex..<fieldsCount {
+            errorLabels[index].isHidden = true
         }
 
         let errorMessages = ascendingIndices.map { self.viewModel.requiredFieldID(at: $0.index) }
 
-        self.configuration.tracker?.error(.validation(.requiredField(errorMessages)), in: self.trackerScreenID)
+        configuration.tracker?.error(.validation(.requiredField(errorMessages)), in: trackerScreenID)
     }
 }

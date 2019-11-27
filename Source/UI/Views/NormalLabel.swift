@@ -5,7 +5,7 @@
 
 class NormalLabel: UILabel, Themeable {
     func applyTheme(theme: IdentityUITheme) {
-        self.font = theme.fonts.normal
-        self.textColor = theme.colors.normalText
+        font = theme.fonts.normal
+        textColor = theme.colors.normalText
     }
 }

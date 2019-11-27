@@ -14,6 +14,6 @@ protocol Storage {
 
 extension UserDefaults: Storage {
     var keys: [String] {
-        return Array(self.dictionaryRepresentation().keys)
+        return Array(dictionaryRepresentation().keys)
     }
 }

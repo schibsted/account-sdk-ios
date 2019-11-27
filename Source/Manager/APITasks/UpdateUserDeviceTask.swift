@@ -20,7 +20,7 @@ class UpdateUserDeviceTask: TaskProtocol {
 
         user.api.updateUserDevice(
             oauthToken: tokens.accessToken,
-            device: self.device
+            device: device
         ) { [weak self] result in
             guard self?.user != nil else {
                 completion(.failure(.invalidUser))

@@ -25,7 +25,7 @@ extension User {
          */
         @discardableResult
         public func oneTimeCode(clientID: String, completion: @escaping StringResultCallback) -> TaskHandle {
-            return self.tokenExchange(clientID: clientID, type: .code, redirectURL: nil, completion: completion)
+            return tokenExchange(clientID: clientID, type: .code, redirectURL: nil, completion: completion)
         }
 
         /**
@@ -55,7 +55,7 @@ extension User {
             }
 
             let serverURL = user.clientConfiguration.serverURL
-            return self.tokenExchange(clientID: clientID, type: .session, redirectURL: redirectURL) { result in
+            return tokenExchange(clientID: clientID, type: .session, redirectURL: redirectURL) { result in
                 switch result {
                 case let .success(code):
                     DispatchQueue.main.async {

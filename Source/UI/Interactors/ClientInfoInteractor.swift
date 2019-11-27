@@ -13,6 +13,6 @@ class ClientInfoInteractor {
     }
 
     func fetchClient(completion: @escaping ClientResultCallback) {
-        self.identityManager.fetchClient(completion: completion)
+        identityManager.fetchClient(completion: completion)
     }
 }

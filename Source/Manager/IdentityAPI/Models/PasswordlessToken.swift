@@ -21,6 +21,6 @@ extension PasswordlessToken: JSONParsable {
 
 extension PasswordlessToken: CustomStringConvertible {
     var description: String {
-        return self.value
+        return value
     }
 }

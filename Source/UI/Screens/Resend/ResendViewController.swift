@@ -14,29 +14,29 @@ class ResendViewController: IdentityUIViewController {
 
     @IBOutlet var header: Heading! {
         didSet {
-            self.header.text = self.viewModel.header
+            header.text = viewModel.header
         }
     }
     @IBOutlet var code: NormalLabel! {
         didSet {
-            self.code.font = self.theme.fonts.normal
-            self.code.text = self.viewModel.subtext
+            code.font = theme.fonts.normal
+            code.text = viewModel.subtext
         }
     }
     @IBOutlet var number: NormalLabel! {
         didSet {
-            self.number.font = self.theme.fonts.normal
-            self.number.text = self.viewModel.identifier.normalizedString
+            number.font = theme.fonts.normal
+            number.text = viewModel.identifier.normalizedString
         }
     }
     @IBOutlet var edit: SecondaryButton! {
         didSet {
-            self.edit.setTitle(self.viewModel.editText, for: .normal)
+            edit.setTitle(viewModel.editText, for: .normal)
         }
     }
     @IBOutlet var ok: PrimaryButton! {
         didSet {
-            self.ok.setTitle(self.viewModel.proceed, for: .normal)
+            ok.setTitle(viewModel.proceed, for: .normal)
         }
     }
     @IBOutlet var stackBackground: UIView!
@@ -54,16 +54,16 @@ class ResendViewController: IdentityUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.stackBackground.layer.cornerRadius = self.theme.geometry.cornerRadius
-        self.stackBackground.clipsToBounds = true
+        stackBackground.layer.cornerRadius = theme.geometry.cornerRadius
+        stackBackground.clipsToBounds = true
     }
 
     @IBAction func didTapContinue(_: UIButton) {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
 
     @IBAction func didTapEdit(_: UIButton) {
-        self.dismiss(animated: true)
-        self.didRequestAction?(.changeIdentifier)
+        dismiss(animated: true)
+        didRequestAction?(.changeIdentifier)
     }
 }

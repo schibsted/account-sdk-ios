@@ -11,15 +11,15 @@ class OneTimeCodeInteractor {
     }
 
     func sendCode(to identifier: Identifier, completion: @escaping NoValueCallback) {
-        self.identityManager.sendCode(to: identifier, completion: completion)
+        identityManager.sendCode(to: identifier, completion: completion)
     }
 
     func resendCode(to identifier: Identifier, completion: @escaping NoValueCallback) {
-        self.identityManager.resendCode(to: identifier, completion: completion)
+        identityManager.resendCode(to: identifier, completion: completion)
     }
 
     func validate(oneTimeCode: String, for identifier: Identifier, scopes: [String], completion: @escaping (Result<User, ClientError>) -> Void) {
-        self.identityManager.validate(oneTimeCode: oneTimeCode, for: identifier, scopes: scopes, persistUser: false) { [weak self] result in
+        identityManager.validate(oneTimeCode: oneTimeCode, for: identifier, scopes: scopes, persistUser: false) { [weak self] result in
             guard let strongSelf = self else { return }
             switch result {
             case .success:

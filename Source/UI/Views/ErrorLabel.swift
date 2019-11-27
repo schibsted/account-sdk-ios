@@ -6,8 +6,8 @@
 class ErrorLabel: NormalLabel {
     override func applyTheme(theme: IdentityUITheme) {
         super.applyTheme(theme: theme)
-        self.textColor = theme.colors.errorText
-        self.font = theme.fonts.error
-        self.numberOfLines = 0
+        textColor = theme.colors.errorText
+        font = theme.fonts.error
+        numberOfLines = 0
     }
 }

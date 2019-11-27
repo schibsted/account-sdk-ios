@@ -28,94 +28,94 @@ class TextField: UITextField, Themeable {
 
     func applyTheme(theme: IdentityUITheme) {
         self.theme = theme
-        self.font = theme.fonts.normal
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = theme.geometry.inputViewCornerRadius
-        self.textColor = theme.colors.normalText
+        font = theme.fonts.normal
+        layer.borderWidth = 1
+        layer.cornerRadius = theme.geometry.inputViewCornerRadius
+        textColor = theme.colors.normalText
         // cursor color
-        self.tintColor = theme.colors.textInputCursor
-        self.contentInset = UIEdgeInsets(
+        tintColor = theme.colors.textInputCursor
+        contentInset = UIEdgeInsets(
             top: theme.geometry.groupedViewSpacing,
             left: 16,
             bottom: theme.geometry.groupedViewSpacing,
             right: 16
         )
 
-        if self.clearButtonMode == .whileEditing, let clearImage = theme.icons.clearTextInput {
+        if clearButtonMode == .whileEditing, let clearImage = theme.icons.clearTextInput {
             //
             // Just setting the rightViewMode to .whileEditing seems to not work. The view shows up as soon
             // as the textfield becomes first responder. So we handle the state ourself
             //
-            self.clearButtonMode = .never
+            clearButtonMode = .never
 
-            self.clearButtonRightSpacing = theme.geometry.groupedViewSpacing
+            clearButtonRightSpacing = theme.geometry.groupedViewSpacing
 
             let w = clearImage.size.width
             let h = clearImage.size.height
-            self.clearButton = UIButton(frame: CGRect(x: 0, y: 0, width: w + self.clearButtonRightSpacing, height: h))
-            self.clearButton?.setImage(clearImage, for: .normal)
-            self.clearButton?.isHidden = true
-            self.clearButton?.addTarget(self, action: #selector(self.clearButtonDidTouchUpInside(_:)), for: .touchUpInside)
+            clearButton = UIButton(frame: CGRect(x: 0, y: 0, width: w + clearButtonRightSpacing, height: h))
+            clearButton?.setImage(clearImage, for: .normal)
+            clearButton?.isHidden = true
+            clearButton?.addTarget(self, action: #selector(clearButtonDidTouchUpInside(_:)), for: .touchUpInside)
 
-            self.rightViewMode = .whileEditing
-            self.rightView = self.clearButton
+            rightViewMode = .whileEditing
+            rightView = clearButton
 
-            self.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-            self.addTarget(self, action: #selector(self.textFieldDidEnd(_:)), for: .editingDidEnd)
-            self.addTarget(self, action: #selector(self.textFieldDidBegin(_:)), for: .editingDidBegin)
+            addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEnd)
+            addTarget(self, action: #selector(textFieldDidBegin(_:)), for: .editingDidBegin)
         }
 
-        self.applyUnfocusedStyle()
+        applyUnfocusedStyle()
     }
 
     override func closestPosition(to point: CGPoint) -> UITextPosition? {
-        if self.enableCursorMotion {
+        if enableCursorMotion {
             return super.closestPosition(to: point)
         }
-        let beginning = self.beginningOfDocument
-        let end = self.position(from: beginning, offset: self.text?.count ?? 0)
+        let beginning = beginningOfDocument
+        let end = position(from: beginning, offset: text?.count ?? 0)
         return end
     }
 
     override var text: String? {
         didSet {
-            self.clearButton?.isHidden = self.text?.isEmpty ?? true
+            clearButton?.isHidden = text?.isEmpty ?? true
         }
     }
 
     @objc func textFieldDidChange(_: TextField) {
-        self.clearButton?.isHidden = self.text?.isEmpty ?? true
+        clearButton?.isHidden = text?.isEmpty ?? true
     }
 
     @objc func textFieldDidEnd(_: TextField) {
-        self.clearButton?.isHidden = true
+        clearButton?.isHidden = true
     }
 
     @objc func textFieldDidBegin(_: TextField) {
-        self.clearButton?.isHidden = self.text?.isEmpty ?? true
+        clearButton?.isHidden = text?.isEmpty ?? true
     }
 
     @objc func clearButtonDidTouchUpInside(_: UIButton) {
-        self.text = ""
-        self.clearButton?.isHidden = true
+        text = ""
+        clearButton?.isHidden = true
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return CGRect(
-            x: bounds.origin.x + self.contentInset.left,
+            x: bounds.origin.x + contentInset.left,
             y: bounds.origin.y,
-            width: bounds.size.width - (self.contentInset.right + self.contentInset.left + self.clearButtonRightSpacing),
+            width: bounds.size.width - (contentInset.right + contentInset.left + clearButtonRightSpacing),
             height: bounds.size.height
         )
     }
 
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return self.textRect(forBounds: bounds)
+        return textRect(forBounds: bounds)
     }
 
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
-        size.height += self.contentInset.top + self.contentInset.bottom
+        size.height += contentInset.top + contentInset.bottom
         return size
     }
 
@@ -125,8 +125,8 @@ class TextField: UITextField, Themeable {
      */
     private func applyFocusedStyle() {
         guard let theme = self.theme else { return }
-        self.layer.borderColor = theme.colors.textInputBorderActive.cgColor
-        self.backgroundColor = self.normalBackgroundColor
+        layer.borderColor = theme.colors.textInputBorderActive.cgColor
+        backgroundColor = normalBackgroundColor
     }
 
     /**
@@ -134,8 +134,8 @@ class TextField: UITextField, Themeable {
      i.e. lose the input focus, but still let user's input.
      */
     func applyUnfocusedStyle() {
-        self.layer.borderColor = self.normalBorderColor
-        self.backgroundColor = self.normalBackgroundColor
+        layer.borderColor = normalBorderColor
+        backgroundColor = normalBackgroundColor
     }
 
     /**
@@ -143,15 +143,15 @@ class TextField: UITextField, Themeable {
      */
     private func applyDisabledStyle() {
         guard let theme = self.theme else { return }
-        self.layer.borderColor = self.normalBorderColor
-        self.backgroundColor = theme.colors.textInputBackgroundDisabled
+        layer.borderColor = normalBorderColor
+        backgroundColor = theme.colors.textInputBackgroundDisabled
     }
 
     @discardableResult
     public override func becomeFirstResponder() -> Bool {
         let result = super.becomeFirstResponder()
         if result {
-            self.applyFocusedStyle()
+            applyFocusedStyle()
         }
         return result
     }
@@ -160,10 +160,10 @@ class TextField: UITextField, Themeable {
     public override func resignFirstResponder() -> Bool {
         // textFieldDidEndEditing is called during the course of super.resignFirstResponder
         // apply the style early so that textFieldDidEndEditing is able to change it
-        self.applyUnfocusedStyle()
+        applyUnfocusedStyle()
         let result = super.resignFirstResponder()
         if !result {
-            self.applyFocusedStyle()
+            applyFocusedStyle()
         }
         return result
     }
@@ -172,9 +172,9 @@ class TextField: UITextField, Themeable {
         get { return super.isEnabled }
         set {
             if newValue {
-                self.applyUnfocusedStyle()
+                applyUnfocusedStyle()
             } else {
-                self.applyDisabledStyle()
+                applyDisabledStyle()
             }
             super.isEnabled = newValue
         }

@@ -81,7 +81,7 @@ extension NetworkStub {
     static func profile() -> NetworkStub {
         let givenName = "Luffy"
         let familyName = "Monkey D"
-        var stub = NetworkStub(path: .path(Router.profile(userID: self.userID).path))
+        var stub = NetworkStub(path: .path(Router.profile(userID: userID).path))
         stub.returnData(json: [
             "data": [
                 "name": [
@@ -96,7 +96,7 @@ extension NetworkStub {
     }
 
     static func agreementsStatus() -> NetworkStub {
-        var stub = NetworkStub(path: .path(Router.agreementsStatus(userID: self.userID).path))
+        var stub = NetworkStub(path: .path(Router.agreementsStatus(userID: userID).path))
         stub.returnData(json: [
             "data": [
                 "agreements": [
@@ -110,7 +110,7 @@ extension NetworkStub {
     }
 
     static func acceptAgreements() -> NetworkStub {
-        var stub = NetworkStub(path: .path(Router.acceptAgreements(userID: self.userID).path))
+        var stub = NetworkStub(path: .path(Router.acceptAgreements(userID: userID).path))
         stub.returnData(json: [
             "data": [
                 "result": true,
@@ -146,7 +146,7 @@ extension NetworkStub {
     }
 
     static func requiredFields() -> NetworkStub {
-        var stub = NetworkStub(path: .path(Router.requiredFields(userID: self.userID).path))
+        var stub = NetworkStub(path: .path(Router.requiredFields(userID: userID).path))
         stub.returnData(json: [
             "data": [
                 "requiredFields": [

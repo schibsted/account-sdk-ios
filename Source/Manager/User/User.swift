@@ -80,12 +80,12 @@ public class User: UserProtocol {
 
     var tokens: TokenData? {
         get {
-            return self.dispatchQueue.sync {
+            return dispatchQueue.sync {
                 self._tokens
             }
         }
         set {
-            self.dispatchQueue.async {
+            dispatchQueue.async {
                 self._tokens = newValue
             }
         }
@@ -97,21 +97,21 @@ public class User: UserProtocol {
      It is recommended to use `id` instead of this.
      */
     public var legacyID: String? {
-        return self.tokens?.userID
+        return tokens?.userID
     }
 
     /**
      Returns the user id for your client, if valid
      */
     public var id: String? {
-        return self.tokens?.anyUserID
+        return tokens?.anyUserID
     }
 
     /**
      Returns current state of User object
      */
     public var state: UserState {
-        return self.tokens == nil ? .loggedOut : .loggedIn
+        return tokens == nil ? .loggedOut : .loggedIn
     }
 
     /**
@@ -125,26 +125,26 @@ public class User: UserProtocol {
      */
     public init(clientConfiguration: ClientConfiguration) {
         self.clientConfiguration = clientConfiguration
-        self.api = IdentityAPI(basePath: clientConfiguration.serverURL)
+        api = IdentityAPI(basePath: clientConfiguration.serverURL)
         let userAuth = User.Auth()
         let userAgreements = User.Agreements()
         let userAssets = User.Assets()
         let userProfile = User.Profile()
         let userDevice = User.Device()
         let userProduct = User.Product()
-        self.auth = userAuth
-        self.agreements = userAgreements
-        self.assets = userAssets
-        self.profile = userProfile
-        self.device = userDevice
-        self.product = userProduct
+        auth = userAuth
+        agreements = userAgreements
+        assets = userAssets
+        profile = userProfile
+        device = userDevice
+        product = userProduct
         userAuth.user = self
         userAgreements.user = self
         userAssets.user = self
         userProfile.user = self
         userDevice.user = self
         userProduct.user = self
-        self.taskManager = TaskManager(for: self)
+        taskManager = TaskManager(for: self)
         User.globalStore[ObjectIdentifier(self).hashValue] = self
         log(level: .debug, from: self, "added User \(ObjectIdentifier(self).hashValue) to global store")
     }
@@ -163,13 +163,13 @@ public class User: UserProtocol {
      If the user is already logged out nothing will happen. If not then the delegate will be informed of a state change.
      */
     public func logout() {
-        log(from: self, "state = \(self.state)")
+        log(from: self, "state = \(state)")
         guard let oldTokens = self.clearTokens() else {
             return
         }
 
         try? UserTokensStorage().clearAll()
-        self.delegate?.user(self, didChangeStateTo: .loggedOut)
+        delegate?.user(self, didChangeStateTo: .loggedOut)
 
         User.globalStore.forEach { _, weakVal in
             guard let value = weakVal.value else { return }
@@ -183,7 +183,7 @@ public class User: UserProtocol {
 
     private func clearTokens() -> TokenData? {
         var oldTokens: TokenData?
-        self.dispatchQueue.sync {
+        dispatchQueue.sync {
             if self._tokens == nil {
                 return
             }
@@ -208,7 +208,7 @@ public class User: UserProtocol {
         // If anything is missing as an argument, the function checks if they were set before and then just assumes
         // you're changing one or more tokens but don't need to change all of them
         //
-        let tokens = try self.dispatchQueue.sync { () -> (new: TokenData?, old: TokenData?) in
+        let tokens = try dispatchQueue.sync { () -> (new: TokenData?, old: TokenData?) in
             let maybeAccessToken = newAccessToken ?? self._tokens?.accessToken
             let maybeRefreshToken = newRefreshToken ?? self._tokens?.refreshToken
 
@@ -255,7 +255,7 @@ public class User: UserProtocol {
 
         log(level: .debug, from: self, "new tokens \(newTokens)")
 
-        self.isPersistent = makePersistent ?? self.isPersistent
+        isPersistent = makePersistent ?? isPersistent
 
         // If we had old tokens then clear them out
         if tokens.old != nil {
@@ -267,7 +267,7 @@ public class User: UserProtocol {
             try? UserTokensStorage().clearAll()
         }
 
-        if self.isPersistent {
+        if isPersistent {
             // Store new tokens if we are supposed to be persistent.
             // Only clear previous tokens if the user is NOT a new one (since they have not logged out)
             try? UserTokensStorage().store(newTokens)
@@ -275,13 +275,13 @@ public class User: UserProtocol {
 
         // Only call state change if we had a previous user and we have a new us
         if newTokens.anyUserID != tokens.old?.anyUserID {
-            self.delegate?.user(self, didChangeStateTo: .loggedIn)
+            delegate?.user(self, didChangeStateTo: .loggedIn)
         }
     }
 
     func loadStoredTokens() throws {
         let tokens = try UserTokensStorage().loadTokens()
-        try self.set(
+        try set(
             accessToken: tokens.accessToken,
             refreshToken: tokens.refreshToken,
             idToken: tokens.idToken,
@@ -289,14 +289,14 @@ public class User: UserProtocol {
         )
 
         // Since credentials were already saved, we assume login is persistent.
-        self.isPersistent = true
+        isPersistent = true
     }
 
     func persistCurrentTokens() {
-        guard !self.isPersistent, let tokens = self.tokens else { return }
+        guard !isPersistent, let tokens = self.tokens else { return }
         do {
             try UserTokensStorage().store(tokens)
-            self.isPersistent = true
+            isPersistent = true
         } catch {
             log(level: .error, from: self, "failed to persist tokens: \(error)", force: true)
         }
@@ -316,9 +316,9 @@ public class User: UserProtocol {
 
         log(level: .verbose, from: self, "refreshing with \(refreshToken.shortened)")
 
-        self.api.requestAccessToken(
-            clientID: self.clientConfiguration.clientID,
-            clientSecret: self.clientConfiguration.clientSecret,
+        api.requestAccessToken(
+            clientID: clientConfiguration.clientID,
+            clientSecret: clientConfiguration.clientSecret,
             grantType: .refreshToken,
             refreshToken: tokens.refreshToken
         ) { [weak self] result in
@@ -355,7 +355,7 @@ public class User: UserProtocol {
 
 extension User: CustomStringConvertible {
     public var description: String {
-        return "<id:\(self.id?.shortened ?? "")>"
+        return "<id:\(id?.shortened ?? "")>"
     }
 }
 

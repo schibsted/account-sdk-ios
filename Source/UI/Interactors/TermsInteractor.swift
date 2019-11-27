@@ -11,6 +11,6 @@ class TermsInteractor {
     }
 
     func fetchTerms(completion: @escaping TermsResultCallback) {
-        self.identityManager.fetchTerms(completion: completion)
+        identityManager.fetchTerms(completion: completion)
     }
 }

@@ -21,8 +21,8 @@ public struct UserDevice {
         applicationName: String,
         applicationVersion: String
     ) {
-        self.deviceId = UIDevice.current.identifierForVendor!.uuidString
-        self.platform = UIDevice.current.deviceModel
+        deviceId = UIDevice.current.identifierForVendor!.uuidString
+        platform = UIDevice.current.deviceModel
         self.applicationName = applicationName
         self.applicationVersion = applicationVersion
     }
@@ -32,10 +32,10 @@ extension UserDevice: CustomStringConvertible {
     /// human-readable string representation (YAML)
     public var description: String {
         var desc = "UserDevice:\n"
-        desc = desc.appendingFormat("  deviceId: %@\n", self.deviceId)
-        desc = desc.appendingFormat("  applicationName: %@\n", self.applicationName)
-        desc = desc.appendingFormat("  applicationVersion: %@\n", self.applicationVersion)
-        desc = desc.appendingFormat("  platform: %@\n", self.platform)
+        desc = desc.appendingFormat("  deviceId: %@\n", deviceId)
+        desc = desc.appendingFormat("  applicationName: %@\n", applicationName)
+        desc = desc.appendingFormat("  applicationVersion: %@\n", applicationVersion)
+        desc = desc.appendingFormat("  platform: %@\n", platform)
 
         return desc
     }

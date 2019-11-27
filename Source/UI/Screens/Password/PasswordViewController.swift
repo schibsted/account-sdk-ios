@@ -17,16 +17,16 @@ class PasswordViewController: IdentityUIViewController {
 
     @IBOutlet var whatsThisButton: UIButton! {
         didSet {
-            self.whatsThisButton.setTitle(self.viewModel.whatsThis, for: .normal)
-            self.whatsThisButton.titleLabel?.font = self.theme.fonts.info
-            self.whatsThisButton.contentEdgeInsets.top = 1
+            whatsThisButton.setTitle(viewModel.whatsThis, for: .normal)
+            whatsThisButton.titleLabel?.font = theme.fonts.info
+            whatsThisButton.contentEdgeInsets.top = 1
         }
     }
     @IBAction func didTapWhatLink(_: UIButton) {
-        self.configuration.tracker?.engagement(.click(on: .learnMoreAboutSchibsted), in: self.trackerScreenID)
-        self.didRequestAction?(.info(
-            title: self.viewModel.persistentLogin,
-            text: self.viewModel.rememberMe
+        configuration.tracker?.engagement(.click(on: .learnMoreAboutSchibsted), in: trackerScreenID)
+        didRequestAction?(.info(
+            title: viewModel.persistentLogin,
+            text: viewModel.rememberMe
         ))
     }
 
@@ -34,67 +34,67 @@ class PasswordViewController: IdentityUIViewController {
 
     @IBOutlet var shouldPersistUserCheck: Checkbox! {
         didSet {
-            self.shouldPersistUserCheck.isChecked = true
+            shouldPersistUserCheck.isChecked = true
         }
     }
     @IBOutlet var shouldPersistUserText: NormalLabel! {
         didSet {
-            self.shouldPersistUserText.text = self.viewModel.persistentLogin
+            shouldPersistUserText.text = viewModel.persistentLogin
         }
     }
     @IBOutlet var forgotPasswordButton: SecondaryButton! {
         didSet {
-            self.forgotPasswordButton.setTitle(self.viewModel.forgotPassword, for: .normal)
-            self.forgotPasswordButton.isHidden = true
+            forgotPasswordButton.setTitle(viewModel.forgotPassword, for: .normal)
+            forgotPasswordButton.isHidden = true
         }
     }
     @IBOutlet var infoLabelHeight: NSLayoutConstraint! {
         didSet {
-            self.infoLabelHeight.constant = 0
+            infoLabelHeight.constant = 0
         }
     }
     @IBOutlet var changeIdentifierButton: UIButton! {
         didSet {
-            let image = UIImage(cgImage: self.theme.icons.chevronLeft.cgImage!, scale: self.theme.icons.chevronLeft.scale, orientation: .rightMirrored)
-            self.changeIdentifierButton.setImage(image, for: .normal)
-            self.changeIdentifierButton.addTarget(self, action: #selector(self.changeIdentifier), for: .touchUpInside)
+            let image = UIImage(cgImage: theme.icons.chevronLeft.cgImage!, scale: theme.icons.chevronLeft.scale, orientation: .rightMirrored)
+            changeIdentifierButton.setImage(image, for: .normal)
+            changeIdentifierButton.addTarget(self, action: #selector(changeIdentifier), for: .touchUpInside)
         }
     }
 
     @IBAction func didTapForgotPassword(_: UIButton) {
-        self.configuration.tracker?.engagement(.click(on: .forgotPassword), in: self.trackerScreenID)
-        self.didRequestAction?(.forgotPassword)
+        configuration.tracker?.engagement(.click(on: .forgotPassword), in: trackerScreenID)
+        didRequestAction?(.forgotPassword)
     }
 
     @IBOutlet var ageLabel: InfoLabel! {
         didSet {
-            self.ageLabel.text = self.viewModel.ageLimit
-            self.ageLabel.isHidden = true
+            ageLabel.text = viewModel.ageLimit
+            ageLabel.isHidden = true
         }
     }
     @IBOutlet var infoLabel: InfoLabel! {
         didSet {
-            self.infoLabel.text = self.viewModel.info
-            self.infoLabel.isHidden = true
+            infoLabel.text = viewModel.info
+            infoLabel.isHidden = true
         }
     }
     @IBOutlet var identifierLabel: NormalLabel! {
         didSet {
-            self.identifierLabel.text = self.viewModel.identifier.originalString
+            identifierLabel.text = viewModel.identifier.originalString
         }
     }
     @IBOutlet var newAccountCreateInfoLabel: NormalLabel! {
         didSet {
-            self.newAccountCreateInfoLabel.text = self.viewModel.creatingNewAccountNotice
+            newAccountCreateInfoLabel.text = viewModel.creatingNewAccountNotice
         }
     }
     @IBOutlet var newAccountCreateNoticeHeader: UIView!
 
     @objc func changeIdentifier() {
-        let prefereblyActionSheet = UIAlertController(title: self.viewModel.identifier.originalString, message: nil, preferredStyle: .actionSheet)
+        let prefereblyActionSheet = UIAlertController(title: viewModel.identifier.originalString, message: nil, preferredStyle: .actionSheet)
 
-        let cancelAction = UIAlertAction(title: self.viewModel.cancel, style: .cancel, handler: nil)
-        let changeAction = UIAlertAction(title: self.viewModel.change, style: .default) { [weak self] _ in
+        let cancelAction = UIAlertAction(title: viewModel.cancel, style: .cancel, handler: nil)
+        let changeAction = UIAlertAction(title: viewModel.change, style: .default) { [weak self] _ in
             self?.didRequestAction?(.changeIdentifier)
         }
 
@@ -102,21 +102,21 @@ class PasswordViewController: IdentityUIViewController {
         prefereblyActionSheet.addAction(changeAction)
 
         if let popoverController = prefereblyActionSheet.popoverPresentationController {
-            popoverController.sourceView = self.changeIdentifierButton
-            popoverController.sourceRect = CGRect(x: self.changeIdentifierButton.bounds.minX, y: self.changeIdentifierButton.bounds.maxY, width: 0, height: 0)
+            popoverController.sourceView = changeIdentifierButton
+            popoverController.sourceRect = CGRect(x: changeIdentifierButton.bounds.minX, y: changeIdentifierButton.bounds.maxY, width: 0, height: 0)
             popoverController.permittedArrowDirections = [.right]
         }
 
-        self.present(prefereblyActionSheet, animated: true, completion: nil)
+        present(prefereblyActionSheet, animated: true, completion: nil)
     }
 
     @IBOutlet var password: TextField! {
         didSet {
-            self.password.keyboardType = .default
-            self.password.autocorrectionType = .no
-            self.password.delegate = self
-            self.password.clearButtonMode = .whileEditing
-            self.password.isSecureTextEntry = true
+            password.keyboardType = .default
+            password.autocorrectionType = .no
+            password.delegate = self
+            password.clearButtonMode = .whileEditing
+            password.isSecureTextEntry = true
 
             if #available(iOS 11.0, *) {
                 self.password.textContentType = .password
@@ -125,17 +125,17 @@ class PasswordViewController: IdentityUIViewController {
     }
     @IBOutlet var inputTitle: NormalLabel! {
         didSet {
-            self.inputTitle.text = self.viewModel.inputTitle
+            inputTitle.text = viewModel.inputTitle
         }
     }
     @IBOutlet var continueButton: PrimaryButton! {
         didSet {
-            self.continueButton.setTitle(self.viewModel.proceed, for: .normal)
+            continueButton.setTitle(viewModel.proceed, for: .normal)
         }
     }
     @IBOutlet var inputError: ErrorLabel! {
         didSet {
-            self.inputError.isHidden = true
+            inputError.isHidden = true
         }
     }
 
@@ -153,29 +153,29 @@ class PasswordViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let toolbar = UIToolbar.forKeyboard(target: self, doneString: self.viewModel.done, doneSelector: #selector(self.didTapContinue))
+        let toolbar = UIToolbar.forKeyboard(target: self, doneString: viewModel.done, doneSelector: #selector(didTapContinue))
 
-        self.password.inputAccessoryView = toolbar
-        self.viewToEnsureVisibilityOfAfterKeyboardAppearance = self.password
+        password.inputAccessoryView = toolbar
+        viewToEnsureVisibilityOfAfterKeyboardAppearance = password
 
-        switch self.viewModel.loginFlowVariant {
+        switch viewModel.loginFlowVariant {
         case .signup:
-            self.infoLabel.isHidden = false
-            self.infoLabelHeight.constant = 200 // (less than or equal of some big value).
-            self.forgotPasswordButton.isHidden = true
-            self.ageLabel.isHidden = false
-            self.newAccountCreateNoticeHeader.isHidden = false
-            self.continueButton.setTitle(self.viewModel.createAccount, for: .normal)
+            infoLabel.isHidden = false
+            infoLabelHeight.constant = 200 // (less than or equal of some big value).
+            forgotPasswordButton.isHidden = true
+            ageLabel.isHidden = false
+            newAccountCreateNoticeHeader.isHidden = false
+            continueButton.setTitle(viewModel.createAccount, for: .normal)
         case .signin:
-            self.infoLabel.isHidden = true
-            self.infoLabelHeight.constant = 0
-            self.forgotPasswordButton.isHidden = false
-            self.newAccountCreateNoticeHeader.isHidden = true
+            infoLabel.isHidden = true
+            infoLabelHeight.constant = 0
+            forgotPasswordButton.isHidden = false
+            newAccountCreateNoticeHeader.isHidden = true
         }
     }
 
     @IBAction func didTapContinue(_: UIButton) {
-        self.continueToNextPage()
+        continueToNextPage()
     }
 
     @objc private func continueToNextPage() {
@@ -197,32 +197,32 @@ class PasswordViewController: IdentityUIViewController {
 
     override func startLoading() {
         super.startLoading()
-        self.inputError.isHidden = true
-        self.password.applyUnfocusedStyle()
-        self.continueButton.isAnimating = true
+        inputError.isHidden = true
+        password.applyUnfocusedStyle()
+        continueButton.isAnimating = true
     }
 
     override func endLoading() {
         super.endLoading()
-        self.continueButton.isAnimating = false
+        continueButton.isAnimating = false
     }
 
     @discardableResult override func showInlineError(_ error: ClientError) -> Bool {
         let message: String
         switch error {
         case .invalidUserCredentials:
-            message = self.viewModel.invalidPassword
+            message = viewModel.invalidPassword
         case .passwordTooShort:
-            message = self.viewModel.passwordTooShort
+            message = viewModel.passwordTooShort
         default:
             return false
         }
 
-        self.configuration.tracker?.error(.validation(error), in: self.trackerScreenID)
+        configuration.tracker?.error(.validation(error), in: trackerScreenID)
 
-        self.inputError.text = message
-        self.inputError.isHidden = false
-        self.password.layer.borderColor = self.theme.colors.errorBorder.cgColor
+        inputError.text = message
+        inputError.isHidden = false
+        password.layer.borderColor = theme.colors.errorBorder.cgColor
 
         return true
     }
@@ -230,7 +230,7 @@ class PasswordViewController: IdentityUIViewController {
 
 extension PasswordViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_: UITextField) -> Bool {
-        self.continueToNextPage()
+        continueToNextPage()
         return true
     }
 }

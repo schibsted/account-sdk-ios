@@ -12,24 +12,24 @@ class OwnedTaskHandle: TaskHandle {
     static var counter = AtomicInt()
 
     init(owner: TaskManager) {
-        self.identifier = type(of: self).counter.getAndIncrement()
+        identifier = type(of: self).counter.getAndIncrement()
         self.owner = owner
     }
 
     func cancel() {
-        self.owner?.cancel(handle: self)
+        owner?.cancel(handle: self)
     }
 }
 
 extension OwnedTaskHandle: CustomStringConvertible {
     var description: String {
-        return "task.handle.\(self.identifier)"
+        return "task.handle.\(identifier)"
     }
 }
 
 extension OwnedTaskHandle: Hashable {
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self.identifier)
+        hasher.combine(identifier)
     }
 
     static func == (lhs: OwnedTaskHandle, rhs: OwnedTaskHandle) -> Bool {

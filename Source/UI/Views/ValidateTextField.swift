@@ -30,15 +30,15 @@ class ValidateTextField: TextField {
 
     override func applyTheme(theme: IdentityUITheme) {
         self.theme = theme
-        self.font = theme.fonts.normal
+        font = theme.fonts.normal
         // cursor color
-        self.tintColor = theme.colors.textInputCursor
-        self.clearButtonMode = .never
-        self.applyUnfocusedStyle()
+        tintColor = theme.colors.textInputCursor
+        clearButtonMode = .never
+        applyUnfocusedStyle()
 
-        if self.bottomBorder == nil {
-            self.borderStyle = .none
-            self.translatesAutoresizingMaskIntoConstraints = false
+        if bottomBorder == nil {
+            borderStyle = .none
+            translatesAutoresizingMaskIntoConstraints = false
 
             let border = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
             border.backgroundColor = theme.colors.textInputBorder
@@ -51,7 +51,7 @@ class ValidateTextField: TextField {
             border.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
             border.heightAnchor.constraint(equalToConstant: 1).isActive = true
 
-            self.bottomBorder = border
+            bottomBorder = border
         }
     }
 }

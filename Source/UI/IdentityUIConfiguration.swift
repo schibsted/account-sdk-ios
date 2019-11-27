@@ -56,7 +56,7 @@ public struct IdentityUIConfiguration {
             return name
         }
         set {
-            self._appName = newValue
+            _appName = newValue
         }
     }
 
@@ -118,7 +118,7 @@ public struct IdentityUIConfiguration {
         appName: String? = nil
     ) -> IdentityUIConfiguration {
         return IdentityUIConfiguration(
-            clientConfiguration: self.clientConfiguration,
+            clientConfiguration: clientConfiguration,
             theme: theme ?? self.theme,
             isCancelable: isCancelable ?? self.isCancelable,
             isSkippable: isSkippable ?? self.isSkippable,
@@ -142,12 +142,12 @@ public struct IdentityUIConfiguration {
 
 extension IdentityUIConfiguration: CustomStringConvertible {
     public var description: String {
-        return "(\n\tname: \(self.appName), "
-            + "\n\tcancelable: \(self.isCancelable), "
-            + "\n\tskippable: \(self.isSkippable), "
-            + "\n\tenableBiometrics: \(self.enableBiometrics), "
-            + "\n\tuseBiometrics: \(self.useBiometrics), "
-            + "\n\ttracker: \(self.tracker != nil), "
-            + "\n\tclient: \(self.clientConfiguration)\n)"
+        return "(\n\tname: \(appName), "
+            + "\n\tcancelable: \(isCancelable), "
+            + "\n\tskippable: \(isSkippable), "
+            + "\n\tenableBiometrics: \(enableBiometrics), "
+            + "\n\tuseBiometrics: \(useBiometrics), "
+            + "\n\ttracker: \(tracker != nil), "
+            + "\n\tclient: \(clientConfiguration)\n)"
     }
 }

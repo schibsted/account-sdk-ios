@@ -78,15 +78,15 @@ public struct Client: JSONParsable {
         if let merchantID = try? data.number(for: "merchantId") {
             self.merchantID = String(describing: Int(merchantID))
         } else {
-            self.merchantID = nil
+            merchantID = nil
         }
 
         let merchantData = (try? data.jsonObject(for: "merchant")) ?? [:]
-        self.merchantName = try? merchantData.string(for: "name")
+        merchantName = try? merchantData.string(for: "name")
         if let kindValue = try? merchantData.string(for: "type") {
-            self.kind = Kind(rawValue: kindValue)
+            kind = Kind(rawValue: kindValue)
         } else {
-            self.kind = nil
+            kind = nil
         }
     }
 }

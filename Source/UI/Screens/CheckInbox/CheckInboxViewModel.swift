@@ -15,14 +15,14 @@ class CheckInboxViewModel {
 
 extension CheckInboxViewModel {
     var sentLink: String {
-        return "CheckInboxScreenStrings.sentLink".localized(from: self.localizationBundle)
+        return "CheckInboxScreenStrings.sentLink".localized(from: localizationBundle)
     }
 
     var change: String {
-        return "CheckInboxScreenStrings.change".localized(from: self.localizationBundle)
+        return "CheckInboxScreenStrings.change".localized(from: localizationBundle)
     }
 
     var title: String {
-        return "CheckInboxScreenStrings.title".localized(from: self.localizationBundle)
+        return "CheckInboxScreenStrings.title".localized(from: localizationBundle)
     }
 }

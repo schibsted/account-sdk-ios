@@ -32,10 +32,10 @@ struct Networking {
 
     static var additionalHeaders: [String: String]? {
         get {
-            return self.proxy.additionalHeaders
+            return proxy.additionalHeaders
         }
         set(newValue) {
-            self.proxy.additionalHeaders = newValue
+            proxy.additionalHeaders = newValue
         }
     }
 
@@ -44,7 +44,7 @@ struct Networking {
         request: URLRequest,
         completion: URLSessionTaskCallback? = nil
     ) -> URLSessionDataTask {
-        return self.proxy.dataTask(for: session, request: request, completion: completion)
+        return proxy.dataTask(for: session, request: request, completion: completion)
     }
 
     static func send(
@@ -63,7 +63,7 @@ struct Networking {
             request.setValue("application/x-www-form-urlencoded", for: .contentType)
         }
 
-        for (key, value) in self.proxy.additionalHeaders ?? [:] {
+        for (key, value) in proxy.additionalHeaders ?? [:] {
             request.setValue(value, forHTTPHeaderField: key)
         }
 
@@ -72,6 +72,6 @@ struct Networking {
         }
 
         log(level: .debug, "\n  \(request.cURLRepresentation)", tag: "CURL")
-        return self.dataTask(for: self.proxy.session, request: request, completion: completion)
+        return dataTask(for: proxy.session, request: request, completion: completion)
     }
 }

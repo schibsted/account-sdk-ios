@@ -13,23 +13,23 @@ class CheckInboxViewController: IdentityUIViewController {
 
     @IBOutlet var textLabel: NormalLabel! {
         didSet {
-            let string = self.viewModel.sentLink + "\n" + self.viewModel.identifier.normalizedString
-            self.textLabel.attributedText = NSAttributedString(
+            let string = viewModel.sentLink + "\n" + viewModel.identifier.normalizedString
+            textLabel.attributedText = NSAttributedString(
                 string: string,
-                attributes: self.theme.textAttributes.centeredNormalParagraph
+                attributes: theme.textAttributes.centeredNormalParagraph
             )
         }
     }
 
     @IBOutlet var changeButton: UIButton! {
         didSet {
-            self.changeButton.titleLabel?.font = self.theme.fonts.normal
-            self.changeButton.setTitle(self.viewModel.change, for: .normal)
+            changeButton.titleLabel?.font = theme.fonts.normal
+            changeButton.setTitle(viewModel.change, for: .normal)
         }
     }
 
     @IBAction func didTapChangeButton(_: UIButton) {
-        self.didRequestAction?(.changeIdentifier)
+        didRequestAction?(.changeIdentifier)
     }
 
     private let viewModel: CheckInboxViewModel
@@ -48,6 +48,6 @@ class CheckInboxViewController: IdentityUIViewController {
     }
 
     override var navigationTitle: String {
-        return self.viewModel.title
+        return viewModel.title
     }
 }

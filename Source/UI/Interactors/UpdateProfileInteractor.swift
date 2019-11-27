@@ -20,11 +20,11 @@ class UpdateProfileInteractor: CompleteProfileInteractor {
         completion: @escaping (Result<User, ClientError>) -> Void
     ) {
         if !acceptingTerms {
-            self.updateRequiredFields(requiredFieldsToUpdate, completion: completion)
+            updateRequiredFields(requiredFieldsToUpdate, completion: completion)
             return
         }
 
-        self.currentUser?.agreements.accept { [weak self] result in
+        currentUser?.agreements.accept { [weak self] result in
             switch result {
             case .success:
                 self?.updateRequiredFields(requiredFieldsToUpdate, completion: completion)

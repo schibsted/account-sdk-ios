@@ -6,7 +6,7 @@
 class InfoLabel: NormalLabel {
     override func applyTheme(theme: IdentityUITheme) {
         super.applyTheme(theme: theme)
-        self.textColor = theme.colors.infoText
-        self.font = theme.fonts.info
+        textColor = theme.colors.infoText
+        font = theme.fonts.info
     }
 }
