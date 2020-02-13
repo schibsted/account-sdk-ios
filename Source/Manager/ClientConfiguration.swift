@@ -117,6 +117,9 @@ public struct ClientConfiguration {
     /// The locale that is being used
     public let locale: Locale
 
+    /// Whether users logging in via web flow should result in persistent user
+    public let webFlowLoginShouldPersistUser: Bool
+    
     /**
      Which environment (if any) is this configuration using
      */
@@ -136,7 +139,7 @@ public struct ClientConfiguration {
      - parameter appURLScheme: set your `appURLSceheme` here. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want to use for requests - defaults to system
      */
-    public init(serverURL: URL, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil) {
+    public init(serverURL: URL, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil, webFlowLoginShouldPersistUser: Bool = false) {
         let data = Environment.dataForServerURL(serverURL)
         self.init(
             environment: data?.environment,
@@ -145,7 +148,8 @@ public struct ClientConfiguration {
             clientID: clientID,
             clientSecret: clientSecret,
             appURLScheme: appURLScheme,
-            locale: locale
+            locale: locale,
+            webFlowLoginShouldPersistUser: webFlowLoginShouldPersistUser
         )
     }
 
@@ -156,7 +160,8 @@ public struct ClientConfiguration {
         clientID: String,
         clientSecret: String,
         appURLScheme: String?,
-        locale: Locale? = nil
+        locale: Locale? = nil,
+        webFlowLoginShouldPersistUser: Bool = false
     ) {
         self.serverURL = serverURL
         self.providerComponent = providerComponent
@@ -167,6 +172,7 @@ public struct ClientConfiguration {
         self.appURLScheme = appURLScheme ?? defaultAppURLScheme
         self.defaultAppURLScheme = defaultAppURLScheme
         self.environment = environment
+        self.webFlowLoginShouldPersistUser = webFlowLoginShouldPersistUser
         guard let name = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String else {
             preconditionFailure("Could not fetch bundle name.")
         }
@@ -322,6 +328,10 @@ public struct ClientConfiguration {
         struct AccountSummary {
             static let settingsKey = "RedirectInfo.AccountSummary"
             static let path = "account-summary"
+        }
+
+        struct WebFlowLogin {
+            static let settingsKey = "RedirectInfo.WebFlowLogin"
         }
     }
 }

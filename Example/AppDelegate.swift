@@ -235,7 +235,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
 
-        if let vc = self.window?.rootViewController, let route = IdentityUI.Route(payload: payload) {
+        if let vc = self.window?.rootViewController, let route = IdentityUI.Route(payload: payload, configuration: ClientConfiguration.current) {
             identityUI.presentIdentityProcess(from: vc, route: route)
             return true
         }
@@ -252,6 +252,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
         case let .codeAfterAccountSummary(code):
             passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
+        case let .codeAfterWebFlowLogin(code):
+            passwordFlowViewController?.validateDeepLinkCode(code, persistUser: ClientConfiguration.current.webFlowLoginShouldPersistUser)
         }
         return true
     }

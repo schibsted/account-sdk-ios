@@ -91,4 +91,31 @@ public class WebSessionRoutes {
             redirectQueryItems: redirectQueryItems
         )
     }
+    
+    public func loginUrl(scopes: [String]? = nil) ->URL {
+        let state = randomString(length: 10)
+        Settings.setValue(state, forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
+
+        let scopeString = scopes.map { $0.joined(separator: " ") } ?? "openid"
+        let authRequestParams = [
+            URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value: scopeString),
+            URLQueryItem(name: "state", value: state),
+            URLQueryItem(name: "nonce", value: randomString(length: 10)),
+            URLQueryItem(name: "new-flow", value: "true")
+        ]
+                
+        return makeURLFromPath(
+            "/oauth/authorize",
+            redirectPath: nil,
+            queryItems: authRequestParams,
+            redirectQueryItems: nil
+        )
+    }
+    
+    private func randomString(length: Int) -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+    
 }

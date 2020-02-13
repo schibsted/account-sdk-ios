@@ -21,12 +21,15 @@ public enum AppLaunchData: Equatable {
     case afterForgotPassword
     /// When deep link returns after an account summary session
     case codeAfterAccountSummary(String)
+    /// When deep link returns after login via the web flows
+    case codeAfterWebFlowLogin(String)
 }
 
 extension AppLaunchData {
     enum QueryKey: String {
         case code
         case persistUser = "persist-user"
+        case state
     }
     /**
      Initializes this object if url is a valid deep link.
@@ -62,6 +65,20 @@ extension AppLaunchData {
         if let code = payload.queryComponents[QueryKey.code.rawValue]?.first {
             guard !code.isEmpty, code.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil else {
                 return nil
+            }
+            
+            // Check if coming back after web flow login
+            let receivedState = payload.queryComponents[QueryKey.state.rawValue]?.first
+            let maybeWebFlowState = Settings.value(forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey) as? String
+
+            if let storedState = maybeWebFlowState {
+                if storedState != receivedState {
+                    return nil
+                }
+            
+                Settings.clearWhere(prefix: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
+                self = .codeAfterWebFlowLogin(code)
+                return
             }
 
             // No path, means a deeplink from a login where the email address was not verified previously
