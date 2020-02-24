@@ -521,20 +521,22 @@ public class IdentityManager: IdentityManagerProtocol {
      The authorization code is passed into the app from Schibsted account after the user verified their email.
 
      - parameter authCode: an authorization code (currently it's just available through deeplinks)
+     - parameter codeVerifier: code verifier associated with the authCode using PKCE
      - parameter completion: the callback that is called after validation
      - parameter scopes: array of scopes you want the token to contain
      - parameter persistUser: whether the login status should be persistent on app's relaunches
 
      - SeeAlso: `AppLaunchData`
      */
-    public func validate(authCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
+    public func validate(authCode: String, persistUser: Bool, codeVerifier: String? = nil, completion: @escaping NoValueCallback) {
         api.requestAccessToken(
             clientID: clientConfiguration.clientID,
             clientSecret: clientConfiguration.clientSecret,
             grantType: .authorizationCode,
             code: authCode,
             // this parameter is useless, but required, otherwise you get "invalid_request" error
-            redirectURI: clientConfiguration.redirectBaseURL(withPathComponent: nil).absoluteString
+            redirectURI: clientConfiguration.redirectBaseURL(withPathComponent: nil).absoluteString,
+            codeVerifier: codeVerifier
         ) { [weak self] result in
             self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }

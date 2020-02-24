@@ -252,8 +252,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
         case let .codeAfterAccountSummary(code):
             passwordFlowViewController?.validateDeepLinkCode(code, persistUser: false)
-        case let .codeAfterWebFlowLogin(code):
-            passwordFlowViewController?.validateDeepLinkCode(code, persistUser: ClientConfiguration.current.webFlowLoginShouldPersistUser)
+        case let .codeAfterWebFlowLogin(code, codeVerifier):
+            passwordFlowViewController?.validateDeepLinkCode(code, persistUser: ClientConfiguration.current.webFlowLoginShouldPersistUser, codeVerifier: codeVerifier)
         }
         return true
     }

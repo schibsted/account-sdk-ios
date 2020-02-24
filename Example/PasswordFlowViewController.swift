@@ -39,8 +39,8 @@ class PasswordFlowViewController: UIViewController {
         }
     }
 
-    func validateDeepLinkCode(_ code: String, persistUser: Bool) {
-        UIApplication.identityManager.validate(authCode: code, persistUser: persistUser) { result in
+    func validateDeepLinkCode(_ code: String, persistUser: Bool, codeVerifier: String? = nil) {
+        UIApplication.identityManager.validate(authCode: code, persistUser: persistUser, codeVerifier: codeVerifier) { result in
             switch result {
             case .success:
                 print("Code validated!")

@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import CommonCrypto
 
 /**
  Schibsted account web page URLs useful for web views in hybrid apps.
@@ -11,6 +12,18 @@ import Foundation
 public class WebSessionRoutes {
     private let clientConfiguration: ClientConfiguration
 
+    internal struct WebFlowData {
+        private static let stateKey = "state"
+        private static let codeVerifierKey = "codeVerifier"
+        
+        static func serialise(state: String, codeVerifier: String) -> [String: String] {
+            [stateKey: state, codeVerifierKey: codeVerifier]
+        }
+        static func deserialise(data: [String: String]) -> (state: String, codeVerifier: String)? {
+            (state: data[stateKey]!, codeVerifier: data[codeVerifierKey]!)
+        }
+    }
+    
     func makeURLFromPath(_ path: String, redirectPath: String?, queryItems: [URLQueryItem], redirectQueryItems: [URLQueryItem]?) -> URL {
         let redirectURL = clientConfiguration.redirectBaseURL(withPathComponent: redirectPath, additionalQueryItems: redirectQueryItems)
         guard var urlComponents = URLComponents(url: self.clientConfiguration.serverURL, resolvingAgainstBaseURL: true) else {
@@ -94,7 +107,8 @@ public class WebSessionRoutes {
     
     public func loginUrl(scopes: [String]? = nil) ->URL {
         let state = randomString(length: 10)
-        Settings.setValue(state, forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
+        let codeVerifier = randomString(length: 60)
+        Settings.setValue(WebFlowData.serialise(state: state, codeVerifier: codeVerifier), forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
 
         let scopeString = scopes.map { $0.joined(separator: " ") } ?? "openid"
         let authRequestParams = [
@@ -102,7 +116,9 @@ public class WebSessionRoutes {
             URLQueryItem(name: "scope", value: scopeString),
             URLQueryItem(name: "state", value: state),
             URLQueryItem(name: "nonce", value: randomString(length: 10)),
-            URLQueryItem(name: "new-flow", value: "true")
+            URLQueryItem(name: "new-flow", value: "true"),
+            URLQueryItem(name: "code_challenge", value: codeChallenge(from: codeVerifier)),
+            URLQueryItem(name: "code_challenge_method", value: "S256")
         ]
                 
         return makeURLFromPath(
@@ -118,4 +134,24 @@ public class WebSessionRoutes {
       return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
+    
+    private func codeChallenge(from codeVerifier: String) -> String {
+        func base64url(data: Data) -> String {
+            let base64url = data.base64EncodedString()
+                .replacingOccurrences(of: "/", with: "_")
+                .replacingOccurrences(of: "+", with: "-")
+                .replacingOccurrences(of: "=", with: "")
+            return base64url
+        }
+        
+        func sha256(data : Data) -> Data {
+            var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
+            data.withUnsafeBytes {
+                _ = CC_SHA256($0, CC_LONG(data.count), &hash)
+            }
+            return Data(bytes: hash)
+        }
+        
+        return base64url(data: sha256(data: Data(codeVerifier.utf8)))
+    }
 }
