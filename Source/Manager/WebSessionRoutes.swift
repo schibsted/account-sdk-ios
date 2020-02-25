@@ -105,6 +105,14 @@ public class WebSessionRoutes {
         )
     }
 
+    /**
+     Schibsted account web login URL.
+
+     Navigate a web view with this URL to show the web login. Can also be used to pick up an already logged in user session in the browser
+     and get a logged in user in the native app.
+
+     - parameter scopes: optional scopes to include in the authentication request
+     */
     public func loginUrl(scopes: [String]? = nil) -> URL {
         let state = randomString(length: 10)
         let codeVerifier = randomString(length: 60)
