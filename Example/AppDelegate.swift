@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -76,7 +76,7 @@ extension SchibstedAccount.ClientConfiguration {
 
 extension SchibstedAccount.ClientConfiguration {
     var webClientID: String? {
-        return ClientConfiguration.config[self.environment!].webClientID
+        return ClientConfiguration.config[environment!].webClientID
     }
 
     var sdkExampleRedirectURL: URL? {
@@ -90,7 +90,7 @@ extension SchibstedAccount.ClientConfiguration {
     }
 
     var scopes: [String] {
-        return ClientConfiguration.config[self.environment!].scopes ?? []
+        return ClientConfiguration.config[environment!].scopes ?? []
     }
 }
 
@@ -235,7 +235,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
 
-        if let vc = self.window?.rootViewController, let route = IdentityUI.Route(payload: payload, configuration: ClientConfiguration.current) {
+        if let vc = window?.rootViewController, let route = IdentityUI.Route(payload: payload, configuration: ClientConfiguration.current) {
             identityUI.presentIdentityProcess(from: vc, route: route)
             return true
         }

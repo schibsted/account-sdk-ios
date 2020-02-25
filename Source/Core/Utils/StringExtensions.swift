@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -15,8 +15,8 @@ extension String {
             return self
         }
 
-        return self[..<self.index(self.startIndex, offsetBy: charsOnEachSide)]
+        return self[..<index(startIndex, offsetBy: charsOnEachSide)]
             + String(repeating: String(inbetweenChar), count: maxChars - charsOnEachSide * 2)
-            + self[self.index(self.endIndex, offsetBy: -charsOnEachSide)...]
+            + self[index(endIndex, offsetBy: -charsOnEachSide)...]
     }
 }

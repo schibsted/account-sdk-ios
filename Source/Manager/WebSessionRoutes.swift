@@ -1,10 +1,10 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import Foundation
 import CommonCrypto
+import Foundation
 
 /**
  Schibsted account web page URLs useful for web views in hybrid apps.
@@ -26,12 +26,12 @@ public class WebSessionRoutes {
 
     func makeURLFromPath(_ path: String, redirectPath: String?, queryItems: [URLQueryItem], redirectQueryItems: [URLQueryItem]?) -> URL {
         let redirectURL = clientConfiguration.redirectBaseURL(withPathComponent: redirectPath, additionalQueryItems: redirectQueryItems)
-        guard var urlComponents = URLComponents(url: self.clientConfiguration.serverURL, resolvingAgainstBaseURL: true) else {
+        guard var urlComponents = URLComponents(url: clientConfiguration.serverURL, resolvingAgainstBaseURL: true) else {
             preconditionFailure("Failed to create URLComponents from \(clientConfiguration.serverURL)")
         }
         urlComponents.path = path
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: self.clientConfiguration.clientID),
+            URLQueryItem(name: "client_id", value: clientConfiguration.clientID),
             URLQueryItem(name: "redirect_uri", value: redirectURL.absoluteString),
         ]
         urlComponents.queryItems?.append(contentsOf: queryItems)
@@ -138,8 +138,8 @@ public class WebSessionRoutes {
     }
 
     private func randomString(length: Int) -> String {
-      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-      return String((0..<length).map { _ in letters.randomElement()! })
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map { _ in letters.randomElement()! })
     }
 
     private func codeChallenge(from codeVerifier: String) -> String {

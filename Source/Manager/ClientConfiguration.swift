@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -297,7 +297,7 @@ public struct ClientConfiguration {
 
         // old style scheme has a host, which is the "root"
         // new style scheme with no host, where path is "/<root>"
-        guard redirectURL.host == redirectURLRoot || redirectURL.pathComponents == ["/", self.redirectURLRoot] else {
+        guard redirectURL.host == redirectURLRoot || redirectURL.pathComponents == ["/", redirectURLRoot] else {
             return nil
         }
 
@@ -360,7 +360,7 @@ extension ClientConfiguration: Equatable {
 extension ClientConfiguration: CustomStringConvertible {
     public var description: String {
         let envString: String
-        if let env = self.environment {
+        if let env = environment {
             envString = String(describing: env)
         } else {
             envString = serverURL.absoluteString
