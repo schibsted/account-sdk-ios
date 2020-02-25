@@ -66,7 +66,7 @@ extension AppLaunchData {
             guard !code.isEmpty, code.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil else {
                 return nil
             }
-            
+
             // Check if coming back after web flow login
             if let storedData = Settings.value(forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey) as? [String: String],
                 let deserialised = WebSessionRoutes.WebFlowData.deserialise(data: storedData) {
@@ -74,7 +74,7 @@ extension AppLaunchData {
                 if deserialised.state != receivedState {
                     return nil
                 }
-            
+
                 Settings.clearWhere(prefix: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
                 self = .codeAfterWebFlowLogin(code, codeVerifier: deserialised.codeVerifier)
                 return

@@ -125,7 +125,7 @@ class IdentityAPI {
             "code": code,
             "redirect_uri": redirectURI,
             "scope": scope?.trimmed().joined(separator: " "),
-            "code_verifier": codeVerifier
+            "code_verifier": codeVerifier,
         ]
 
         requestWithRetries(router: .oauthToken, formData: formData, completion: completion)

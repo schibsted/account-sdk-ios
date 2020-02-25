@@ -119,7 +119,7 @@ public struct ClientConfiguration {
 
     /// Whether users logging in via web flow should result in persistent user
     public let webFlowLoginShouldPersistUser: Bool
-    
+
     /**
      Which environment (if any) is this configuration using
      */
@@ -139,7 +139,14 @@ public struct ClientConfiguration {
      - parameter appURLScheme: set your `appURLSceheme` here. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want to use for requests - defaults to system
      */
-    public init(serverURL: URL, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil, webFlowLoginShouldPersistUser: Bool = false) {
+    public init(
+        serverURL: URL,
+        clientID: String,
+        clientSecret: String,
+        appURLScheme: String?,
+        locale: Locale? = nil,
+        webFlowLoginShouldPersistUser: Bool = false
+    ) {
         let data = Environment.dataForServerURL(serverURL)
         self.init(
             environment: data?.environment,
