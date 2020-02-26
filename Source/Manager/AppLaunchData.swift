@@ -22,7 +22,7 @@ public enum AppLaunchData: Equatable {
     /// When deep link returns after an account summary session
     case codeAfterAccountSummary(String)
     /// When deep link returns after login via the web flows
-    case codeAfterWebFlowLogin(String, codeVerifier: String)
+    case codeAfterWebFlowLogin(String, codeVerifier: String, shouldPersistUser: Bool)
 }
 
 extension AppLaunchData {
@@ -68,7 +68,7 @@ extension AppLaunchData {
             }
 
             // Check if coming back after web flow login
-            if let storedData = Settings.value(forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey) as? [String: String],
+            if let storedData = Settings.value(forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey) as? [String: Any],
                 let deserialised = WebSessionRoutes.WebFlowData.deserialise(data: storedData) {
                 let receivedState = payload.queryComponents[QueryKey.state.rawValue]?.first
                 if deserialised.state != receivedState {
@@ -76,7 +76,7 @@ extension AppLaunchData {
                 }
 
                 Settings.clearWhere(prefix: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
-                self = .codeAfterWebFlowLogin(code, codeVerifier: deserialised.codeVerifier)
+                self = .codeAfterWebFlowLogin(code, codeVerifier: deserialised.codeVerifier, shouldPersistUser: deserialised.shouldPersistUser)
                 return
             }
 

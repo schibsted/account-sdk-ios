@@ -15,12 +15,19 @@ public class WebSessionRoutes {
     internal struct WebFlowData {
         private static let stateKey = "state"
         private static let codeVerifierKey = "codeVerifier"
+        private static let persistUserKey = "persistUser"
 
-        static func serialise(state: String, codeVerifier: String) -> [String: String] {
-            [stateKey: state, codeVerifierKey: codeVerifier]
+        static func serialise(state: String, codeVerifier: String, shouldPersistUser: Bool) -> [String: Any] {
+            [stateKey: state, codeVerifierKey: codeVerifier, persistUserKey: shouldPersistUser]
         }
-        static func deserialise(data: [String: String]) -> (state: String, codeVerifier: String)? {
-            (state: data[stateKey]!, codeVerifier: data[codeVerifierKey]!)
+        static func deserialise(data: [String: Any]) -> (state: String, codeVerifier: String, shouldPersistUser: Bool)? {
+            if let state = data[stateKey] as? String,
+                let codeVerifier = data[codeVerifierKey] as? String,
+                let persistUser = data[persistUserKey] as? Bool {
+                return (state: state, codeVerifier: codeVerifier, shouldPersistUser: persistUser)
+            }
+            
+            return nil
         }
     }
 
@@ -111,12 +118,13 @@ public class WebSessionRoutes {
      Navigate a web view with this URL to show the web login. Can also be used to pick up an already logged in user session in the browser
      and get a logged in user in the native app.
 
+     - parameter shouldPersistUser: whether logging in via web flow should result in persistent user
      - parameter scopes: optional scopes to include in the authentication request
      */
-    public func loginUrl(scopes: [String]? = nil) -> URL {
+    public func loginUrl(shouldPersistUser: Bool, scopes: [String]? = nil) -> URL {
         let state = randomString(length: 10)
         let codeVerifier = randomString(length: 60)
-        Settings.setValue(WebFlowData.serialise(state: state, codeVerifier: codeVerifier), forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
+        Settings.setValue(WebFlowData.serialise(state: state, codeVerifier: codeVerifier, shouldPersistUser: shouldPersistUser), forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
 
         let scopeString = scopes.map { $0.joined(separator: " ") } ?? "openid"
         let authRequestParams = [

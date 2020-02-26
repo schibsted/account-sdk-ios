@@ -120,7 +120,7 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func didTapWebFlowLogin(_: UIButton) {
-        let url = UIApplication.identityManager.routes.loginUrl()
+        let url = UIApplication.identityManager.routes.loginUrl(shouldPersistUser: false)
         UIApplication.shared.openURL(url)
     }
 

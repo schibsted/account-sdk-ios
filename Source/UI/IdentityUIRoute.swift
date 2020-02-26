@@ -40,7 +40,7 @@ extension IdentityUI.Route {
         guard let payload = configuration.parseRedirectURL(url) else {
             return nil
         }
-        self.init(payload: payload, configuration: configuration)
+        self.init(payload: payload)
     }
 
     /**
@@ -49,7 +49,7 @@ extension IdentityUI.Route {
 
      - parameter payload: The given redirect payload.
      */
-    public init?(payload: ClientConfiguration.RedirectPayload, configuration: ClientConfiguration) {
+    public init?(payload: ClientConfiguration.RedirectPayload) {
         guard let launchData = AppLaunchData(payload: payload) else {
             self = .login
             return
@@ -74,8 +74,8 @@ extension IdentityUI.Route {
             self = .validateAuthCode(code: code, shouldPersistUser: false)
         case let .codeAfterAccountSummary(code):
             self = .validateAuthCode(code: code, shouldPersistUser: nil)
-        case let .codeAfterWebFlowLogin(code, codeVerifier):
-            self = .validateAuthCode(code: code, shouldPersistUser: configuration.webFlowLoginShouldPersistUser, codeVerifier: codeVerifier)
+        case let .codeAfterWebFlowLogin(code, codeVerifier, shouldPersistUser):
+            self = .validateAuthCode(code: code, shouldPersistUser: shouldPersistUser, codeVerifier: codeVerifier)
         }
     }
 }

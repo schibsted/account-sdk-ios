@@ -117,9 +117,6 @@ public struct ClientConfiguration {
     /// The locale that is being used
     public let locale: Locale
 
-    /// Whether users logging in via web flow should result in persistent user
-    public let webFlowLoginShouldPersistUser: Bool
-
     /**
      Which environment (if any) is this configuration using
      */
@@ -144,8 +141,7 @@ public struct ClientConfiguration {
         clientID: String,
         clientSecret: String,
         appURLScheme: String?,
-        locale: Locale? = nil,
-        webFlowLoginShouldPersistUser: Bool = false
+        locale: Locale? = nil
     ) {
         let data = Environment.dataForServerURL(serverURL)
         self.init(
@@ -155,8 +151,7 @@ public struct ClientConfiguration {
             clientID: clientID,
             clientSecret: clientSecret,
             appURLScheme: appURLScheme,
-            locale: locale,
-            webFlowLoginShouldPersistUser: webFlowLoginShouldPersistUser
+            locale: locale
         )
     }
 
@@ -167,8 +162,7 @@ public struct ClientConfiguration {
         clientID: String,
         clientSecret: String,
         appURLScheme: String?,
-        locale: Locale? = nil,
-        webFlowLoginShouldPersistUser: Bool = false
+        locale: Locale? = nil
     ) {
         self.serverURL = serverURL
         self.providerComponent = providerComponent
@@ -179,7 +173,6 @@ public struct ClientConfiguration {
         self.appURLScheme = appURLScheme ?? defaultAppURLScheme
         self.defaultAppURLScheme = defaultAppURLScheme
         self.environment = environment
-        self.webFlowLoginShouldPersistUser = webFlowLoginShouldPersistUser
         guard let name = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String else {
             preconditionFailure("Could not fetch bundle name.")
         }
