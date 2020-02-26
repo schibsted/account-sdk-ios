@@ -68,8 +68,8 @@ extension AppLaunchData {
             }
 
             // Check if coming back after web flow login
-            if let storedData = Settings.value(forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey) as? [String: Any],
-                let deserialised = WebSessionRoutes.WebFlowData.deserialise(data: storedData) {
+            if let storedData = Settings.value(forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey) as? Data,
+                let deserialised = try? JSONDecoder().decode(WebSessionRoutes.WebFlowData.self, from: storedData) {
                 let receivedState = payload.queryComponents[QueryKey.state.rawValue]?.first
                 if deserialised.state != receivedState {
                     return nil

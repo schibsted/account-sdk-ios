@@ -12,23 +12,10 @@ import Foundation
 public class WebSessionRoutes {
     private let clientConfiguration: ClientConfiguration
 
-    internal struct WebFlowData {
-        private static let stateKey = "state"
-        private static let codeVerifierKey = "codeVerifier"
-        private static let persistUserKey = "persistUser"
-
-        static func serialise(state: String, codeVerifier: String, shouldPersistUser: Bool) -> [String: Any] {
-            [stateKey: state, codeVerifierKey: codeVerifier, persistUserKey: shouldPersistUser]
-        }
-        static func deserialise(data: [String: Any]) -> (state: String, codeVerifier: String, shouldPersistUser: Bool)? {
-            if let state = data[stateKey] as? String,
-                let codeVerifier = data[codeVerifierKey] as? String,
-                let persistUser = data[persistUserKey] as? Bool {
-                return (state: state, codeVerifier: codeVerifier, shouldPersistUser: persistUser)
-            }
-            
-            return nil
-        }
+    internal struct WebFlowData: Codable {
+        let state: String
+        let codeVerifier: String
+        let shouldPersistUser: Bool
     }
 
     func makeURLFromPath(_ path: String, redirectPath: String?, queryItems: [URLQueryItem], redirectQueryItems: [URLQueryItem]?) -> URL {
@@ -124,7 +111,11 @@ public class WebSessionRoutes {
     public func loginUrl(shouldPersistUser: Bool, scopes: [String]? = nil) -> URL {
         let state = randomString(length: 10)
         let codeVerifier = randomString(length: 60)
-        Settings.setValue(WebFlowData.serialise(state: state, codeVerifier: codeVerifier, shouldPersistUser: shouldPersistUser), forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
+        let webFlowData = WebFlowData(state: state, codeVerifier: codeVerifier, shouldPersistUser: shouldPersistUser)
+
+        if let encoded = try? JSONEncoder().encode(webFlowData) {
+            Settings.setValue(encoded, forKey: ClientConfiguration.RedirectInfo.WebFlowLogin.settingsKey)
+        }
 
         let scopeString = scopes.map { $0.joined(separator: " ") } ?? "openid"
         let authRequestParams = [
