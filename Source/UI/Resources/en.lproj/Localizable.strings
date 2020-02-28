@@ -28,7 +28,7 @@
 "PasswordScreenString.forgotPassword" = "Forgot password?";
 "PasswordScreenString.persistentLogin" = "Remember me on this device";
 "PasswordScreenString.whatsThis" = "What's this?";
-"PasswordScreenString.ageLimit" = "You need to be at least 16 years old to create a Schibsted account";
+"PasswordScreenString.ageLimit" = "You need to be at least 15 years old to create a Schibsted account";
 "PasswordScreenString.creatingNewAccountNotice" = "You are now creating a new Schibsted account";
 "PasswordScreenString.createAccount" = "Create account";
 "PasswordScreenString.biometricsPrompt" = "Log in as $0";
