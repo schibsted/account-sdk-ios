@@ -28,7 +28,7 @@
 "PasswordScreenString.forgotPassword" = "Glömt lösenordet?";
 "PasswordScreenString.persistentLogin" = "Kom ihåg mig på den här enheten";
 "PasswordScreenString.whatsThis" = "Vad är detta?";
-"PasswordScreenString.ageLimit" = "Du måste vara minst 16 år gammal för att skapa ett Schibsted-konto";
+"PasswordScreenString.ageLimit" = "Du måste vara minst 15 år gammal för att skapa ett Schibsted-konto";
 "PasswordScreenString.creatingNewAccountNotice" = "Du skapar nu ett nytt Schibsted-konto";
 "PasswordScreenString.createAccount" = "Skapa konto";
 "PasswordScreenString.biometricsPrompt" = "Logga in som $0";
