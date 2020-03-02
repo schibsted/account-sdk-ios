@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -39,7 +39,7 @@ public protocol IdentityManagerProtocol: AnyObject {
         completion: @escaping NoValueCallback
     )
     ///
-    func validate(authCode: String, persistUser: Bool, completion: @escaping NoValueCallback)
+    func validate(authCode: String, persistUser: Bool, codeVerifier: String?, completion: @escaping NoValueCallback)
 
     ///
     func fetchStatus(for identifier: Identifier, completion: @escaping IdentifierStatusResultCallback)

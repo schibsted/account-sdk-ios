@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -53,7 +53,7 @@ protocol RouteHandler {
 
 extension FlowCoordinator {
     var presentedViewController: IdentityUIViewController? {
-        if let presentedViewController = self.navigationController.presentedViewController {
+        if let presentedViewController = navigationController.presentedViewController {
             return presentedViewController as? IdentityUIViewController
         }
         return navigationController.topViewController as? IdentityUIViewController
@@ -110,7 +110,7 @@ extension FlowCoordinator {
     }
 
     func isPresentingURL(containing path: String) -> Bool {
-        guard let safariViewController = self.navigationController.visibleViewController as? SafariViewController else {
+        guard let safariViewController = navigationController.visibleViewController as? SafariViewController else {
             return false
         }
         return safariViewController.url.absoluteString.contains(path)

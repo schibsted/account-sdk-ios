@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -82,8 +82,8 @@ extension UserProfile {
     }
     func formData(withMappings mappings: [FormDataMappings: String] = [:]) -> [String: String] {
         let nameJson = [
-            mappings[.givenName] ?? FormDataMappings.givenName.rawValue: self.givenName,
-            mappings[.familyName] ?? FormDataMappings.familyName.rawValue: self.familyName,
+            mappings[.givenName] ?? FormDataMappings.givenName.rawValue: givenName,
+            mappings[.familyName] ?? FormDataMappings.familyName.rawValue: familyName,
         ].compactedValues()
 
         var nameData: String?
@@ -96,7 +96,7 @@ extension UserProfile {
 
         return [
             "name": nameData,
-            "displayName": self.displayName,
+            "displayName": displayName,
             "birthday": birthdayData,
             "phone_number": numberData,
         ].compactedValues()

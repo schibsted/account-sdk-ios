@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -215,7 +215,7 @@ extension VerifyViewController: UITextFieldDelegate {
 
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         guard let codeBox = textField as? TextField,
-            let index = self.textFieldStackView.arrangedSubviews.index(of: codeBox)
+            let index = textFieldStackView.arrangedSubviews.index(of: codeBox)
         else {
             return false
         }
@@ -302,7 +302,7 @@ extension VerifyViewController: UITextFieldDelegate {
 
 extension VerifyViewController {
     func nextField(index: Int) {
-        guard let textfield = self.textFieldStackView.arrangedSubviews[index] as? TextField else {
+        guard let textfield = textFieldStackView.arrangedSubviews[index] as? TextField else {
             return
         }
 
@@ -311,7 +311,7 @@ extension VerifyViewController {
     }
 
     func previousField(index: Int) {
-        guard let textfield = self.textFieldStackView.arrangedSubviews[index] as? TextField else {
+        guard let textfield = textFieldStackView.arrangedSubviews[index] as? TextField else {
             return
         }
 

@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -16,12 +16,12 @@ class PasswordFlowViewController: UIViewController {
     }
 
     var email: EmailAddress? {
-        guard let text = self.emailField.text else { return nil }
+        guard let text = emailField.text else { return nil }
         return EmailAddress(text)
     }
 
     var password: String? {
-        guard let text = self.passwordField.text else { return nil }
+        guard let text = passwordField.text else { return nil }
         return text
     }
 
@@ -39,8 +39,8 @@ class PasswordFlowViewController: UIViewController {
         }
     }
 
-    func validateDeepLinkCode(_ code: String, persistUser: Bool) {
-        UIApplication.identityManager.validate(authCode: code, persistUser: persistUser) { result in
+    func validateDeepLinkCode(_ code: String, persistUser: Bool, codeVerifier: String? = nil) {
+        UIApplication.identityManager.validate(authCode: code, persistUser: persistUser, codeVerifier: codeVerifier) { result in
             switch result {
             case .success:
                 print("Code validated!")

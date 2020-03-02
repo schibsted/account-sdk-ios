@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -40,7 +40,7 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
 
         let localizedReasonString = viewModel.biometricsPrompt.replacingOccurrences(of: "$0", with: input.identifier.normalizedString)
 
-        guard let password = self.getPasswordFromKeychain(for: input.identifier, localizedReasonString) else {
+        guard let password = getPasswordFromKeychain(for: input.identifier, localizedReasonString) else {
             showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
             return
         }
@@ -257,7 +257,7 @@ extension PasswordCoordinator {
         var queryResult: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &queryResult)
         if status == noErr, let qresult = queryResult as? Data, let password = String(data: qresult as Data, encoding: .utf8) {
-            configuration.tracker?.interaction(.submit, with: .passwordInput, additionalFields: [.customLoginType(self.biometryType)])
+            configuration.tracker?.interaction(.submit, with: .passwordInput, additionalFields: [.customLoginType(biometryType)])
             return password
         } else {
             return nil
