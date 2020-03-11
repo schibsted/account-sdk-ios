@@ -10,6 +10,7 @@ class PasswordTextField: TextField {
         super.applyTheme(theme: theme)
 
         let passwordVisibilityView = UIButton(type: .custom)
+        passwordVisibilityView.contentEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: theme.geometry.groupedViewSpacing)
         passwordVisibilityView.setImage(UIImage.schibstedPasswordShow.resize(targetSize: CGSize(width: 25, height: 25)), for: .normal)
         passwordVisibilityView.frame = CGRect(x: 0, y: 0,
                                               width: UIImage.schibstedPasswordShow.size.width + theme.geometry.groupedViewSpacing,
