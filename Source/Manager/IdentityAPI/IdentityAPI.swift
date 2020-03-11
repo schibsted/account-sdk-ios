@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -113,6 +113,7 @@ class IdentityAPI {
                             code: String? = nil,
                             redirectURI: String? = nil,
                             scope: [String]? = nil,
+                            codeVerifier: String? = nil,
                             completion: @escaping ((Result<TokenData, ClientError>) -> Void)) {
         let formData: [String: String?] = [
             "client_id": clientID,
@@ -124,6 +125,7 @@ class IdentityAPI {
             "code": code,
             "redirect_uri": redirectURI,
             "scope": scope?.trimmed().joined(separator: " "),
+            "code_verifier": codeVerifier,
         ]
 
         requestWithRetries(router: .oauthToken, formData: formData, completion: completion)

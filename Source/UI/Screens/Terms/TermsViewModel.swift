@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -55,32 +55,32 @@ class TermsViewModel {
     }
 
     var termsLink: NSAttributedString {
-        guard let platformTermsURL = self.terms.platformTermsURL else {
+        guard let platformTermsURL = terms.platformTermsURL else {
             return NSAttributedString(string: "<platform terms missing>")
         }
-        guard let platformTermsText = self.platformTerms.expand(with: self.platformName, link: platformTermsURL) else {
+        guard let platformTermsText = platformTerms.expand(with: platformName, link: platformTermsURL) else {
             return NSAttributedString(string: "<platform terms localization text unexpandable>")
         }
-        guard let clientTermsURL = self.terms.clientTermsURL else {
+        guard let clientTermsURL = terms.clientTermsURL else {
             return platformTermsText
         }
-        guard let clientTermsText = self.clientTerms.expand(with: self.appName, link: clientTermsURL) else {
+        guard let clientTermsText = clientTerms.expand(with: appName, link: clientTermsURL) else {
             return NSAttributedString(string: "<client terms localization text unexpandable>")
         }
         return platformTermsText + clientTermsText
     }
 
     var privacyLink: NSAttributedString {
-        guard let platformPrivacyURL = self.terms.platformPrivacyURL else {
+        guard let platformPrivacyURL = terms.platformPrivacyURL else {
             return NSAttributedString(string: "<platform privacy missing>")
         }
-        guard let platformPrivacyText = self.platformPrivacy.expand(with: self.platformName, link: platformPrivacyURL) else {
+        guard let platformPrivacyText = platformPrivacy.expand(with: platformName, link: platformPrivacyURL) else {
             return NSAttributedString(string: "<platform privacy localization text unexpandable>")
         }
-        guard let clientPrivacyURL = self.terms.clientPrivacyURL else {
+        guard let clientPrivacyURL = terms.clientPrivacyURL else {
             return platformPrivacyText
         }
-        guard let clientPrivacyText = self.clientPrivacy.expand(with: self.appName, link: clientPrivacyURL) else {
+        guard let clientPrivacyText = clientPrivacy.expand(with: appName, link: clientPrivacyURL) else {
             return NSAttributedString(string: "<client privacy localization text unexpandable>")
         }
         return platformPrivacyText + clientPrivacyText

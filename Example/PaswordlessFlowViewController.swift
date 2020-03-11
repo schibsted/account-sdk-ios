@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -21,8 +21,8 @@ class PaswordlessFlowViewController: UIViewController {
     }
 
     @IBAction func sendSMS(_: UIButton) {
-        guard let countryCode = self.countryCodeField.text,
-            let number = self.phoneNumberField.text,
+        guard let countryCode = countryCodeField.text,
+            let number = phoneNumberField.text,
             let phoneNumber = PhoneNumber(countryCode: countryCode, number: number)
         else {
             return
@@ -41,8 +41,8 @@ class PaswordlessFlowViewController: UIViewController {
     }
 
     @IBAction func resendSMS(_: AnyObject) {
-        guard let countryCode = self.countryCodeField.text,
-            let number = self.phoneNumberField.text,
+        guard let countryCode = countryCodeField.text,
+            let number = phoneNumberField.text,
             let phoneNumber = PhoneNumber(countryCode: countryCode, number: number)
         else {
             return

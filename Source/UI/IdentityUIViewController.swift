@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -86,7 +86,7 @@ class IdentityUIViewController: UIViewController {
 
         var leftBarButtonItems: [UIBarButtonItem] = []
 
-        if let backAction = self.navigationSettings.navigateBack {
+        if let backAction = navigationSettings.navigateBack {
             let backBarButtonItem = IdentityUIBarButtonItem(
                 title: nil,
                 style: .plain,
@@ -114,7 +114,7 @@ class IdentityUIViewController: UIViewController {
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItems = leftBarButtonItems
 
-        if let cancelAction = self.navigationSettings.cancel {
+        if let cancelAction = navigationSettings.cancel {
             let barButtonItem = IdentityUIBarButtonItem(
                 title: nil,
                 style: .plain,
@@ -127,6 +127,10 @@ class IdentityUIViewController: UIViewController {
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
+
+        if #available(iOS 13.0, *) {
+            isModalInPresentation = !configuration.isCancelable
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -151,7 +155,7 @@ class IdentityUIViewController: UIViewController {
     }
 
     @objc private func keyboardDidShow(notification: NSNotification) {
-        guard let view = self.viewToEnsureVisibilityOfAfterKeyboardAppearance else {
+        guard let view = viewToEnsureVisibilityOfAfterKeyboardAppearance else {
             return
         }
 

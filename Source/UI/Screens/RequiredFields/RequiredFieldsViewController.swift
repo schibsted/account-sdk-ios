@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -123,7 +123,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     private func updateScrollViewContentInset() {
         let bottom: CGFloat
 
-        if let override = self.overrideScrollViewBottomContentInset {
+        if let override = overrideScrollViewBottomContentInset {
             bottom = override
         } else {
             let padding: CGFloat = 8
@@ -166,7 +166,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     private func valuesToUpdate() -> [SupportedRequiredField: String]? {
         var invalidIndices: [(Int, String)] = []
         for (index, field) in viewModel.supportedRequiredFields.enumerated() {
-            guard let value = self.values[index] else {
+            guard let value = values[index] else {
                 invalidIndices.append((index, viewModel.string(for: .missing)))
                 continue
             }
@@ -182,7 +182,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
         var valuesToUpdate: [SupportedRequiredField: String] = [:]
 
         for (index, field) in viewModel.supportedRequiredFields.enumerated() {
-            guard let value = self.values[index] else {
+            guard let value = values[index] else {
                 continue
             }
             valuesToUpdate[field] = value
@@ -192,7 +192,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     }
 
     private func getActiveInput() -> UIView? {
-        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[Int(self.currentInputIndex)] as? UIStackView else {
+        guard let subStack = requiredFieldsStackView.arrangedSubviews[Int(currentInputIndex)] as? UIStackView else {
             return nil
         }
         return subStack.arrangedSubviews[ViewIndex.input.rawValue]
@@ -201,7 +201,7 @@ class RequiredFieldsViewController: IdentityUIViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
             let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size,
-            let activeInput = self.getActiveInput() else {
+            let activeInput = getActiveInput() else {
             return
         }
 
@@ -260,7 +260,7 @@ extension RequiredFieldsViewController: UITextFieldDelegate {
         let oldText = (textField.text ?? "") as NSString
         let newText = oldText.replacingCharacters(in: range, with: string)
 
-        guard let processedText = self.processValueForField(at: textField.tag, from: oldText as String, to: newText),
+        guard let processedText = processValueForField(at: textField.tag, from: oldText as String, to: newText),
             processedText.count != newText.count else {
             return true
         }
@@ -289,7 +289,7 @@ extension RequiredFieldsViewController: UITextFieldDelegate {
         guard index < viewModel.supportedRequiredFields.count else {
             return nil
         }
-        guard let formattedString = self.viewModel.supportedRequiredFields[index].format(oldValue: oldValue, with: newValue) else {
+        guard let formattedString = viewModel.supportedRequiredFields[index].format(oldValue: oldValue, with: newValue) else {
             values[index] = newValue
             return nil
         }
@@ -304,7 +304,7 @@ extension RequiredFieldsViewController {
     }
 
     func gotoInput(at index: UInt) {
-        guard let subStack = self.requiredFieldsStackView.arrangedSubviews[Int(index)] as? UIStackView else {
+        guard let subStack = requiredFieldsStackView.arrangedSubviews[Int(index)] as? UIStackView else {
             return
         }
         subStack.arrangedSubviews[ViewIndex.input.rawValue].becomeFirstResponder()

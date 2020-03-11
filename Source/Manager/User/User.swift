@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -67,7 +67,7 @@ public class User: UserProtocol {
     ///
     public weak var delegate: UserDelegate?
 
-    var willDeinit = EventEmitter<()>(description: "User.willDeinit")
+    var willDeinit = EventEmitter<Void>(description: "User.willDeinit")
 
     let api: IdentityAPI
     let clientConfiguration: ClientConfiguration
@@ -164,7 +164,7 @@ public class User: UserProtocol {
      */
     public func logout() {
         log(from: self, "state = \(state)")
-        guard let oldTokens = self.clearTokens() else {
+        guard let oldTokens = clearTokens() else {
             return
         }
 

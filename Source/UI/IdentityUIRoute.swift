@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -17,7 +17,7 @@ extension IdentityUI {
         case enterPassword(for: EmailAddress, scopes: [String])
 
         /// Route to validate an authcode
-        case validateAuthCode(code: String, shouldPersistUser: Bool?)
+        case validateAuthCode(code: String, shouldPersistUser: Bool?, codeVerifier: String? = nil)
 
         var loginMethod: LoginMethod {
             switch self {
@@ -74,6 +74,8 @@ extension IdentityUI.Route {
             self = .validateAuthCode(code: code, shouldPersistUser: false)
         case let .codeAfterAccountSummary(code):
             self = .validateAuthCode(code: code, shouldPersistUser: nil)
+        case let .codeAfterWebFlowLogin(code, codeVerifier, shouldPersistUser):
+            self = .validateAuthCode(code: code, shouldPersistUser: shouldPersistUser, codeVerifier: codeVerifier)
         }
     }
 }

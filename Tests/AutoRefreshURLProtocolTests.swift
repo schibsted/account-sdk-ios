@@ -27,20 +27,21 @@ class AutoRefreshURLProtocolTests: QuickSpec {
             let session = URLSession(user: user, configuration: .default)
             let request = URLRequest(url: URL(string: "example.com")!)
 
+            var task: URLSessionDataTask? = nil
+
             waitUntil { done in
-                let task = session.dataTask(with: request) { data, _, _ in
+                task = session.dataTask(with: request) { data, _, _ in
                     expect(String(data: data!, encoding: .utf8)) == self.prissyBrat
                     done()
                 }
 
-                expect(task.currentRequest?.allHTTPHeaderFields?[Networking.Header.userAgent.rawValue]).to(beNil())
-                expect(task.currentRequest?.allHTTPHeaderFields?[Networking.Header.xSchibstedAccountUserAgent.rawValue]) == UserAgent().value
-
-                task.resume()
+                task!.resume()
             }
 
             waitUntil { [unowned user] done in
                 user.wrapped.taskManager.waitForRequestsToFinish()
+                expect(task!.currentRequest?.allHTTPHeaderFields?[Networking.Header.userAgent.rawValue]).to(beNil())
+                expect(task!.currentRequest?.allHTTPHeaderFields?[Networking.Header.xSchibstedAccountUserAgent.rawValue]) == UserAgent().value
                 done()
             }
         }

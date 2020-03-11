@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -136,7 +136,13 @@ public struct ClientConfiguration {
      - parameter appURLScheme: set your `appURLSceheme` here. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want to use for requests - defaults to system
      */
-    public init(serverURL: URL, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil) {
+    public init(
+        serverURL: URL,
+        clientID: String,
+        clientSecret: String,
+        appURLScheme: String?,
+        locale: Locale? = nil
+    ) {
         let data = Environment.dataForServerURL(serverURL)
         self.init(
             environment: data?.environment,
@@ -284,7 +290,7 @@ public struct ClientConfiguration {
 
         // old style scheme has a host, which is the "root"
         // new style scheme with no host, where path is "/<root>"
-        guard redirectURL.host == redirectURLRoot || redirectURL.pathComponents == ["/", self.redirectURLRoot] else {
+        guard redirectURL.host == redirectURLRoot || redirectURL.pathComponents == ["/", redirectURLRoot] else {
             return nil
         }
 
@@ -323,6 +329,10 @@ public struct ClientConfiguration {
             static let settingsKey = "RedirectInfo.AccountSummary"
             static let path = "account-summary"
         }
+
+        struct WebFlowLogin {
+            static let settingsKey = "RedirectInfo.WebFlowLogin"
+        }
     }
 }
 
@@ -343,7 +353,7 @@ extension ClientConfiguration: Equatable {
 extension ClientConfiguration: CustomStringConvertible {
     public var description: String {
         let envString: String
-        if let env = self.environment {
+        if let env = environment {
             envString = String(describing: env)
         } else {
             envString = serverURL.absoluteString

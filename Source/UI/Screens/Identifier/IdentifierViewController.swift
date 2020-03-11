@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -185,7 +185,7 @@ class IdentifierViewController: IdentityUIViewController {
 
         switch self.viewModel.loginMethod.identifierType {
         case .email:
-            guard let text = self.emailAddress.text?.trimmingCharacters(in: .whitespaces) else {
+            guard let text = emailAddress.text?.trimmingCharacters(in: .whitespaces) else {
                 return
             }
             guard let email = EmailAddress(text) else {

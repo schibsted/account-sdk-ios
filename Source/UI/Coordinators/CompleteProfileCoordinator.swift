@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -284,7 +284,7 @@ extension CompleteProfileCoordinator {
              since we know within the context of the complete profile coordinator that we have a valid identifier in flight, this can only happen if
              someone tried to use a phone number in a required field that has already been used as an identifier in Schibsted account.
              */
-            if let vc = self.presentedViewController as? RequiredFieldsViewController, case .alreadyRegistered = error {
+            if let vc = presentedViewController as? RequiredFieldsViewController, case .alreadyRegistered = error {
                 presentError(description: vc.viewModel.string(for: .numberInvalid))
             } else {
                 present(error: error)

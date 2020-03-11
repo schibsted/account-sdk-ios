@@ -51,9 +51,9 @@ class TestingIdentityManager: IdentityManagerProtocol {
         }
     }
 
-    func validate(authCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
+    func validate(authCode: String, persistUser: Bool, codeVerifier: String? = nil, completion: @escaping NoValueCallback) {
         Utils.waitUntilDone(completion) { [unowned self] in
-            self.identityManager.validate(authCode: authCode, persistUser: persistUser, completion: $0)
+            self.identityManager.validate(authCode: authCode, persistUser: persistUser, codeVerifier: codeVerifier, completion: $0)
         }
     }
 
