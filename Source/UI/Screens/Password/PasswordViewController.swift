@@ -110,7 +110,7 @@ class PasswordViewController: IdentityUIViewController {
         present(prefereblyActionSheet, animated: true, completion: nil)
     }
 
-    @IBOutlet var password: TextField! {
+    @IBOutlet var password: PasswordTextField! {
         didSet {
             password.delegate = self
         }
