@@ -1,5 +1,5 @@
 //
-// Copyright 2011 - 2019 Schibsted Products & Technology AS.
+// Copyright 2011 - 2020 Schibsted Products & Technology AS.
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
@@ -11,7 +11,9 @@ class PasswordTextField: TextField {
 
         let passwordVisibilityView = UIButton(type: .custom)
         passwordVisibilityView.setImage(UIImage.schibstedPasswordShow.resize(targetSize: CGSize(width: 25, height: 25)), for: .normal)
-        passwordVisibilityView.frame = CGRect(x: 0, y: 0, width: UIImage.schibstedPasswordShow.size.width + theme.geometry.groupedViewSpacing, height: UIImage.schibstedPasswordShow.size.height)
+        passwordVisibilityView.frame = CGRect(x: 0, y: 0,
+                                              width: UIImage.schibstedPasswordShow.size.width + theme.geometry.groupedViewSpacing,
+                                              height: UIImage.schibstedPasswordShow.size.height)
         passwordVisibilityView.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
 
         keyboardType = .default
