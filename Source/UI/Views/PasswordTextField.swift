@@ -29,10 +29,10 @@ class PasswordTextField: TextField {
 
     @IBAction private func togglePasswordVisibility(passwordVisibility: UIButton) {
         if isSecureTextEntry {
-            passwordVisibility.setImage(UIImage.schibstedPasswordHide, for: .normal)
+            passwordVisibility.setImage(UIImage.schibstedPasswordHide.resize(targetSize: CGSize(width: 25, height: 25)), for: .normal)
             isSecureTextEntry = false
         } else {
-            passwordVisibility.setImage(UIImage.schibstedPasswordShow, for: .normal)
+            passwordVisibility.setImage(UIImage.schibstedPasswordShow.resize(targetSize: CGSize(width: 25, height: 25)), for: .normal)
             isSecureTextEntry = true
         }
     }
