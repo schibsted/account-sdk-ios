@@ -110,17 +110,9 @@ class PasswordViewController: IdentityUIViewController {
         present(prefereblyActionSheet, animated: true, completion: nil)
     }
 
-    @IBOutlet var password: TextField! {
+    @IBOutlet var password: PasswordTextField! {
         didSet {
-            password.keyboardType = .default
-            password.autocorrectionType = .no
             password.delegate = self
-            password.clearButtonMode = .whileEditing
-            password.isSecureTextEntry = true
-
-            if #available(iOS 11.0, *) {
-                self.password.textContentType = .password
-            }
         }
     }
     @IBOutlet var inputTitle: NormalLabel! {

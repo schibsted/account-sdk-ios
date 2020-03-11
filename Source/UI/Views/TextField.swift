@@ -53,6 +53,7 @@ class TextField: UITextField, Themeable {
             let w = clearImage.size.width
             let h = clearImage.size.height
             clearButton = UIButton(frame: CGRect(x: 0, y: 0, width: w + clearButtonRightSpacing, height: h))
+            clearButton?.contentEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: theme.geometry.groupedViewSpacing)
             clearButton?.setImage(clearImage, for: .normal)
             clearButton?.isHidden = true
             clearButton?.addTarget(self, action: #selector(clearButtonDidTouchUpInside(_:)), for: .touchUpInside)
