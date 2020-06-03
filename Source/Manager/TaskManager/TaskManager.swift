@@ -239,7 +239,7 @@ class TaskManager {
                 if let clientError = error as? ClientError {
                     switch clientError {
                     case let .networkingError(internaleError):
-                        let logoutCodes = [400, 401, 403]
+                        let logoutCodes = [401, 403]
                         if case let NetworkingError.unexpectedStatus(status, _) = internaleError, logoutCodes.contains(status) {
                             strongSelf.user?.logout()
                         }
