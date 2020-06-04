@@ -276,9 +276,9 @@ class URLSessionTests: QuickSpec {
                 expect(user.tokens?.refreshToken).to(equal("abc"))
             }
 
-            itBehavesLike("refresh failure") { ["status": 400, "logout": true] }
             itBehavesLike("refresh failure") { ["status": 401, "logout": true] }
             itBehavesLike("refresh failure") { ["status": 403, "logout": true] }
+            itBehavesLike("refresh failure") { ["status": 400, "logout": false] }
             itBehavesLike("refresh failure") { ["status": 500, "logout": false] }
             itBehavesLike("refresh failure") { ["status": 300, "logout": false] }
         }
