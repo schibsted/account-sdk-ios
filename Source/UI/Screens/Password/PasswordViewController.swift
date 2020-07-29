@@ -145,7 +145,13 @@ class PasswordViewController: IdentityUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let toolbar = UIToolbar.forKeyboard(target: self, doneString: viewModel.done, doneSelector: #selector(didTapContinue))
+        let toolbar = UIToolbar.forKeyboard(
+            target: self,
+            doneString: viewModel.done,
+            doneSelector: #selector(didTapContinue),
+            extraActionSelector: #selector(didTapForgotPassword),
+            extraActionString: viewModel.forgotPassword
+        )
 
         password.inputAccessoryView = toolbar
         viewToEnsureVisibilityOfAfterKeyboardAppearance = password
