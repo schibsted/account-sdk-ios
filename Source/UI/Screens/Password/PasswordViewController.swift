@@ -149,8 +149,8 @@ class PasswordViewController: IdentityUIViewController {
             target: self,
             doneString: viewModel.done,
             doneSelector: #selector(didTapContinue),
-            extraActionSelector: #selector(didTapForgotPassword),
-            extraActionString: viewModel.forgotPassword
+            extraActionSelector: viewModel.loginFlowVariant == .signin ? #selector(didTapForgotPassword) : nil,
+            extraActionString: viewModel.loginFlowVariant == .signin ? viewModel.forgotPassword : nil
         )
 
         password.inputAccessoryView = toolbar
