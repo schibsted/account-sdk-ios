@@ -202,8 +202,9 @@ public struct ClientConfiguration {
      - parameter clientSecret: the secret associated with the client ID
      - parameter appURLScheme: set your `appURLSceheme`. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want IdentityManager to use for requests
+     - parameter accessGroup: The keychain access group - defaults to nil
      */
-    public init(environment: Environment, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil) {
+    public init(environment: Environment, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil, accessGroup: String? = nil) {
         let envConfig = environment.loadConfiguration()
         self.init(
             environment: environment,
@@ -212,7 +213,8 @@ public struct ClientConfiguration {
             clientID: clientID,
             clientSecret: clientSecret,
             appURLScheme: appURLScheme,
-            locale: locale
+            locale: locale,
+            accessGroup: accessGroup
         )
     }
 
