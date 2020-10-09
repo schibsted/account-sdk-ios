@@ -69,7 +69,12 @@ public struct ClientConfiguration {
         case norway
 
         fileprivate static func loadConfigurationData() -> [String: [String: String]] {
-            guard let configFile = Bundle(for: IdentityManager.self).path(forResource: "Configuration", ofType: "plist") else {
+            #if SWIFT_PACKAGE
+            let bundle = Bundle.module
+            #else
+            let bundle = Bundle(for: IdentityManager.self)
+            #endif
+            guard let configFile = bundle.path(forResource: "Configuration", ofType: "plist") else {
                 preconditionFailure("Configuration.plist file not found in bundle")
             }
             guard let config = NSDictionary(contentsOfFile: configFile) as? [String: [String: String]] else {
