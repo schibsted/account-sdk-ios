@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   }
 
   s.swift_versions = ['4.2']
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '11.0'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }
   s.default_subspecs = ['Manager', 'UI']
 
