@@ -105,7 +105,7 @@ class AutoRefreshURLProtocol: URLProtocol {
     }
 
     override func startLoading() {
-        log(from: self, request)
+        log(from: self, self.request)
         guard let userInstanceAddressString = request.allHTTPHeaderFields?[type(of: self).key],
             let userInstanceAddressInt = Int(userInstanceAddressString),
             let user = User.globalStore[userInstanceAddressInt]
@@ -151,7 +151,7 @@ class AutoRefreshURLProtocol: URLProtocol {
     }
 
     override func stopLoading() {
-        log(from: self, request)
+        log(from: self, self.request)
         taskHandle?.cancel()
     }
 }

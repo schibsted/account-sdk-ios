@@ -152,10 +152,9 @@ public class WebSessionRoutes {
 
         func sha256(data: Data) -> Data {
             var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-            data.withUnsafeBytes {
-                _ = CC_SHA256($0, CC_LONG(data.count), &hash)
-            }
-            return Data(bytes: hash)
+            var mutableData = data
+            _ = CC_SHA256(&mutableData, CC_LONG(mutableData.count), &hash)
+            return Data(hash)
         }
 
         return base64url(data: sha256(data: Data(codeVerifier.utf8)))
