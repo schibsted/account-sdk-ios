@@ -19,7 +19,7 @@ open class SPiDAccessToken: Codable {
         case refreshToken = "refresh_token"
     }
 
-    public init?(userID: String, accessToken: String?, expiresAt: Date?, refreshToken: String) {
+    public init!(userID: String, accessToken: String?, expiresAt: Date?, refreshToken: String) {
         guard let accessToken = accessToken, let expiresAt = expiresAt else {
             return nil
         }
@@ -30,7 +30,7 @@ open class SPiDAccessToken: Codable {
         self.refreshToken = refreshToken
     }
 
-    public convenience init?(dictionary: [String: Any]) {
+    public convenience init!(dictionary: [String: Any]) {
         guard let userID = dictionary[CodingKeys.userId.rawValue] as? String,
               let accessToken = dictionary[CodingKeys.accessToken.rawValue] as? String,
               let expiresIn = dictionary[CodingKeys.expiresIn.rawValue] as? NSNumber,

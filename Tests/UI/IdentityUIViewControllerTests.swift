@@ -5,6 +5,7 @@
 
 import Nimble
 import Quick
+import UIKit
 @testable import SchibstedAccount
 
 private class MyThemeable: UIView, Themeable {

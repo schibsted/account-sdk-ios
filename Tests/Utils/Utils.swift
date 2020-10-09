@@ -6,6 +6,7 @@
 import Foundation
 import Nimble
 import Quick
+import XCTest
 @testable import SchibstedAccount
 
 let kDummyError = NSError(domain: "Irrelevant NSError", code: 0, userInfo: nil)

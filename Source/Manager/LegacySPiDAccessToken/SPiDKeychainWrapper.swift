@@ -22,7 +22,8 @@ final class SPiDKeychainWrapper {
         return nil
     }
 
-    public class func storeInKeychainAccessToken(value accessToken: SPiDAccessToken, forIdentifier identifier: String) -> Bool {
+    @discardableResult
+    public class func storeInKeychainAccessToken(withValue accessToken: SPiDAccessToken, forIdentifier identifier: String) -> Bool {
         let data = NSKeyedArchiver.archivedData(withRootObject: accessToken)
         var query = setupSearchQuery(identifier: identifier)
         query[(kSecValueData as String)] = data
@@ -37,6 +38,7 @@ final class SPiDKeychainWrapper {
         return false
     }
 
+    @discardableResult
     public class func updateAccessTokenInKeychain(value accessToken: SPiDAccessToken, forIdentifier identifier: String) -> Bool {
         let data = NSKeyedArchiver.archivedData(withRootObject: accessToken)
         let searchQuery = setupSearchQuery(identifier: identifier)
