@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  Can be used to customize the UI

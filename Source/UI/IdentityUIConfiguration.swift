@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 private struct Constants {
     static let BiometricsSettingsKey = "Identity.useBiometrics"

@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 private extension NSMutableString {
     func replace(string target: String, with value: String) -> NSRange? {
