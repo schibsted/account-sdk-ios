@@ -40,6 +40,8 @@ public struct IdentityUIConfiguration {
 
     private var _appName: String?
 
+    public let disableWhatsThisButton: Bool
+
     /**
      Some of the UI screens will use the bundle name of your app. Sometimes this is not what you want
      so you can set this to override it
@@ -77,6 +79,7 @@ public struct IdentityUIConfiguration {
         isCancelable: Bool = true,
         isSkippable: Bool = false,
         enableBiometrics: Bool = false,
+        disableWhatsThisButton: Bool = false,
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
@@ -90,6 +93,7 @@ public struct IdentityUIConfiguration {
         self.localizationBundle = localizationBundle ?? IdentityUI.bundle
         self.enableBiometrics = enableBiometrics
         self.tracker = tracker
+        self.disableWhatsThisButton = disableWhatsThisButton
         if let appName = appName {
             self.appName = appName
         }
@@ -112,6 +116,7 @@ public struct IdentityUIConfiguration {
         isCancelable: Bool? = nil,
         isSkippable: Bool? = nil,
         enableBiometrics: Bool? = nil,
+        disableWhatsThisButton: Bool? = nil,
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
@@ -123,6 +128,7 @@ public struct IdentityUIConfiguration {
             isCancelable: isCancelable ?? self.isCancelable,
             isSkippable: isSkippable ?? self.isSkippable,
             enableBiometrics: enableBiometrics ?? self.enableBiometrics,
+            disableWhatsThisButton: disableWhatsThisButton ?? self.disableWhatsThisButton,
             presentationHook: presentationHook ?? self.presentationHook,
             tracker: tracker ?? self.tracker,
             localizationBundle: localizationBundle ?? self.localizationBundle,

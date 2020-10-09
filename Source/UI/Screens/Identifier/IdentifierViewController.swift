@@ -21,6 +21,10 @@ class IdentifierViewController: IdentityUIViewController {
 
     @IBOutlet var whastThisButton: UIButton! {
         didSet {
+            guard !configuration.disableWhatsThisButton else {
+                whastThisButton.setTitle("", for: .normal)
+                return
+            }
             whastThisButton.setTitle(viewModel.whatsThis, for: .normal)
             whastThisButton.titleLabel?.font = theme.fonts.info
             whastThisButton.contentEdgeInsets.top = 1
@@ -32,6 +36,7 @@ class IdentifierViewController: IdentityUIViewController {
         }
     }
     @IBAction func didTapWhatsThis(_: UIButton) {
+        guard !configuration.disableWhatsThisButton else { return }
         configuration.tracker?.engagement(.click(on: .whatsSchibstedAccount), in: trackerScreenID)
         didRequestAction?(.showHelp(url: viewModel.helpURL))
     }
