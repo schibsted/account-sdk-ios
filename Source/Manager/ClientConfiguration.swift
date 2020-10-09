@@ -156,7 +156,8 @@ public struct ClientConfiguration {
             clientID: clientID,
             clientSecret: clientSecret,
             appURLScheme: appURLScheme,
-            locale: locale
+            locale: locale,
+            accessGroup: accessGroup
         )
     }
 
