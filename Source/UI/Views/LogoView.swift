@@ -3,7 +3,7 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import Foundation
+import UIKit
 
 class LogoStackView: UIStackView, Themeable {
     func applyTheme(theme: IdentityUITheme) {
@@ -11,7 +11,7 @@ class LogoStackView: UIStackView, Themeable {
 
         alignment = .center
 
-        let schImage = UIImage(named: "schibsted-logo", in: Bundle(for: IdentityUI.self), compatibleWith: nil)
+        let schImage = UIImage(named: "schibsted-logo", in: Bundle.libraryBundle, compatibleWith: nil)
         let schImageView = UIImageView(image: schImage)
         schImageView.contentMode = .scaleAspectFit
         schImageView.widthAnchor.constraint(equalToConstant: 69).isActive = true

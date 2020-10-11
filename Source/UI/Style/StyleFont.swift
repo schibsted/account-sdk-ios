@@ -3,7 +3,7 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import Foundation
+import UIKit
 
 /**
  Different fonts and their associated properties that are part of the schibsted style

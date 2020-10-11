@@ -3,6 +3,7 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
+import UIKit
 import Nimble
 import Quick
 @testable import SchibstedAccount

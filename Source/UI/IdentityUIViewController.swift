@@ -58,7 +58,7 @@ class IdentityUIViewController: UIViewController {
         self.trackerScreenID = trackerScreenID
         self.trackerViewAdditionalFields = trackerViewAdditionalFields
         let typeSelf = type(of: self)
-        super.init(nibName: typeSelf.nibName, bundle: Bundle(for: typeSelf))
+        super.init(nibName: typeSelf.nibName, bundle: Bundle.libraryBundle)
     }
 
     required init?(coder _: NSCoder) {

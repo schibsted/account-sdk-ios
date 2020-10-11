@@ -10,24 +10,25 @@ private let kSPiDAccessToken = "AccessToken"
 struct UserTokensStorage {
     func loadTokens() throws -> TokenData {
         let tokens: TokenData
-        var areOldTokens = false
         if let existingTokens = UserTokensKeychain().data().first {
             tokens = existingTokens
-        } else if let oldTokens = SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kSPiDAccessToken), let accessToken = oldTokens.accessToken {
-            tokens = TokenData(accessToken: accessToken, refreshToken: oldTokens.refreshToken, idToken: nil, userID: oldTokens.userID)
-            areOldTokens = true
         } else {
+            #if SWIFT_PACKAGE
             throw ClientError.invalidUser
-        }
-
-        if areOldTokens {
-            do {
-                // Store in new format
-                try store(tokens)
-                SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
-            } catch {
-                log(level: .error, from: self, "failed to migrate \(tokens)", force: true)
+            #else
+            if let oldTokens = SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kSPiDAccessToken), let accessToken = oldTokens.accessToken {
+                tokens = TokenData(accessToken: accessToken, refreshToken: oldTokens.refreshToken, idToken: nil, userID: oldTokens.userID)
+                do {
+                    // Store in new format
+                    try store(tokens)
+                    SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
+                } catch {
+                    log(level: .error, from: self, "failed to migrate \(tokens)", force: true)
+                }
+            } else {
+                throw ClientError.invalidUser
             }
+            #endif
         }
 
         log(level: .debug, from: self, "loaded \(tokens)")
@@ -58,9 +59,11 @@ struct UserTokensStorage {
 
         do {
             try keychain.saveInKeychain()
+            #if !SWIFT_PACKAGE
             if SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kSPiDAccessToken) != nil {
                 SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
             }
+            #endif
             log(level: .debug, from: self, "cleared \(tokens)")
         } catch {
             log(level: .error, from: self, "error removing keychain for user: \(error)", force: true)
@@ -73,9 +76,11 @@ struct UserTokensStorage {
 
         do {
             try keychain.saveInKeychain()
+            #if !SWIFT_PACKAGE
             if SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kSPiDAccessToken) != nil {
                 SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kSPiDAccessToken)
             }
+            #endif
             log(level: .debug, from: self, "cleared ALL tokens")
         } catch {
             log(level: .error, from: self, "error removing keychain for user: \(error)", force: true)

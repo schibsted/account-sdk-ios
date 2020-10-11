@@ -3,7 +3,7 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import Foundation
+import UIKit
 
 ///
 public enum StyleIconKind: String {
@@ -33,7 +33,7 @@ public enum StyleIconKind: String {
 
 extension UIImage {
     convenience init?(icon: StyleIconKind) {
-        let bundle = Bundle(for: IdentityManager.self)
+        let bundle = Bundle.libraryBundle
         self.init(named: icon.rawValue, in: bundle, compatibleWith: nil)
     }
 }

@@ -65,3 +65,13 @@ extension Dictionary where Value: OptionalConvertible {
         return destination
     }
 }
+
+extension Bundle {
+    static var libraryBundle: Bundle {
+        #if SWIFT_PACKAGE
+        return Bundle.module
+        #else
+        return Bundle(for: IdentityManager.self)
+        #endif
+    }
+}

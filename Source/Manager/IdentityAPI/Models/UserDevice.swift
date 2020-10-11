@@ -3,7 +3,7 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import Foundation
+import UIKit
 
 /**
  The user device data.

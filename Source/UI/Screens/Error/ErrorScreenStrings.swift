@@ -3,6 +3,8 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
+import Foundation
+
 struct ErrorScreenStrings {
     let localizationBundle: Bundle
     init(localizationBundle: Bundle) {

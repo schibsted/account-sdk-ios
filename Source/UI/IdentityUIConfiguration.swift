@@ -3,7 +3,7 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-import Foundation
+import UIKit
 
 private struct Constants {
     static let BiometricsSettingsKey = "Identity.useBiometrics"
@@ -87,7 +87,7 @@ public struct IdentityUIConfiguration {
         self.isCancelable = isCancelable
         self.isSkippable = isSkippable
         self.presentationHook = presentationHook
-        self.localizationBundle = localizationBundle ?? IdentityUI.bundle
+        self.localizationBundle = localizationBundle ?? Bundle.libraryBundle
         self.enableBiometrics = enableBiometrics
         self.tracker = tracker
         if let appName = appName {

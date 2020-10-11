@@ -723,12 +723,6 @@ extension IdentityUI: TrackingEventsHandlerDelegate {
     }
 }
 
-extension IdentityUI {
-    static let bundle = {
-        Bundle(for: IdentityUI.self)
-    }()
-}
-
 private final class DismissableNavigationController: UINavigationController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)

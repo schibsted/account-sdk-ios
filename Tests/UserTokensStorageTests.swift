@@ -18,6 +18,7 @@ class UserTokensStorageTests: QuickSpec {
 
     override func spec() {
 
+        #if !SWIFT_PACKAGE
         beforeEach {
             let token = SPiDAccessToken(userID: self.testUserID, accessToken: self.testAccessToken, expiresAt: Date(), refreshToken: self.testRefreshToken)
             SPiDKeychainWrapper.storeInKeychainAccessToken(withValue: token, forIdentifier: kAccessToken)
@@ -26,6 +27,7 @@ class UserTokensStorageTests: QuickSpec {
         afterEach {
             SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kAccessToken)
         }
+        #endif
 
         describe("Loading") {
 
@@ -37,8 +39,10 @@ class UserTokensStorageTests: QuickSpec {
             }
 
             it("Should load user from keychain") {
+                #if !SWIFT_PACKAGE
                 SPiDKeychainWrapper.removeAccessTokenFromKeychain(forIdentifier: kAccessToken)
-
+                #endif
+                
                 let newAccessToken = "newAccessToken"
                 let newRefreshToken = "newRefreshToken"
                 let newUserID = "newUserID"
@@ -56,8 +60,10 @@ class UserTokensStorageTests: QuickSpec {
                     let tokens = try! UserTokensStorage().loadTokens()
                     expect(tokens).toNot(beNil())
                 }
+                #if !SWIFT_PACKAGE
                 let accessToken = SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kAccessToken)?.accessToken
                 expect(accessToken).to(beNil())
+                #endif
                 do {
                     let tokens = try! UserTokensStorage().loadTokens()
                     expect(tokens).toNot(beNil())
