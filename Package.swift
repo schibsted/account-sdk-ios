@@ -5,7 +5,7 @@ let package = Package(
     name: "SchibstedAccount",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v8)
     ],
     products: [
         .library(name: "SchibstedAccount", targets: ["SchibstedAccount"])
