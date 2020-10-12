@@ -172,7 +172,7 @@ class IdentifierViewController: IdentityUIViewController {
         }
 
         skipButton.isHidden = !self.configuration.isSkippable
-        self.whastThisButton.isHidden = configuration.disableWhatsThisButton
+        whastThisButton.isHidden = configuration.disableWhatsThisButton
     }
 
     @IBAction func didTapContinue(_: UIButton) {
