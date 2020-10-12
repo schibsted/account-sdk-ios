@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol DeviceInfo {
     var deviceModel: String { get }

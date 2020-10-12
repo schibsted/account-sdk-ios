@@ -168,7 +168,7 @@ public class User: UserProtocol {
             return
         }
 
-        try? UserTokensStorage().clearAll()
+        try? UserTokensStorage(accessGroup: clientConfiguration.accessGroup).clearAll()
         delegate?.user(self, didChangeStateTo: .loggedOut)
 
         User.globalStore.forEach { _, weakVal in
@@ -264,13 +264,13 @@ public class User: UserProtocol {
             // tokens were then not cleared or some other weird nonsense.
             //
             // TODO: Revisit this logic if and when multi user keychain support is implemented
-            try? UserTokensStorage().clearAll()
+            try? UserTokensStorage(accessGroup: clientConfiguration.accessGroup).clearAll()
         }
 
         if isPersistent {
             // Store new tokens if we are supposed to be persistent.
             // Only clear previous tokens if the user is NOT a new one (since they have not logged out)
-            try? UserTokensStorage().store(newTokens)
+            try? UserTokensStorage(accessGroup: clientConfiguration.accessGroup).store(newTokens)
         }
 
         // Only call state change if we had a previous user and we have a new us
@@ -280,7 +280,7 @@ public class User: UserProtocol {
     }
 
     func loadStoredTokens() throws {
-        let tokens = try UserTokensStorage().loadTokens()
+        let tokens = try UserTokensStorage(accessGroup: clientConfiguration.accessGroup).loadTokens()
         try set(
             accessToken: tokens.accessToken,
             refreshToken: tokens.refreshToken,
@@ -295,7 +295,7 @@ public class User: UserProtocol {
     func persistCurrentTokens() {
         guard !isPersistent, let tokens = self.tokens else { return }
         do {
-            try UserTokensStorage().store(tokens)
+            try UserTokensStorage(accessGroup: clientConfiguration.accessGroup).store(tokens)
             isPersistent = true
         } catch {
             log(level: .error, from: self, "failed to persist tokens: \(error)", force: true)

@@ -8,10 +8,16 @@ import Foundation
 private let kSPiDAccessToken = "AccessToken"
 
 struct UserTokensStorage {
+    let accessGroup: String?
+
+    init(accessGroup: String? = nil) {
+        self.accessGroup = accessGroup
+    }
+
     func loadTokens() throws -> TokenData {
         let tokens: TokenData
         var areOldTokens = false
-        if let existingTokens = UserTokensKeychain().data().first {
+        if let existingTokens = UserTokensKeychain(accessGroup: accessGroup).data().first {
             tokens = existingTokens
         } else if let oldTokens = SPiDKeychainWrapper.accessTokenFromKeychain(forIdentifier: kSPiDAccessToken), let accessToken = oldTokens.accessToken {
             tokens = TokenData(accessToken: accessToken, refreshToken: oldTokens.refreshToken, idToken: nil, userID: oldTokens.userID)
@@ -35,7 +41,7 @@ struct UserTokensStorage {
     }
 
     func store(_ tokens: TokenData) throws {
-        let keychain = UserTokensKeychain()
+        let keychain = UserTokensKeychain(accessGroup: accessGroup)
         keychain.addTokens(tokens)
 
         do {
@@ -53,7 +59,7 @@ struct UserTokensStorage {
     }
 
     func clear(_ tokens: TokenData) throws {
-        let keychain = UserTokensKeychain()
+        let keychain = UserTokensKeychain(accessGroup: accessGroup)
         keychain.removeTokens(forAccessToken: tokens.accessToken)
 
         do {
@@ -68,7 +74,7 @@ struct UserTokensStorage {
     }
 
     func clearAll() throws {
-        let keychain = UserTokensKeychain()
+        let keychain = UserTokensKeychain(accessGroup: accessGroup)
         keychain.removeAllTokens()
 
         do {

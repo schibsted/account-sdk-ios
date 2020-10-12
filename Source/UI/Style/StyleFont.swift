@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  Different fonts and their associated properties that are part of the schibsted style

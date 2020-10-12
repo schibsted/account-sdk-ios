@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// The result of calling `IdentityUI.presentIdentityProcess(from viewController:)
 public enum IdentityUIResult {

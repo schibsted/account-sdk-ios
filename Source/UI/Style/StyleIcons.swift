@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 ///
 public enum StyleIconKind: String {

@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ValidateTextField: TextField {
     private var bottomBorder: UIView?
