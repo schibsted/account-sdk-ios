@@ -55,3 +55,6 @@ Pods/
 
 # This is because of the scripts/format.sh
 swiftformat_result
+
+# SwiftPM
+.swiftpm/xcode/package.xcworkspace
