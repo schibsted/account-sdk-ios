@@ -23,8 +23,6 @@ extension URLSessionTask.State: CustomStringConvertible {
             return prefix + "running"
         case .suspended:
             return prefix + "suspended"
-        @unknown default:
-            return prefix + "unknown"
         }
     }
 }

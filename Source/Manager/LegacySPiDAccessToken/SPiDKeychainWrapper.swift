@@ -42,9 +42,7 @@ final class SPiDKeychainWrapper {
     public class func updateAccessTokenInKeychain(value accessToken: SPiDAccessToken, forIdentifier identifier: String) -> Bool {
         let data = NSKeyedArchiver.archivedData(withRootObject: accessToken)
         let searchQuery = setupSearchQuery(identifier: identifier)
-        let updateQuery: [String: Any] = [
-            (kSecValueData as String): data
-        ]
+        let updateQuery: [String: Any] = [(kSecValueData as String): data]
 
         let status = SecItemUpdate(searchQuery as CFDictionary, updateQuery as CFDictionary)
         return status == errSecSuccess
@@ -64,11 +62,9 @@ final class SPiDKeychainWrapper {
     }
 
     private class func setupSearchQuery(identifier: String) -> [String: Any] {
-        return [
-            (kSecClass as String): kSecClassGenericPassword,
-            (kSecAttrGeneric as String): identifier,
-            (kSecAttrAccount as String): identifier,
-            (kSecAttrService as String): serviceNameForSPiD
-        ]
+        return [(kSecClass as String): kSecClassGenericPassword,
+                (kSecAttrGeneric as String): identifier,
+                (kSecAttrAccount as String): identifier,
+                (kSecAttrService as String): serviceNameForSPiD]
     }
 }
