@@ -6,6 +6,7 @@
 //  Copyright © 2018 Schibsted. All rights reserved.
 //
 
+import Foundation
 import Nimble
 import Quick
 @testable import SchibstedAccount

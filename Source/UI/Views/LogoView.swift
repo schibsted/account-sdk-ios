@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 class LogoStackView: UIStackView, Themeable {
     func applyTheme(theme: IdentityUITheme) {

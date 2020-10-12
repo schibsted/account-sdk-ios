@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PasswordTextField: TextField {
     override func applyTheme(theme: IdentityUITheme) {

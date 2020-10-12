@@ -20,7 +20,7 @@ class UserTokensStorageTests: QuickSpec {
 
         beforeEach {
             let token = SPiDAccessToken(userID: self.testUserID, accessToken: self.testAccessToken, expiresAt: Date(), refreshToken: self.testRefreshToken)
-            SPiDKeychainWrapper.storeInKeychainAccessToken(withValue: token, forIdentifier: kAccessToken)
+            SPiDKeychainWrapper.storeInKeychainAccessToken(withValue: token!, forIdentifier: kAccessToken)
         }
 
         afterEach {

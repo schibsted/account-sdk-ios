@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  Used to store extracted application launch data for deep linking scenarios.

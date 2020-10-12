@@ -140,7 +140,7 @@ public class Logger {
 
     func log<T>(
         level: LogLevel = .info,
-        _ object: @autoclosure () -> T,
+        _ object: @autoclosure @escaping () -> T,
         tag: String,
         force: Bool = false,
         _ file: String = #file,
@@ -153,7 +153,7 @@ public class Logger {
     func log<T, S>(
         level: LogLevel = .info,
         from _: S?,
-        _ object: @autoclosure () -> T,
+        _ object: @autoclosure @escaping () -> T,
         tags: [String] = [],
         force: Bool = false,
         _ file: String = #file,
@@ -174,7 +174,7 @@ public class Logger {
 
     func log<T>(
         level: LogLevel = .info,
-        _ object: @autoclosure () -> T,
+        _ object: @autoclosure @escaping () -> T,
         tags: [String] = [],
         force: Bool = false,
         _ file: String = #file,
@@ -195,7 +195,7 @@ public class Logger {
 
     private func log<T>(
         level: LogLevel = .info,
-        object: @autoclosure () -> T,
+        object: @autoclosure @escaping () -> T,
         tags explicitTags: [String] = [],
         force: Bool,
         context: String?,

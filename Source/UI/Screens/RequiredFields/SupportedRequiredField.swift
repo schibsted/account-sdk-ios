@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  The UI currently has support for the following fields and types
