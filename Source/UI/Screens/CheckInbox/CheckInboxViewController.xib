@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckInboxViewController" customModule="SchibstedAccount" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckInboxViewController" customModule="SchibstedAccount">
             <connections>
                 <outlet property="changeButton" destination="G3X-hO-td0" id="pBV-Tw-IWy"/>
                 <outlet property="textLabel" destination="nMD-ag-4Zd" id="G56-bm-9bf"/>
@@ -23,25 +21,26 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check-inbox" translatesAutoresizingMaskIntoConstraints="NO" id="pJi-Y3-Ucu">
-                    <rect key="frame" x="91" y="109" width="193" height="94"/>
+                    <rect key="frame" x="91" y="89" width="193" height="94"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="94" id="0RK-wQ-ci4"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMD-ag-4Zd" userLabel="SentLinkLabel" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
-                    <rect key="frame" x="166" y="260" width="42" height="21"/>
+                    <rect key="frame" x="167" y="240" width="41.5" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3X-hO-td0" userLabel="ChangeButton">
-                    <rect key="frame" x="164.5" y="281" width="46" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3X-hO-td0" userLabel="ChangeButton">
+                    <rect key="frame" x="164.5" y="260.5" width="46" height="30"/>
                     <state key="normal" title="Button"/>
                     <connections>
                         <action selector="didTapChangeButton:" destination="-1" eventType="touchUpInside" id="PES-yt-MCn"/>
                     </connections>
                 </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="pJi-Y3-Ucu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="91" id="49G-Fp-6Fx"/>
@@ -53,7 +52,7 @@
                 <constraint firstItem="G3X-hO-td0" firstAttribute="top" secondItem="nMD-ag-4Zd" secondAttribute="bottom" id="q4T-XO-A82"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="G3X-hO-td0" secondAttribute="bottom" constant="16" id="qRX-Sp-mp9"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="140" y="155"/>
         </view>
     </objects>
     <resources>

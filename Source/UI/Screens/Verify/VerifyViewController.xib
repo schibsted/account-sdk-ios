@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VerifyViewController" customModule="SchibstedAccount" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VerifyViewController" customModule="SchibstedAccount">
             <connections>
                 <outlet property="changeIdentifier" destination="Dg2-1a-y2B" id="I7v-6U-YrW"/>
                 <outlet property="errorText" destination="Ktb-rh-s7n" id="g1s-af-FFE"/>
@@ -78,13 +75,13 @@
                                     <rect key="frame" x="16" y="126.5" width="343" height="34"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verification code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tcs-2F-vhB" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="128.5" height="34"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="34"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="xzi-Q5-w5v">
-                                            <rect key="frame" x="136.5" y="0.0" width="206.5" height="34"/>
+                                            <rect key="frame" x="136" y="0.0" width="207" height="34"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGg-nk-u7J">
                                                     <rect key="frame" x="0.0" y="0.0" width="61" height="34"/>
@@ -171,7 +168,7 @@
                                             </constraints>
                                         </stackView>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktb-rh-s7n" customClass="ErrorLabel" customModule="SchibstedAccount" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="-168.5" width="343" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -194,7 +191,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBh-93-1WH">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBh-93-1WH">
                                                     <rect key="frame" x="0.0" y="20.5" width="77" height="30"/>
                                                     <state key="normal" title="What's this"/>
                                                     <connections>
@@ -241,6 +238,7 @@
                     </connections>
                 </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="una-cn-kts"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="Dxs-UK-nE3" firstAttribute="leading" secondItem="una-cn-kts" secondAttribute="leading" constant="16" id="8md-hB-f3t"/>
@@ -252,7 +250,7 @@
                 <constraint firstItem="gqM-JQ-Djo" firstAttribute="width" secondItem="una-cn-kts" secondAttribute="width" id="nph-Ia-kmn"/>
                 <constraint firstItem="una-cn-kts" firstAttribute="trailing" secondItem="Dxs-UK-nE3" secondAttribute="trailing" constant="16" id="yYS-b0-xUw"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="una-cn-kts"/>
+            <point key="canvasLocation" x="140" y="155"/>
         </view>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>
