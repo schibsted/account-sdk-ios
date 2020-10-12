@@ -8,18 +8,8 @@ import Foundation
 /// This is for the Result success type if no value is expected
 public typealias NoValue = ()
 
-/**
- A result object is generally used for asynchronous callbacks in the SDK
- */
-public enum Result<T, E: Error> {
-    /// Denotes a successful journey of bits and instructions through the virtual world.
-    /// Contains the value that was meant to be received in a success case.
-    case success(T)
-
-    /// Something went wrong. Contains the `Error` object with more information.
-    case failure(E)
-
-    func materialize() throws -> T {
+public extension Result {
+    func materialize() throws -> Success {
         switch self {
         case let .success(value): return value
         case let .failure(error): throw error

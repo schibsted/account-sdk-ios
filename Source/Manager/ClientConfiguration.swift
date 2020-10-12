@@ -122,6 +122,9 @@ public struct ClientConfiguration {
     /// The locale that is being used
     public let locale: Locale
 
+    /// The (optional) keychain access group
+    public let accessGroup: String?
+
     /**
      Which environment (if any) is this configuration using
      */
@@ -140,13 +143,15 @@ public struct ClientConfiguration {
      - parameter clientSecret: the secret associated with the client ID
      - parameter appURLScheme: set your `appURLSceheme` here. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want to use for requests - defaults to system
+     - parameter accessGroup: The keychain access group - defaults to nil
      */
     public init(
         serverURL: URL,
         clientID: String,
         clientSecret: String,
         appURLScheme: String?,
-        locale: Locale? = nil
+        locale: Locale? = nil,
+        accessGroup: String? = nil
     ) {
         let data = Environment.dataForServerURL(serverURL)
         self.init(
@@ -156,7 +161,8 @@ public struct ClientConfiguration {
             clientID: clientID,
             clientSecret: clientSecret,
             appURLScheme: appURLScheme,
-            locale: locale
+            locale: locale,
+            accessGroup: accessGroup
         )
     }
 
@@ -167,13 +173,15 @@ public struct ClientConfiguration {
         clientID: String,
         clientSecret: String,
         appURLScheme: String?,
-        locale: Locale? = nil
+        locale: Locale? = nil,
+        accessGroup: String? = nil
     ) {
         self.serverURL = serverURL
         self.providerComponent = providerComponent
         self.clientID = clientID
         self.clientSecret = clientSecret
         self.locale = locale ?? Locale.current
+        self.accessGroup = accessGroup
         let defaultAppURLScheme = "spid-\(clientID)"
         self.appURLScheme = appURLScheme ?? defaultAppURLScheme
         self.defaultAppURLScheme = defaultAppURLScheme
@@ -199,8 +207,9 @@ public struct ClientConfiguration {
      - parameter clientSecret: the secret associated with the client ID
      - parameter appURLScheme: set your `appURLSceheme`. Defaults to "spid-\(clientID)" if nil
      - parameter locale: Locale you want IdentityManager to use for requests
+     - parameter accessGroup: The keychain access group - defaults to nil
      */
-    public init(environment: Environment, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil) {
+    public init(environment: Environment, clientID: String, clientSecret: String, appURLScheme: String?, locale: Locale? = nil, accessGroup: String? = nil) {
         let envConfig = environment.loadConfiguration()
         self.init(
             environment: environment,
@@ -209,7 +218,8 @@ public struct ClientConfiguration {
             clientID: clientID,
             clientSecret: clientSecret,
             appURLScheme: appURLScheme,
-            locale: locale
+            locale: locale,
+            accessGroup: accessGroup
         )
     }
 

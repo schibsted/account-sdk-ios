@@ -44,6 +44,7 @@ class UserTokensKeychain: KeychainGenericPasswordType {
         return fetchedData
     }
     let accountName = "SchibstedID"
+    let accessGroup: String?
 
     func data() -> [TokenData] {
         guard let loggedInUsers = (try? fetchedData.jsonObject(for: Keys.loggedInUsers)) as? [String: JSONObject] else {
@@ -112,7 +113,8 @@ class UserTokensKeychain: KeychainGenericPasswordType {
         try saveInKeychain()
     }
 
-    init() {
+    init(accessGroup: String? = nil) {
+        self.accessGroup = accessGroup
         var downcastedSelf = self
         if (try? downcastedSelf.fetchFromKeychain()) != nil {
             fetchedData = downcastedSelf.fetchedData
