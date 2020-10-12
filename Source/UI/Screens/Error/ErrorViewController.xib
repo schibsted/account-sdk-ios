@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorViewController" customModule="SchibstedAccount" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorViewController" customModule="SchibstedAccount">
             <connections>
                 <outlet property="descriptionLabel" destination="s95-xn-JM2" id="Cmh-fh-lhk"/>
                 <outlet property="headingLabel" destination="Jq9-Fj-Pjo" id="B9a-Wv-dtg"/>
@@ -28,7 +26,7 @@
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bl0-tH-nXD" userLabel="stack background">
-                    <rect key="frame" x="16" y="209.5" width="343" height="248"/>
+                    <rect key="frame" x="16" y="210" width="343" height="247.5"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cdj-im-QTv">
                             <rect key="frame" x="16" y="16" width="311" height="215.5"/>
@@ -36,19 +34,19 @@
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" image="location" translatesAutoresizingMaskIntoConstraints="NO" id="Wbb-TP-BLJ">
                                     <rect key="frame" x="0.0" y="0.0" width="311" height="72"/>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error asdas dasd as das dasd asd asd asd asd asd asd as" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jq9-Fj-Pjo" customClass="Heading" customModule="SchibstedAccount" customModuleProvider="target">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error asdas dasd as das dasd asd asd asd asd asd asd as" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jq9-Fj-Pjo" customClass="Heading" customModule="SchibstedAccount">
                                     <rect key="frame" x="0.0" y="88" width="311" height="41"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error description." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s95-xn-JM2" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error description." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s95-xn-JM2" customClass="NormalLabel" customModule="SchibstedAccount">
                                     <rect key="frame" x="0.0" y="145" width="311" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T1N-QZ-h0R" customClass="PrimaryButton" customModule="SchibstedAccount" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T1N-QZ-h0R" customClass="PrimaryButton" customModule="SchibstedAccount">
                                     <rect key="frame" x="0.0" y="181.5" width="311" height="34"/>
                                     <state key="normal" title="OK">
                                         <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -69,6 +67,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="wZL-Vf-ece"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="bl0-tH-nXD" firstAttribute="top" relation="greaterThanOrEqual" secondItem="wZL-Vf-ece" secondAttribute="top" constant="16" id="1DC-yd-2EZ"/>
@@ -82,7 +81,7 @@
                 <constraint firstAttribute="trailing" secondItem="IIf-ES-tB9" secondAttribute="trailing" id="s5o-7q-bE0"/>
                 <constraint firstItem="wZL-Vf-ece" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bl0-tH-nXD" secondAttribute="bottom" constant="16" id="w6z-ef-qZc"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="wZL-Vf-ece"/>
+            <point key="canvasLocation" x="140" y="155"/>
         </view>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>
