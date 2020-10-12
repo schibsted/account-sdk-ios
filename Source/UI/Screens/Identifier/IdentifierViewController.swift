@@ -24,6 +24,7 @@ class IdentifierViewController: IdentityUIViewController {
             whastThisButton.setTitle(viewModel.whatsThis, for: .normal)
             whastThisButton.titleLabel?.font = theme.fonts.info
             whastThisButton.contentEdgeInsets.top = 1
+            whastThisButton.isHidden = configuration.disableWhatsThisButton
         }
     }
     @IBOutlet var backgroundView: UIView! {

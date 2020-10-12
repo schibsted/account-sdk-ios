@@ -121,7 +121,7 @@ class StatusViewController: UIViewController {
 
     @IBAction func didTapWebFlowLogin(_: UIButton) {
         let url = UIApplication.identityManager.routes.loginUrl(shouldPersistUser: false)
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url, options: [:]) { _ in }
     }
 
     @IBAction func didTapOpenProfile(_: UIButton) {
@@ -129,7 +129,7 @@ class StatusViewController: UIViewController {
 
         let alert = UIAlertController(title: "Mood", message: "Would you like to go through SPiD or the BFF?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "SPiD", style: .default) { _ in
-            UIApplication.shared.openURL(accountURL)
+            UIApplication.shared.open(accountURL, options: [:]) { _ in }
         })
         alert.addAction(UIAlertAction(title: "BFF", style: .default) { _ in
             guard var components = URLComponents(url: ClientConfiguration.current.serverURL, resolvingAgainstBaseURL: true) else {
@@ -152,7 +152,7 @@ class StatusViewController: UIViewController {
                 print("could not create url from \(components)")
                 return
             }
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [:]) { _ in }
         })
 
         present(alert, animated: true, completion: nil)

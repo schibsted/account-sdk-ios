@@ -215,7 +215,7 @@ extension VerifyViewController: UITextFieldDelegate {
 
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         guard let codeBox = textField as? TextField,
-            let index = textFieldStackView.arrangedSubviews.index(of: codeBox)
+              let index = textFieldStackView.arrangedSubviews.firstIndex(of: codeBox)
         else {
             return false
         }

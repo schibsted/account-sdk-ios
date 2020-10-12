@@ -129,6 +129,8 @@ class SafariViewController: SFSafariViewController {
 
     init(url: URL) {
         self.url = url
-        super.init(url: url, entersReaderIfAvailable: false)
+        let configuration = SFSafariViewController.Configuration()
+        configuration.entersReaderIfAvailable = false
+        super.init(url: url, configuration: configuration)
     }
 }

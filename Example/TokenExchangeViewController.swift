@@ -37,7 +37,7 @@ class TokenExchangeViewController: UIViewController {
             redirectURL: redirectURL
         ) { result in
             if case let .success(url) = result {
-                UIApplication.shared.openURL(url)
+                UIApplication.shared.open(url, options: [:]) { _ in }
             }
         }
     }
