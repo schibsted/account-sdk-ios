@@ -53,7 +53,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="H89-Om-ehF">
                                                     <rect key="frame" x="0.0" y="0.0" width="311" height="177.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="752" text="We sent you a new verification code" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C50-p2-Oen" customClass="Heading" customModule="SchibstedAccount" customModuleProvider="target">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="752" text="We sent you a new verification code" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C50-p2-Oen" customClass="Heading" customModule="SchibstedAccount">
                                                             <rect key="frame" x="0.0" y="0.0" width="311" height="120.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -62,13 +62,13 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="llg-3d-DMz">
                                                             <rect key="frame" x="0.0" y="136.5" width="311" height="41"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="The code was sent to:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGD-Xo-XZV" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="The code was sent to:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGD-Xo-XZV" customClass="NormalLabel" customModule="SchibstedAccount">
                                                                     <rect key="frame" x="72" y="0.0" width="167.5" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="+123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgj-sA-xIF" customClass="NormalLabel" customModule="SchibstedAccount" customModuleProvider="target">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="+123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgj-sA-xIF" customClass="NormalLabel" customModule="SchibstedAccount">
                                                                     <rect key="frame" x="136.5" y="20.5" width="38" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -81,7 +81,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Bzv-nP-mbe">
                                                     <rect key="frame" x="0.0" y="233.5" width="311" height="84"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJI-Ep-0LG" customClass="PrimaryButton" customModule="SchibstedAccount" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJI-Ep-0LG" customClass="PrimaryButton" customModule="SchibstedAccount">
                                                             <rect key="frame" x="0.0" y="0.0" width="311" height="34"/>
                                                             <state key="normal" title="OK">
                                                                 <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -90,7 +90,7 @@
                                                                 <action selector="didTapContinue:" destination="-1" eventType="touchUpInside" id="sTA-PY-FWj"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Np1-PI-Lke" customClass="SecondaryButton" customModule="SchibstedAccount" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Np1-PI-Lke" customClass="SecondaryButton" customModule="SchibstedAccount">
                                                             <rect key="frame" x="0.0" y="50" width="311" height="34"/>
                                                             <state key="normal" title="Edit your phone number">
                                                                 <color key="titleColor" red="0.22206924855709076" green="0.4401949942111969" blue="0.83146572113037109" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

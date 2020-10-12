@@ -33,7 +33,7 @@
                                         <constraint firstAttribute="height" constant="20" placeholder="YES" id="uL1-fy-98e"/>
                                     </constraints>
                                 </stackView>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B1X-CN-sF8" customClass="TextView" customModule="SchibstedAccount" customModuleProvider="target">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B1X-CN-sF8" customClass="TextView" customModule="SchibstedAccount">
                                     <rect key="frame" x="16" y="38" width="343" height="36"/>
                                     <attributedString key="attributedText">
                                         <fragment content="Info text">
@@ -65,7 +65,7 @@
                         <constraint firstItem="YG2-ap-J6Y" firstAttribute="top" secondItem="iev-hC-9g1" secondAttribute="top" id="xJI-V3-IlJ"/>
                     </constraints>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqI-Ms-4ff" customClass="PrimaryButton" customModule="SchibstedAccount" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqI-Ms-4ff" customClass="PrimaryButton" customModule="SchibstedAccount">
                     <rect key="frame" x="16" y="621" width="343" height="30"/>
                     <state key="normal" title="Button"/>
                     <connections>
