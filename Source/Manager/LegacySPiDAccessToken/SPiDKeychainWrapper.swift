@@ -62,9 +62,11 @@ final class SPiDKeychainWrapper {
     }
 
     private class func setupSearchQuery(identifier: String) -> [String: Any] {
-        return [(kSecClass as String): kSecClassGenericPassword,
-                (kSecAttrGeneric as String): identifier,
-                (kSecAttrAccount as String): identifier,
-                (kSecAttrService as String): serviceNameForSPiD]
+        return [
+            (kSecClass as String): kSecClassGenericPassword,
+            (kSecAttrGeneric as String): identifier,
+            (kSecAttrAccount as String): identifier,
+            (kSecAttrService as String): serviceNameForSPiD,
+        ]
     }
 }
