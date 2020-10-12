@@ -222,7 +222,7 @@ extension CompleteProfileCoordinator {
     }
 
     private func handleFetchRequiredFieldsResult(
-        _ result: SchibstedAccount.Result<[RequiredField], ClientError>,
+        _ result: Result<[RequiredField], ClientError>,
         completion: @escaping (RequiredFieldEnteringResult) -> Void
     ) {
         switch result {
