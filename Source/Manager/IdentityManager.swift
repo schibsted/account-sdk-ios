@@ -392,7 +392,7 @@ public class IdentityManager: IdentityManagerProtocol {
             if let error = error {
                 log(level: .error, from: self, "Failed to add \(username) to the shared web credentials: \(error)")
             } else {
-                log(level: .verbose, from: self, "Add credentials to the shared web credentials for \(username)")
+                log(level: .verbose, from: self, "Added credentials to the shared web credentials for \(username)")
             }
         }
 
