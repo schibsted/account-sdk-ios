@@ -386,7 +386,7 @@ public class IdentityManager: IdentityManagerProtocol {
             return
         }
 
-        SecAddSharedWebCredential(clientConfiguration.serverURL.absoluteString as CFString,
+        SecAddSharedWebCredential(clientConfiguration.serverURL.host! as CFString,
                                   email.emailAddress as CFString,
                                   password as CFString) { error in
             if let error = error {
