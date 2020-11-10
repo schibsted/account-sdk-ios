@@ -381,9 +381,19 @@ public class IdentityManager: IdentityManagerProtocol {
             completion(result)
         }
 
-        guard case .email = username else {
+        guard case .email(let email) = username else {
             wrappedCompletion(.failure(ClientError.unexpectedIdentifier(actual: username, expected: "only EmailAddress supported")))
             return
+        }
+
+        SecAddSharedWebCredential(clientConfiguration.serverURL.absoluteString as CFString,
+                                  email.emailAddress as CFString,
+                                  password as CFString) { error in
+            if let error = error {
+                log(level: .error, from: self, "Failed to add \(username) to the shared web credentials: \(error)")
+            } else {
+                log(level: .verbose, from: self, "Add credentials to the shared web credentials for \(username)")
+            }
         }
 
         api.requestAccessToken(
