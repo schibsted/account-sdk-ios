@@ -44,12 +44,16 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
             showPasswordView(for: input.identifier, on: input.loginFlowVariant, scopes: input.scopes, completion: completion)
             return
         }
+
+        let useSharedWebCredentials = configuration.enableSharedWebCredentials
+
         submit(
             password: password,
             for: input.identifier,
             on: input.loginFlowVariant,
             persistUser: true,
             scopes: input.scopes,
+            useSharedWebCredentials: useSharedWebCredentials,
             completion: completion
         )
     }
@@ -96,10 +100,11 @@ extension PasswordCoordinator {
             localizationBundle: configuration.localizationBundle
         )
         let viewController = PasswordViewController(configuration: configuration, navigationSettings: navigationSettings, viewModel: viewModel)
+        let useSharedWebCredentials = configuration.enableSharedWebCredentials
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(password, shouldPersistUser):
-                self?.submit(password: password, for: identifier, on: loginFlowVariant, persistUser: shouldPersistUser, scopes: scopes, completion: completion)
+                self?.submit(password: password, for: identifier, on: loginFlowVariant, persistUser: shouldPersistUser, scopes: scopes, useSharedWebCredentials: useSharedWebCredentials, completion: completion)
             case .changeIdentifier:
                 completion(.changeIdentifier)
             case .forgotPassword:
@@ -134,6 +139,7 @@ extension PasswordCoordinator {
         on loginFlowVariant: LoginMethod.FlowVariant,
         persistUser: Bool,
         scopes: [String],
+        useSharedWebCredentials: Bool,
         completion: @escaping (Output) -> Void
     ) {
         if loginFlowVariant == .signup {
@@ -142,7 +148,7 @@ extension PasswordCoordinator {
         }
 
         presentedViewController?.startLoading()
-        signinInteractor.login(username: identifier, password: password, scopes: scopes) { [weak self] result in
+        signinInteractor.login(username: identifier, password: password, scopes: scopes, useSharedWebCredentials: useSharedWebCredentials) { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
