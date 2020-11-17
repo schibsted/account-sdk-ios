@@ -67,6 +67,8 @@ public struct ClientConfiguration {
         case development
         /// payment.schibsted.no
         case norway
+        /// login.schibsted.fi
+        case finland
 
         fileprivate static func loadConfigurationData() -> [String: [String: String]] {
             #if SWIFT_PACKAGE
