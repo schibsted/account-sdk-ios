@@ -5,7 +5,7 @@
 
 import Foundation
 
-open class SPiDAccessToken: Codable {
+open class SPiDAccessToken: NSObject, NSCoding {
     open var userID: String
     open var accessToken: String?
     open var expiresAt: Date
@@ -44,20 +44,26 @@ open class SPiDAccessToken: Codable {
                   refreshToken: refreshToken)
     }
 
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userID = try container.decode(String.self, forKey: .userId)
-        self.accessToken = try container.decodeIfPresent(String.self, forKey: .accessToken)
-        self.expiresAt = try container.decode(Date.self, forKey: .expiresAt)
-        self.refreshToken = try container.decode(String.self, forKey: .refreshToken)
+    public func encode(with coder: NSCoder) {
+        coder.encode(userID, forKey: CodingKeys.userId.rawValue)
+        coder.encode(accessToken, forKey: CodingKeys.accessToken.rawValue)
+        coder.encode(expiresAt, forKey: CodingKeys.expiresAt.rawValue)
+        coder.encode(refreshToken, forKey: CodingKeys.refreshToken.rawValue)
     }
+    
+    public required init?(coder: NSCoder) {
+        guard let userID = coder.decodeObject(forKey: CodingKeys.userId.rawValue) as? String,
+              let accessToken = coder.decodeObject(forKey: CodingKeys.accessToken.rawValue) as? String,
+              let expiresAt = coder.decodeObject(forKey: CodingKeys.expiresAt.rawValue) as? Date,
+              let refreshToken = coder.decodeObject(forKey: CodingKeys.refreshToken.rawValue) as? String
+              else {
+                return nil
+              }
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(userID, forKey: .userId)
-        try container.encode(accessToken, forKey: .accessToken)
-        try container.encode(expiresAt, forKey: .expiresAt)
-        try container.encode(refreshToken, forKey: .refreshToken)
+        self.userID = userID
+        self.accessToken = accessToken
+        self.expiresAt = expiresAt
+        self.refreshToken = refreshToken
     }
 
     public func hasExpired() -> Bool {
