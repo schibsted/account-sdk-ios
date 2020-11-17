@@ -367,9 +367,10 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter password: the password for the identifier
      - parameter scopes: array of scopes you want the token to contain
      - parameter persistUser: whether the login status should be persistent on app's relaunches
+     - parameter useSharedWebCredentials: whether the credentials should be saved to the shared web credentials.
      - parameter completion: a callback that is called after the credential is checked.
      */
-    public func login(username: Identifier, password: String, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
+    public func login(username: Identifier, password: String, scopes: [String] = [], persistUser: Bool, useSharedWebCredentials: Bool, completion: @escaping NoValueCallback) {
         log(from: self, "\(username) logging in with scopes: \(scopes), persist: \(persistUser)")
 
         let wrappedCompletion: NoValueCallback = { [weak self] result in
@@ -386,15 +387,7 @@ public class IdentityManager: IdentityManagerProtocol {
             return
         }
 
-        SecAddSharedWebCredential(clientConfiguration.serverURL.host! as CFString,
-                                  email.emailAddress as CFString,
-                                  password as CFString) { error in
-            if let error = error {
-                log(level: .error, from: self, "Failed to add \(username) to the shared web credentials: \(error)")
-            } else {
-                log(level: .verbose, from: self, "Added credentials to the shared web credentials for \(username)")
-            }
-        }
+        let fqdn = clientConfiguration.serverURL.host!
 
         api.requestAccessToken(
             clientID: clientConfiguration.clientID,
@@ -405,6 +398,15 @@ public class IdentityManager: IdentityManagerProtocol {
             password: password,
             scope: (scopes + IdentityManager.defaultScopes).duplicatesRemoved()
         ) { [weak self] result in
+            if case .success = result, useSharedWebCredentials {
+                SecAddSharedWebCredential(fqdn as CFString, email.emailAddress as CFString, password as CFString) { error in
+                    if let error = error {
+                        log(level: .error, from: self, "Failed to add \(username) to the shared web credentials: \(error)")
+                    } else {
+                        log(level: .verbose, from: self, "Added credentials to the shared web credentials for \(username)")
+                    }
+                }
+            }
             self?.finishLogin(result: result, persistUser: persistUser, completion: wrappedCompletion)
         }
     }

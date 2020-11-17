@@ -8,6 +8,7 @@ import UIKit
 
 private struct Constants {
     static let BiometricsSettingsKey = "Identity.useBiometrics"
+    static let UseSharedWebCredentialsSettingsKey = "Identity.useSharedWebCredentials"
 }
 
 /**
@@ -29,6 +30,13 @@ public struct IdentityUIConfiguration {
     /// This determines whether the user wants to use biometric login, defaults to false
     public var useBiometrics: Bool {
         guard let value = Settings.value(forKey: Constants.BiometricsSettingsKey) as? Bool else {
+            return false
+        }
+        return value
+    }
+    /// This determines whether the user wants to use shared web credentials, defaults to false
+    public var useSharedWebCredentials: Bool {
+        guard let value = Settings.value(forKey: Constants.UseSharedWebCredentialsSettingsKey) as? Bool else {
             return false
         }
         return value
@@ -145,6 +153,15 @@ public struct IdentityUIConfiguration {
     public func useBiometrics(_ useBiometrics: Bool) {
         Settings.setValue(useBiometrics, forKey: Constants.BiometricsSettingsKey)
     }
+
+    /**
+     Call this to enable shared web credentials.
+
+     - parameter useBiometrics: If you want to enable shared web credentials.
+     */
+    public func useSharedWebCredentials(_ useSharedWebCredentials: Bool) {
+        Settings.setValue(useSharedWebCredentials, forKey: Constants.UseSharedWebCredentialsSettingsKey)
+    }
 }
 
 extension IdentityUIConfiguration: CustomStringConvertible {
@@ -154,6 +171,7 @@ extension IdentityUIConfiguration: CustomStringConvertible {
             + "\n\tskippable: \(isSkippable), "
             + "\n\tenableBiometrics: \(enableBiometrics), "
             + "\n\tuseBiometrics: \(useBiometrics), "
+            + "\n\tuseSharedWebCredentials: \(useSharedWebCredentials), "
             + "\n\ttracker: \(tracker != nil), "
             + "\n\tclient: \(clientConfiguration)\n)"
     }
