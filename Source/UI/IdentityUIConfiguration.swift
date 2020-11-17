@@ -129,6 +129,7 @@ public struct IdentityUIConfiguration {
             isCancelable: isCancelable ?? self.isCancelable,
             isSkippable: isSkippable ?? self.isSkippable,
             enableBiometrics: enableBiometrics ?? self.enableBiometrics,
+            enableSharedWebCredentials: enableSharedWebCredentials ?? self.enableSharedWebCredentials,
             disableWhatsThisButton: disableWhatsThisButton ?? self.disableWhatsThisButton,
             presentationHook: presentationHook ?? self.presentationHook,
             tracker: tracker ?? self.tracker,
