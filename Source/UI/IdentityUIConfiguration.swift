@@ -8,7 +8,6 @@ import UIKit
 
 private struct Constants {
     static let BiometricsSettingsKey = "Identity.useBiometrics"
-    static let UseSharedWebCredentialsSettingsKey = "Identity.useSharedWebCredentials"
 }
 
 /**
@@ -35,12 +34,7 @@ public struct IdentityUIConfiguration {
         return value
     }
     /// This determines whether the user wants to use shared web credentials, defaults to false
-    public var useSharedWebCredentials: Bool {
-        guard let value = Settings.value(forKey: Constants.UseSharedWebCredentialsSettingsKey) as? Bool else {
-            return false
-        }
-        return value
-    }
+    public let enableSharedWebCredentials: Bool
     /// This will be given the navigationController we use internally before we start presentation incase you want to customize
     /// certain aspects
     public let presentationHook: ((UIViewController) -> Void)?
@@ -81,6 +75,7 @@ public struct IdentityUIConfiguration {
      - parameter localizationBundle: If you have any custom localizations you want to use
      - parameter appName: If you want to customize the app name display in the UI
      - parameter enableBiometrics: If you want to enable authentication using biometrics
+     - parameter enableSharedWebCredentials: If you want to enable shared web credentials.
      */
     public init(
         clientConfiguration: ClientConfiguration,
@@ -88,6 +83,7 @@ public struct IdentityUIConfiguration {
         isCancelable: Bool = true,
         isSkippable: Bool = false,
         enableBiometrics: Bool = false,
+        enableSharedWebCredentials: Bool = false,
         disableWhatsThisButton: Bool = false,
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
@@ -101,6 +97,7 @@ public struct IdentityUIConfiguration {
         self.presentationHook = presentationHook
         self.localizationBundle = localizationBundle ?? IdentityUI.bundle
         self.enableBiometrics = enableBiometrics
+        self.enableSharedWebCredentials = enableSharedWebCredentials
         self.tracker = tracker
         self.disableWhatsThisButton = disableWhatsThisButton
         if let appName = appName {
@@ -153,15 +150,6 @@ public struct IdentityUIConfiguration {
     public func useBiometrics(_ useBiometrics: Bool) {
         Settings.setValue(useBiometrics, forKey: Constants.BiometricsSettingsKey)
     }
-
-    /**
-     Call this to enable shared web credentials.
-
-     - parameter useBiometrics: If you want to enable shared web credentials.
-     */
-    public func useSharedWebCredentials(_ useSharedWebCredentials: Bool) {
-        Settings.setValue(useSharedWebCredentials, forKey: Constants.UseSharedWebCredentialsSettingsKey)
-    }
 }
 
 extension IdentityUIConfiguration: CustomStringConvertible {
@@ -171,7 +159,7 @@ extension IdentityUIConfiguration: CustomStringConvertible {
             + "\n\tskippable: \(isSkippable), "
             + "\n\tenableBiometrics: \(enableBiometrics), "
             + "\n\tuseBiometrics: \(useBiometrics), "
-            + "\n\tuseSharedWebCredentials: \(useSharedWebCredentials), "
+            + "\n\tenableSharedWebCredentials: \(enableSharedWebCredentials), "
             + "\n\ttracker: \(tracker != nil), "
             + "\n\tclient: \(clientConfiguration)\n)"
     }

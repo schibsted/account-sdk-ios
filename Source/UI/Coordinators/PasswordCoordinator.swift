@@ -45,7 +45,7 @@ class PasswordCoordinator: AuthenticationCoordinator, RouteHandler {
             return
         }
 
-        let useSharedWebCredentials = configuration.useSharedWebCredentials
+        let useSharedWebCredentials = configuration.enableSharedWebCredentials
 
         submit(
             password: password,
@@ -100,7 +100,7 @@ extension PasswordCoordinator {
             localizationBundle: configuration.localizationBundle
         )
         let viewController = PasswordViewController(configuration: configuration, navigationSettings: navigationSettings, viewModel: viewModel)
-        let useSharedWebCredentials = configuration.useSharedWebCredentials
+        let useSharedWebCredentials = configuration.enableSharedWebCredentials
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(password, shouldPersistUser):

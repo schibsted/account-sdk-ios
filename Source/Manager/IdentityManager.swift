@@ -387,8 +387,6 @@ public class IdentityManager: IdentityManagerProtocol {
             return
         }
 
-        let fqdn = clientConfiguration.serverURL.host!
-
         api.requestAccessToken(
             clientID: clientConfiguration.clientID,
             clientSecret: clientConfiguration.clientSecret,
@@ -397,7 +395,8 @@ public class IdentityManager: IdentityManagerProtocol {
             username: username.normalizedString,
             password: password,
             scope: (scopes + IdentityManager.defaultScopes).duplicatesRemoved()
-        ) { [weak self] result in
+        ) { [weak self, clientConfiguration] result in
+            let fqdn = clientConfiguration.serverURL.host!
             if case .success = result, useSharedWebCredentials {
                 SecAddSharedWebCredential(fqdn as CFString, email.emailAddress as CFString, password as CFString) { error in
                     if let error = error {
