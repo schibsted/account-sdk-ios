@@ -14,6 +14,7 @@ final class SPiDKeychainWrapper {
         var cfData: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &cfData)
         if status == noErr, let data = cfData as? Data {
+            NSKeyedUnarchiver.setClass(SPiDAccessToken.self, forClassName: "SPiDAccessToken")
             if let accessToken = NSKeyedUnarchiver.unarchiveObject(with: data) as? SPiDAccessToken {
                 return accessToken
             }
