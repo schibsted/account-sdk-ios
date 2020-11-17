@@ -27,7 +27,7 @@ class PasswordFlowViewController: UIViewController {
 
     @IBAction func login(_: UIButton) {
         guard let email = self.email, let password = self.password else { return }
-        UIApplication.identityManager.login(email: email, password: password, scopes: ClientConfiguration.current.scopes, persistUser: shouldPersistUserSwitch.isOn) { result in
+        UIApplication.identityManager.login(email: email, password: password, scopes: ClientConfiguration.current.scopes, persistUser: shouldPersistUserSwitch.isOn, useSharedWebCredentials: true) { result in
             print(result)
         }
     }
