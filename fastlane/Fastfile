@@ -50,10 +50,7 @@ platform :ios do
 
     pod_lib_lint(
       :quick => true,
-      :allow_warnings => true,
-      :sources => [
-        'https://github.com/CocoaPods/Specs.git',
-      ]
+      :allow_warnings => true
     )
 
     sh "cd .. && scripts/format.sh"
