@@ -154,8 +154,8 @@ class TaskManager {
 
             // If retry count exceeded, cancel it, we're done
             if let maxRetryCount = SDKConfiguration.shared.refreshRetryCount,
-                taskData.retryCount >= maxRetryCount,
-                let data = pendingTasks.removeValue(forKey: handle) {
+               taskData.retryCount >= maxRetryCount,
+               let data = pendingTasks.removeValue(forKey: handle) {
                 log(level: .warn, from: self, "refresh retry count for \(handle) exceeeded")
                 DispatchQueue.main.async {
                     let userInfo: [AnyHashable: Any] = [

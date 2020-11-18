@@ -726,7 +726,7 @@ class IdentityManagerTests: QuickSpec {
 
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, scopes: ["random"], persistUser: false, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, scopes: ["random"], persistUser: false, useSharedWebCredentials: false, completion: { _ in })
 
                 expect(Networking.testingProxy.callCount) == 1
                 let callData = Networking.testingProxy.calls[0]
@@ -745,7 +745,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, useSharedWebCredentials: false, completion: { _ in })
 
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedIn))
             }
@@ -758,7 +758,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.tokens).to(beNil())
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, useSharedWebCredentials: false, completion: { _ in })
 
                 expect(identityManager.currentUser.tokens).toNot(beNil())
                 expect(identityManager.currentUser.tokens?.accessToken).to(equal("d315d41a1804dc7416accb7a02410eeff7a078c7"))
@@ -775,7 +775,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.tokens?.idToken).to(beNil())
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, useSharedWebCredentials: false, completion: { _ in })
 
                 expect(identityManager.currentUser.tokens?.idToken).to(equal("testIDToken"))
             }
@@ -789,7 +789,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.id).to(beNil())
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, useSharedWebCredentials: false, completion: { _ in })
 
                 expect(identityManager.currentUser.id).to(equal("testIDToken"))
             }
@@ -802,7 +802,7 @@ class IdentityManagerTests: QuickSpec {
 
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, useSharedWebCredentials: false) { result in
                     expect(result).to(failWith(ClientError.invalidUserCredentials(message: nil)))
                 }
             }
@@ -816,7 +816,7 @@ class IdentityManagerTests: QuickSpec {
                 let identityManager = Utils.makeIdentityManager()
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, completion: { _ in })
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, useSharedWebCredentials: false, completion: { _ in })
 
                 expect(identityManager.currentUser.state).to(equal(UserState.loggedOut))
             }
@@ -829,7 +829,7 @@ class IdentityManagerTests: QuickSpec {
 
                 let identityManager = Utils.makeIdentityManager()
 
-                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false) { result in
+                identityManager.login(username: self.testEmail, password: self.testPassword, persistUser: false, useSharedWebCredentials: false) { result in
                     expect(result).to(failWith(ClientError.unverifiedEmail))
                 }
             }

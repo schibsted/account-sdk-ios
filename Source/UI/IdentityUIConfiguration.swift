@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-private struct Constants {
+private enum Constants {
     static let BiometricsSettingsKey = "Identity.useBiometrics"
 }
 
@@ -122,6 +122,7 @@ public struct IdentityUIConfiguration {
         isCancelable: Bool? = nil,
         isSkippable: Bool? = nil,
         enableBiometrics: Bool? = nil,
+        enableSharedWebCredentials: Bool? = nil,
         disableWhatsThisButton: Bool? = nil,
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,

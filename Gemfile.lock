@@ -105,6 +105,7 @@ GEM
       xcodeproj (>= 1.8.1, < 2.0.0)
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
+    fastlane-plugin-swiftformat (0.1.0)
     ffi (1.11.1)
     fourflusher (2.3.1)
     fuzzy_match (2.0.4)
@@ -242,6 +243,7 @@ PLATFORMS
 DEPENDENCIES
   cocoapods (>= 1.7.5)
   fastlane (>= 2.127.2)
+  fastlane-plugin-swiftformat
   jazzy (>= 0.9.1, < 0.10.0)
   slather (>= 2.4.7)
 

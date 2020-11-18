@@ -1,6 +1,9 @@
 source "https://rubygems.org"
 
-gem "cocoapods", ">=1.7.5"
-gem "fastlane", ">= 2.127.2"
-gem "jazzy", ">= 0.9.1", "< 0.10.0" # version 0.10.0 requires macOS >= 10.14.4 which isn't on Travis
-gem "slather", ">= 2.4.7"
+gem "cocoapods", ">=1.10.0"
+gem "fastlane", ">= 2.167.0"
+gem "jazzy", ">= 0.13.6"
+gem "slather", ">= 2.5.0"
+
+plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
+eval_gemfile(plugins_path) if File.exist?(plugins_path)

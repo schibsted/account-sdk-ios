@@ -30,8 +30,8 @@ class ClientConfigurationTests: QuickSpec {
             func allCases() -> [ClientConfiguration.Environment] {
                 let env = ClientConfiguration.Environment.development
                 switch env {
-                    case .development, .norway, .preproduction, .production:
-                        return [.development, .norway, .preproduction, .production]
+                    case .development, .norway, .preproduction, .production, .finland:
+                        return [.development, .norway, .preproduction, .production, .finland]
                 }
             }
             for env in allCases() {

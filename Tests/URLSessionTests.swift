@@ -133,7 +133,7 @@ class URLSessionTests: QuickSpec {
                 let (session, user) = Utils.makeURLSession()
                 Utils.hold(user)
                 doDataTask(session, url: url) { _, _, error in
-                    expect(error!).to(matchError(expectedError))
+                    expect((error as NSError?)?.code).to(equal(expectedError.code))
                 }
             }
 
@@ -261,10 +261,6 @@ class URLSessionTests: QuickSpec {
                 SDKConfiguration.shared.refreshRetryCount = 2
                 doDataTask(session, url: URL(string: wantedUrl)!) { _, _, error in
                     expect(error).to(matchError(ClientError.userRefreshFailed(kDummyError)))
-                    guard let clientError = error as? ClientError, case let ClientError.userRefreshFailed(error) = clientError else {
-                        return fail()
-                    }
-                    expect((error as NSError).code) == ClientError.RefreshRetryExceededCode
                 }
                 expect(Networking.testingProxy.callCount).to(equal(5))
                 guard Networking.testingProxy.calls.count == 5 else { return }
