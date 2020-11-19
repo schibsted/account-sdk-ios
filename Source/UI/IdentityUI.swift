@@ -140,8 +140,6 @@ public class IdentityUI {
     }
     private let _identityManager: IdentityManager
 
-    private var sharedWebCredentialsController: SharedWebCredentialsController?
-
     lazy var navigationController: UINavigationController = {
         DismissableNavigationController { [weak self] in
             // Ensure we're not nil and that we are the prsenting identityUI
@@ -469,11 +467,11 @@ extension IdentityUI {
             handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, client: client, completion: completion)
         case let .byLoginMethod(loginMethod, vc, localizedTeaserText, scopes):
             if #available(iOS 13.0, *), case .sharedWebCredentials = loginMethod {
-                showSharedWebCredentialsController(client: client,
-                                                   presentingViewController: vc,
-                                                   localizedTeaserText: localizedTeaserText,
-                                                   scopes: scopes,
-                                                   completion: completion)
+                handleWebCredentials(client: client,
+                                     presentingViewController: vc,
+                                     localizedTeaserText: localizedTeaserText,
+                                     scopes: scopes,
+                                     completion: completion)
                 return
             }
 
@@ -493,24 +491,25 @@ extension IdentityUI {
     }
 
     @available(iOS 13.0, *)
-    private func showSharedWebCredentialsController(client: Client,
-                                                    presentingViewController: UIViewController,
-                                                    localizedTeaserText: String?,
-                                                    scopes: [String],
-                                                    completion: @escaping (Output) -> Void) {
+    private func handleWebCredentials(client: Client,
+                                      presentingViewController: UIViewController,
+                                      localizedTeaserText: String?,
+                                      scopes: [String],
+                                      completion: @escaping (Output) -> Void) {
         func fallback(_ loginMethod: LoginMethod) {
-            show(input: .byLoginMethod(.password,
+            show(input: .byLoginMethod(loginMethod,
                                        presentingViewController: presentingViewController,
                                        localizedTeaserText: localizedTeaserText,
                                        scopes: scopes),
                  client: client,
                  completion: completion)
-
-            sharedWebCredentialsController = nil
         }
 
+        var sharedWebCredentialsController: SharedWebCredentialsController?
         sharedWebCredentialsController = SharedWebCredentialsController { [weak self] result in
             guard let self = self else { return }
+            sharedWebCredentialsController = nil
+
             switch result {
             case .failure(let error):
                 log(from: self, error)
@@ -594,7 +593,6 @@ extension IdentityUI {
                             }
                         }
                     }
-                    self.sharedWebCredentialsController = nil
                 }
             }
         }
@@ -877,16 +875,12 @@ private final class DismissableNavigationController: UINavigationController {
     }
 }
 
-private final class SharedWebCredentialsController: NSObject {
-    // Stored anonymously to retain the ASAuthorizationController
-    private var authorizationController: NSObject?
-    private var completion: (Swift.Result<(String, String), Swift.Error>) -> Void
+@available(iOS 13.0, *)
+private final class SharedWebCredentialsController: NSObject, ASAuthorizationControllerDelegate {
+    private var authorizationController: ASAuthorizationController?
+    private let completion: (Swift.Result<(String, String), Swift.Error>) -> Void
 
-    init?(completion: @escaping (Swift.Result<(String, String), Swift.Error>) -> Void) {
-        guard #available(iOS 13.0, *) else {
-            return nil
-        }
-
+    init(completion: @escaping (Swift.Result<(String, String), Swift.Error>) -> Void) {
         let authorizationRequest = ASAuthorizationPasswordProvider().createRequest()
         let authorizationController = ASAuthorizationController(authorizationRequests: [authorizationRequest])
         self.authorizationController = authorizationController
@@ -897,10 +891,7 @@ private final class SharedWebCredentialsController: NSObject {
         authorizationController.delegate = self
         authorizationController.performRequests()
     }
-}
 
-@available(iOS 13.0, *)
-extension SharedWebCredentialsController: ASAuthorizationControllerDelegate {
     public func authorizationController(controller: ASAuthorizationController,
                                         didCompleteWithAuthorization authorization: ASAuthorization) {
         defer { authorizationController = nil }
