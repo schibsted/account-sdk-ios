@@ -49,7 +49,7 @@ class TaskOperation: Operation {
         #endif
     }
 
-    public override var isAsynchronous: Bool {
+    override public var isAsynchronous: Bool {
         return true
     }
 
@@ -57,7 +57,7 @@ class TaskOperation: Operation {
         case isExecuting, isFinished, isCancelled
     }
 
-    public private(set) override var isExecuting: Bool {
+    override public private(set) var isExecuting: Bool {
         get {
             return state == .executing
         }
@@ -68,7 +68,7 @@ class TaskOperation: Operation {
         }
     }
 
-    public private(set) override var isFinished: Bool {
+    override public private(set) var isFinished: Bool {
         get {
             return state == .finished
         }
@@ -79,7 +79,7 @@ class TaskOperation: Operation {
         }
     }
 
-    public override func start() {
+    override public func start() {
         guard !isCancelled else {
             isFinished = true
             return

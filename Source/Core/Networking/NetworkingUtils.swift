@@ -5,7 +5,7 @@
 
 import Foundation
 extension Networking {
-    struct Utils {
+    enum Utils {
         static func ensureResponse(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> ([Int]) throws -> Data {
             return { expectedStatuses in
                 if let error = error {

@@ -57,7 +57,7 @@ extension KeychainItemType {
 }
 
 extension KeychainItemType {
-    internal var attributesToSave: [String: Any] {
+    var attributesToSave: [String: Any] {
         var itemAttributes = attributes
         let archivedData = NSKeyedArchiver.archivedData(withRootObject: dataToStore)
 
@@ -71,13 +71,13 @@ extension KeychainItemType {
         return itemAttributes
     }
 
-    internal func dataFromAttributes(_ attributes: [String: Any]) -> [String: Any]? {
+    func dataFromAttributes(_ attributes: [String: Any]) -> [String: Any]? {
         guard let valueData = attributes[String(kSecValueData)] as? Data else { return nil }
 
         return NSKeyedUnarchiver.unarchiveObject(with: valueData) as? [String: Any] ?? nil
     }
 
-    internal var attributesForFetch: [String: Any] {
+    var attributesForFetch: [String: Any] {
         var itemAttributes = attributes
 
         itemAttributes[String(kSecReturnData)] = kCFBooleanTrue
@@ -90,7 +90,7 @@ extension KeychainItemType {
         return itemAttributes
     }
 
-    internal var attributesForDelete: [String: Any] {
+    var attributesForDelete: [String: Any] {
         var itemAttributes = attributes
         if let group = accessGroup {
             itemAttributes[String(kSecAttrAccessGroup)] = group
@@ -185,7 +185,7 @@ extension KeychainItemType {
 
     mutating func fetchFromKeychain(_ keychain: KeychainServiceType = Keychain()) throws -> Self {
         if let result = try keychain.fetchItemWithAttributes(attributesForFetch),
-            let itemData = dataFromAttributes(result) {
+           let itemData = dataFromAttributes(result) {
             fetchedData = itemData
         }
 

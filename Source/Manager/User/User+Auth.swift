@@ -5,11 +5,11 @@
 
 import Foundation
 
-extension User {
+public extension User {
     /**
      Contains APIs that allow you get access to tokens and control some oauth related settings for a user
      */
-    public class Auth: UserAuthAPI {
+    class Auth: UserAuthAPI {
         weak var user: UserProtocol?
 
         /**

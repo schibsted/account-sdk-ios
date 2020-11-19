@@ -847,9 +847,9 @@ extension IdentityUI: TrackingEventsHandlerDelegate {
 extension IdentityUI {
     static let bundle: Bundle = {
         #if SWIFT_PACKAGE
-        return Bundle.module
+            return Bundle.module
         #else
-        return Bundle(for: IdentityUI.self)
+            return Bundle(for: IdentityUI.self)
         #endif
     }()
 }

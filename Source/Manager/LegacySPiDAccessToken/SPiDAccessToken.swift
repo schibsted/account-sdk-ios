@@ -50,15 +50,15 @@ open class SPiDAccessToken: NSObject, NSCoding {
         coder.encode(expiresAt, forKey: CodingKeys.expiresAt.rawValue)
         coder.encode(refreshToken, forKey: CodingKeys.refreshToken.rawValue)
     }
-    
+
     public required init?(coder: NSCoder) {
         guard let userID = coder.decodeObject(forKey: CodingKeys.userId.rawValue) as? String,
               let accessToken = coder.decodeObject(forKey: CodingKeys.accessToken.rawValue) as? String,
               let expiresAt = coder.decodeObject(forKey: CodingKeys.expiresAt.rawValue) as? Date,
               let refreshToken = coder.decodeObject(forKey: CodingKeys.refreshToken.rawValue) as? String
-              else {
-                return nil
-              }
+        else {
+            return nil
+        }
 
         self.userID = userID
         self.accessToken = accessToken

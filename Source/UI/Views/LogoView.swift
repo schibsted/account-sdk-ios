@@ -13,9 +13,9 @@ class LogoStackView: UIStackView, Themeable {
         alignment = .center
 
         #if SWIFT_PACKAGE
-        let bundle = Bundle.module
+            let bundle = Bundle.module
         #else
-        let bundle = Bundle(for: IdentityUI.self)
+            let bundle = Bundle(for: IdentityUI.self)
         #endif
 
         let schImage = UIImage(named: "schibsted-logo", in: bundle, compatibleWith: nil)

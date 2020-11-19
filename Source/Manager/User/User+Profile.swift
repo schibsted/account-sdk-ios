@@ -5,11 +5,11 @@
 
 import Foundation
 
-extension User {
+public extension User {
     /**
      Gives you access to user profile related information
      */
-    public class Profile: UserProfileAPI {
+    class Profile: UserProfileAPI {
         weak var user: UserProtocol?
 
         /**

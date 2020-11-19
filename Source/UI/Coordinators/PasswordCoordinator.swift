@@ -6,7 +6,7 @@
 import LocalAuthentication
 import UIKit
 
-private struct Constants {
+private enum Constants {
     static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
     static let EmailStorageLabel = "com.schibsted.account.user.email"
 }
@@ -104,7 +104,13 @@ extension PasswordCoordinator {
         viewController.didRequestAction = { [weak self] action in
             switch action {
             case let .enter(password, shouldPersistUser):
-                self?.submit(password: password, for: identifier, on: loginFlowVariant, persistUser: shouldPersistUser, scopes: scopes, useSharedWebCredentials: useSharedWebCredentials, completion: completion)
+                self?.submit(password: password,
+                             for: identifier,
+                             on: loginFlowVariant,
+                             persistUser: shouldPersistUser,
+                             scopes: scopes,
+                             useSharedWebCredentials: useSharedWebCredentials,
+                             completion: completion)
             case .changeIdentifier:
                 completion(.changeIdentifier)
             case .forgotPassword:
@@ -148,7 +154,8 @@ extension PasswordCoordinator {
         }
 
         presentedViewController?.startLoading()
-        signinInteractor.login(username: identifier, password: password, scopes: scopes, useSharedWebCredentials: useSharedWebCredentials) { [weak self] result in
+        signinInteractor.login(username: identifier, password: password, scopes: scopes,
+                               useSharedWebCredentials: useSharedWebCredentials) { [weak self] result in
             self?.presentedViewController?.endLoading()
 
             switch result {
@@ -273,9 +280,9 @@ extension PasswordCoordinator {
     private func canUseBiometrics() -> Bool {
         let context = LAContext()
         guard #available(iOS 11.3, *),
-            configuration.enableBiometrics,
-            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
-            context.biometryType == .touchID || context.biometryType == .faceID
+              configuration.enableBiometrics,
+              context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
+              context.biometryType == .touchID || context.biometryType == .faceID
         else {
             return false
         }
@@ -306,12 +313,12 @@ extension PasswordCoordinator {
             return
         }
         guard #available(iOS 11.3, *),
-            let accessControl = SecAccessControlCreateWithFlags(
-                kCFAllocatorDefault,
-                kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-                .biometryCurrentSet,
-                nil
-            ) else {
+              let accessControl = SecAccessControlCreateWithFlags(
+                  kCFAllocatorDefault,
+                  kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+                  .biometryCurrentSet,
+                  nil
+              ) else {
             return
         }
         var dictionary = [String: Any]()

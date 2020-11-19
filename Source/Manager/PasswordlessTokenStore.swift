@@ -30,7 +30,7 @@ extension PasswordlessTokenStoreError: ClientErrorConvertible {
     }
 }
 
-struct PasswordlessTokenStore {
+enum PasswordlessTokenStore {
     private struct Key: CustomStringConvertible {
         fileprivate static let prefix = "passwordless-token"
         let key: String

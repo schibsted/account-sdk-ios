@@ -3,11 +3,11 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
-extension User {
+public extension User {
     /**
      Gives you access to asset related information for a user
      */
-    public class Assets: UserAssetsAPI {
+    class Assets: UserAssetsAPI {
         weak var user: UserProtocol?
 
         /**

@@ -12,7 +12,7 @@ enum IdentifierViewControllerAction {
     case skip
 }
 
-private struct Constants {
+private enum Constants {
     static let EmailStorageLabel = "com.schibsted.account.user.email"
 }
 

@@ -63,9 +63,9 @@ class TestingIdentityManager: IdentityManagerProtocol {
         }
     }
 
-    func login(username: Identifier, password: String, scopes: [String] = [], persistUser: Bool, completion: @escaping NoValueCallback) {
+    func login(username: Identifier, password: String, scopes: [String] = [], persistUser: Bool, useSharedWebCredentials: Bool, completion: @escaping NoValueCallback) {
         Utils.waitUntilDone(completion) { [unowned self] in
-            self.identityManager.login(username: username, password: password, scopes: scopes, persistUser: persistUser, completion: $0)
+            self.identityManager.login(username: username, password: password, scopes: scopes, persistUser: persistUser, useSharedWebCredentials: useSharedWebCredentials, completion: $0)
         }
     }
 

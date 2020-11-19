@@ -200,8 +200,8 @@ class RequiredFieldsViewController: IdentityUIViewController {
 
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
-            let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size,
-            let activeInput = getActiveInput() else {
+              let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size,
+              let activeInput = getActiveInput() else {
             return
         }
 
@@ -261,7 +261,7 @@ extension RequiredFieldsViewController: UITextFieldDelegate {
         let newText = oldText.replacingCharacters(in: range, with: string)
 
         guard let processedText = processValueForField(at: textField.tag, from: oldText as String, to: newText),
-            processedText.count != newText.count else {
+              processedText.count != newText.count else {
             return true
         }
 
@@ -277,7 +277,7 @@ extension RequiredFieldsViewController: UITextFieldDelegate {
 
         let newBeginning = textField.beginningOfDocument
         if let cursorOffset = cursorOffset,
-            let newPosition = textField.position(from: newBeginning, offset: cursorOffset + (processedText.count - (oldText as String).count)) {
+           let newPosition = textField.position(from: newBeginning, offset: cursorOffset + (processedText.count - (oldText as String).count)) {
             textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
             return false
         }

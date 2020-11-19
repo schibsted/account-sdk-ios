@@ -22,8 +22,8 @@ class PaswordlessFlowViewController: UIViewController {
 
     @IBAction func sendSMS(_: UIButton) {
         guard let countryCode = countryCodeField.text,
-            let number = phoneNumberField.text,
-            let phoneNumber = PhoneNumber(countryCode: countryCode, number: number)
+              let number = phoneNumberField.text,
+              let phoneNumber = PhoneNumber(countryCode: countryCode, number: number)
         else {
             return
         }
@@ -42,8 +42,8 @@ class PaswordlessFlowViewController: UIViewController {
 
     @IBAction func resendSMS(_: AnyObject) {
         guard let countryCode = countryCodeField.text,
-            let number = phoneNumberField.text,
-            let phoneNumber = PhoneNumber(countryCode: countryCode, number: number)
+              let number = phoneNumberField.text,
+              let phoneNumber = PhoneNumber(countryCode: countryCode, number: number)
         else {
             return
         }
