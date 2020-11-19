@@ -24,9 +24,9 @@ public enum LoginMethod {
     /// asks for identifier and then a password to either login or signup if not already registered; the specified email will appear pre-filled in the identity
     /// UI, yet the user will still be able to modify it before submitting.
     case passwordWithPrefilledEmail(EmailAddress)
-    /// prompts the user for using their shared web credentials (if available)
+    /// prompts the user for using their shared web credentials (if available), with fallback to the regular password flow in case of invalid credentials (or any other failures).
     @available(iOS 13.0, *)
-    case sharedWebCredentials
+    case passwordWithSharedWebCredentials
 
     /// does the user try to signin or signup
     public enum FlowVariant {
@@ -56,14 +56,14 @@ public enum LoginMethod {
         switch self {
         case .email, .emailWithPrefilledValue, .phone, .phoneWithPrefilledValue:
             return .passwordless
-        case .password, .passwordWithPrefilledEmail, .sharedWebCredentials:
+        case .password, .passwordWithPrefilledEmail, .passwordWithSharedWebCredentials:
             return .password
         }
     }
 
     var identifierType: IdentifierType {
         switch self {
-        case .email, .emailWithPrefilledValue, .password, .passwordWithPrefilledEmail, .sharedWebCredentials:
+        case .email, .emailWithPrefilledValue, .password, .passwordWithPrefilledEmail, .passwordWithSharedWebCredentials:
             return .email
         case .phone, .phoneWithPrefilledValue:
             return .phone
@@ -76,7 +76,7 @@ public enum LoginMethod {
             return .email
         case .phone, .phoneWithPrefilledValue:
             return .phone
-        case .password, .passwordWithPrefilledEmail, .sharedWebCredentials:
+        case .password, .passwordWithPrefilledEmail, .passwordWithSharedWebCredentials:
             return .password
         }
     }
@@ -466,7 +466,7 @@ extension IdentityUI {
         case let .byRoute(route, vc):
             handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, client: client, completion: completion)
         case let .byLoginMethod(loginMethod, vc, localizedTeaserText, scopes):
-            if #available(iOS 13.0, *), case .sharedWebCredentials = loginMethod {
+            if #available(iOS 13.0, *), case .passwordWithSharedWebCredentials = loginMethod {
                 handleWebCredentials(client: client,
                                      presentingViewController: vc,
                                      localizedTeaserText: localizedTeaserText,

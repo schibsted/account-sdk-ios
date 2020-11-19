@@ -170,7 +170,7 @@ class IdentifierViewController: IdentityUIViewController {
             showPhoneNumber()
             countryCode.text = prefilledPhoneComponents.countryCode
             phoneNumber.text = prefilledPhoneComponents.number
-        case .sharedWebCredentials:
+        case .passwordWithSharedWebCredentials:
             fatalError()
         }
 
