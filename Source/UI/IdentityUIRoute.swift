@@ -5,10 +5,10 @@
 
 import Foundation
 
-extension IdentityUI {
+public extension IdentityUI {
     /// Route to a specific screen in the identity UI flow. A route is typically constructed in order to handle a universal (i.e. deep) link URL so that the
     /// identity process can then be presented by going directly to the screen corresponding to the URL.
-    public enum Route {
+    enum Route {
         /// Route to the initial login screen.
         case login
 
@@ -28,7 +28,7 @@ extension IdentityUI {
     }
 }
 
-extension IdentityUI.Route {
+public extension IdentityUI.Route {
     /// Initializes a new route from the given universal (i.e. deep) link URL and configuration. The initializer returns `nil` in case the given URL isn't
     /// recognized as part of an identity process (so that you can possibly handle it in a different way in case you have universal links other than the ones
     /// coming from the identity process).
@@ -36,7 +36,7 @@ extension IdentityUI.Route {
     /// - Parameters:
     ///   - url: The given URL.
     ///   - configuration: The given configuration.
-    public init?(url: URL, configuration: ClientConfiguration) {
+    init?(url: URL, configuration: ClientConfiguration) {
         guard let payload = configuration.parseRedirectURL(url) else {
             return nil
         }
@@ -49,7 +49,7 @@ extension IdentityUI.Route {
 
      - parameter payload: The given redirect payload.
      */
-    public init?(payload: ClientConfiguration.RedirectPayload) {
+    init?(payload: ClientConfiguration.RedirectPayload) {
         guard let launchData = AppLaunchData(payload: payload) else {
             self = .login
             return

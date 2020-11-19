@@ -59,9 +59,9 @@ class IdentityUIViewController: UIViewController {
         self.trackerViewAdditionalFields = trackerViewAdditionalFields
         let typeSelf = type(of: self)
         #if SWIFT_PACKAGE
-        let bundle = Bundle.module
+            let bundle = Bundle.module
         #else
-        let bundle = Bundle(for: typeSelf)
+            let bundle = Bundle(for: typeSelf)
         #endif
         super.init(nibName: typeSelf.nibName, bundle: bundle)
     }

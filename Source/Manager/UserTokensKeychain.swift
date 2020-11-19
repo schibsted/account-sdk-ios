@@ -30,7 +30,7 @@ import Foundation
  */
 
 class UserTokensKeychain: KeychainGenericPasswordType {
-    struct Keys {
+    enum Keys {
         static let accessToken = "access_token"
         static let refreshToken = "refresh_token"
         static let idToken = "id_token"

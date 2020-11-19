@@ -4,6 +4,7 @@ skip_undocumented: true
 hide_documentation_coverage: true
 exclude:
   - Example/**
+  - Package.swift
   - Source/Manager/SwiftKeychain.swift
   - Source/UI/Screens/Identifier/IdentifierViewModel.swift
   - Source/UI/Screens/RequiredFields/RequiredFieldsViewModel.swift

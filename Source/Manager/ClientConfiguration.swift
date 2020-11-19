@@ -72,9 +72,9 @@ public struct ClientConfiguration {
 
         fileprivate static func loadConfigurationData() -> [String: [String: String]] {
             #if SWIFT_PACKAGE
-            let bundle = Bundle.module
+                let bundle = Bundle.module
             #else
-            let bundle = Bundle(for: IdentityManager.self)
+                let bundle = Bundle(for: IdentityManager.self)
             #endif
             guard let configFile = bundle.path(forResource: "Configuration", ofType: "plist") else {
                 preconditionFailure("Configuration.plist file not found in bundle")
@@ -328,26 +328,26 @@ public struct ClientConfiguration {
         return (maybePath, queryComponents)
     }
 
-    struct RedirectInfo {
+    enum RedirectInfo {
         static let pathKey = "path"
         static let persistUserKey = "persist-user"
 
-        struct Signup {
+        enum Signup {
             static let settingsKey = "RedirectInfo.Signup"
             static let path = "validate-after-signup"
         }
 
-        struct ForgotPassword {
+        enum ForgotPassword {
             static let settingsKey = "RedirectInfo.ForgotPassword"
             static let path = "enter-password"
         }
 
-        struct AccountSummary {
+        enum AccountSummary {
             static let settingsKey = "RedirectInfo.AccountSummary"
             static let path = "account-summary"
         }
 
-        struct WebFlowLogin {
+        enum WebFlowLogin {
             static let settingsKey = "RedirectInfo.WebFlowLogin"
         }
     }

@@ -8,7 +8,7 @@ import Foundation
 /**
  Style contains the diffent aspects of UI styling guidelines that we use
  */
-public struct Style {
+public enum Style {
     /**
      The colors we use
 

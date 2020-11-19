@@ -35,9 +35,9 @@ public enum StyleIconKind: String {
 extension UIImage {
     convenience init?(icon: StyleIconKind) {
         #if SWIFT_PACKAGE
-        let bundle = Bundle.module
+            let bundle = Bundle.module
         #else
-        let bundle = Bundle(for: IdentityManager.self)
+            let bundle = Bundle(for: IdentityManager.self)
         #endif
         self.init(named: icon.rawValue, in: bundle, compatibleWith: nil)
     }

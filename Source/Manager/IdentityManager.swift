@@ -370,7 +370,8 @@ public class IdentityManager: IdentityManagerProtocol {
      - parameter useSharedWebCredentials: whether the credentials should be saved to the shared web credentials.
      - parameter completion: a callback that is called after the credential is checked.
      */
-    public func login(username: Identifier, password: String, scopes: [String] = [], persistUser: Bool, useSharedWebCredentials: Bool, completion: @escaping NoValueCallback) {
+    public func login(username: Identifier, password: String, scopes: [String] = [], persistUser: Bool,
+                      useSharedWebCredentials: Bool, completion: @escaping NoValueCallback) {
         log(from: self, "\(username) logging in with scopes: \(scopes), persist: \(persistUser)")
 
         let wrappedCompletion: NoValueCallback = { [weak self] result in
@@ -382,7 +383,7 @@ public class IdentityManager: IdentityManagerProtocol {
             completion(result)
         }
 
-        guard case .email(let email) = username else {
+        guard case let .email(email) = username else {
             wrappedCompletion(.failure(ClientError.unexpectedIdentifier(actual: username, expected: "only EmailAddress supported")))
             return
         }

@@ -5,11 +5,11 @@
 
 import Foundation
 
-extension User {
+public extension User {
     /**
      Gives you access to user device related information
      */
-    public class Device: UserDeviceAPI {
+    class Device: UserDeviceAPI {
         weak var user: UserProtocol?
 
         /**

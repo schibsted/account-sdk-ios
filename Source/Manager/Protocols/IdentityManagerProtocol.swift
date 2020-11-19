@@ -26,7 +26,8 @@ public protocol IdentityManagerProtocol: AnyObject {
     func validate(oneTimeCode: String, for _: Identifier, scopes: [String], persistUser: Bool, completion: @escaping NoValueCallback)
 
     ///
-    func login(username: Identifier, password: String, scopes: [String], persistUser: Bool, useSharedWebCredentials: Bool, completion: @escaping NoValueCallback)
+    func login(username: Identifier, password: String, scopes: [String], persistUser: Bool,
+               useSharedWebCredentials: Bool, completion: @escaping NoValueCallback)
 
     ///
     func signup(

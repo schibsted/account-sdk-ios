@@ -71,16 +71,16 @@ public enum ClientError: Error {
     case noAccess
 }
 
-extension ClientError {
+public extension ClientError {
     /**
      When the SDK returns custom NSError objects. The domain is set to this.
      */
-    public static let domain = "ClientError"
+    static let domain = "ClientError"
     /**
      This is the error code inside the NSError object that is returned from `URLSession.dataTask(with:completion:)` in the case
      that the number of refresh retries has been exceeded
      */
-    public static let RefreshRetryExceededCode = 2
+    static let RefreshRetryExceededCode = 2
 }
 
 extension ClientError: CustomStringConvertible {

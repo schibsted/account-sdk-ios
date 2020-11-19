@@ -8,8 +8,8 @@ import Foundation
 final class SPiDKeychainWrapper {
     public class func accessTokenFromKeychain(forIdentifier identifier: String) -> SPiDAccessToken! {
         var query = setupSearchQuery(identifier: identifier)
-        query[(kSecMatchLimitOne as String)] = true
-        query[(kSecReturnData as String)] = true
+        query[kSecMatchLimitOne as String] = true
+        query[kSecReturnData as String] = true
 
         var cfData: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &cfData)
@@ -27,7 +27,7 @@ final class SPiDKeychainWrapper {
     public class func storeInKeychainAccessToken(withValue accessToken: SPiDAccessToken, forIdentifier identifier: String) -> Bool {
         let data = NSKeyedArchiver.archivedData(withRootObject: accessToken)
         var query = setupSearchQuery(identifier: identifier)
-        query[(kSecValueData as String)] = data
+        query[kSecValueData as String] = data
 
         let status = SecItemAdd(query as CFDictionary, nil)
         if status == errSecSuccess {
@@ -43,7 +43,7 @@ final class SPiDKeychainWrapper {
     public class func updateAccessTokenInKeychain(value accessToken: SPiDAccessToken, forIdentifier identifier: String) -> Bool {
         let data = NSKeyedArchiver.archivedData(withRootObject: accessToken)
         let searchQuery = setupSearchQuery(identifier: identifier)
-        let updateQuery: [String: Any] = [(kSecValueData as String): data]
+        let updateQuery: [String: Any] = [kSecValueData as String: data]
 
         let status = SecItemUpdate(searchQuery as CFDictionary, updateQuery as CFDictionary)
         return status == errSecSuccess
@@ -64,10 +64,10 @@ final class SPiDKeychainWrapper {
 
     private class func setupSearchQuery(identifier: String) -> [String: Any] {
         return [
-            (kSecClass as String): kSecClassGenericPassword,
-            (kSecAttrGeneric as String): identifier,
-            (kSecAttrAccount as String): identifier,
-            (kSecAttrService as String): serviceNameForSPiD,
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrGeneric as String: identifier,
+            kSecAttrAccount as String: identifier,
+            kSecAttrService as String: serviceNameForSPiD,
         ]
     }
 }

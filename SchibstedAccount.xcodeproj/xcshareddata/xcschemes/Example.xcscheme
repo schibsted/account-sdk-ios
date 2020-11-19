@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "43C24187205BF1BE00154866"
-               BuildableName = "SchibstedAccount.framework"
-               BlueprintName = "SchibstedAccount"
+               BlueprintIdentifier = "43E160492063C7A200D9BA3E"
+               BuildableName = "Example.app"
+               BlueprintName = "Example"
                ReferencedContainer = "container:SchibstedAccount.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,26 +27,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "43C24187205BF1BE00154866"
-            BuildableName = "SchibstedAccount.framework"
-            BlueprintName = "SchibstedAccount"
-            ReferencedContainer = "container:SchibstedAccount.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "43C24190205BF1BE00154866"
-               BuildableName = "SchibstedAccountTests.xctest"
-               BlueprintName = "SchibstedAccountTests"
-               ReferencedContainer = "container:SchibstedAccount.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -59,15 +40,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "43C24187205BF1BE00154866"
-            BuildableName = "SchibstedAccount.framework"
-            BlueprintName = "SchibstedAccount"
+            BlueprintIdentifier = "43E160492063C7A200D9BA3E"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
             ReferencedContainer = "container:SchibstedAccount.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -75,15 +57,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "43C24187205BF1BE00154866"
-            BuildableName = "SchibstedAccount.framework"
-            BlueprintName = "SchibstedAccount"
+            BlueprintIdentifier = "43E160492063C7A200D9BA3E"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
             ReferencedContainer = "container:SchibstedAccount.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

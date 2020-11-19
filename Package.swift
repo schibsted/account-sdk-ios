@@ -21,6 +21,13 @@ let package = Package(
                           "UI/Resources/Info.plist"],
                 resources: [
                     .copy("Manager/Configuration.plist")
-                ])
+                ]),
+        .testTarget(name: "SchibstedAccountTests",
+                    dependencies: ["SchibstedAccount", "Quick", "Nimble"],
+                    path: "Tests",
+                    exclude: ["Info.plist"],
+                    resources: [
+                        .copy("Responses/")
+                    ])
     ]
 )

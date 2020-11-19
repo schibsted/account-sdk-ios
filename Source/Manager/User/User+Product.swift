@@ -5,11 +5,11 @@
 
 import Foundation
 
-extension User {
+public extension User {
     /**
      Gives you access to product related information for a user
      */
-    public class Product: UserProductAPI {
+    class Product: UserProductAPI {
         weak var user: UserProtocol?
 
         /**

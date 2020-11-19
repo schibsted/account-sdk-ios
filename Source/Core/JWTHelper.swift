@@ -44,7 +44,7 @@ struct DefaultJWTHelperProxy: JWTHelperProxy {
     }
 }
 
-struct JWTHelper {
+enum JWTHelper {
     static var proxy: JWTHelperProxy = DefaultJWTHelperProxy()
 
     static func toJSON(string: String) throws -> JSONObject {
