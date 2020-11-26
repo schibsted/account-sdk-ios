@@ -526,11 +526,11 @@ extension IdentityUI {
 
                 func presentCompleteProfileCoordinator(user: User) {
                     let navigationController = DismissableNavigationController {
-                        if IdentityUI.updatedTermsCoordinator != nil {
+                        if IdentityUI.completeProfileCoordinator != nil {
                             user.logout()
                             completion(.cancel)
                         }
-                        IdentityUI.updatedTermsCoordinator = nil
+                        IdentityUI.completeProfileCoordinator = nil
                     }
 
                     let completeProfileCoordinator = CompleteProfileCoordinator(
