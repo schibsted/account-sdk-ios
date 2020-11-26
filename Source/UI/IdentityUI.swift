@@ -161,6 +161,7 @@ public class IdentityUI {
     private weak static var presentedIdentityUI: IdentityUI?
 
     private static var updatedTermsCoordinator: UpdatedTermsCoordinator?
+    private static var completeProfileCoordinator: CompleteProfileCoordinator?
 
     /**
      Present a screen where the user can review and accept updated terms and conditions.
@@ -523,51 +524,40 @@ extension IdentityUI {
                     return
                 }
 
-                func success(user: User) {
-                    completion(.success(user: user, persistUser: true))
-                }
-
-                func cancel() {
-                    completion(.cancel)
-                }
-
-                func presentTerms(user: User) {
-                    self._identityManager.fetchTerms { result in
-                        switch result {
-                        case .success(let terms):
-                            let navigationController = DismissableNavigationController {
-                                if IdentityUI.updatedTermsCoordinator != nil {
-                                    user.logout()
-                                    cancel()
-                                }
-                                IdentityUI.updatedTermsCoordinator = nil
-                            }
-
-                            let updatedTermsCoordinator = UpdatedTermsCoordinator(
-                                navigationController: navigationController, configuration: self.configuration)
-
-                            updatedTermsCoordinator.start(input: .init(currentUser: user, terms: terms)) { output in
-                                IdentityUI.updatedTermsCoordinator = nil
-
-                                navigationController.dismiss(animated: true) {
-                                    switch output {
-                                    case .success:
-                                        success(user: user)
-                                    case .cancel:
-                                        cancel()
-                                    }
-                                }
-                            }
-
-                            IdentityUI.updatedTermsCoordinator = updatedTermsCoordinator
-                            self.configuration.presentationHook?(navigationController)
-                            presentingViewController.present(navigationController, animated: true, completion: nil)
-                        case .failure(let error):
-                            log(from: self, error)
+                func presentCompleteProfileCoordinator(user: User) {
+                    let navigationController = DismissableNavigationController {
+                        if IdentityUI.updatedTermsCoordinator != nil {
                             user.logout()
-                            self.present(error: error)
+                            completion(.cancel)
+                        }
+                        IdentityUI.updatedTermsCoordinator = nil
+                    }
+
+                    let completeProfileCoordinator = CompleteProfileCoordinator(
+                        navigationController: navigationController,
+                        identityManager: self._identityManager,
+                        configuration: self.configuration)
+
+                    let interactor = UpdateProfileInteractor(
+                        currentUser: user,
+                        loginFlowVariant: .signin,
+                        tracker: self.configuration.tracker)
+
+                    completeProfileCoordinator.start(input: interactor) { output in
+                        switch output {
+                        case .success:
+                            completion(.success(user: user, persistUser: true))
+                        case .cancel, .back, .reset:
+                            completion(.cancel)
+                        case .error(let error):
+                            log(from: self, error)
+                            completion(.failure(error))
                         }
                     }
+
+                    IdentityUI.completeProfileCoordinator = completeProfileCoordinator
+                    self.configuration.presentationHook?(navigationController)
+                    presentingViewController.present(navigationController, animated: true, completion: nil)
                 }
 
                 self._identityManager.login(username: .email(email),
@@ -576,24 +566,11 @@ extension IdentityUI {
                                             persistUser: true,
                                             useSharedWebCredentials: false) { result in
                     switch result {
+                    case .success:
+                        presentCompleteProfileCoordinator(user: self._identityManager.currentUser)
                     case .failure(let error):
                         log(from: self, error)
                         fallback(.passwordWithPrefilledEmail(email))
-                    case .success:
-                        let user = self._identityManager.currentUser
-                        user.agreements.status { result in
-                            switch result {
-                            case .success(let agreed):
-                                if agreed {
-                                    success(user: user)
-                                } else {
-                                    presentTerms(user: user)
-                                }
-                            case .failure(let error):
-                                log(from: self, error)
-                                presentTerms(user: user)
-                            }
-                        }
                     }
                 }
             }
