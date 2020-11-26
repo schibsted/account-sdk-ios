@@ -560,19 +560,55 @@ extension IdentityUI {
                     presentingViewController.present(navigationController, animated: true, completion: nil)
                 }
 
-                self._identityManager.login(username: .email(email),
-                                            password: password,
-                                            scopes: scopes,
-                                            persistUser: true,
-                                            useSharedWebCredentials: false) { result in
-                    switch result {
-                    case .success:
-                        presentCompleteProfileCoordinator(user: self._identityManager.currentUser)
-                    case .failure(let error):
-                        log(from: self, error)
-                        fallback(.passwordWithPrefilledEmail(email))
+                func ensureRequiredFields(user: User) {
+                    user.profile.requiredFields { result in
+                        switch result {
+                        case .success(let requiredFields):
+                            guard SupportedRequiredField.from(requiredFields).isEmpty else {
+                                presentCompleteProfileCoordinator(user: user)
+                                return
+                            }
+                            completion(.success(user: user, persistUser: true))
+                        case .failure(let error):
+                            log(from: self, error)
+                            completion(.failure(error))
+                        }
                     }
                 }
+
+                func ensureUserAgreedToTerms(user: User) {
+                    user.agreements.status { result in
+                        switch result {
+                        case .success(let agreed):
+                            if agreed {
+                                ensureRequiredFields(user: user)
+                            } else {
+                                presentCompleteProfileCoordinator(user: user)
+                            }
+                        case .failure(let error):
+                            log(from: self, error)
+                            completion(.failure(error))
+                        }
+                    }
+                }
+
+                func login(email: EmailAddress, password: String, scopes: [String]) {
+                    self._identityManager.login(username: .email(email),
+                                                password: password,
+                                                scopes: scopes,
+                                                persistUser: true,
+                                                useSharedWebCredentials: false) { result in
+                        switch result {
+                        case .success:
+                            ensureUserAgreedToTerms(user: self._identityManager.currentUser)
+                        case .failure(let error):
+                            log(from: self, error)
+                            fallback(.passwordWithPrefilledEmail(email))
+                        }
+                    }
+                }
+
+                login(email: email, password: password, scopes: scopes)
             }
         }
     }
