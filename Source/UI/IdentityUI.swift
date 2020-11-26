@@ -24,7 +24,8 @@ public enum LoginMethod {
     /// asks for identifier and then a password to either login or signup if not already registered; the specified email will appear pre-filled in the identity
     /// UI, yet the user will still be able to modify it before submitting.
     case passwordWithPrefilledEmail(EmailAddress)
-    /// prompts the user for using their shared web credentials (if available), with fallback to the regular password flow in case of invalid credentials (or any other failures).
+    /// prompts the user for using their shared web credentials (if available),
+    /// with fallback to the regular password flow in case of invalid credentials (or any other failures).
     @available(iOS 13.0, *)
     case passwordWithSharedWebCredentials
 
@@ -508,6 +509,7 @@ extension IdentityUI {
         var sharedWebCredentialsController: SharedWebCredentialsController?
         sharedWebCredentialsController = SharedWebCredentialsController { [weak self] result in
             guard let self = self else { return }
+            _ = sharedWebCredentialsController // avoids 'unused variable' warning.
             sharedWebCredentialsController = nil
 
             switch result {
