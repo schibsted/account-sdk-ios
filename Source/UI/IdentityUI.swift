@@ -553,6 +553,8 @@ extension IdentityUI {
                             log(from: self, error)
                             completion(.failure(error))
                         }
+
+                        navigationController.dismiss(animated: true, completion: nil)
                     }
 
                     IdentityUI.completeProfileCoordinator = completeProfileCoordinator
