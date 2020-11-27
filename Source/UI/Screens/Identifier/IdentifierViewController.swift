@@ -170,6 +170,8 @@ class IdentifierViewController: IdentityUIViewController {
             showPhoneNumber()
             countryCode.text = prefilledPhoneComponents.countryCode
             phoneNumber.text = prefilledPhoneComponents.number
+        case .passwordWithSharedWebCredentials:
+            fatalError()
         }
 
         skipButton.isHidden = !self.configuration.isSkippable

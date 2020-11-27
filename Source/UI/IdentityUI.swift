@@ -5,6 +5,7 @@
 
 import SafariServices
 import UIKit
+import AuthenticationServices
 
 /// The UI can start logging in a user either via email or phone number
 public enum LoginMethod {
@@ -23,6 +24,10 @@ public enum LoginMethod {
     /// asks for identifier and then a password to either login or signup if not already registered; the specified email will appear pre-filled in the identity
     /// UI, yet the user will still be able to modify it before submitting.
     case passwordWithPrefilledEmail(EmailAddress)
+    /// prompts the user for using their shared web credentials (if available),
+    /// with fallback to the regular password flow in case of invalid credentials (or any other failures).
+    @available(iOS 13.0, *)
+    case passwordWithSharedWebCredentials
 
     /// does the user try to signin or signup
     public enum FlowVariant {
@@ -52,14 +57,14 @@ public enum LoginMethod {
         switch self {
         case .email, .emailWithPrefilledValue, .phone, .phoneWithPrefilledValue:
             return .passwordless
-        case .password, .passwordWithPrefilledEmail:
+        case .password, .passwordWithPrefilledEmail, .passwordWithSharedWebCredentials:
             return .password
         }
     }
 
     var identifierType: IdentifierType {
         switch self {
-        case .email, .emailWithPrefilledValue, .password, .passwordWithPrefilledEmail:
+        case .email, .emailWithPrefilledValue, .password, .passwordWithPrefilledEmail, .passwordWithSharedWebCredentials:
             return .email
         case .phone, .phoneWithPrefilledValue:
             return .phone
@@ -72,7 +77,7 @@ public enum LoginMethod {
             return .email
         case .phone, .phoneWithPrefilledValue:
             return .phone
-        case .password, .passwordWithPrefilledEmail:
+        case .password, .passwordWithPrefilledEmail, .passwordWithSharedWebCredentials:
             return .password
         }
     }
@@ -156,6 +161,7 @@ public class IdentityUI {
     private weak static var presentedIdentityUI: IdentityUI?
 
     private static var updatedTermsCoordinator: UpdatedTermsCoordinator?
+    private static var completeProfileCoordinator: CompleteProfileCoordinator?
 
     /**
      Present a screen where the user can review and accept updated terms and conditions.
@@ -462,6 +468,15 @@ extension IdentityUI {
         case let .byRoute(route, vc):
             handleRouteForUnpresentedUI(route: route, byPresentingIn: vc, client: client, completion: completion)
         case let .byLoginMethod(loginMethod, vc, localizedTeaserText, scopes):
+            if #available(iOS 13.0, *), case .passwordWithSharedWebCredentials = loginMethod {
+                handleWebCredentials(client: client,
+                                     presentingViewController: vc,
+                                     localizedTeaserText: localizedTeaserText,
+                                     scopes: scopes,
+                                     completion: completion)
+                return
+            }
+
             let identifierViewController = makeIdentifierViewController(
                 loginMethod: loginMethod,
                 localizedTeaserText: localizedTeaserText,
@@ -474,6 +489,130 @@ extension IdentityUI {
             navigationController.viewControllers = [identifierViewController]
             configuration.presentationHook?(navigationController)
             vc.present(navigationController, animated: true)
+        }
+    }
+
+    @available(iOS 13.0, *)
+    private func handleWebCredentials(client: Client,
+                                      presentingViewController: UIViewController,
+                                      localizedTeaserText: String?,
+                                      scopes: [String],
+                                      completion: @escaping (Output) -> Void) {
+        func fallback(_ loginMethod: LoginMethod) {
+            show(input: .byLoginMethod(loginMethod,
+                                       presentingViewController: presentingViewController,
+                                       localizedTeaserText: localizedTeaserText,
+                                       scopes: scopes),
+                 client: client,
+                 completion: completion)
+        }
+
+        var sharedWebCredentialsController: SharedWebCredentialsController?
+        sharedWebCredentialsController = SharedWebCredentialsController { [weak self] result in
+            guard let self = self else { return }
+            _ = sharedWebCredentialsController // avoids 'unused variable' warning.
+            sharedWebCredentialsController = nil
+
+            switch result {
+            case .failure(let error):
+                log(from: self, error)
+                fallback(.password)
+            case .success((let username, let password)):
+                guard let email = EmailAddress(username) else {
+                    log(from: self, "Invalid email '\(username)'.")
+                    fallback(.password)
+                    return
+                }
+
+                func presentCompleteProfileCoordinator(user: User) {
+                    let navigationController = DismissableNavigationController {
+                        if IdentityUI.completeProfileCoordinator != nil {
+                            user.logout()
+                            completion(.cancel)
+                        }
+                        IdentityUI.completeProfileCoordinator = nil
+                    }
+
+                    let completeProfileCoordinator = CompleteProfileCoordinator(
+                        navigationController: navigationController,
+                        identityManager: self._identityManager,
+                        configuration: self.configuration)
+
+                    let interactor = UpdateProfileInteractor(
+                        currentUser: user,
+                        loginFlowVariant: .signin,
+                        tracker: self.configuration.tracker)
+
+                    completeProfileCoordinator.start(input: interactor) { output in
+                        switch output {
+                        case .success:
+                            IdentityUI.completeProfileCoordinator = nil
+                            completion(.success(user: user, persistUser: true))
+                        case .cancel, .back, .reset:
+                            completion(.cancel)
+                        case .error(let error):
+                            log(from: self, error)
+                            completion(.failure(error))
+                        }
+
+                        navigationController.dismiss(animated: true, completion: nil)
+                    }
+
+                    IdentityUI.completeProfileCoordinator = completeProfileCoordinator
+                    self.configuration.presentationHook?(navigationController)
+                    presentingViewController.present(navigationController, animated: true, completion: nil)
+                }
+
+                func ensureRequiredFields(user: User) {
+                    user.profile.requiredFields { result in
+                        switch result {
+                        case .success(let requiredFields):
+                            guard SupportedRequiredField.from(requiredFields).isEmpty else {
+                                presentCompleteProfileCoordinator(user: user)
+                                return
+                            }
+                            completion(.success(user: user, persistUser: true))
+                        case .failure(let error):
+                            log(from: self, error)
+                            completion(.failure(error))
+                        }
+                    }
+                }
+
+                func ensureUserAgreedToTerms(user: User) {
+                    user.agreements.status { result in
+                        switch result {
+                        case .success(let agreed):
+                            if agreed {
+                                ensureRequiredFields(user: user)
+                            } else {
+                                presentCompleteProfileCoordinator(user: user)
+                            }
+                        case .failure(let error):
+                            log(from: self, error)
+                            completion(.failure(error))
+                        }
+                    }
+                }
+
+                func login(email: EmailAddress, password: String, scopes: [String]) {
+                    self._identityManager.login(username: .email(email),
+                                                password: password,
+                                                scopes: scopes,
+                                                persistUser: true,
+                                                useSharedWebCredentials: false) { result in
+                        switch result {
+                        case .success:
+                            ensureUserAgreedToTerms(user: self._identityManager.currentUser)
+                        case .failure(let error):
+                            log(from: self, error)
+                            fallback(.passwordWithPrefilledEmail(email))
+                        }
+                    }
+                }
+
+                login(email: email, password: password, scopes: scopes)
+            }
         }
     }
 
@@ -751,5 +890,40 @@ private final class DismissableNavigationController: UINavigationController {
 
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+@available(iOS 13.0, *)
+private final class SharedWebCredentialsController: NSObject, ASAuthorizationControllerDelegate {
+    private var authorizationController: ASAuthorizationController?
+    private let completion: (Swift.Result<(String, String), Swift.Error>) -> Void
+
+    init(completion: @escaping (Swift.Result<(String, String), Swift.Error>) -> Void) {
+        let authorizationRequest = ASAuthorizationPasswordProvider().createRequest()
+        let authorizationController = ASAuthorizationController(authorizationRequests: [authorizationRequest])
+        self.authorizationController = authorizationController
+        self.completion = completion
+
+        super.init()
+
+        authorizationController.delegate = self
+        authorizationController.performRequests()
+    }
+
+    public func authorizationController(controller: ASAuthorizationController,
+                                        didCompleteWithAuthorization authorization: ASAuthorization) {
+        defer { authorizationController = nil }
+        guard let credential = authorization.credential as? ASPasswordCredential else {
+            enum Error: Swift.Error { case noCredentials }
+            self.completion(.failure(Error.noCredentials))
+            return
+        }
+        self.completion(.success((credential.user, credential.password)))
+    }
+
+    public func authorizationController(controller: ASAuthorizationController,
+                                        didCompleteWithError error: Swift.Error) {
+        defer { authorizationController = nil }
+        self.completion(.failure(error))
     }
 }
