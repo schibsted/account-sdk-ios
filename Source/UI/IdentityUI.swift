@@ -544,10 +544,9 @@ extension IdentityUI {
                         tracker: self.configuration.tracker)
 
                     completeProfileCoordinator.start(input: interactor) { output in
-                        IdentityUI.completeProfileCoordinator = nil
-
                         switch output {
                         case .success:
+                            IdentityUI.completeProfileCoordinator = nil
                             completion(.success(user: user, persistUser: true))
                         case .cancel, .back, .reset:
                             completion(.cancel)
