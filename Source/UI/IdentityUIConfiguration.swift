@@ -45,6 +45,9 @@ public struct IdentityUIConfiguration {
 
     public let disableWhatsThisButton: Bool
 
+    /// This determines whether the persistent login checkbox should be hidden, defaults to false
+    public let hidePersistentLoginCheckbox: Bool
+
     /**
      Some of the UI screens will use the bundle name of your app. Sometimes this is not what you want
      so you can set this to override it
@@ -85,6 +88,7 @@ public struct IdentityUIConfiguration {
         enableBiometrics: Bool = false,
         enableSharedWebCredentials: Bool = false,
         disableWhatsThisButton: Bool = false,
+        hidePersistentLoginCheckbox: Bool = false,
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
@@ -100,6 +104,7 @@ public struct IdentityUIConfiguration {
         self.enableSharedWebCredentials = enableSharedWebCredentials
         self.tracker = tracker
         self.disableWhatsThisButton = disableWhatsThisButton
+        self.hidePersistentLoginCheckbox = hidePersistentLoginCheckbox
         if let appName = appName {
             self.appName = appName
         }
@@ -124,6 +129,7 @@ public struct IdentityUIConfiguration {
         enableBiometrics: Bool? = nil,
         enableSharedWebCredentials: Bool? = nil,
         disableWhatsThisButton: Bool? = nil,
+        hidePersistentLoginCheckbox: Bool? = false,
         presentationHook: ((UIViewController) -> Void)? = nil,
         tracker: TrackingEventsHandler? = nil,
         localizationBundle: Bundle? = nil,
@@ -137,6 +143,7 @@ public struct IdentityUIConfiguration {
             enableBiometrics: enableBiometrics ?? self.enableBiometrics,
             enableSharedWebCredentials: enableSharedWebCredentials ?? self.enableSharedWebCredentials,
             disableWhatsThisButton: disableWhatsThisButton ?? self.disableWhatsThisButton,
+            hidePersistentLoginCheckbox: hidePersistentLoginCheckbox ?? self.hidePersistentLoginCheckbox,
             presentationHook: presentationHook ?? self.presentationHook,
             tracker: tracker ?? self.tracker,
             localizationBundle: localizationBundle ?? self.localizationBundle,

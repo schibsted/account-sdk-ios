@@ -131,6 +131,12 @@ class PasswordViewController: IdentityUIViewController {
         }
     }
 
+    @IBOutlet var persistentLoginStackView: UIStackView! {
+        didSet {
+            persistentLoginStackView.isHidden = configuration.hidePersistentLoginCheckbox
+        }
+    }
+
     let viewModel: PasswordViewModel
 
     init(configuration: IdentityUIConfiguration, navigationSettings: NavigationSettings, viewModel: PasswordViewModel) {
