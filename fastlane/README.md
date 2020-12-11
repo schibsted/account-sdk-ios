@@ -46,6 +46,11 @@ Configurable with:
 - `TESTS`: To test or not to test (default to YES)
 
 - `DOCUMENTATION`: To doc or not to doc (default to YES)
+### ios clean
+```
+fastlane ios clean
+```
+clean derived data
 
 ----
 

@@ -9,7 +9,7 @@ class TaskOperation: Operation {
     private let lock = NSLock()
 
     #if DEBUG
-        static var counter = AtomicInt(0)
+        static let counter = AtomicInt(0)
     #endif
 
     static let sharedQueue = DispatchQueue(label: "com.schibsted.identity.TaskOperation", attributes: [.concurrent])

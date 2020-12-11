@@ -59,7 +59,7 @@ class TestingNetworkingProxy: NetworkingProxy {
     }
 
     let dispatchQueue = DispatchQueue(label: "com.schibsted.identity.TestingNetworkHelper", attributes: [])
-    var _calls: [CallData] = []
+    private var _calls: [CallData] = []
     var calls: [CallData] {
         return self.dispatchQueue.sync {
             self._calls
@@ -100,11 +100,6 @@ class TestingNetworkingProxy: NetworkingProxy {
             passedNSSession: session
         )
 
-        // When using operation queues and GCD this guy can potentially be bombarded from every direction. Protect it with all your might.
-        self.dispatchQueue.async { [weak self] in
-            self?._calls.append(callData)
-        }
-
         let decoratedCallback: URLSessionTaskCallback? = completion != nil ? { data, response, error in
             callData.returnedData = data
             callData.returnedResponse = response
@@ -122,6 +117,12 @@ class TestingNetworkingProxy: NetworkingProxy {
             )
         }
         callData.sentHTTPHeaders = requestHeaders.merging(sessionHeaders) { current, _ in current }
+
+        // When using operation queues and GCD this guy can potentially be bombarded from every direction. Protect it with all your might.
+        self.dispatchQueue.sync {
+            self._calls.append(callData)
+        }
+
         return dataTask
     }
 }
