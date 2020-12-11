@@ -10,5 +10,6 @@
 1. Wait until CI completes successfully, then merge the PR to `master`.
 1. Create a new [release via GitHub](https://github.com/schibsted/account-sdk-ios/releases).
     1. Enter the version number as the tag name and include the changes in the release description.
+1. Lint the CocoaPod: `pod lib lint SchibstedAccount.podspec`, then fix errors and warnings if there are any.
 1. Publish the pod: `pod trunk push`.
 1. Announce the new release on Slack in #ios-internal-libs and #spt-id-mobile.
