@@ -6,15 +6,22 @@
 import Foundation
 import Nimble
 import Quick
+import XCTest
 @testable import SchibstedAccount
 
 let kDummyError = NSError(domain: "Irrelevant NSError", code: 0, userInfo: nil)
 
 extension Data {
     static func fromFile(_ name: String) -> Data {
+        #if SWIFT_PACKAGE
+        let bundle = Bundle.module
+        let resource = "Responses/\(name)"
+        #else
         let bundle = Bundle(for: TestingUser.self)
+        let resource = name
+        #endif
 
-        guard let path = bundle.path(forResource: name, ofType: "json") else {
+        guard let path = bundle.path(forResource: resource, ofType: "json") else {
             preconditionFailure("Must specify a file name that exists in the test bundle")
         }
 

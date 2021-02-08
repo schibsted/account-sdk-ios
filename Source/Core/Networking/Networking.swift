@@ -27,7 +27,7 @@ extension URLSessionTask.State: CustomStringConvertible {
     }
 }
 
-struct Networking {
+enum Networking {
     static var proxy: NetworkingProxy = DefaultNetworkingProxy()
 
     static var additionalHeaders: [String: String]? {

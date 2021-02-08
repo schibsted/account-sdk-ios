@@ -18,18 +18,18 @@ class WeakValue<V: AnyObject>: CustomStringConvertible {
 class SynchronizedWeakDictionary<K: Hashable, V: AnyObject> {
     private let dictionary = SynchronizedDictionary<K, WeakValue<V>>()
     subscript(key: K) -> V? {
+        get {
+            guard let weakValue = dictionary.removeValue(forKey: key, if: { $0.value == nil }) else {
+                return nil
+            }
+            return weakValue.value
+        }
         set {
             guard newValue != nil else {
                 dictionary[key] = nil
                 return
             }
             dictionary[key] = WeakValue(newValue)
-        }
-        get {
-            guard let weakValue = dictionary.removeValue(forKey: key, if: { $0.value == nil }) else {
-                return nil
-            }
-            return weakValue.value
         }
     }
 

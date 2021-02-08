@@ -22,9 +22,9 @@ private enum Keys {
     }
 }
 
-extension SDKConfiguration {
+public extension SDKConfiguration {
     /// How agreements are cached
-    public struct AgreementsCache {
+    struct AgreementsCache {
         static let `default` = AgreementsCache(
             isOn: true,
             minDays: 1,

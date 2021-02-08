@@ -33,7 +33,7 @@ import Foundation
  way to recover short of logging the user back in again.
 
  */
-extension URLSession {
+public extension URLSession {
     /**
      Creates a URLSession object that is tied to a User object which means it will set authentication headers based on the
      user and also take care of any oauth intricacies that need to be handled. If you use thie URLSession that if there's
@@ -45,7 +45,7 @@ extension URLSession {
      - parameter: delegate: see docs for URLSession
      - parameter: delegateQueue: see docs for URLSession
      */
-    public convenience init(user: User, configuration: URLSessionConfiguration, delegate: URLSessionDelegate?, delegateQueue: OperationQueue?) {
+    convenience init(user: User, configuration: URLSessionConfiguration, delegate: URLSessionDelegate?, delegateQueue: OperationQueue?) {
         var adjustedheaders = configuration.httpAdditionalHeaders ?? [AnyHashable: Any]()
         adjustedheaders.updateValue(String(describing: ObjectIdentifier(user).hashValue), forKey: AutoRefreshURLProtocol.key)
         adjustedheaders.updateValue(UserAgent().value, forKey: Networking.Header.xSchibstedAccountUserAgent.rawValue)
@@ -65,7 +65,7 @@ extension URLSession {
      - parameter: user: `User` object that you want this URLSession to be associated with
      - parameter: configuration: see docs for URLSession
      */
-    public convenience init(user: User, configuration: URLSessionConfiguration) {
+    convenience init(user: User, configuration: URLSessionConfiguration) {
         self.init(user: user, configuration: configuration, delegate: nil, delegateQueue: nil)
     }
 }

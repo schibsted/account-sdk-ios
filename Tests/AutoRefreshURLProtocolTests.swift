@@ -182,7 +182,7 @@ class AutoRefreshURLProtocolTests: QuickSpec {
 
             waitUntil { done in
                 let task = session.dataTask(with: URLRequest(url: url)) { _, _, error in
-                    expect(error).to(matchError(expectedError))
+                    expect((error as NSError?)?.code).to(equal(expectedError.code))
                     done()
                 }
                 task.resume()

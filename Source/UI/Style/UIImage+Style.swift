@@ -3,6 +3,8 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
+import UIKit
+
 extension UIImage {
     static var schibstedCheckedBox: UIImage { return Style.icons[.checkedBox] }
     static var schibstedUncheckedBox: UIImage { return Style.icons[.uncheckedBox] }

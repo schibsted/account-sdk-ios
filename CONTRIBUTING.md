@@ -34,7 +34,7 @@ The Example app will then build and there's an offline mode switch (experimental
 
 **Building**:
 
-Open up SchibstedAccount.xcodeproj and hack away.
+Run `pod install` and open up SchibstedAccount.xcworkspace and hack away.
 
 ## Code style
 

@@ -3,6 +3,8 @@
 // Licensed under the terms of the MIT license. See LICENSE in the project root.
 //
 
+import UIKit
+
 class CheckInboxViewModel {
     let identifier: Identifier
     let localizationBundle: Bundle

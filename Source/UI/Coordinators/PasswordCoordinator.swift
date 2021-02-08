@@ -6,7 +6,7 @@
 import LocalAuthentication
 import UIKit
 
-private struct Constants {
+private enum Constants {
     static let BiometricsSecretsLabel = "com.schibsted.account.biometrics.secrets"
     static let EmailStorageLabel = "com.schibsted.account.user.email"
 }
@@ -267,9 +267,9 @@ extension PasswordCoordinator {
     private func canUseBiometrics() -> Bool {
         let context = LAContext()
         guard #available(iOS 11.3, *),
-            configuration.enableBiometrics,
-            context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
-            context.biometryType == .touchID || context.biometryType == .faceID
+              configuration.enableBiometrics,
+              context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil),
+              context.biometryType == .touchID || context.biometryType == .faceID
         else {
             return false
         }
@@ -300,12 +300,12 @@ extension PasswordCoordinator {
             return
         }
         guard #available(iOS 11.3, *),
-            let accessControl = SecAccessControlCreateWithFlags(
-                kCFAllocatorDefault,
-                kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-                .biometryCurrentSet,
-                nil
-            ) else {
+              let accessControl = SecAccessControlCreateWithFlags(
+                  kCFAllocatorDefault,
+                  kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+                  .biometryCurrentSet,
+                  nil
+              ) else {
             return
         }
         var dictionary = [String: Any]()
