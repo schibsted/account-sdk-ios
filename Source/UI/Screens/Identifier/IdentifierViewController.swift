@@ -27,11 +27,7 @@ class IdentifierViewController: IdentityUIViewController {
             whastThisButton.isHidden = configuration.disableWhatsThisButton
         }
     }
-    @IBOutlet var backgroundView: UIView! {
-        didSet {
-            backgroundView.backgroundColor = .schibstedLightGray
-        }
-    }
+    
     @IBAction func didTapWhatsThis(_: UIButton) {
         configuration.tracker?.engagement(.click(on: .whatsSchibstedAccount), in: trackerScreenID)
         didRequestAction?(.showHelp(url: viewModel.helpURL))
