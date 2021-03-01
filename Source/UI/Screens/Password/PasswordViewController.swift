@@ -83,7 +83,7 @@ class PasswordViewController: IdentityUIViewController {
             identifierLabel.text = viewModel.identifier.originalString
         }
     }
-    @IBOutlet var newAccountCreateInfoLabel: NormalLabel! {
+    @IBOutlet var newAccountCreateInfoLabel: UILabel! {
         didSet {
             newAccountCreateInfoLabel.text = viewModel.creatingNewAccountNotice
         }

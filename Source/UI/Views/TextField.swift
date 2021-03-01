@@ -35,7 +35,7 @@ class TextField: UITextField, Themeable {
         layer.cornerRadius = theme.geometry.inputViewCornerRadius
         textColor = theme.colors.normalText
         // cursor color
-        tintColor = theme.colors.textInputCursor
+        tintColor = theme.colors.textInputCursor        
         contentInset = UIEdgeInsets(
             top: theme.geometry.groupedViewSpacing,
             left: 16,

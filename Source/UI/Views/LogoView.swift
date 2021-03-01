@@ -24,6 +24,7 @@ class LogoStackView: UIStackView, Themeable {
         schImageView.widthAnchor.constraint(equalToConstant: 69).isActive = true
         schImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         schImageView.translatesAutoresizingMaskIntoConstraints = false
+        schImageView.tintColor = theme.colors.schibstedLogoTint
 
         let filler = UIView(frame: .zero)
         filler.translatesAutoresizingMaskIntoConstraints = false

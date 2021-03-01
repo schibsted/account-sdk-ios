@@ -11,11 +11,13 @@ class PasswordTextField: TextField {
         super.applyTheme(theme: theme)
 
         let passwordVisibilityView = UIButton(type: .custom)
+        if #available(iOS 13.0, *) {
+            passwordVisibilityView.tintColor = .label
+        }
+
         passwordVisibilityView.contentEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: theme.geometry.groupedViewSpacing)
-        passwordVisibilityView.setImage(UIImage.schibstedPasswordShow.resize(targetSize: CGSize(width: 25, height: 25)), for: .normal)
-        passwordVisibilityView.frame = CGRect(x: 0, y: 0,
-                                              width: UIImage.schibstedPasswordShow.size.width + theme.geometry.groupedViewSpacing,
-                                              height: UIImage.schibstedPasswordShow.size.height)
+        passwordVisibilityView.setImage(UIImage.schibstedPasswordShow, for: .normal)
+        passwordVisibilityView.frame = CGRect(x: 0, y: 0, width: 25 + theme.geometry.groupedViewSpacing, height: 25)
         passwordVisibilityView.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
 
         keyboardType = .default
@@ -33,10 +35,10 @@ class PasswordTextField: TextField {
 
     @IBAction private func togglePasswordVisibility(passwordVisibility: UIButton) {
         if isSecureTextEntry {
-            passwordVisibility.setImage(UIImage.schibstedPasswordHide.resize(targetSize: CGSize(width: 25, height: 25)), for: .normal)
+            passwordVisibility.setImage(UIImage.schibstedPasswordHide, for: .normal)
             isSecureTextEntry = false
         } else {
-            passwordVisibility.setImage(UIImage.schibstedPasswordShow.resize(targetSize: CGSize(width: 25, height: 25)), for: .normal)
+            passwordVisibility.setImage(UIImage.schibstedPasswordShow, for: .normal)
             isSecureTextEntry = true
         }
     }
