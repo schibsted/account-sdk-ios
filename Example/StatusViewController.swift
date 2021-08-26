@@ -223,4 +223,13 @@ class StatusViewController: UIViewController {
             }
         }
     }
+
+    @IBAction func storeToDevice(_ sender: Any) {
+        User.storeOnDevice(withConfiguration: .current, storageKey: "key-set-by-brand")
+    }
+    
+    @IBAction func storeFromDeviceToKeyhcain(_ sender: Any) {
+        let user = User.loadFromDevice(withConfiguration: .current, storageKey: "key-set-by-brand")
+        print("user is loggedin? \(user.state.description)")
+    }
 }
