@@ -14,4 +14,20 @@ public extension User {
         try? user.loadStoredTokens()
         return user
     }
+    /**
+     Enables App transfer step 1
+     */
+    static func storeOnDevice(withConfiguration clientConfiguration: ClientConfiguration, storageKey: String) {
+        let user = User(clientConfiguration: clientConfiguration)
+        try? user.storeOnDevice(key: storageKey)
+    }
+    /**
+     Enables App transfer step 2
+     */
+    static func loadFromDevice(withConfiguration clientConfiguration: ClientConfiguration, storageKey: String) -> User {
+        let user = User(clientConfiguration: clientConfiguration)
+        try? user.loadFromDeviceToKeychain(key: storageKey)
+
+        return User.loadLast(withConfiguration: clientConfiguration)
+    }
 }

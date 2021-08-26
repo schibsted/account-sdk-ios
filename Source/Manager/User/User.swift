@@ -292,6 +292,38 @@ public class User: UserProtocol {
         isPersistent = true
     }
 
+    func storeOnDevice(key: String) throws {
+        do {
+            let tokens = try UserTokensStorage(accessGroup: clientConfiguration.accessGroup).loadTokens()
+            let keyPrefix = "old-sdk-app-transfer-"
+
+            if let encoded = try? JSONEncoder().encode(tokens) {
+                UserDefaults.standard.set(encoded, forKey: keyPrefix + key)
+            }
+        } catch {
+            log(level: .error, from: self, "failed to storeOnDevice tokens: \(error)", force: true)
+        }
+    }
+
+    func loadFromDeviceToKeychain(key: String) throws {
+        let keyPrefix = "old-sdk-app-transfer-"
+
+        if let tokenData = UserDefaults.standard.object(forKey: "old-sdk-app-transfer-" + key) as? Data,
+           let decodedTokenData = try? JSONDecoder().decode(TokenData.self, from: tokenData) {
+            // Storing in Keyhcain
+            do {
+                isPersistent = true
+                try set(accessToken: decodedTokenData.accessToken,
+                        refreshToken: decodedTokenData.refreshToken,
+                        idToken: decodedTokenData.idToken,
+                        userID: decodedTokenData.userID)
+                UserDefaults.standard.removeObject(forKey: keyPrefix + key)
+            } catch {
+                log(level: .error, from: self, "failed from to storeFromDeviceToKeychain: \(error)", force: true)
+            }
+        }
+    }
+
     func persistCurrentTokens() {
         guard !isPersistent, let tokens = self.tokens else { return }
         do {

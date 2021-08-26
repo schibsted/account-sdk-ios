@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct TokenData: JSONParsable, Equatable {
+struct TokenData: JSONParsable, Equatable, Codable {
     let accessToken: String
     let refreshToken: String?
     let idToken: IDToken?
