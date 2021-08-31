@@ -308,7 +308,7 @@ public class User: UserProtocol {
     func loadFromDeviceToKeychain(key: String) throws {
         let keyPrefix = "old-sdk-app-transfer-"
 
-        if let tokenData = UserDefaults.standard.object(forKey: "old-sdk-app-transfer-" + key) as? Data,
+        if let tokenData = UserDefaults.standard.object(forKey: keyPrefix + key) as? Data,
            let decodedTokenData = try? JSONDecoder().decode(TokenData.self, from: tokenData) {
             // Storing in Keyhcain
             do {
