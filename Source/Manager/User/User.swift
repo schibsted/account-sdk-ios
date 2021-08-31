@@ -292,13 +292,15 @@ public class User: UserProtocol {
         isPersistent = true
     }
 
+    
+    private static let keyPrefix = "old-sdk-app-transfer-"
+    
     func storeOnDevice(key: String) throws {
         do {
             let tokens = try UserTokensStorage(accessGroup: clientConfiguration.accessGroup).loadTokens()
-            let keyPrefix = "old-sdk-app-transfer-"
-
+            
             if let encoded = try? JSONEncoder().encode(tokens) {
-                UserDefaults.standard.set(encoded, forKey: keyPrefix + key)
+                UserDefaults.standard.set(encoded, forKey: User.keyPrefix + key)
             }
         } catch {
             log(level: .error, from: self, "failed to storeOnDevice tokens: \(error)", force: true)
@@ -306,9 +308,8 @@ public class User: UserProtocol {
     }
 
     func loadFromDeviceToKeychain(key: String) throws {
-        let keyPrefix = "old-sdk-app-transfer-"
 
-        if let tokenData = UserDefaults.standard.object(forKey: keyPrefix + key) as? Data,
+        if let tokenData = UserDefaults.standard.object(forKey: User.keyPrefix + key) as? Data,
            let decodedTokenData = try? JSONDecoder().decode(TokenData.self, from: tokenData) {
             // Storing in Keyhcain
             do {
@@ -317,7 +318,7 @@ public class User: UserProtocol {
                         refreshToken: decodedTokenData.refreshToken,
                         idToken: decodedTokenData.idToken,
                         userID: decodedTokenData.userID)
-                UserDefaults.standard.removeObject(forKey: keyPrefix + key)
+                UserDefaults.standard.removeObject(forKey: User.keyPrefix + key)
             } catch {
                 log(level: .error, from: self, "failed from to storeFromDeviceToKeychain: \(error)", force: true)
             }
