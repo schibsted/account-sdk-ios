@@ -292,13 +292,12 @@ public class User: UserProtocol {
         isPersistent = true
     }
 
-    
     private static let keyPrefix = "old-sdk-app-transfer-"
-    
+
     func storeOnDevice(key: String) throws {
         do {
             let tokens = try UserTokensStorage(accessGroup: clientConfiguration.accessGroup).loadTokens()
-            
+
             if let encoded = try? JSONEncoder().encode(tokens) {
                 UserDefaults.standard.set(encoded, forKey: User.keyPrefix + key)
             }

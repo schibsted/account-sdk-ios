@@ -230,6 +230,6 @@ class StatusViewController: UIViewController {
     
     @IBAction func storeFromDeviceToKeyhcain(_ sender: Any) {
         let user = User.loadFromDevice(withConfiguration: .current, storageKey: "key-set-by-brand")
-        print("user is loggedin? \(user.state.description)")
+        print("user is loggedin? \(String(describing: user?.state.description))")
     }
 }

@@ -24,10 +24,10 @@ public extension User {
     /**
      Enables App transfer step 2
      */
-    static func loadFromDevice(withConfiguration clientConfiguration: ClientConfiguration, storageKey: String) -> User {
+    static func loadFromDevice(withConfiguration clientConfiguration: ClientConfiguration, storageKey: String) -> User? {
         let user = User(clientConfiguration: clientConfiguration)
         try? user.loadFromDeviceToKeychain(key: storageKey)
 
-        return User.loadLast(withConfiguration: clientConfiguration)
+        return user
     }
 }
