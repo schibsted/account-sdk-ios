@@ -225,11 +225,21 @@ class StatusViewController: UIViewController {
     }
 
     @IBAction func storeToDevice(_ sender: Any) {
-        User.storeOnDevice(withConfiguration: .current, storageKey: "key-set-by-brand")
+        do {
+            try User.storeOnDevice(withConfiguration: .current, storageKey: "key-set-by-brand")
+        } catch {
+            print("Something went wrong: \(error)")
+        }
+        
     }
     
     @IBAction func storeFromDeviceToKeyhcain(_ sender: Any) {
-        let user = User.loadFromDevice(withConfiguration: .current, storageKey: "key-set-by-brand")
-        print("user is loggedin? \(String(describing: user?.state.description))")
+        do {
+            let user = try User.loadFromDevice(withConfiguration: .current, storageKey: "key-set-by-brand")
+            print("user state is? \(String(describing: user.state.description))")
+        } catch {
+            print("Something went wrong: \(error)")
+        }
+        
     }
 }

@@ -297,21 +297,22 @@ public class User: UserProtocol {
     func storeOnDevice(key: String) throws {
         do {
             let tokens = try UserTokensStorage(accessGroup: clientConfiguration.accessGroup).loadTokens()
+            let encoded = try JSONEncoder().encode(tokens)
 
-            if let encoded = try? JSONEncoder().encode(tokens) {
-                UserDefaults.standard.set(encoded, forKey: User.keyPrefix + key)
-            }
+            UserDefaults.standard.set(encoded, forKey: User.keyPrefix + key)
+            UserDefaults.standard.synchronize()
         } catch {
             log(level: .error, from: self, "failed to storeOnDevice tokens: \(error)", force: true)
+            throw error
         }
     }
 
     func loadFromDeviceToKeychain(key: String) throws {
 
-        if let tokenData = UserDefaults.standard.object(forKey: User.keyPrefix + key) as? Data,
-           let decodedTokenData = try? JSONDecoder().decode(TokenData.self, from: tokenData) {
+        if let tokenData = UserDefaults.standard.object(forKey: User.keyPrefix + key) as? Data {
             // Storing in Keyhcain
             do {
+                let decodedTokenData = try JSONDecoder().decode(TokenData.self, from: tokenData)
                 isPersistent = true
                 try set(accessToken: decodedTokenData.accessToken,
                         refreshToken: decodedTokenData.refreshToken,
@@ -320,6 +321,7 @@ public class User: UserProtocol {
                 UserDefaults.standard.removeObject(forKey: User.keyPrefix + key)
             } catch {
                 log(level: .error, from: self, "failed from to storeFromDeviceToKeychain: \(error)", force: true)
+                throw error
             }
         }
     }
