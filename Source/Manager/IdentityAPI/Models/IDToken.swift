@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct IDToken: Equatable {
+struct IDToken: Equatable, Codable {
     let string: String
     let subjectID: String
     let legacyUserID: String?
