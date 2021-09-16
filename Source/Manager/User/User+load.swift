@@ -23,14 +23,6 @@ public extension User {
     }
 
     /**
-     Enables App transfer step 1 - Clear when user logs out
-     */
-    static func clearStoredUserOnDevice(withConfiguration clientConfiguration: ClientConfiguration, storageKey: String) throws {
-        let user = User(clientConfiguration: clientConfiguration)
-        user.clearStoredUserOnDevice(key: storageKey)
-    }
-
-    /**
      Enables App transfer step 2
      */
     static func loadFromDevice(withConfiguration clientConfiguration: ClientConfiguration, storageKey: String) throws -> User {
@@ -38,5 +30,13 @@ public extension User {
         try user.loadFromDeviceToKeychain(key: storageKey)
 
         return user
+    }
+
+    /**
+     Clear when user logs out
+     */
+    static func clearStoredUserOnDevice(withConfiguration clientConfiguration: ClientConfiguration, storageKey: String) throws {
+        let user = User(clientConfiguration: clientConfiguration)
+        user.clearStoredUserOnDevice(key: storageKey)
     }
 }
