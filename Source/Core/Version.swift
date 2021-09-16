@@ -6,4 +6,4 @@
 import Foundation
 
 /// Version of the SDK.
-public let sdkVersion = "2.10.0"
+public let sdkVersion = "2.11.0"
