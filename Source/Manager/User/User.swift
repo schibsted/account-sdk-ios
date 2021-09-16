@@ -307,8 +307,11 @@ public class User: UserProtocol {
         }
     }
 
-    func loadFromDeviceToKeychain(key: String) throws {
+    func clearStoredUserOnDevice(key: String) {
+        UserDefaults.standard.removeObject(forKey: User.keyPrefix + key)
+    }
 
+    func loadFromDeviceToKeychain(key: String) throws {
         if let tokenData = UserDefaults.standard.object(forKey: User.keyPrefix + key) as? Data {
             // Storing in Keyhcain
             do {
