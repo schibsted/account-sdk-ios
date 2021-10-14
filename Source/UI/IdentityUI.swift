@@ -777,11 +777,14 @@ extension IdentityUI {
                     self?.complete(with: output, presentingViewController: presentingViewController)
                 }
             }
-        case let .validateAuthCode(code, shouldPersistUser, codeVerifier):
+        case let .validateAuthCode(code, shouldPersistUser, codeVerifier, codeAfterSignup):
             // Let's check if the code validates.
             authenticationCodeInteractor.validate(authCode: code, codeVerifier: codeVerifier) { [weak self] result in
                 switch result {
                 case let .success(user):
+                    if codeAfterSignup {
+                        self?._identityManager.currentUser.refresh(completion: { _ in })
+                    }
                     self?.configuration.tracker?.loginID = self?._identityManager.currentUser.legacyID
                     // User has validated the identifier and the code matches, nothing else to do.
                     self?.complete(with: .success(user: user, persistUser: shouldPersistUser), presentingViewController: presentingViewController)
