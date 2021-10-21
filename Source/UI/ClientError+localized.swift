@@ -40,7 +40,9 @@ extension ClientError {
              .userRefreshFailed,
              .invalidScope,
              .invalidDevicePayloadData,
-             .noAccess:
+             .noAccess,
+             .userDidNotAcceptUpdatedTermsAndConditions,
+             .userCancelledProfileCompletion:
             //
             // These do not have translations deliberately because they don't make sense to a user when trying to visually login, or
             // they are handled in some other way in the UI flows:

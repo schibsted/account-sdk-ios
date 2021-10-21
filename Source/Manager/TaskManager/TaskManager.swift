@@ -241,10 +241,10 @@ class TaskManager {
                     case let .networkingError(internaleError):
                         let logoutCodes = [401, 403]
                         if case let NetworkingError.unexpectedStatus(status, _) = internaleError, logoutCodes.contains(status) {
-                            strongSelf.user?.logout()
+                            strongSelf.user?.logout(clientError: clientError)
                         }
                     case .invalidClientCredentials:
-                        strongSelf.user?.logout()
+                        strongSelf.user?.logout(clientError: clientError)
                     //
                     // HACK HACK HACK!
                     //
@@ -256,7 +256,7 @@ class TaskManager {
                     // cases. So for now we handle it here until someone thinks of a better way
                     //
                     case .invalidCode:
-                        strongSelf.user?.logout()
+                        strongSelf.user?.logout(clientError: clientError)
                     default:
                         break
                     }

@@ -21,6 +21,19 @@ public protocol IdentityManagerDelegate: AnyObject {
      - SeeAlso: `UserDelegate.user(_:didChangeStateTo:)`
      */
     func userStateChanged(_ state: UserState)
+
+    /**
+     Informs you when the state of `IdentityManager.currentUser` changes due to an error
+
+     - SeeAlso: `UserDelegate.user(_:didChangeStateTo:error)`
+     */
+    func userStateChanged(_ state: UserState, error: ClientError)
+}
+
+public extension IdentityManagerDelegate {
+    func userStateChanged(_ state: UserState, error: ClientError) {
+        userStateChanged(state)
+    }
 }
 
 /**
@@ -776,6 +789,16 @@ extension IdentityManager: UserDelegate {
         DispatchQueue.main.async { [weak self] in
             log(from: self, "delegating state: \(newState)")
             self?.delegate?.userStateChanged(newState)
+        }
+    }
+
+    public func user(_ user: User, didChangeStateTo newState: UserState, error: ClientError) {
+        guard delegate != nil else {
+            return
+        }
+        DispatchQueue.main.async { [weak self] in
+            log(from: self, "delegating state: \(newState), error: \(error)")
+            self?.delegate?.userStateChanged(newState, error: error)
         }
     }
 }

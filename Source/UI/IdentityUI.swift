@@ -527,7 +527,7 @@ extension IdentityUI {
                 func presentCompleteProfileCoordinator(user: User) {
                     let navigationController = DismissableNavigationController {
                         if IdentityUI.completeProfileCoordinator != nil {
-                            user.logout()
+                            user.logout(clientError: ClientError.userCancelledProfileCompletion)
                             completion(.cancel)
                         }
                         IdentityUI.completeProfileCoordinator = nil

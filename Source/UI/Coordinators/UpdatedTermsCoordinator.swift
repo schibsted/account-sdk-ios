@@ -53,7 +53,7 @@ extension UpdatedTermsCoordinator {
                 }
             case .cancel, .back:
                 // Since user has not accepted the updated terms, we force a logout :'(
-                userTermsInteractor.user.logout()
+                userTermsInteractor.user.logout(clientError: ClientError.userDidNotAcceptUpdatedTermsAndConditions)
                 completion(.cancel)
             }
         }

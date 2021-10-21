@@ -163,7 +163,11 @@ public class User: UserProtocol {
      If the user is already logged out nothing will happen. If not then the delegate will be informed of a state change.
      */
     public func logout() {
-        log(from: self, "state = \(state)")
+        logout(clientError: nil)
+    }
+
+    func logout(clientError: ClientError?) {
+        log(from: self, "state = \(state), clientError = \(clientError?.description ?? "<nil>")")
         guard let oldTokens = clearTokens() else {
             return
         }
@@ -175,7 +179,11 @@ public class User: UserProtocol {
             guard let value = weakVal.value else { return }
             if value.tokens == oldTokens {
                 if value.clearTokens() != nil {
-                    value.delegate?.user(value, didChangeStateTo: .loggedOut)
+                    if let clientError = clientError {
+                        value.delegate?.user(value, didChangeStateTo: .loggedOut, error: clientError)
+                    } else {
+                        value.delegate?.user(value, didChangeStateTo: .loggedOut)
+                    }
                 }
             }
         }

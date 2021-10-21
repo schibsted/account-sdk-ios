@@ -69,6 +69,12 @@ public enum ClientError: Error {
 
     /// Occurs when user does not have access to a requested resource (e.g. a product)
     case noAccess
+
+    /// Occours when the user refused to accept updated terms & conditions.
+    case userDidNotAcceptUpdatedTermsAndConditions
+
+    /// Occours when the user cancels the profile completion (i.e. when having to provide required fields)
+    case userCancelledProfileCompletion
 }
 
 public extension ClientError {
@@ -129,6 +135,10 @@ extension ClientError: CustomStringConvertible {
             return "Your password should have at least 8 characters."
         case .invalidDevicePayloadData:
             return "Invalid device payload data"
+        case .userDidNotAcceptUpdatedTermsAndConditions:
+            return "User did not accept updated terms & conditions."
+        case .userCancelledProfileCompletion:
+            return "User cancelled profile completion"
         }
     }
 }
