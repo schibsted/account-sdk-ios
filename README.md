@@ -1,3 +1,12 @@
+# DEPRECATED
+This is no longer supported, please consider using the SDK [AccountSDKIOSWeb](https://github.com/schibsted/AccountSDKIOSWeb)
+
+Clients using this old SDK will stop working in the future
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+<strike>
+    
 # SchibstedAccount iOS SDK
 
 The SchibstedAccount iOS SDK provides you access to Schibsted identity services via the [SPiD](https://techdocs.spid.no/#api-reference) APIs. It provides the following:
@@ -244,3 +253,5 @@ class ViewController: UIViewController, IdentityManagerDelegate {
 ### Building, testing, documentaion
 
 See [contributing.md](https://github.com/schibsted/account-sdk-ios/blob/master/CONTRIBUTING.md).
+
+</strike>
