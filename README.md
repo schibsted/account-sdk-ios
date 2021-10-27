@@ -1,7 +1,7 @@
 # DEPRECATED
 This is no longer supported, please consider using the SDK [AccountSDKIOSWeb](https://github.com/schibsted/AccountSDKIOSWeb)
 
-Clients using this old SDK will in the future stop working.
+Clients using this old SDK will stop working in the future
 
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
