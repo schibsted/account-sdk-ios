@@ -191,6 +191,9 @@ class IdentityUIViewController: UIViewController {
     }
 
     func startLoading() {
+        // This ensures the keyboard is dismissed before the view interaction is disabled
+        // which is necessary for the keyboard appearance notifications to be correctly delivered.
+        view.endEditing(true)
         view.isUserInteractionEnabled = false
     }
 
