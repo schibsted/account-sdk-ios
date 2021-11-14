@@ -17,7 +17,7 @@ public extension IdentityUI {
         case enterPassword(for: EmailAddress, scopes: [String])
 
         /// Route to validate an authcode
-        case validateAuthCode(code: String, shouldPersistUser: Bool?, codeVerifier: String? = nil)
+        case validateAuthCode(code: String, shouldPersistUser: Bool?, codeVerifier: String? = nil, codeAfterSignup: Bool = false)
 
         var loginMethod: LoginMethod {
             switch self {
@@ -68,7 +68,7 @@ public extension IdentityUI.Route {
             }
             self = .enterPassword(for: email, scopes: scopes)
         case let .codeAfterSignup(code, shouldPersistUser):
-            self = .validateAuthCode(code: code, shouldPersistUser: shouldPersistUser)
+            self = .validateAuthCode(code: code, shouldPersistUser: shouldPersistUser, codeAfterSignup: true)
         case let .codeAfterUnvalidatedLogin(code):
             // We have no way to retrieve the `shouldPersistUser` flag from the redirect URL in this case, so we just fall back to `false`.
             self = .validateAuthCode(code: code, shouldPersistUser: false)
