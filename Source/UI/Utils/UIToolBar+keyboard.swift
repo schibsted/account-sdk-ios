@@ -12,6 +12,8 @@ extension UIToolbar {
         doneSelector: Selector? = nil,
         previousSelector: Selector? = nil,
         nextSelector: Selector? = nil,
+        extraActionSelector: Selector? = nil,
+        extraActionString: String? = nil,
         leftChevronImage: UIImage? = nil
     ) -> UIToolbar {
         let toolbar = UIToolbar()
@@ -33,8 +35,13 @@ extension UIToolbar {
             next = UIBarButtonItem(image: chevronRight, style: .plain, target: target, action: nextSelector)
         }
 
+        var extra: UIBarButtonItem?
+        if let extraActionSelector = extraActionSelector, let extraActionString = extraActionString {
+            extra = UIBarButtonItem(title: extraActionString, style: .done, target: target, action: extraActionSelector)
+        }
+
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([previous, next, flex, done].compactOrFlatMap { $0 }, animated: true)
+        toolbar.setItems([previous, next, extra, flex, done].compactOrFlatMap { $0 }, animated: true)
         return toolbar
     }
 }
