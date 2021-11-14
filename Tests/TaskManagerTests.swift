@@ -9,41 +9,59 @@ import Quick
 @testable import SchibstedAccount
 
 class MockTask: TaskProtocol {
-    static var counter = AtomicInt()
+    var counter = AtomicInt()
+    private var queue = DispatchQueue(label: "com.schibsted.account.mockTask.queue")
 
-    var didCancelCallCount = 0
-    var executeCallCount = 0
-    var shouldRefreshCallCount = 0
+    var _didCancelCallCount = 0
+    var _executeCallCount = 0
+    var _shouldRefreshCallCount = 0
+    var _failureValue: ClientError?
 
-    var failureValue: ClientError?
-    var shouldRefresh: Bool
+
+    var executeCallCount: Int {
+        return queue.sync { _executeCallCount }
+    }
+    var didCancelCallCount: Int {
+        return queue.sync { _didCancelCallCount }
+    }
+    var shouldRefreshCallCount: Int {
+        return queue.sync { _shouldRefreshCallCount }
+    }
+    var failureValue: ClientError? {
+        return queue.sync { _failureValue }
+    }
+
+    let shouldRefresh: Bool
 
     init(failureValue: ClientError? = nil, shouldRefresh: Bool = false) {
-        MockTask.counter.getAndIncrement()
-        self.failureValue = failureValue
+        self.counter.getAndIncrement()
+        self._failureValue = failureValue
         self.shouldRefresh = shouldRefresh
     }
 
     deinit {
-        MockTask.counter.getAndDecrement()
+        self.counter.getAndDecrement()
     }
 
     func execute(completion: @escaping (Result<NoValue, ClientError>) -> Void) {
-        self.executeCallCount += 1
+        queue.sync(flags: .barrier) {
+            self._executeCallCount += 1
+        }
 
         if let failureValue = self.failureValue {
             completion(.failure(failureValue))
         } else {
             completion(.success(()))
         }
+        queue.sync { self._executeCallCount += 1 }
     }
 
     func didCancel() {
-        self.didCancelCallCount += 1
+        queue.sync { self._didCancelCallCount += 1 }
     }
 
     func shouldRefresh(result _: Result<NoValue, ClientError>) -> Bool {
-        self.shouldRefreshCallCount += 1
+        queue.sync { self._shouldRefreshCallCount += 1 }
         return self.shouldRefresh
     }
 }
@@ -52,22 +70,16 @@ class TaskManagerTests: QuickSpec {
 
     override func spec() {
 
-        afterEach {
-            expect(MockTask.counter.value) == 0
-        }
-
         describe("Adding a task") {
 
             it("Should execute it") {
-                let task = MockTask()
+                let task =  MockTask()
                 let user = User(state: .loggedIn)
                 let manager = TaskManager(for: user)
 
                 _ = manager.add(task: task) { result in
                     expect(result).to(beSuccess())
-                }
-                waitTill {
-                    task.executeCallCount == 1
+                    expect(task.executeCallCount).to(equal(1))
                 }
             }
 
@@ -240,12 +252,13 @@ class TaskManagerTests: QuickSpec {
                 // 1 refresh
                 // Two successful 200 tasks
                 expect(Networking.testingProxy.callCount).toEventually(equal(5))
-                expect(Networking.testingProxy.calls[0].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
-                expect(Networking.testingProxy.calls[1].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
-                expect(Networking.testingProxy.calls[2].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(beNil())
-                expect(Networking.testingProxy.calls[3].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
-                expect(Networking.testingProxy.calls[4].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
-
+                if (Networking.testingProxy.callCount == 5) {
+                    expect(Networking.testingProxy.calls[0].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
+                    expect(Networking.testingProxy.calls[1].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("testAccessToken"))
+                    expect(Networking.testingProxy.calls[2].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(beNil())
+                    expect(Networking.testingProxy.calls[3].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
+                    expect(Networking.testingProxy.calls[4].passedRequest?.allHTTPHeaderFields?["Authorization"]).to(contain("123"))
+                }
                 user.taskManager.waitForRequestsToFinish()
             }
         }
